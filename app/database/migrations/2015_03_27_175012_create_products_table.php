@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration {
 			$table->foreign('productType')->references('id')->on('product_types');
 			$table->string('attachedImage')->nullable();
 			$table->string('detachedImage')->nullable();
+			$table->string('thumb');
 			$table->string('name');
 			$table->string('shortName');
 			$table->string('slug');

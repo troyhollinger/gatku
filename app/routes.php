@@ -7,9 +7,20 @@ Route::get('/', ['as' => 'home', function() {
 }]);
 
 
+Route::resource('products', 'ProductsController');
 
-Route::get('product/{slug?}', ['as' => 'product', function() {
 
-	return View::make('pages.product');
+Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function() {
 
-}]);
+	Route::get('/', ['as' => 'admin.index', function() {
+
+		return View::make('pages.admin');
+
+	}]);
+
+
+});
+
+
+
+
