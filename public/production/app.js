@@ -219,7 +219,7 @@ $(document).ready(function() {
 
 	}
 
-	if (currentRoute === 'product') {
+	if (currentRoute === 'product.show') {
 
 		PurchaseColumn.init();
 

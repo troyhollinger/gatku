@@ -22,12 +22,15 @@
         <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
         <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
         <script>
-
             var currentRoute = '{{ Route::currentRouteName() }}'
-
         </script>
+        @if(isset($productId))
+        <script>
+            var productId = '{{ $productId }}'
+        </script>
+        @endif
     </head>
-    @if(Route::currentRouteName() === 'product') 
+    @if(Route::currentRouteName() === 'product.show') 
     <body ng-app="gatku" ng-controller="ProductController">
     @else
     <body ng-app="gatku">
@@ -47,6 +50,7 @@
         <script src="{{ asset('bower_components/fitvids/jquery.fitvids.js') }}"></script>
         <script src="{{ asset('bower_components/ng-file-upload/angular-file-upload.js') }}"></script>
         <script src="{{ asset('bower_components/nanobar/nanobar.js') }}"></script>
+        <script src="{{ asset('js/directives.js') }}"></script>
         <script src="{{ asset('js/factories.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/controllers.js') }}"></script>

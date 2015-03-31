@@ -17,9 +17,15 @@ app.factory('Product', ['$http', function($http) {
 
 	return  {
 
-		get : function() {
+		all : function() {
 
 			return $http.get('/product');
+
+		},
+
+		get : function(productId) {
+
+			return $http.get('/product/get/' + productId)
 
 		},
  

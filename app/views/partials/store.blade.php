@@ -2,14 +2,14 @@
 
 	<div class="heads-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="head in heads"><a href="{{ route('product.show', []) }}/@{{ head.slug }}"><img ng-src="@{{ head.thumb }}"></a></div>
+		<div class="product-thumb-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}"><img ng-src="@{{ head.thumb }}"></a></div>
 		
 		<div class="clear"></div>
 
 	</div>
 
 	<div class="heads-links links">
-		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', []) }}/@{{ head.slug }}">@{{ head.name }}{{-- <span class="detail">/Paralyzer</span> --}}</a></div>
+		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}">@{{ head.name }}{{-- <span class="detail">/Paralyzer</span> --}}</a></div>
 
 		<div class="clear"></div>
 	</div>
@@ -18,7 +18,7 @@
 
 	<div class="tails-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="{{ route('product.show', []) }}/@{{ pole.slug }}"><img ng-src="@{{ pole.thumb }}"></a></div>
+		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="{{ route('product.show', ['']) }}/@{{ pole.slug }}"><img ng-src="@{{ pole.thumb }}"></a></div>
 		
 
 		<div class="clear"></div>
@@ -27,7 +27,7 @@
 
 	<div class="tails-links links">
 
-		<div class="product-link-container" ng-repeat="pole in poles"><a href="{{ route('product.show', []) }}/@{{ pole.slug }}">@{{ pole.shortName }}<span class="unbold">'ER</span> {{-- <span class="detail">/152<span class="uncaps">cm</span></span> --}}</a></div>
+		<div class="product-link-container" ng-repeat="pole in poles"><a href="{{ route('product.show', ['']) }}/@{{ pole.slug }}">@{{ pole.shortName }}<span class="unbold">'ER</span> {{-- <span class="detail">/152<span class="uncaps">cm</span></span> --}}</a></div>
 		
 
 		<div class="clear"></div>

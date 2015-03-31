@@ -14,7 +14,7 @@ Product Description goes here.
 
 <div class="scroller">
 
-	<img class="scroller-image" src="{{ asset('img/full-size/eightfooter.jpg') }}" ng-class="{'fit' : fullSize === false }" ng-cloak>
+	<img class="scroller-image" ng-src="@{{ product.attachedImage }}" ng-class="{'fit' : fullSize === false }" ng-cloak>
 
 </div>
 
@@ -29,14 +29,14 @@ Product Description goes here.
 
 	<div class="product-column-left">
 
-		<h1 class="product-title"><span class="bold">TEN</span>'ER <span class="detail"><span class="detail">/256cm</span></span></h1>
+		<h1 class="product-title"><span class="bold uppercase">@{{ product.name }}</span>{{-- 'ER <span class="detail"><span class="detail">/256cm</span></span> --}}</h1>
 
 		<div class="product-description">
-
-			<p>Our 10 foot pole <span class="bold">breaks down into two sections</span>. The <span class="bold">all aluminum rear section</span> which is <span class="bold">60 inches</span>, and the <span class="bold">carbon graphite front end</span> section which is <span class="bold">42 inches</span>. Heads are sold separately. Usually the TEN'ER is paired with our <span class="bold highlight-product">SlipTip</span>.</p>
+			@{{ product.description }}
+			{{-- <p>Our 10 foot pole <span class="bold">breaks down into two sections</span>. The <span class="bold">all aluminum rear section</span> which is <span class="bold">60 inches</span>, and the <span class="bold">carbon graphite front end</span> section which is <span class="bold">42 inches</span>. Heads are sold separately. Usually the TEN'ER is paired with our <span class="bold highlight-product">SlipTip</span>.</p>
 			<p class="faded"><span class="bold">Watch FAQ Video</span> about this Polespear</p>
 			<p>More for <span class="bold">experienced</span> divers.</p>
-			<p>Traditionally an open-water only spear, now our <span class="bold highlight-inshore">InshoreShrinker</span> can be attached to make it more of a "reef hunter". Go for such fishas Yellowtail, Wahoo, Amberjack, White Seabass, and Dorado, etc.</p>
+			<p>Traditionally an open-water only spear, now our <span class="bold highlight-inshore">InshoreShrinker</span> can be attached to make it more of a "reef hunter". Go for such fishas Yellowtail, Wahoo, Amberjack, White Seabass, and Dorado, etc.</p> --}}
 
 		</div>
 
@@ -46,19 +46,19 @@ Product Description goes here.
 
 			<img class="product-performance-icon" src="{{ asset('img/movement.jpg') }}">
 			<h3 class="product-performance-title bold">Maneuverability</h3>
-			<p class="product-performance-description">Sleek, 3/8” diameter, carbon graphite front end allows diver to effortlessly swing polespear with minimized drag in the water; This is especially a benefit when tracking fish.</p>
+			<p class="product-performance-description">@{{ product.maneuverability }}</p>
 
 			<img class="product-performance-icon" src="{{ asset('img/crosshairs.jpg') }}">
 			<h3 class="product-performance-title bold">Trajectory</h3>
-			<p class="product-performance-description">Extended section in front of loaded hand allows you to see where the polespear is headed. Eliminating the 'shooting from the hip' factor. Instead, you are capable of pinpointing target with limited guesswork.</p>
+			<p class="product-performance-description">@{{ product.trajectory }}</p>
 
 			<img class="product-performance-icon" src="{{ asset('img/balance.jpg') }}">
 			<h3 class="product-performance-title bold">Balance</h3>
-			<p class="product-performance-description">Polespear won't feel so 'weighted down' in the rear with the tip 3’ away from loaded hand; Resulting in natural tracking movements plus a more comfortable hold.</p>
+			<p class="product-performance-description">@{{ product.balance }}}</p>
 
 			<img class="product-performance-icon" src="{{ asset('img/diver-shadow.jpg') }}">
 			<h3 class="product-performance-title bold">Stealth</h3>
-			<p class="product-performance-description">With 3’ of polespear in front of your extended, loaded hand, fish are much more approachable. The proximity of a diver's body and the fish is a greater distance, making it less likely spooked.</p>
+			<p class="product-performance-description">@{{ product.stealth }}</p>
 
 		</div>
 
@@ -90,7 +90,7 @@ Product Description goes here.
 		
 		<div class="clear"></div>
 
-		<p class="product-price"><span class="product-price-amount">$190</span> /+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
+		<p class="product-price"><span class="product-price-amount">$@{{ product.price | money }}</span> /+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
 
 		<p class="addon-title right">Click to add to order</p>
 

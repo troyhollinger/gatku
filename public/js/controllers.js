@@ -81,7 +81,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 	$scope.getProducts = function() {
 
-		Product.get().success(function(response) {
+		Product.all().success(function(response) {
 
 			$scope.products = response.data;
 
@@ -210,11 +210,33 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 
 
-app.controller('ProductController', ['$scope', function($scope) {
+app.controller('ProductController', ['$scope', 'Product', function($scope, Product) {
 
 	$scope.fullSize = true;
 
-	console.log("hello");
+	$scope.product = {};
+
+	$scope.init = function() {
+
+		$scope.getProduct();
+
+	}
+
+	$scope.getProduct = function() {
+
+		Product.get(productId).success(function(response) {
+
+			$scope.product = response.data;
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+	}
+
+	$scope.init();
 
 }]);
 
