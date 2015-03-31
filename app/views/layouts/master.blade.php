@@ -45,6 +45,9 @@
         <script src="{{ asset('js/config.js') }}"></script>
         <script src="{{ asset('bower_components/skippr/js/jquery.skippr.js') }}"></script>
         <script src="{{ asset('bower_components/fitvids/jquery.fitvids.js') }}"></script>
+        <script src="{{ asset('bower_components/ng-file-upload/angular-file-upload.js') }}"></script>
+        <script src="{{ asset('bower_components/nanobar/nanobar.js') }}"></script>
+        <script src="{{ asset('js/factories.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/controllers.js') }}"></script>
 

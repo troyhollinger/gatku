@@ -6,9 +6,9 @@
 
 	<div class="container navigation-container">
 
-		<img id="logo-above" src="{{ asset('img/logo-white.png') }}">
+		<a href="{{ route('home') }}"><img id="logo-above" src="{{ asset('img/logo-white.png') }}"></a>
 
-		<img id="logo-below" src="{{ asset('img/logo-white-bg.png') }}">
+		<a href="{{ route('home') }}"><img id="logo-below" src="{{ asset('img/logo-white-bg.png') }}"></a>
 
 		<ul class="navigation">
 			<li><a href="#store">Store</a></li>

@@ -5,6 +5,9 @@ $helvetica : 'Helvetica Neue', 'HelveticaNeue', 'Helvetica-Neue', 'Helvetica', H
 $helvetica-thin : 'HelveticaNeue-Thin', 'Helvetica Neue', 'HelveticaNeue', 'Helvetica-Neue', 'Helvetica', Helvetica, Arial, sans-serif;
 
 $gray : #737476;
+$red : #E74C3C;
+$green : #2ECC71;
+$light : #ECF0F1;
 
 //Mixins
 @mixin center {
@@ -86,6 +89,26 @@ html {
 
 }
 
+.success-bg {
+
+	background-color: $green;
+	color:white;
+
+}
+
+.error-bg {
+
+	background-color: $red;
+	color:white;
+
+}
+
+.info-bg {
+
+	background-color: $light;
+
+}
+
 .inline {
 
 	display: inline;
@@ -137,6 +160,12 @@ html {
 .bold {
 
 	font-weight: bold;
+
+}
+
+.uppercase {
+
+	text-transform: uppercase;
 
 }
 
@@ -194,7 +223,7 @@ html {
 	width:100%;
 	background-position: center;
 	background-size: cover;
-	z-index: 99;
+	z-index: 15;
 	color:white;
 	font-size: 1.6rem;
 
@@ -966,3 +995,208 @@ html {
 	margin-bottom: 100px;
 
 }
+
+
+.admin-container {
+
+	@extend .container;
+	min-height: 400px;
+	margin-top: 100px;
+	box-shadow: 0px 0px 10px lighten($gray, 30%);
+	box-sizing:border-box;
+	padding:30px;
+
+	h1 {
+
+		font-size: 2em;
+		font-weight: bold;
+
+	}
+
+	h2 {
+
+		font-size: 1.5em;
+
+	}
+
+	input[type='text'], input[type='number'], textarea {
+
+		display: block;
+		width:100%;
+		box-sizing:border-box;
+		padding:5px;
+		border:none;
+		border:1px solid lighten($gray, 20%);
+		border-radius: 3px;
+
+		&.image-path-storage-input {
+
+			display: none;
+		}
+
+	}
+
+
+	label {
+
+		margin-top: 10px;
+		display: block;
+
+	}
+
+
+
+}
+
+.admin-navigation-container {
+
+	position: relative;
+	width:100%;
+	height:45px;
+	border-radius: 3px;
+	background-color: lighten($gray, 40%);
+	margin:10px 0;
+
+}
+
+.admin-navigation-tab {
+
+	position: relative;
+	float:left;
+	width:25%;
+	height:100%;
+	line-height: 2.75;
+	text-align: center;
+	cursor: pointer;
+
+	&.selected {
+
+		background-color: $gray;
+		color:white;
+
+	}
+
+}
+
+.button {
+
+	box-sizing:border-box;
+	padding:10px 18px;
+	border-radius: 3px;
+	font-weight: bold;
+	display: inline-block;
+	cursor: pointer;
+
+}
+
+.admin-sub-section {
+
+	margin-top: 15px;
+	position: relative;
+
+}
+
+.edit-indicator {
+
+	margin-left: 10px;
+
+}
+
+
+.upload-field {
+
+	position: relative;
+	width:150px;
+	height:150px;
+	background-color: $light;
+	cursor: pointer;
+	background-size: cover;
+	background-position: center;
+
+	input[type="file"] {
+
+		opacity: 0;
+		width:100%;
+		height:100%;
+		cursor: pointer;
+
+	}
+
+	i {
+
+		@include center;
+		color:$gray;
+
+	}
+
+}
+
+.new-product-form {
+
+	margin:20px 0;
+
+}
+
+
+.admin-products-table {
+
+	width:100%;
+
+	tr {
+
+		border:1px solid lighten($gray, 35%);
+
+		.button {
+
+			visibility: hidden;
+
+		}
+
+		&:hover {
+
+			.button {
+
+				visibility: visible;
+
+			}
+
+		}
+
+	}
+
+	td {
+
+		box-sizing:border-box;
+		padding:10px;
+
+		&:last-child {
+
+			text-align: right;
+
+			.button {
+
+				margin-left: 5px;
+
+			}
+
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

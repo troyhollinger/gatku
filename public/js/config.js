@@ -1,1 +1,1 @@
-var app = angular.module('gatku', []);
+var app = angular.module('gatku', ['angularFileUpload']);

@@ -1,21 +1,15 @@
-<div class="store-container">
+<div class="store-container" ng-controller="StoreController">
 
 	<div class="heads-row product-row">
 
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/signature-paralyzer.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/barbed-paralyzer.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/flopper.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/slip-tip.png') }}"></div>
-
+		<div class="product-thumb-container" ng-repeat="head in heads"><a href="{{ route('product.show', []) }}/@{{ head.slug }}"><img ng-src="@{{ head.thumb }}"></a></div>
+		
 		<div class="clear"></div>
 
 	</div>
 
 	<div class="heads-links links">
-		<div class="product-link-container"><a href="">Signature <span class="detail">/Paralyzer</span></a></div>
-		<div class="product-link-container"><a href="">Barbed <span class="detail">/Paralyzer</span></a></div>
-		<div class="product-link-container"><a href="">Flopper</a></div>
-		<div class="product-link-container"><a href="">SlipTip</a></div>
+		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', []) }}/@{{ head.slug }}">@{{ head.name }}{{-- <span class="detail">/Paralyzer</span> --}}</a></div>
 
 		<div class="clear"></div>
 	</div>
@@ -24,11 +18,8 @@
 
 	<div class="tails-row product-row">
 
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/polespear-end.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/polespear-end.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/polespear-end.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/polespear-end.png') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/polespear-end.png') }}"></div>
+		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="{{ route('product.show', []) }}/@{{ pole.slug }}"><img ng-src="@{{ pole.thumb }}"></a></div>
+		
 
 		<div class="clear"></div>
 
@@ -36,11 +27,8 @@
 
 	<div class="tails-links links">
 
-		<div class="product-link-container"><a href="">SIX<span class="unbold">'ER</span> <span class="detail">/152<span class="uncaps">cm</span></span></a></div>
-		<div class="product-link-container"><a href="">SEVEN<span class="unbold">'ER</span> <span class="detail">/182<span class="uncaps">cm</span></span></a></div>
-		<div class="product-link-container"><a href="">EIGHT<span class="unbold">'ER</span> <span class="detail">/208<span class="uncaps">cm</span></span></a></div>
-		<div class="product-link-container"><a href="">NINE<span class="unbold">'ER</span> <span class="detail">/243<span class="uncaps">cm</span></span></a></div>
-		<div class="product-link-container"><a href="">TEN<span class="unbold">'ER</span> <span class="detail">/256<span class="uncaps">cm</span></span></a></div>
+		<div class="product-link-container" ng-repeat="pole in poles"><a href="{{ route('product.show', []) }}/@{{ pole.slug }}">@{{ pole.shortName }}<span class="unbold">'ER</span> {{-- <span class="detail">/152<span class="uncaps">cm</span></span> --}}</a></div>
+		
 
 		<div class="clear"></div>
 
@@ -48,7 +36,7 @@
 
 	<h2 class="store-label">Gen 2 Hybrid Polespears</h2>
 
-	<div class="extras-row product-row">
+	{{-- <div class="extras-row product-row">
 
 		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/inshore-shrinker.png') }}"></div>
 		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/knife.png') }}" class="knife-thumb"></div>
@@ -90,6 +78,6 @@
 
 	</div>
 
-	<h2 class="store-label">Apparel</h2>
+	<h2 class="store-label">Apparel</h2> --}}
 
 </div>
