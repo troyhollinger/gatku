@@ -15,7 +15,7 @@
 			<li><a href="#videos">Videos</a></li>
 			<li><a href="#you">You</a></li>
 			<li>Contact</li>
-			<li>Cart</li>
+			<li ng-controller="CartCountController" ng-click="showCart()">Cart <div class="cart-amount-indicator" ng-show="count > 0"><span>@{{ count }}</span></div> </li>
 		</ul>
 
 		<div class="clear"></div>

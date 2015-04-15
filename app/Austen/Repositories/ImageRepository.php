@@ -96,4 +96,12 @@ class ImageRepository {
 	}
 
 
+	public function all() {
+
+		$photos = glob( public_path() .'img/uploads/*.*');
+
+		return $photos;
+
+	}
+
 }

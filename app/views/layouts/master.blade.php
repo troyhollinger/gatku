@@ -22,11 +22,16 @@
         <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
         <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
         <script>
-            var currentRoute = '{{ Route::currentRouteName() }}'
+            var currentRoute = '{{ Route::currentRouteName() }}';
+            var CONFIG = {
+
+                base : '{{ URL::to("/") }}'
+
+            }
         </script>
-        @if(isset($productId))
+        @if(Route::currentRouteName() === 'product.show')
         <script>
-            var productId = '{{ $productId }}'
+            var productId = '{{ $product->id }}';
         </script>
         @endif
     </head>
@@ -37,7 +42,9 @@
     @endif
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <![endif]-->   
+
+        @include('partials.cart')
 
         @include('partials.nav')
 
@@ -45,15 +52,12 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
-        <script src="{{ asset('js/config.js') }}"></script>
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <script src="{{ asset('bower_components/skippr/js/jquery.skippr.js') }}"></script>
         <script src="{{ asset('bower_components/fitvids/jquery.fitvids.js') }}"></script>
         <script src="{{ asset('bower_components/ng-file-upload/angular-file-upload.js') }}"></script>
         <script src="{{ asset('bower_components/nanobar/nanobar.js') }}"></script>
-        <script src="{{ asset('js/directives.js') }}"></script>
-        <script src="{{ asset('js/factories.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
-        <script src="{{ asset('js/controllers.js') }}"></script>
+        <script src="{{ asset('production/app.js') }}"></script>
 
         <script>
             // (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

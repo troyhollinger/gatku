@@ -74,18 +74,16 @@ class ProductController extends BaseController {
 	 * @return Response
 	 */
 	public function show($slug) {
+		
+		$product = $this->product->find($slug);
 
-		try {
-			
-			$productId = $this->product->find($slug)->id;
+		if ($product === false || $product === null) {
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
+			return Redirect::route('home');
 
-		}
+		}	
 
-		return View::make('pages.product', ['productId' => $productId]);
+		return View::make('pages.product', ['product' => $product]);
 
 	}
 

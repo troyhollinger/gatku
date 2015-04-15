@@ -11,4 +11,11 @@ class Product extends Eloquent {
 
 	}
 
+	public function addons() {
+
+		return $this->hasMany('Addon', 'parentId');
+
+	}
+
+
 }

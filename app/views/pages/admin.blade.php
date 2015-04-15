@@ -23,7 +23,7 @@ Admin
 			<h2>Orders</h2>
 		</div>
 
-		<div class="admin-section" ng-show="showProducts" ng-cloak>
+		<div class="admin-section" ng-if="showProducts" ng-cloak>
 			
 			<div class="admin-sub-section">
 
@@ -50,8 +50,22 @@ Admin
 					<label>Description</label>
 					<textarea ng-model="newProduct.description"></textarea>
 
+					<label>Meta Description</label>
+					<input type="text" ng-model="newProduct.metaDescription">
+
+					<label>Length</label>
+					<input type="text" ng-model="newProduct.length">
+
 					<label>Price</label>
 					<input type="number" ng-model="newProduct.price">
+
+					{{-- FIGURE ADDONS OUT --}}
+
+					<label>Addons</label>
+					<div class="new-product-checkbox-container" ng-repeat="addon in newProduct.addonSelection" ng-if="editState">
+						<input type="checkbox" ng-model="addon.isAddon">&nbsp;<span class="uppercase">@{{ addon.name }}</span>
+					</div>
+					
 
 					<label>Attached Image</label>
 					<div class="upload-field" ng-style="{'background-image':'url(' + newProduct.attachedImage + ')'}">
@@ -94,11 +108,16 @@ Admin
 
 			</div>
 
-			<div class="admin-sub-section">
+			<div class="admin-sub-section" ng-hide="editState">
 
 				<h2>Products</h2>
 
 				<table class="admin-products-table">
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Actions (hover)</th>
+					</tr>
 					<tr ng-repeat="product in products">
 						<td class="bold uppercase">@{{ product.name }}</td>
 						<td class="faded">@{{ product.type.name }}</td>

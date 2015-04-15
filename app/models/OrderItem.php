@@ -4,7 +4,7 @@ class OrderItem extends Eloquent {
 
 	protected $fillable = [];
 
-	protected $table = 'order_item';
+	protected $table = 'order_items';
 
 	
 }

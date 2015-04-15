@@ -8,7 +8,16 @@ module.exports = function(grunt) {
             dist : {
                 src : [
                     'js/plugins.js',
-                    'js/main.js'
+                    'js/main.js',
+                    'bower_components/angular-cookies/angular-cookies.js',
+                    'bower_components/angular-cookie/angular-cookie.js',
+                    'bower_components/angular-animate/angular-animate.js',
+                    'bower_components/angular-stripe/release/angular-stripe.js',
+                    'js/config.js',
+                    'js/directives.js',
+                    'js/services/*.js',
+                    'js/factories.js',
+                    'js/controllers/*.js'
                 ],
                 dest: 'production/app.js'
             }
@@ -40,7 +49,11 @@ module.exports = function(grunt) {
         watch: {
             
             scripts: {
-                files: ['js/*.js'],
+                files: [
+                    'js/*.js', 
+                    'js/controllers/*.js', 
+                    'js/services/*.js'
+                ],
                 tasks: ['concat', 'uglify'],
                 options: {
                     spawn: false

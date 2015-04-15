@@ -58,3 +58,19 @@ app.factory('Product', ['$http', function($http) {
 	}
 
 }]);
+
+
+app.factory('Order', ['$http', function($http) {
+
+
+	return {
+
+		store : function(data) {
+
+			return $http.post('/order', data);
+
+		}
+
+	}
+
+}]);

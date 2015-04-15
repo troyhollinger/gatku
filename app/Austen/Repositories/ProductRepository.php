@@ -6,13 +6,14 @@ namespace Austen\Repositories;
 use Product;
 use ProductType;
 use Log;
+use Addon;
 
 class ProductRepository implements ProductRepositoryInterface {
 
 	
 	public function all() {
 
-		return Product::with('type')->get();
+		return Product::with('type', 'addons')->get();
 
 	}
 
@@ -21,6 +22,8 @@ class ProductRepository implements ProductRepositoryInterface {
 		try {
 			
 			$product = Product::findOrFail($id);
+
+			$product->load('type', 'addons.product');
 
 		} catch (Exception $e) {
 			
@@ -36,7 +39,17 @@ class ProductRepository implements ProductRepositoryInterface {
 
 	public function find($slug) {
 
-		$product = Product::where('slug', '=', $slug)->first();
+		try {
+			
+			$product = Product::where('slug', '=', $slug)->with('type')->first();
+
+		} catch (Exception $e) {
+			
+			Log::error($e);
+
+			return false;
+
+		}
 
 		return $product;
 
@@ -48,21 +61,12 @@ class ProductRepository implements ProductRepositoryInterface {
 		try {
 		
 			$product = new Product;
-			$product->typeId = $input['typeId'];
-			$product->attachedImage = $input['attachedImage'];
-			$product->detachedImage = $input['detachedImage'];
-			if (isset($input['thumb'])) $product->thumb = $input['thumb'];
-			$product->name = $input['name'];
-			$product->shortName = $input['shortName'];
-			$product->slug = $input['slug'];
-			$product->price = $input['price'];
-			$product->description = $input['description'];
-			if (isset($input['maneuverability'])) $product->maneuverability = $input['maneuverability'];
-			if (isset($input['trajectory'])) $product->trajectory = $input['trajectory'];
-			if (isset($input['balance'])) $product->balance = $input['balance'];
-			if (isset($input['stealth'])) $product->stealth = $input['stealth'];
+			
+			$result = $this->assignData($product, $input);
 
-			$product->save();
+			$result->save();
+
+			$this->assignAddons($result, $input);
 
 		} catch (Exception $e) {
 			
@@ -81,21 +85,12 @@ class ProductRepository implements ProductRepositoryInterface {
 		try {
 			
 			$product = Product::findOrFail($id);
-			$product->typeId = $input['typeId'];
-			$product->attachedImage = $input['attachedImage'];
-			$product->detachedImage = $input['detachedImage'];
-			if (isset($input['thumb'])) $product->thumb = $input['thumb'];
-			$product->name = $input['name'];
-			$product->shortName = $input['shortName'];
-			$product->slug = $input['slug'];
-			$product->price = $input['price'];
-			$product->description = $input['description'];
-			if (isset($input['maneuverability'])) $product->maneuverability = $input['maneuverability'];
-			if (isset($input['trajectory'])) $product->trajectory = $input['trajectory'];
-			if (isset($input['balance'])) $product->balance = $input['balance'];
-			if (isset($input['stealth'])) $product->stealth = $input['stealth'];
-			$product->save();
+		
+			$result = $this->assignData($product, $input);
 
+			$result->save();
+
+			$this->assignAddons($result, $input);
 
 		} catch (Exception $e) {
 			
@@ -159,4 +154,110 @@ class ProductRepository implements ProductRepositoryInterface {
 
 	}
 
+
+	/**
+	 * Assigns product data from input
+	 *
+	 * @return object $product
+	 */
+	private function assignData($product, $data) {
+
+		$product->typeId = $data['typeId'];
+		$product->attachedImage = $data['attachedImage'];
+		$product->detachedImage = $data['detachedImage'];
+		if (isset($data['thumb'])) $product->thumb = $data['thumb'];
+		$product->name = $data['name'];
+		$product->shortName = $data['shortName'];
+		$product->slug = $data['slug'];
+		$product->price = $data['price'];
+		$product->description = $data['description'];
+		$product->metaDescription = $data['metaDescription'];
+		$product->length = $data['length'];
+		if (isset($data['maneuverability'])) $product->maneuverability = $data['maneuverability'];
+		if (isset($data['trajectory'])) $product->trajectory = $data['trajectory'];
+		if (isset($data['balance'])) $product->balance = $data['balance'];
+		if (isset($data['stealth'])) $product->stealth = $data['stealth'];
+
+		return $product;
+
+	}
+
+
+	/**
+	 * Assign addons
+	 *
+	 * 
+	 */
+	private function assignAddons($product, $data) {
+
+		Log::info("Assign Addons is being called");
+
+		$addons = $data['addonSelection'];
+		// get existing addons for product
+		$existing = $product->addons;
+
+		// loop through the data array
+		foreach($addons as $addon) {
+
+			if (count($existing)) {
+
+				$match = false;
+
+				// loop through existing addons
+				foreach($existing as $existingAddon) {
+
+					// there is a match
+					if ($existingAddon->childId == $addon['id']) {
+
+						if ($addon['isAddon'] === false) {
+
+							$existingAddon->delete();
+
+							break;
+
+						} 
+
+						$match = true;
+
+					} 
+
+				}
+
+				if ($match === false && $addon['isAddon'] === true) {
+
+					$newAddon = new Addon;
+					$newAddon->parentId = $product->id;
+					$newAddon->childId = $addon['id'];
+					$newAddon->save();
+
+				}
+
+			} else {
+
+				if ($addon['isAddon'] === true) {
+
+					$newAddon = new Addon;
+					$newAddon->parentId = $product->id;
+					$newAddon->childId = $addon['id'];
+					$newAddon->save();
+
+				}
+
+			}
+
+		}
+
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
