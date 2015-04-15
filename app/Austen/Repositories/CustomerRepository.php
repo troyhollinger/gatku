@@ -1,0 +1,29 @@
+<?php namespace Austen\Repositories;
+
+
+use Customer;
+
+class CustomerRepository {
+
+
+	public function store($input) {
+
+		$customer = new Customer;
+		$customer->firstName = $input['firstName'];
+		$customer->lastName = $input['lastName'];
+		$customer->fullName = $input['firstName'] . ' ' . $input['lastName'];
+		$customer->email = $input['email'];
+		$customer->address = $input['address'];
+		$customer->city = $input['city'];
+		$customer->state = $input['state'];
+		$customer->zip = $input['zip'];
+		$customer->country = $input['country'];
+		$customer->stripeId = 1;
+		$customer->save();
+
+		return $customer;
+
+	}
+
+
+}
