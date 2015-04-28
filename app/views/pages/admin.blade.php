@@ -21,6 +21,38 @@ Admin
 
 		<div class="admin-section" ng-show="showOrders" ng-cloak>
 			<h2>Orders</h2>
+
+			<table class="admin-orders-table">
+
+				<tr>
+					<th>Name</th>
+					<th>Products</th>
+					<th>Actions</th>
+					<th>Date</th>
+				</tr>
+
+				<tr ng-repeat="order in orders">
+					<td>@{{ order.customer.fullName }}</td>
+					<td>
+						<ul>
+							<li ng-repeat="item in order.items">
+								@{{ item.product.name }}
+								<ul class="admin-order-addons-list">
+									<li ng-repeat="addon in item.addons">
+										@{{ addon.product.name }}
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</td>
+					<td><div class="button info-bg">Print Label</div></td>
+					<td>@{{ order.createdAtHuman }}</td>
+				</tr>
+
+
+
+			</table>
+
 		</div>
 
 		<div class="admin-section" ng-if="showProducts" ng-cloak>
@@ -122,7 +154,7 @@ Admin
 						<td class="bold uppercase">@{{ product.name }}</td>
 						<td class="faded">@{{ product.type.name }}</td>
 						<td>
-							<div class="button info-bg">View</div>
+							<a href="/product/@{{ product.slug }}" target="_blank"><div class="button info-bg">View</div></a>
 							<div class="button info-bg" ng-click="editProduct(product)">Edit</div>
 							<div class="button error-bg">Delete</div>
 						</td>

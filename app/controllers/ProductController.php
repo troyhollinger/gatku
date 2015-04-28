@@ -66,6 +66,20 @@ class ProductController extends BaseController {
 
 	}
 
+	public function getBySlug($slug) {
+
+		$product = $this->product->find($slug);
+
+		if ($product === false) {
+
+			return Response::json(['message' => 'Sorry, the product could not be retrieved'], 404);
+
+		}
+
+		return Response::json(['data' => $product], 200);
+
+	}
+
 	/**
 	 * Display the specified resource.
 	 * GET /products/{id}

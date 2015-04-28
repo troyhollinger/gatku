@@ -2801,30 +2801,146 @@ app.filter('money', function () {
 });
 
 
-// app.directive('addonSelector', function() {
+app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
 
-// 	return {
+	return {
 
-// 		link : function (scope, element, attrs) {
+		restrict : 'E',
 
-// 			scope.$watch(attrs.currentProduct, function(value) {
+		scope : true,
+
+		link : function($scope, element, attrs) {
+
+			$scope.product = {};
+
+			var moneyFilter = $filter('money');
+			var thisElement = angular.element(element[0]);
+			var template = '<div class="hover-card">' + 
+			'<h2>{{ product.name }}</h2>' + 
+			'<div class="hover-card-image-container"><img ng-src="{{ product.thumb }}"></div>' +
+			'<div class="hover-card-actions"><a ng-href="/product/'+ attrs.slug +'" target="_blank"><div class="button success-bg">See This Product</div></a></div>' +
+			'<div class="hover-card-price">${{ product.price | money }}</div>' + 
+			'<div class="clear"></div>' +
+			'<div class="hover-card-carot shadowed"></div>'+
+			'<div class="hover-card-carot"></div>'+
+			'</div>';
+			var body = angular.element($window.document.getElementsByTagName('body')[0]);
+			var hoverCard = $compile(template)($scope);
+
+			$scope.productFetched = false;
+
+			$scope.init = function() {
+
+				body.append(hoverCard);
+
+				$scope.positionCard();
+
+				$scope.fetchProduct();
+
+			}
+
+			$scope.fetchProduct = function() {
+
+				Product.getBySlug(attrs.slug).success(function(response) {
+
+					$scope.product = response.data;
+
+					$scope.productFetched = true;
+
+					$scope.positionCard();
+
+				}).error(function(response) {
+
+					console.log(response.message);
+
+				});
+
+			}
+
+			$scope.positionCard = function() {
+
+				var offsetTop = $scope.getRootOffsetTop(thisElement[0], 0);
+				var offsetLeft = $scope.getRootOffsetLeft(thisElement[0], 0);
+				var width = thisElement[0].offsetWidth;
+				var cardHeight = hoverCard[0].offsetHeight;
+				console.log(cardHeight);
+				var top = offsetTop - (cardHeight / 2);
+				var left = offsetLeft + width;
+
+				hoverCard.css({ top : top + 'px', left : left + 'px'});
+
+			}
+
+			$scope.getRootOffsetTop = function getRootOffsetTop (elem, val){
+
+				if (elem.offsetParent === null){
+
+					return val + elem.offsetTop;
+
+				}
+
+				return $scope.getRootOffsetTop(elem.offsetParent, val + elem.offsetTop);
+
+			};
+
+			$scope.getRootOffsetLeft = function getRootOffsetLeft (elem, val){
+
+			if (elem.offsetParent === null) {
+
+				return val + elem.offsetLeft;
+
+			}
+
+			return $scope.getRootOffsetLeft(elem.offsetParent, val + elem.offsetLeft);
+
+			};
+
+			thisElement.bind('mouseover', function show() {
+
+				if (!$scope.productFetched) {
+
+					$scope.fetchProduct();
+
+				} 
+
+				hoverCard.addClass('visible');
+
+			});
+
+			thisElement.bind('mouseleave', function hide() {
+
+				hoverCard.removeClass('visible');
+
+			});
+
+			hoverCard.bind('mouseover', function show() {
+
+				hoverCard.addClass('visible');
+
+			});
+
+			hoverCard.bind('mouseleave', function hide() {
+
+				hoverCard.removeClass('visible');
+				
+			});
+
+			angular.element($window).bind('resize', function onResize() {
+
+				$scope.positionCard();
+
+			});
+
+			$scope.init();
+			
+
+		}
 
 
 
-// 			});
+	}
 
-// 		},
-
-// 		template : '<div class="new-product-checkbox-container" ng-repeat="product in products">
-// 						<input type="checkbox" value="{{ product.id }}" ng-checked="checkAddonsForMatch(product.id)">&nbsp;<span class="uppercase">@{{ product.name }}</span>
-// 					</div>',
-
-
-// 	}
-
-	
-
-// });
+}]);
 app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', function($rootScope, $http, $cookies, $cookieStore, ipCookie) {
 
 	var CartService = {};
@@ -2843,10 +2959,30 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		var cart = CartService.getItems();
 		var item = {};
 
-		item.id = data.item.id;
-		item.name = data.item.name;
-		item.price = data.item.price;
-		item.thumb = data.item.thumb;
+		item.id = data.id;
+		item.name = data.name;
+		item.price = data.price;
+		item.thumb = data.thumb;
+		item.addons = [];
+
+		// Grab selected addons from the user action,
+		// dump them in the item.addons array
+		for(var i = 0; i < data.addons.length; i++) {
+
+			var addon = data.addons[i];
+			var addonToCart = {};
+
+			if (addon.checked) {
+
+				addonToCart.id = addon.product.id;
+				addonToCart.price = addon.product.price;
+				addonToCart.name = addon.product.name;
+
+				item.addons.push(addonToCart);
+
+			}
+
+		}
 
 		cart.push(item);
 
@@ -2985,7 +3121,13 @@ app.factory('Product', ['$http', function($http) {
 			return $http.get('/product/get/' + productId)
 
 		},
- 
+ 	
+ 		getBySlug : function(slug) {
+
+ 			return $http.get('/product/by/slug/' + slug);
+
+ 		},
+
 		store : function(data) {
 
 			return $http.post('/product', data);
@@ -3022,6 +3164,12 @@ app.factory('Order', ['$http', function($http) {
 
 	return {
 
+		all : function() {
+
+			return $http.get('/order');
+
+		},
+
 		store : function(data) {
 
 			return $http.post('/order', data);
@@ -3031,23 +3179,25 @@ app.factory('Order', ['$http', function($http) {
 	}
 
 }]);
-app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope, Image, Product) {
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', function($scope, Image, Product, Order) {
 
 	$scope.init = function() {
 
-		$scope.showProducts = true;
+		// $scope.showProducts = true;
+		$scope.show('orders');
+		$scope.getOrders();
 		$scope.getTypes();
 		$scope.getProducts();
 
 	}
+
+	$scope.orders = [];
 
 	$scope.types = [];
 
 	$scope.products = [];
 
 	$scope.newProduct = {};
-
-	// $scope.newProduct.addonSelection = [];
 
 	$scope.editState = false;
 
@@ -3084,9 +3234,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 		Product.all().success(function(response) {
 
 			$scope.products = response.data;
-
-			console.log($scope.products);
-
+			
 		}).error(function(response) {
 
 			console.log("Sorry, there was an error retrieving the products");
@@ -3168,7 +3316,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 			var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 
-			console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+			// console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
 
 		}).success(function(response) {
 
@@ -3198,7 +3346,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 			$scope.types = response.data;
 
-			console.log(response.data);
+			// console.log(response.data);
 
 		}).error(function(response) {
 
@@ -3250,6 +3398,22 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 	}
 
+	//Orders
+	$scope.getOrders = function() {
+
+		Order.all().success(function(response) {
+
+			$scope.orders = response.data;
+			console.log($scope.orders);
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+	}
+
 	$scope.init();
 
 }]);
@@ -3257,45 +3421,41 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 
 
+app.controller('CartBlinderController', ['$scope', 'CartService', function($scope, CartService) {
 
 
+	$scope.show = false;
 
+	$scope.hide = function() {
 
+		CartService.hide();
 
+	}
 
+	$scope.$on('show', function() {
 
+		$scope.show = true;
 
+	});
 
+	$scope.$on('hide', function() {
 
+		$scope.show = false;
 
+	});
 
-
-
-// $scope.checkAddonsForMatch = function(productId) {
-
-// 	if ($scope.newProduct.length) {
-
-// 		for(var i = 0; i < $scope.newProduct.addons.length; i++) {
-
-// 			if (productId === $scope.newProduct.addons[i].childId) {
-
-// 				$scope.addonSelection.push(productId);
-
-// 				return true;
-
-// 			}
-
-// 		}
-
-// 		return false;
-
-// 		console.log("checking for matching addons");
-
-// 	}		
-
-// 	console.log("checking for matching addons");
-
-// }
+}]);
+/*
+|--------------------------------------------------------------------------
+| Cart Controller
+|--------------------------------------------------------------------------
+|
+| All of the form fields are defined in the view cart.blade.php. This 
+| controller simply passes the data on to the backend. 
+| NOTE: if a field is added or subtracted, you will have to update the  
+| $scope.validate method to reflect the changes.
+|
+*/
 app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', function($scope, CartService, StripeService, Order) {
 
 	$scope.items = [];
@@ -3338,7 +3498,16 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			total += $scope.items[key].price;
 
+			for(var i = 0; i < $scope.items[key].addons.length; i++) {
+
+				total += $scope.items[key].addons[i].price;
+
+			}
+
 		});
+
+		// TODO calculate Shipping
+		// console.log(total);
 
 		return total + 2000;
 
@@ -3560,6 +3729,9 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 }]);
 
 
+
+
+
 app.controller('CartCountController', ['$scope', 'CartService', function($scope, CartService) {
 
 	$scope.count = CartService.getItems().length; 
@@ -3576,31 +3748,6 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 
 	}
 
-
-}]);
-
-app.controller('CartBlinderController', ['$scope', 'CartService', function($scope, CartService) {
-
-
-	$scope.show = false;
-
-	$scope.hide = function() {
-
-		CartService.hide();
-
-	}
-
-	$scope.$on('show', function() {
-
-		$scope.show = true;
-
-	});
-
-	$scope.$on('hide', function() {
-
-		$scope.show = false;
-
-	});
 
 }]);
 app.controller('ProductController', ['$scope', 'Product', 'CartService', function($scope, Product, CartService) {
@@ -3636,9 +3783,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.addToCart = function() {
 
-		var data = { item : $scope.product }
-
-		CartService.addItem(data);
+		CartService.addItem($scope.product);
 
 	}
 

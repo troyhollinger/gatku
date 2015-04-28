@@ -7,7 +7,16 @@ use Product;
 use Austen\Repositories\CustomerRepository;
 use Log;
 use Mail;
+use OrderItemAddon;
 
+
+
+
+/**
+ *
+ *
+ * @todo complete validateInput method
+ */
 class OrderRepository {
 
 	protected $customer;
@@ -15,6 +24,16 @@ class OrderRepository {
 	public function __construct(CustomerRepository $customer) {
 
 		$this->customer = $customer;
+
+	}
+
+	public function all() {
+
+		$orders = Order::with('items.addons.product', 'items.product', 'customer')->get();
+
+		$orders = $this->assignHumanReadableTimestamps($orders);
+
+		return $orders;
 
 	}
 
@@ -31,16 +50,6 @@ class OrderRepository {
 			
 			$customer = $this->customer->store($input['form']);
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
-
-			return false;
-
-		}
-
-		try {
-			
 			//create order object
 			$order = new Order;
 			//assign form data
@@ -49,67 +58,20 @@ class OrderRepository {
 			// save order
 			$order->save();
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
-
-			return false;
-
-		}
-		
-		//calculate total
-		try {
-			
+			//calculate total			
 			$total = $this->calculateTotal($input['items']);
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
-
-			$order->delete();
-
-			return false;
-
-		}
-
-		//Charge card
-		try {
-			
+			//Charge card	
 			Stripe_Charge::create([
 
 				'source' => $input['token']['id'],
 				'amount' => $total,
 				'currency' => 'usd',
 
-
 			]);
-
-		} catch (Exception $e) {
-				
-			Log::error($e);
-
-			$order->delete();
-
-			return false;
-
-		}
-
-		try {
-			
+	
 			$this->assignOrderItems($input['items'], $order);
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
-
-			$order->delete();
-
-			return false;
-
-		}
-
-		try {
-		
 			//Queue Email
 			Mail::send('emails.order', ['items' => $input['items'], 'info' => $input['form'], 'total' => $total], function($message) {
 
@@ -117,11 +79,7 @@ class OrderRepository {
 
 			});
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
-
-			$order->delete();
+		} catch(Exception $e) {
 
 			return false;
 
@@ -160,7 +118,7 @@ class OrderRepository {
 
 	}
 
-
+	// TODO: Validate input
 	private function validateInput($input) {
 
 		return true;
@@ -176,10 +134,24 @@ class OrderRepository {
 			$orderItem->productId = $item['id'];
 			$orderItem->save();
 
+			foreach($item['addons'] as $addon) {
+
+				$itemAddon = new OrderItemAddon;
+				$itemAddon->orderItemId = $orderItem->id;
+				$itemAddon->productId = $addon['id'];
+				$itemAddon->save();
+
+			}
+
 		}
 
 	}
 
+	/**
+	 * 
+	 *
+	 * @todo calculate Shipping
+	 */
 	private function calculateTotal($items) {
 
 		$total = 0;
@@ -188,13 +160,33 @@ class OrderRepository {
 
 			$price = Product::findOrFail($item['id'])->price;
 
-			// Log::info(P));
-
 			$total += $price;
+
+			// The 'id' key of the $addon array is the id of the product in the products table,
+			// NOT the id of the record in the addons table.
+			foreach($item['addons'] as $addon) {
+
+				$addonPrice = Product::findOrFail($addon['id'])->price;
+
+				$total += $addonPrice;
+
+			}
 
 		}
 
 		return $total;
+
+	}
+
+	private function assignHumanReadableTimestamps($collection) {
+
+		foreach($collection as $model) {
+
+			$model->createdAtHuman = $model->created_at->timezone('America/Los_Angeles')->format('F jS Y h:i A');
+
+		}
+
+		return $collection;
 
 	}
 

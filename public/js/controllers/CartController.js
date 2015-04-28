@@ -1,3 +1,14 @@
+/*
+|--------------------------------------------------------------------------
+| Cart Controller
+|--------------------------------------------------------------------------
+|
+| All of the form fields are defined in the view cart.blade.php. This 
+| controller simply passes the data on to the backend. 
+| NOTE: if a field is added or subtracted, you will have to update the  
+| $scope.validate method to reflect the changes.
+|
+*/
 app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', function($scope, CartService, StripeService, Order) {
 
 	$scope.items = [];
@@ -40,7 +51,16 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			total += $scope.items[key].price;
 
+			for(var i = 0; i < $scope.items[key].addons.length; i++) {
+
+				total += $scope.items[key].addons[i].price;
+
+			}
+
 		});
+
+		// TODO calculate Shipping
+		// console.log(total);
 
 		return total + 2000;
 
@@ -262,46 +282,5 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 }]);
 
 
-app.controller('CartCountController', ['$scope', 'CartService', function($scope, CartService) {
-
-	$scope.count = CartService.getItems().length; 
-
-	$scope.$on('update', function() {
-
-		$scope.count = CartService.getItems().length; 
-
-	});
-
-	$scope.showCart = function() {
-
-		CartService.show();
-
-	}
 
 
-}]);
-
-app.controller('CartBlinderController', ['$scope', 'CartService', function($scope, CartService) {
-
-
-	$scope.show = false;
-
-	$scope.hide = function() {
-
-		CartService.hide();
-
-	}
-
-	$scope.$on('show', function() {
-
-		$scope.show = true;
-
-	});
-
-	$scope.$on('hide', function() {
-
-		$scope.show = false;
-
-	});
-
-}]);

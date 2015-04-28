@@ -53,7 +53,7 @@
 
 			<img class="product-performance-icon" src="{{ asset('img/balance.jpg') }}">
 			<h3 class="product-performance-title bold">Balance</h3>
-			<p class="product-performance-description">{{ $product->balance }}}</p>
+			<p class="product-performance-description">{{ $product->balance }}</p>
 
 			<img class="product-performance-icon" src="{{ asset('img/diver-shadow.jpg') }}">
 			<h3 class="product-performance-title bold">Stealth</h3>
@@ -100,7 +100,7 @@
 		<div class="addon-container">
 
 			<div ng-repeat="addon in product.addons" ng-cloak>
-				<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}">
+				<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
 				<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
 			</div>
 			

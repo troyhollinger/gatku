@@ -16,10 +16,30 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		var cart = CartService.getItems();
 		var item = {};
 
-		item.id = data.item.id;
-		item.name = data.item.name;
-		item.price = data.item.price;
-		item.thumb = data.item.thumb;
+		item.id = data.id;
+		item.name = data.name;
+		item.price = data.price;
+		item.thumb = data.thumb;
+		item.addons = [];
+
+		// Grab selected addons from the user action,
+		// dump them in the item.addons array
+		for(var i = 0; i < data.addons.length; i++) {
+
+			var addon = data.addons[i];
+			var addonToCart = {};
+
+			if (addon.checked) {
+
+				addonToCart.id = addon.product.id;
+				addonToCart.price = addon.product.price;
+				addonToCart.name = addon.product.name;
+
+				item.addons.push(addonToCart);
+
+			}
+
+		}
 
 		cart.push(item);
 

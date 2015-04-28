@@ -31,9 +31,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.addToCart = function() {
 
-		var data = { item : $scope.product }
-
-		CartService.addItem(data);
+		CartService.addItem($scope.product);
 
 	}
 

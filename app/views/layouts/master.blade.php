@@ -37,6 +37,8 @@
     </head>
     @if(Route::currentRouteName() === 'product.show') 
     <body ng-app="gatku" ng-controller="ProductController">
+    @elseif(Route::currentRouteName() === 'admin.index')
+    <body ng-app="gatku" class="admin-body">
     @else
     <body ng-app="gatku">
     @endif

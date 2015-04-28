@@ -28,7 +28,13 @@ app.factory('Product', ['$http', function($http) {
 			return $http.get('/product/get/' + productId)
 
 		},
- 
+ 	
+ 		getBySlug : function(slug) {
+
+ 			return $http.get('/product/by/slug/' + slug);
+
+ 		},
+
 		store : function(data) {
 
 			return $http.post('/product', data);
@@ -64,6 +70,12 @@ app.factory('Order', ['$http', function($http) {
 
 
 	return {
+
+		all : function() {
+
+			return $http.get('/order');
+
+		},
 
 		store : function(data) {
 

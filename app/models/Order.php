@@ -6,7 +6,7 @@ class Order extends Eloquent {
 
 	public function items() {
 
-		return $this->hasManyTrough('Product', 'OrderItem', 'orderId', 'productId');
+		return $this->hasMany('OrderItem', 'orderId');
 
 	}
 

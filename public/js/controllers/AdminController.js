@@ -1,20 +1,22 @@
-app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope, Image, Product) {
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', function($scope, Image, Product, Order) {
 
 	$scope.init = function() {
 
-		$scope.showProducts = true;
+		// $scope.showProducts = true;
+		$scope.show('orders');
+		$scope.getOrders();
 		$scope.getTypes();
 		$scope.getProducts();
 
 	}
+
+	$scope.orders = [];
 
 	$scope.types = [];
 
 	$scope.products = [];
 
 	$scope.newProduct = {};
-
-	// $scope.newProduct.addonSelection = [];
 
 	$scope.editState = false;
 
@@ -51,9 +53,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 		Product.all().success(function(response) {
 
 			$scope.products = response.data;
-
-			console.log($scope.products);
-
+			
 		}).error(function(response) {
 
 			console.log("Sorry, there was an error retrieving the products");
@@ -135,7 +135,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 			var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 
-			console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+			// console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
 
 		}).success(function(response) {
 
@@ -165,7 +165,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 			$scope.types = response.data;
 
-			console.log(response.data);
+			// console.log(response.data);
 
 		}).error(function(response) {
 
@@ -217,49 +217,25 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', function($scope
 
 	}
 
+	//Orders
+	$scope.getOrders = function() {
+
+		Order.all().success(function(response) {
+
+			$scope.orders = response.data;
+			console.log($scope.orders);
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+	}
+
 	$scope.init();
 
 }]);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $scope.checkAddonsForMatch = function(productId) {
-
-// 	if ($scope.newProduct.length) {
-
-// 		for(var i = 0; i < $scope.newProduct.addons.length; i++) {
-
-// 			if (productId === $scope.newProduct.addons[i].childId) {
-
-// 				$scope.addonSelection.push(productId);
-
-// 				return true;
-
-// 			}
-
-// 		}
-
-// 		return false;
-
-// 		console.log("checking for matching addons");
-
-// 	}		
-
-// 	console.log("checking for matching addons");
-
-// }
