@@ -39,8 +39,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		$scope.items = items;
 
-		console.log(items);
-
 	}
 
 	$scope.total = function() {
@@ -60,7 +58,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 		});
 
 		// TODO calculate Shipping
-		// console.log(total);
 
 		return total + 2000;
 

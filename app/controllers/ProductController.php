@@ -196,4 +196,28 @@ class ProductController extends BaseController {
 
 	}
 
+
+	/**
+	 * Retrieve you images corresponding to the product
+	 *
+	 * @param id integer
+	 */
+	public function photos($id) {
+
+		try {
+			
+			$image = Product::find($id)->images;
+
+		} catch (Exception $e) {
+				
+			Log::error($e);
+
+			return Response::json(['message' => 'Sorry, there was a problem retrieving the images'], 404);
+
+		}
+		
+		return Response::json(['data' => $image], 200);
+
+	}
+
 }

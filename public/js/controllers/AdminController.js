@@ -1,12 +1,13 @@
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', function($scope, Image, Product, Order) {
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', function($scope, Image, Product, Order, YouImage) {
 
 	$scope.init = function() {
 
 		// $scope.showProducts = true;
-		$scope.show('orders');
-		$scope.getOrders();
-		$scope.getTypes();
-		$scope.getProducts();
+		$scope.show('you');
+		getOrders();
+		getProducts();
+		getTypes();
+		getYouImages();
 
 	}
 
@@ -18,6 +19,10 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	$scope.newProduct = {};
 
+	$scope.youImages = [];
+	
+	$scope.newYouImage = {};
+
 	$scope.editState = false;
 
 	$scope.editingNew = true;
@@ -28,6 +33,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 		$scope.showProducts = false;
 		$scope.showYou = false;
 		$scope.showVideos = false;
+		$scope.reset();
 
 		switch(section) {
 
@@ -48,7 +54,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.getProducts = function() {
+	function getProducts() {
 
 		Product.all().success(function(response) {
 
@@ -62,7 +68,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.createProduct = function() {
+	$scope.saveProduct = function() {
 
 		var nanobar = new Nanobar({ bg : '#fff' });
 
@@ -70,8 +76,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 		Product.store($scope.newProduct).success(function(response) {
 
-			$scope.getProducts();
-			$scope.clearNewProduct();
+			getProducts();
+			$scope.reset();
 			nanobar.go(100);
 
 		}).error(function(response) {
@@ -83,13 +89,24 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
+	$scope.createProduct = function() {
+
+		$scope.newProduct = {};
+		$scope.editState = true;
+		$scope.editingNew = true;
+
+		registerAddons();
+
+	}
+
+
 	$scope.editProduct = function(product) {
 
 		$scope.newProduct = product;
 		$scope.editState = true;
 		$scope.editingNew = false;
 
-		$scope.registerAddons();
+		registerAddons();
 
 	}
 
@@ -102,8 +119,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 		Product.update(data.id, data).success(function(response) {
 
-			$scope.getProducts();
-			$scope.clearNewProduct();
+			getProducts();
+			$scope.reset();
 			nanobar.go(100);
 
 		}).error(function(response) {
@@ -151,15 +168,17 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.clearNewProduct = function() {
+	
+	$scope.reset = function() {
 
 		$scope.newProduct = {};
+		$scope.newYouImage = {};
 		$scope.editState = false;
 		$scope.editingNew = true;
 
 	}
 
-	$scope.getTypes = function() {
+	function getTypes() {
 
 		Product.getTypes().success(function(response) {
 
@@ -177,7 +196,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 
 
-	$scope.registerAddons = function() {
+	function registerAddons() {
 
 		$scope.newProduct.addonSelection = [];
 
@@ -188,20 +207,29 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 			addon.id = $scope.products[i].id;
 			addon.name = $scope.products[i].name;
 
-			// If selected products has addons
-			if ($scope.newProduct.addons.length) {
+			// If creating a new product, it has no addons obviously...
+			if (!$scope.editingNew) {
 
-				for(var e = 0; e < $scope.newProduct.addons.length; e++) {
+				// If selected products has addons
+				if ($scope.newProduct.addons.length) {
 
-					if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
+					for(var e = 0; e < $scope.newProduct.addons.length; e++) {
 
-						addon.isAddon = true;
-						break;
+						if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
 
-					} else {
+							addon.isAddon = true;
+							break;
 
-						addon.isAddon = false;
+						} else {
+
+							addon.isAddon = false;
+						}
+
 					}
+
+				} else {
+
+					addon.isAddon = false;
 
 				}
 
@@ -210,7 +238,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 				addon.isAddon = false;
 
 			}
-
+			
 			$scope.newProduct.addonSelection.push(addon);
 
 		}
@@ -218,18 +246,101 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 	}
 
 	//Orders
-	$scope.getOrders = function() {
+	function getOrders() {
 
 		Order.all().success(function(response) {
 
 			$scope.orders = response.data;
-			console.log($scope.orders);
 
 		}).error(function(response) {
 
 			console.log(response.message);
 
 		});
+
+	}
+
+
+	// You
+
+	$scope.youImages = [];
+	$scope.newYouImage = {};
+
+	function getYouImages() {
+
+		YouImage.all().success(function(response) {
+
+			$scope.youImages = response.data;
+
+			Squares.init();
+
+			// console.log($scope.youImages);
+
+		}).error(function(response) {
+
+			console.log("There was an error getting the You images");
+
+		});
+
+	}
+
+	$scope.uploadYouImage = function($files) {
+
+		
+
+		var file = $files[0];
+
+		if (!file) return false;
+
+		var data = {
+
+			url : '/you-image/upload',
+			file : file
+
+		}
+
+		// console.log("still uploading image");
+
+		$scope.editState = true;
+		// $scope.editNew = true;
+
+		Image.upload(data).success(function(response) {
+
+			$scope.newYouImage.image = response.data;
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+
+	}
+
+	$scope.saveYouImage = function() {
+
+		var nanobar = new Nanobar({ bg : '#fff' });
+		nanobar.go(40);
+
+		YouImage.save($scope.newYouImage).success(function() {
+
+			getYouImages();
+			$scope.reset();
+
+			nanobar.go(100);
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+	}
+
+	$scope.clearNewYouImage = function() {
+
+
+		$scope.newYouImage = false;
 
 	}
 

@@ -11,6 +11,7 @@ Route::get('product/types', ['as' => 'product.types', 'uses' => 'ProductControll
 Route::get('product/by/type', ['as' => 'product.getByType', 'uses' => 'ProductController@getByType']);
 Route::get('product/by/slug/{slug}', ['as' => 'product.getBySlug', 'uses' => 'ProductController@getBySlug']);
 Route::get('product/get/{id}', ['as' => 'product.get', 'uses' => 'ProductController@get']);
+Route::get('product/photos/{id}', ['as' => 'product.customerPhotos', 'uses' => 'ProductController@photos']);
 
 Route::resource('product', 'ProductController');
 
@@ -26,6 +27,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function() {
 
 Route::resource('order', 'OrderController');
 
+Route::resource('you-image', 'YouImageController', ['only' => ['index', 'store', 'update', 'destroy']]);
+Route::post('you-image/upload', ['as' => 'you-image.upload', 'uses' => 'YouImageController@upload']);
 
 Route::get('thankyou', ['as' => 'thankyou', function() {
 

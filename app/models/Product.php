@@ -17,5 +17,11 @@ class Product extends Eloquent {
 
 	}
 
+	public function images() {
+
+		return $this->hasMany('YouImage', 'productId', 'id');
+
+	}
+
 
 }

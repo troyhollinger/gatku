@@ -4,6 +4,8 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 
 	$scope.poles = [];
 
+	$scope.shrinker = [];
+
 	$scope.extras = [];
 
 	$scope.apparel = [];
@@ -20,6 +22,8 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 
 			$scope.heads = response.data['heads'];
 			$scope.poles = response.data['poles'];
+			$scope.shrinker = response.data['shrinker'];
+			$scope.extras = response.data['extras'];
 
 		}).error(function(response) {
 

@@ -57,6 +57,12 @@ app.factory('Product', ['$http', function($http) {
 
 			return $http.get('/product/by/type');
 
+		},
+
+		customerPhotos : function(productId) {
+
+			return $http.get('/product/photos/' + productId);
+
 		}
 
 
@@ -86,3 +92,27 @@ app.factory('Order', ['$http', function($http) {
 	}
 
 }]);
+
+app.factory('YouImage', ['$http', function($http) {
+
+	return {
+
+		all : function() {
+
+			return $http.get('/you-image');
+
+		},
+
+		save : function(data) {
+
+			return $http.post('/you-image', data);
+
+		}
+
+	}
+
+}]);
+
+
+
+

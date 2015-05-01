@@ -12,24 +12,29 @@
 @section('content')
 
 
-<div class="scroller">
+<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller' : '' }}">
 
-	<img class="scroller-image" ng-src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false }" ng-cloak>
+	@if($product->attachedImage)
+	<img class="scroller-image" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image" ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
+	@endif
 
 </div>
 
+@if($product->attachedImage)
 <div class="arrows">
 	<div class="left-arrow"></div>
 	<div class="right-arrow"></div>
 
 	<div class="clear"></div>
 </div>
+@endif
 
 <div class="container">
 
 	<div class="product-column-left">
 
-		<h1 class="product-title"><span class="bold uppercase">{{ $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} <span class="detail"><span class="detail">/{{ $product->length }}</span></span></h1>
+		<h1 class="product-title"><span class="bold uppercase">{{ $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->type->slug !== 'shrinker' && $product->slug !== 'bands') <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
 		<div class="product-description">
 
@@ -65,33 +70,29 @@
 
 		<p class="product-buyers-header bold">Others who have bought this product:</p>
 
-		<div class="product-buyers-container">
-
-			<div class="product-buyer square"></div>
-			<div class="product-buyer square"></div>
-			<div class="product-buyer square"></div>
-
-			<div class="clear"></div>
-
-		</div>
+		<product-buyers product-id="{{ $product->id }}"></product-buyers>
 
 	</div>
 
 	<div class="product-column-right">
 		<!-- Increase the width of this element to increase margin between children -->
+		@if($product->attachedImage)
 		<div class="pole-view-actions">
 
-			<p class="attachment-button faded">TAKE APART</p>
+			<p class="attachment-button faded" ng-click="attached = !attached">
+				<span ng-show="attached">TAKE POLE APART</span>
+				<span ng-show="attached === false">PUT POLE TOGETHER</span>
+			</p>
 
-			<div class="zoom-out-button zoom-button" ng-class="{'selected' : fullSize === false}" ng-click="fullSize = false; console.log('hello')"></div>
-			<div class="zoom-in-button zoom-button" ng-class="{'selected' : fullSize === true}" ng-click="fullSize = true"></div>
+
+			<div class="zoom-out-button zoom-button" ng-class="{'selected' : fullSize === false}" ng-click="fullSize = false; poleScrollInit()"></div>
+			<div class="zoom-in-button zoom-button" ng-class="{'selected' : fullSize === true}" ng-click="fullSize = true; goFullSize();"></div>
 
 		</div>
-		
-		
 		<div class="clear"></div>
+		@endif
 
-		<p class="product-price" ng-cloak><span class="product-price-amount" ng-cloak>$@{{ product.price | money }}</span> /+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
+		<p class="product-price" ng-cloak><span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> /+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
 
 		<p class="addon-title right">Click to add to order</p>
 

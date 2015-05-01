@@ -113,19 +113,24 @@ var Squares = {
 
 		Squares.squarify();
 
-	},
+		// setTimeout(function(){ Squares.init() }, 5);
+		setTimeout(function(){ Squares.init() }, 100);
 
-	elements : $(".square"),
+	},
 
 	squarify : function(){
 
-		Squares.elements.each(function() {
+		var squares = $(".square");
+
+		squares.each(function() {
 
 			var width = $(this).width();
 
 			$(this).height(width);
 
 		});
+
+		squares = null;
 
 	}
 
@@ -182,15 +187,53 @@ var PurchaseColumn = {
 
 }
 
+var PoleScroll = {
+
+	init : function() {
+
+		this.scrollPosition();
+
+	},
+
+	element : $(".scroller"),
+
+	scrollPosition : function() {
+
+		var scroller = $(".scroller");
+
+		if (layoutType === 'head') {
+
+			if ($(window).width() < 1000) {
+
+				scroller.scrollLeft($(".scroller-image.visible").width() - 600);
+
+			} else {
+
+				scroller.scrollLeft($(".scroller-image.visible").width());
+
+			}
+
+		} else if(layoutType === 'shrinker') {
+
+			scroller.scrollLeft($(".scroller-image").width() - 3100);			
+
+		}
+
+		scroller = null;
+
+	}
+
+}
+
 $(document).ready(function() {
 
-	BlurbSlider.init();
 	Squares.init();
 
 	if (currentRoute === 'home') {
 
 		Mast.init();
 		You.init();
+		BlurbSlider.init();
 
 	}
 

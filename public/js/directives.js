@@ -7,6 +7,17 @@ app.filter('money', function () {
 
 });
 
+app.directive('backImg', function(){
+    return function(scope, element, attrs){
+        attrs.$observe('backImg', function(value) {
+            element.css({
+                'background-image': 'url(' + value +')',
+                'background-size' : 'cover'
+            });
+        });
+    };
+});
+
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
 
@@ -70,7 +81,6 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 				var offsetLeft = $scope.getRootOffsetLeft(thisElement[0], 0);
 				var width = thisElement[0].offsetWidth;
 				var cardHeight = hoverCard[0].offsetHeight;
-				console.log(cardHeight);
 				var top = offsetTop - (cardHeight / 2);
 				var left = offsetLeft + width;
 
@@ -143,8 +153,77 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 
 		}
 
+	}
 
+}]);
+
+
+app.directive('productBuyers', ['Product', function(Product) {
+
+	return {
+
+		restrict : 'E',
+
+		scope : false,
+
+		template : '<div class="product-buyers-container">' +
+			'<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
+			'<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"></div>' + 
+			'<div class="clear"></div>' +
+			'</div>',
+
+		link : function($scope, element, attrs) {
+
+			$scope.photos = [];
+
+			function getImages() {
+
+				Product.customerPhotos(attrs.productId).success(function(response) {
+
+					$scope.photos = response.data;
+
+					Squares.init();
+
+				}).error(function(response) {
+
+					console.log("There was a problem getting the product images");
+
+				});
+
+			}
+
+			getImages();
+
+		}
+
+		
 
 	}
 
 }]);
+
+app.directive('loaded', ['$parse', function ($parse) {
+
+    return {
+
+		restrict: 'A',
+
+		link: function (scope, elem, attrs) {
+
+			var fn = $parse(attrs.loaded);
+
+			elem.on('load', function (event) {
+
+				scope.$apply(function() {
+
+					fn(scope, { $event: event });
+
+				});
+
+			});
+
+		}
+
+    };
+
+  }]);

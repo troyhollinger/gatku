@@ -59,10 +59,10 @@ Admin
 			
 			<div class="admin-sub-section">
 
-				<div class="button success-bg" ng-hide="editState" ng-click="editState = true">Create Product</div>
-				<div class="button success-bg" ng-show="editState && editingNew" ng-click="createProduct();">Save</div>
-								<div class="button success-bg" ng-show="editState && editingNew === false" ng-click="updateProduct();">Update</div>
-				<div class="button error-bg" ng-show="editState" ng-click="clearNewProduct();">Cancel</div>
+				<div class="button success-bg" ng-hide="editState" ng-click="createProduct()">Create Product</div>
+				<div class="button success-bg" ng-show="editState && editingNew" ng-click="saveProduct();">Save</div>
+				<div class="button success-bg" ng-show="editState && editingNew === false" ng-click="updateProduct();">Update</div>
+				<div class="button error-bg" ng-show="editState" ng-click="reset();">Cancel</div>
 				<span ng-show="editState" class="edit-indicator">Editing Product</span>
 
 				<form class="new-product-form" ng-show="editState" ng-cloak>
@@ -90,8 +90,6 @@ Admin
 
 					<label>Price</label>
 					<input type="number" ng-model="newProduct.price">
-
-					{{-- FIGURE ADDONS OUT --}}
 
 					<label>Addons</label>
 					<div class="new-product-checkbox-container" ng-repeat="addon in newProduct.addonSelection" ng-if="editState">
@@ -133,9 +131,9 @@ Admin
 					<input type="text" ng-model="newProduct.stealth"> 
 				</form>
 
-				<div class="button success-bg" ng-show="editState && editingNew" ng-click="createProduct();">Save</div>
+				<div class="button success-bg" ng-show="editState && editingNew" ng-click="saveProduct();">Save</div>
 				<div class="button success-bg" ng-show="editState && editingNew === false" ng-click="updateProduct();">Update</div>
-				<div class="button error-bg" ng-show="editState" ng-click="clearNewProduct();">Cancel</div>
+				<div class="button error-bg" ng-show="editState" ng-click="reset();">Cancel</div>
 				<span ng-show="editState" class="edit-indicator">Editing Product</span>
 
 			</div>
@@ -167,10 +165,44 @@ Admin
 
 		<div class="admin-section" ng-show="showYou" ng-cloak>
 			<h2>You</h2>
+
+			<div class="admin-sub-section">
+
+				<div class="button success-bg" ng-hide="editState" ng-file-select="uploadYouImage($files)">Upload New</div>
+				<span ng-show="editState" class="edit-indicator">Editing You Image</span>
+
+				<div class="admin-you-image-staging" ng-show="editState">
+					<div class="upload-field" ng-style="{'background-image':'url(' + newYouImage.image + ')'}"></div>
+
+					<label>Select corresponding product (optional)</label>
+					<p><select ng-options="product.id as product.name for product in products" ng-model="newYouImage.productId"></select></p>
+
+					<div class="button success-bg" ng-click="saveYouImage()">Save</div> 
+					<div class="button error-bg" ng-click="reset()">Cancel</div>
+				</div>
+
+			</div>
+
+			<div class="admin-sub-section">
+
+				<div class="grid-container">
+
+					{{-- <div class="grid-square square" ng-repeat="youImage in youImages" ng-style="{'background-image':'url(' + youImage.image + ')'}"></div> --}}
+					<div class="grid-square square" ng-repeat="youImage in youImages" back-img="@{{ youImage.image }}"></div>
+
+					
+					<div class="clear"></div>
+
+				</div>
+			</div>
+			
+
+
 		</div>
 
 		<div class="admin-section" ng-show="showVideos" ng-cloak>
 			<h2>Videos</h2>
+
 		</div>
 
 	</div>

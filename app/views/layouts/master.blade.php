@@ -23,6 +23,7 @@
         <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
         <script>
             var currentRoute = '{{ Route::currentRouteName() }}';
+            var layoutType = {{ Route::currentRouteName() === 'product.show' ? "'" . $product->type->slug . "'" : "null;" }}
             var CONFIG = {
 
                 base : '{{ URL::to("/") }}'

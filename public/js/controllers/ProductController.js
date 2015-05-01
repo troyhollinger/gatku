@@ -6,6 +6,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.product = {};
 
+	if (layoutType === 'pole' || layoutType === 'shrinker' || layoutType === 'extra') {
+
+		$scope.attached = true;
+
+	} else {
+
+		$scope.attached = false;
+
+	}
+
 	$scope.init = function() {
 
 		$scope.getProduct();
@@ -33,6 +43,24 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 		CartService.addItem($scope.product);
 
+	}
+
+
+
+	$scope.poleScrollInit = function() {
+
+		PoleScroll.init();
+
+	}
+
+	$scope.goFullSize = function() {
+
+		setTimeout(function() {
+
+			PoleScroll.init();
+
+		}, 20);
+		
 	}
 
 	$scope.init();

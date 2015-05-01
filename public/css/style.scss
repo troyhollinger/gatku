@@ -639,10 +639,12 @@ html {
 
 	float:left;
 	width: 20%;
-	background-color: $gray;
-	@include box-sizing(border-box);
+	background-color: transparent;
+	box-sizing: border-box;
 	padding:5px;
 	background-clip: content-box;
+	background-position: center;
+	background-size: cover;
 
 }
 
@@ -760,6 +762,13 @@ html {
 	overflow-x:scroll;	
 	overflow-y:visible;
 	margin: 105px 0 0 0;
+	text-align: center;
+
+	&.knife-scroller {
+
+		height:220px;
+
+	}
 
 }
 
@@ -843,10 +852,13 @@ html {
 	float: left;
 	width:33.3333%;
 	width: calc(100% / 3);
-	background-color: $gray;
-	@include box-sizing(border-box);
+	background-color: transparent;
+	box-sizing:border-box;
 	background-clip: content-box;
+	background-size: cover;
+	background-position: center;
 	padding:6px;
+
 
 }
 
@@ -937,6 +949,7 @@ html {
 	white-space: nowrap;
 	font-size: 1rem;
 	line-height: .9;
+	cursor: pointer;
 
 }
 
@@ -1264,6 +1277,24 @@ html {
 	// background-color: darken(white, 5%);
 
 }
+
+
+.admin-you-image-staging {
+
+	.upload-field {
+
+		margin-top: 10px;
+
+	}
+
+	select {
+
+		margin-bottom: 20px;
+
+	}
+
+}
+
 
 
 .cart-blinder {
@@ -1606,8 +1637,9 @@ html {
 
 	h2 {
 
-		font-size: 2rem;
+		font-size: 1.8rem;
 		font-weight: bold;
+		text-transform: uppercase;
 
 	}
 

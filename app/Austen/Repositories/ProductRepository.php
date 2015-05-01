@@ -66,7 +66,7 @@ class ProductRepository implements ProductRepositoryInterface {
 
 			$result->save();
 
-			$this->assignAddons($result, $input);
+			if (isset($input['addonSelection'])) $this->assignAddons($result, $input);
 
 		} catch (Exception $e) {
 			
@@ -135,6 +135,8 @@ class ProductRepository implements ProductRepositoryInterface {
 			
 			$heads = ProductType::where('name', '=', 'head')->first()->products;
 			$poles = ProductType::where('name', '=', 'pole')->first()->products;
+			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products;
+			$extras = ProductType::where('name', '=', 'extra')->first()->products;
 			// $extras = ProductType::where('name', '=', 'extra')
 
 		} catch (Exception $e) {
@@ -147,7 +149,9 @@ class ProductRepository implements ProductRepositoryInterface {
 
 		$products = [
 			'heads' => $heads,
-			'poles' => $poles
+			'poles' => $poles,
+			'shrinker' => $shrinker,
+			'extras' => $extras
 		];
 
 		return $products;
@@ -163,8 +167,8 @@ class ProductRepository implements ProductRepositoryInterface {
 	private function assignData($product, $data) {
 
 		$product->typeId = $data['typeId'];
-		$product->attachedImage = $data['attachedImage'];
-		$product->detachedImage = $data['detachedImage'];
+		if (isset($data['attachedImage'])) $product->attachedImage = $data['attachedImage'];
+		if (isset($data['detachedImage'])) $product->detachedImage = $data['detachedImage'];
 		if (isset($data['thumb'])) $product->thumb = $data['thumb'];
 		$product->name = $data['name'];
 		$product->shortName = $data['shortName'];
@@ -172,7 +176,7 @@ class ProductRepository implements ProductRepositoryInterface {
 		$product->price = $data['price'];
 		$product->description = $data['description'];
 		$product->metaDescription = $data['metaDescription'];
-		$product->length = $data['length'];
+		if (isset($data['length'])) $product->length = $data['length'];
 		if (isset($data['maneuverability'])) $product->maneuverability = $data['maneuverability'];
 		if (isset($data['trajectory'])) $product->trajectory = $data['trajectory'];
 		if (isset($data['balance'])) $product->balance = $data['balance'];

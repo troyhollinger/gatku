@@ -138,19 +138,24 @@ var Squares = {
 
 		Squares.squarify();
 
-	},
+		// setTimeout(function(){ Squares.init() }, 5);
+		setTimeout(function(){ Squares.init() }, 100);
 
-	elements : $(".square"),
+	},
 
 	squarify : function(){
 
-		Squares.elements.each(function() {
+		var squares = $(".square");
+
+		squares.each(function() {
 
 			var width = $(this).width();
 
 			$(this).height(width);
 
 		});
+
+		squares = null;
 
 	}
 
@@ -207,15 +212,53 @@ var PurchaseColumn = {
 
 }
 
+var PoleScroll = {
+
+	init : function() {
+
+		this.scrollPosition();
+
+	},
+
+	element : $(".scroller"),
+
+	scrollPosition : function() {
+
+		var scroller = $(".scroller");
+
+		if (layoutType === 'head') {
+
+			if ($(window).width() < 1000) {
+
+				scroller.scrollLeft($(".scroller-image.visible").width() - 600);
+
+			} else {
+
+				scroller.scrollLeft($(".scroller-image.visible").width());
+
+			}
+
+		} else if(layoutType === 'shrinker') {
+
+			scroller.scrollLeft($(".scroller-image").width() - 3100);			
+
+		}
+
+		scroller = null;
+
+	}
+
+}
+
 $(document).ready(function() {
 
-	BlurbSlider.init();
 	Squares.init();
 
 	if (currentRoute === 'home') {
 
 		Mast.init();
 		You.init();
+		BlurbSlider.init();
 
 	}
 
@@ -2800,6 +2843,17 @@ app.filter('money', function () {
 
 });
 
+app.directive('backImg', function(){
+    return function(scope, element, attrs){
+        attrs.$observe('backImg', function(value) {
+            element.css({
+                'background-image': 'url(' + value +')',
+                'background-size' : 'cover'
+            });
+        });
+    };
+});
+
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
 
@@ -2863,7 +2917,6 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 				var offsetLeft = $scope.getRootOffsetLeft(thisElement[0], 0);
 				var width = thisElement[0].offsetWidth;
 				var cardHeight = hoverCard[0].offsetHeight;
-				console.log(cardHeight);
 				var top = offsetTop - (cardHeight / 2);
 				var left = offsetLeft + width;
 
@@ -2936,11 +2989,80 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 
 		}
 
+	}
 
+}]);
+
+
+app.directive('productBuyers', ['Product', function(Product) {
+
+	return {
+
+		restrict : 'E',
+
+		scope : false,
+
+		template : '<div class="product-buyers-container">' +
+			'<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
+			'<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"></div>' + 
+			'<div class="clear"></div>' +
+			'</div>',
+
+		link : function($scope, element, attrs) {
+
+			$scope.photos = [];
+
+			function getImages() {
+
+				Product.customerPhotos(attrs.productId).success(function(response) {
+
+					$scope.photos = response.data;
+
+					Squares.init();
+
+				}).error(function(response) {
+
+					console.log("There was a problem getting the product images");
+
+				});
+
+			}
+
+			getImages();
+
+		}
+
+		
 
 	}
 
 }]);
+
+app.directive('loaded', ['$parse', function ($parse) {
+
+    return {
+
+		restrict: 'A',
+
+		link: function (scope, elem, attrs) {
+
+			var fn = $parse(attrs.loaded);
+
+			elem.on('load', function (event) {
+
+				scope.$apply(function() {
+
+					fn(scope, { $event: event });
+
+				});
+
+			});
+
+		}
+
+    };
+
+  }]);
 app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', function($rootScope, $http, $cookies, $cookieStore, ipCookie) {
 
 	var CartService = {};
@@ -3150,6 +3272,12 @@ app.factory('Product', ['$http', function($http) {
 
 			return $http.get('/product/by/type');
 
+		},
+
+		customerPhotos : function(productId) {
+
+			return $http.get('/product/photos/' + productId);
+
 		}
 
 
@@ -3179,15 +3307,41 @@ app.factory('Order', ['$http', function($http) {
 	}
 
 }]);
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', function($scope, Image, Product, Order) {
+
+app.factory('YouImage', ['$http', function($http) {
+
+	return {
+
+		all : function() {
+
+			return $http.get('/you-image');
+
+		},
+
+		save : function(data) {
+
+			return $http.post('/you-image', data);
+
+		}
+
+	}
+
+}]);
+
+
+
+
+
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', function($scope, Image, Product, Order, YouImage) {
 
 	$scope.init = function() {
 
 		// $scope.showProducts = true;
-		$scope.show('orders');
-		$scope.getOrders();
-		$scope.getTypes();
-		$scope.getProducts();
+		$scope.show('you');
+		getOrders();
+		getProducts();
+		getTypes();
+		getYouImages();
 
 	}
 
@@ -3199,6 +3353,10 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	$scope.newProduct = {};
 
+	$scope.youImages = [];
+	
+	$scope.newYouImage = {};
+
 	$scope.editState = false;
 
 	$scope.editingNew = true;
@@ -3209,6 +3367,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 		$scope.showProducts = false;
 		$scope.showYou = false;
 		$scope.showVideos = false;
+		$scope.reset();
 
 		switch(section) {
 
@@ -3229,7 +3388,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.getProducts = function() {
+	function getProducts() {
 
 		Product.all().success(function(response) {
 
@@ -3243,7 +3402,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.createProduct = function() {
+	$scope.saveProduct = function() {
 
 		var nanobar = new Nanobar({ bg : '#fff' });
 
@@ -3251,8 +3410,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 		Product.store($scope.newProduct).success(function(response) {
 
-			$scope.getProducts();
-			$scope.clearNewProduct();
+			getProducts();
+			$scope.reset();
 			nanobar.go(100);
 
 		}).error(function(response) {
@@ -3264,13 +3423,24 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
+	$scope.createProduct = function() {
+
+		$scope.newProduct = {};
+		$scope.editState = true;
+		$scope.editingNew = true;
+
+		registerAddons();
+
+	}
+
+
 	$scope.editProduct = function(product) {
 
 		$scope.newProduct = product;
 		$scope.editState = true;
 		$scope.editingNew = false;
 
-		$scope.registerAddons();
+		registerAddons();
 
 	}
 
@@ -3283,8 +3453,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 		Product.update(data.id, data).success(function(response) {
 
-			$scope.getProducts();
-			$scope.clearNewProduct();
+			getProducts();
+			$scope.reset();
 			nanobar.go(100);
 
 		}).error(function(response) {
@@ -3332,15 +3502,17 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 	}
 
-	$scope.clearNewProduct = function() {
+	
+	$scope.reset = function() {
 
 		$scope.newProduct = {};
+		$scope.newYouImage = {};
 		$scope.editState = false;
 		$scope.editingNew = true;
 
 	}
 
-	$scope.getTypes = function() {
+	function getTypes() {
 
 		Product.getTypes().success(function(response) {
 
@@ -3358,7 +3530,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 
 
 
-	$scope.registerAddons = function() {
+	function registerAddons() {
 
 		$scope.newProduct.addonSelection = [];
 
@@ -3369,20 +3541,29 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 			addon.id = $scope.products[i].id;
 			addon.name = $scope.products[i].name;
 
-			// If selected products has addons
-			if ($scope.newProduct.addons.length) {
+			// If creating a new product, it has no addons obviously...
+			if (!$scope.editingNew) {
 
-				for(var e = 0; e < $scope.newProduct.addons.length; e++) {
+				// If selected products has addons
+				if ($scope.newProduct.addons.length) {
 
-					if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
+					for(var e = 0; e < $scope.newProduct.addons.length; e++) {
 
-						addon.isAddon = true;
-						break;
+						if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
 
-					} else {
+							addon.isAddon = true;
+							break;
 
-						addon.isAddon = false;
+						} else {
+
+							addon.isAddon = false;
+						}
+
 					}
+
+				} else {
+
+					addon.isAddon = false;
 
 				}
 
@@ -3391,7 +3572,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 				addon.isAddon = false;
 
 			}
-
+			
 			$scope.newProduct.addonSelection.push(addon);
 
 		}
@@ -3399,18 +3580,101 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', functi
 	}
 
 	//Orders
-	$scope.getOrders = function() {
+	function getOrders() {
 
 		Order.all().success(function(response) {
 
 			$scope.orders = response.data;
-			console.log($scope.orders);
 
 		}).error(function(response) {
 
 			console.log(response.message);
 
 		});
+
+	}
+
+
+	// You
+
+	$scope.youImages = [];
+	$scope.newYouImage = {};
+
+	function getYouImages() {
+
+		YouImage.all().success(function(response) {
+
+			$scope.youImages = response.data;
+
+			Squares.init();
+
+			// console.log($scope.youImages);
+
+		}).error(function(response) {
+
+			console.log("There was an error getting the You images");
+
+		});
+
+	}
+
+	$scope.uploadYouImage = function($files) {
+
+		
+
+		var file = $files[0];
+
+		if (!file) return false;
+
+		var data = {
+
+			url : '/you-image/upload',
+			file : file
+
+		}
+
+		// console.log("still uploading image");
+
+		$scope.editState = true;
+		// $scope.editNew = true;
+
+		Image.upload(data).success(function(response) {
+
+			$scope.newYouImage.image = response.data;
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+
+	}
+
+	$scope.saveYouImage = function() {
+
+		var nanobar = new Nanobar({ bg : '#fff' });
+		nanobar.go(40);
+
+		YouImage.save($scope.newYouImage).success(function() {
+
+			getYouImages();
+			$scope.reset();
+
+			nanobar.go(100);
+
+		}).error(function(response) {
+
+			console.log(response.message);
+
+		});
+
+	}
+
+	$scope.clearNewYouImage = function() {
+
+
+		$scope.newYouImage = false;
 
 	}
 
@@ -3486,8 +3750,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		$scope.items = items;
 
-		console.log(items);
-
 	}
 
 	$scope.total = function() {
@@ -3507,7 +3769,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 		});
 
 		// TODO calculate Shipping
-		// console.log(total);
 
 		return total + 2000;
 
@@ -3758,6 +4019,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.product = {};
 
+	if (layoutType === 'pole' || layoutType === 'shrinker' || layoutType === 'extra') {
+
+		$scope.attached = true;
+
+	} else {
+
+		$scope.attached = false;
+
+	}
+
 	$scope.init = function() {
 
 		$scope.getProduct();
@@ -3787,6 +4058,24 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	}
 
+
+
+	$scope.poleScrollInit = function() {
+
+		PoleScroll.init();
+
+	}
+
+	$scope.goFullSize = function() {
+
+		setTimeout(function() {
+
+			PoleScroll.init();
+
+		}, 20);
+		
+	}
+
 	$scope.init();
 
 }]);
@@ -3795,6 +4084,8 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 	$scope.heads = [];
 
 	$scope.poles = [];
+
+	$scope.shrinker = [];
 
 	$scope.extras = [];
 
@@ -3812,6 +4103,8 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 
 			$scope.heads = response.data['heads'];
 			$scope.poles = response.data['poles'];
+			$scope.shrinker = response.data['shrinker'];
+			$scope.extras = response.data['extras'];
 
 		}).error(function(response) {
 
