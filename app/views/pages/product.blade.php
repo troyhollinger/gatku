@@ -11,17 +11,18 @@
 
 @section('content')
 
-
+@if($product->type->slug != 'apparel')
 <div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller' : '' }}">
 
-	@if($product->attachedImage)
+	@if($product->attachedImage || $product->detachedImage)
 	<img class="scroller-image" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
-	<img class="scroller-image" ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker' : '' }}" ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
 	@endif
 
 </div>
+@endif
 
-@if($product->attachedImage)
+@if($product->attachedImage && $product->detachedImage)
 <div class="arrows">
 	<div class="left-arrow"></div>
 	<div class="right-arrow"></div>
@@ -30,11 +31,17 @@
 </div>
 @endif
 
-<div class="container">
+<div class="container {{ $product->type->slug === 'apparel' ? 'apparel-height' : ''}}">
 
-	<div class="product-column-left">
+	@if($product->type->slug === 'apparel')
+	<div class="apparel-container">
+		<img class="rollerblade-img" src="{{ $product->attachedImage}}">
+	</div>
+	@endif
 
-		<h1 class="product-title"><span class="bold uppercase">{{ $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->type->slug !== 'shrinker' && $product->slug !== 'bands') <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
+	<div class="product-column-left {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
+
+		<h1 class="product-title"><span class="bold uppercase">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
 		<div class="product-description">
 
@@ -68,15 +75,13 @@
 
 		@endif
 
-		<p class="product-buyers-header bold">Others who have bought this product:</p>
-
 		<product-buyers product-id="{{ $product->id }}"></product-buyers>
 
 	</div>
 
-	<div class="product-column-right">
+	<div class="product-column-right {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
 		<!-- Increase the width of this element to increase margin between children -->
-		@if($product->attachedImage)
+		@if($product->attachedImage && $product->detachedImage)
 		<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached">
@@ -92,25 +97,51 @@
 		<div class="clear"></div>
 		@endif
 
-		<p class="product-price" ng-cloak><span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> /+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
+		
+		<p class="product-price" ng-cloak>
+			@if(!$product->sizeable)
+			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> / 
+			@endif
+			@if($product->type->slug === 'pole')
+			+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
+			@else
+			Ships Free w/ Pole Purchase
+			@endif
+
 
 		<p class="addon-title right">Click to add to order</p>
 
 		<div class="clear"></div>
 
 		<div class="addon-container">
+	
+			@if($product->sizeable)
+
+			<div ng-repeat="size in product.sizes" ng-cloak>
+				<input type="checkbox"  name="size-@{{ $index }}" id="size-@{{ $index }}" ng-model="size.checked">
+				<label for="size-@{{ $index }}"><span class="addon-name">@{{ size.shortName }} -</span>  <span class="addon-price">$@{{ size.price | money }}</span></label>
+			</div>
+
+			@foreach($product->sizes as $size)
+			<div ng-hide="loaded">
+				<input type="checkbox">
+				<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
+			</div>
+			@endforeach
+			@else
 
 			<div ng-repeat="addon in product.addons" ng-cloak>
 				<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
 				<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
 			</div>
-			
+
 			@foreach($product->addons as $addon)
 			<div ng-hide="loaded">
 				<input type="checkbox">
 				<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
 			</div>
 			@endforeach
+			@endif
 
 		</div>
 

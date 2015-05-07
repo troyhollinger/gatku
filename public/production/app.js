@@ -250,6 +250,74 @@ var PoleScroll = {
 
 }
 
+var ApparelRotator = {
+
+	init : function(slug) {
+
+		var images;
+
+		if (slug === 'niner-tshirt') {
+
+			images = this.photos.niner;
+
+		} else if (slug === 'superhero-tshirt') {
+
+			images = this.photos.superhero;
+
+		} else if (slug === 'comfort-hoodie') {
+
+			images = this.photos.comfort;
+
+		}
+
+		$(".apparel-container").rollerblade({
+
+			imageArray : images
+
+		});
+
+	},
+
+	photos : {
+
+		niner : [
+			CONFIG.base + '/img/apparel/niner/niner-1.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-2.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-3.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-4.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-5.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-6.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-7.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-8.jpg'
+			
+		],
+		superhero : [
+			CONFIG.base + '/img/apparel/superhero/superhero-1.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-2.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-3.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-4.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-5.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-6.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-7.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-8.jpg'
+		],
+		comfort : [
+			CONFIG.base + '/img/apparel/comfort/comfort-1.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-2.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-3.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-4.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-5.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-6.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-7.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-8.jpg'
+		]
+		
+		
+
+	}
+
+}
+
 $(document).ready(function() {
 
 	Squares.init();
@@ -265,6 +333,12 @@ $(document).ready(function() {
 	if (currentRoute === 'product.show') {
 
 		PurchaseColumn.init();
+
+	}
+
+	if (layoutType === 'apparel' && slug !== null) {
+
+		ApparelRotator.init(slug);
 
 	}
 
@@ -3002,10 +3076,13 @@ app.directive('productBuyers', ['Product', function(Product) {
 
 		scope : false,
 
-		template : '<div class="product-buyers-container">' +
+		template : '<div>' +
+			'<p class="product-buyers-header bold" ng-show="photos.length">Others who have bought this product:</p>' +
+			'<div class="product-buyers-container">' +
 			'<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
 			'<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"></div>' + 
 			'<div class="clear"></div>' +
+			'</div>' +
 			'</div>',
 
 		link : function($scope, element, attrs) {
@@ -3031,8 +3108,6 @@ app.directive('productBuyers', ['Product', function(Product) {
 			getImages();
 
 		}
-
-		
 
 	}
 
@@ -3062,8 +3137,125 @@ app.directive('loaded', ['$parse', function ($parse) {
 
     };
 
-  }]);
-app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', function($rootScope, $http, $cookies, $cookieStore, ipCookie) {
+}]);
+
+
+
+app.directive('alerter', ['$window', '$timeout', 'AlertService', function($window, $timeout, AlertService) {
+
+	return {
+
+		restrict : 'E',
+
+		template : '<div class="alert-container slide-up" ng-show="show">' +
+		'<div class="success-alert" ng-class="{\'success-bg\' : alertType === \'success\', \'info-bg\' : alertType === \'info\', \'error-bg\' : alertType === \'error\'}">' +
+			'{{ message }}' +
+		'</div>' +
+        '<i class="fa fa-close" ng-click="show = false"></i>' +
+        '</div>',
+
+        scope : false,
+
+		link : function($scope, element, attrs) {
+
+			$scope.message = '';
+			$scope.show = false;
+			$scope.alertType = 'success';
+
+			console.log("is this happening?");
+
+			$scope.$on('successAlert', function() {
+
+				$scope.alertType = 'success';	
+				display();
+
+			});
+
+			$scope.$on('infoAlert', function() {
+
+				$scope.alertType = 'info';
+				display();
+
+			});
+
+			$scope.$on('errorAlert', function() {
+
+				$scope.alertType = 'error';
+				display();
+
+			});
+
+			function display() {
+
+				$scope.message = AlertService.message;
+				$scope.show = true;
+
+				$timeout(function() {
+
+					$scope.show = false;
+
+				}, 4000)
+
+			}
+
+		}
+
+
+	}
+
+}]);
+app.factory('AlertService', ['$rootScope', function($rootScope) {
+
+	var AlertService = {};
+
+	AlertService.message = '';
+
+	AlertService.broadcast = function(message, type) {
+
+		this.message = message;
+
+		if (type == 'success') {
+
+			this.broadcastSuccessAlert();
+
+		} else if (type == 'error') {
+
+			this.broadcastErrorAlert();
+
+		} else if (type == 'info') {
+
+			this.broadcastInfoAlert();
+
+		} else {
+
+			this.broadcastInfoAlert();
+
+		}
+
+	}
+
+	AlertService.broadcastSuccessAlert = function() {
+
+		$rootScope.$broadcast('successAlert');
+
+	}
+
+	AlertService.broadcastErrorAlert = function() {
+
+		$rootScope.$broadcast('errorAlert');
+
+	}
+
+	AlertService.broadcastInfoAlert = function() {
+
+		$rootScope.$broadcast('infoAlert');
+
+	}
+
+	return AlertService;
+
+}]);
+app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', 'AlertService', function($rootScope, $http, $cookies, $cookieStore, ipCookie, AlertService) {
 
 	var CartService = {};
 	var Cookie = ipCookie;
@@ -3085,6 +3277,8 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.name = data.name;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.sizeable = data.sizeable;
+		item.sizeId = data.sizeId;
 		item.addons = [];
 
 		// Grab selected addons from the user action,
@@ -3111,6 +3305,8 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
+
+		AlertService.broadcast('Item added to cart!', 'success');
 
 	}
 	
@@ -3146,7 +3342,6 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		$rootScope.$broadcast('hide');
 
 	}
-
 	
 	return CartService;
 
@@ -3330,14 +3525,27 @@ app.factory('YouImage', ['$http', function($http) {
 
 
 
+app.factory('Size', ['$http', function($http) {
+
+	return {
+
+		getBySlug : function(slug) {
+
+			return $http.get('/size/by/slug/' + slug);
+
+		}
+
+	}
+
+}]);
+
 
 
 app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', function($scope, Image, Product, Order, YouImage) {
 
 	$scope.init = function() {
 
-		// $scope.showProducts = true;
-		$scope.show('you');
+		$scope.show('orders');
 		getOrders();
 		getProducts();
 		getTypes();
@@ -4011,7 +4219,7 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 
 
 }]);
-app.controller('ProductController', ['$scope', 'Product', 'CartService', function($scope, Product, CartService) {
+app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size', function($scope, Product, CartService, Size) {
 
 	$scope.fullSize = true;
 
@@ -4019,7 +4227,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.product = {};
 
-	if (layoutType === 'pole' || layoutType === 'shrinker' || layoutType === 'extra') {
+	if (layoutType === 'pole' || layoutType === 'extra') {
 
 		$scope.attached = true;
 
@@ -4041,6 +4249,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 			$scope.product = response.data;
 
+			parseSizeableAddons();
+
 			$scope.loaded = true;
 
 		}).error(function(response) {
@@ -4054,7 +4264,34 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 	$scope.addToCart = function() {
 
-		CartService.addItem($scope.product);
+		if ($scope.product.sizeable) {
+
+			var size = verifySizeIsChecked();
+
+			if (size) {
+
+				$scope.sizedProduct = angular.copy($scope.product);
+
+				$scope.sizedProduct.name = size.name;
+				$scope.sizedProduct.price = size.price;
+				$scope.sizedProduct.shortName = size.shortName;
+				$scope.sizedProduct.sizeId = size.id;
+
+				CartService.addItem($scope.sizedProduct);
+
+			} else {
+
+				return false;
+
+			}
+
+		} else {
+
+			CartService.addItem($scope.product);
+
+		}
+
+		reset();
 
 	}
 
@@ -4074,6 +4311,72 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', functio
 
 		}, 20);
 		
+	}
+
+	function verifySizeIsChecked() {
+
+		for(var i = 0; i < $scope.product.sizes.length; i++) {
+
+			if ($scope.product.sizes[i].checked) {
+
+				return $scope.product.sizes[i];
+
+			}
+
+		}
+
+		return false;
+
+	}
+
+	function parseSizeableAddons() {
+
+		for(var i = 0; i < $scope.product.addons.length; i++) {
+
+			var addon = $scope.product.addons[i];
+
+			if (addon.product.sizeable && addon.product.slug === 'bands') {
+
+				var slug = $scope.product.slug + '-band';
+
+				Size.getBySlug(slug).success(function(response) {
+
+					addon.product.price = response.data.price;
+
+				}).error(function(response) {
+
+					$scope.product.addons.splice(i, 1);
+
+				});
+
+			}
+
+		}
+
+	}
+
+	function reset() {
+
+		if ($scope.product.sizeable) {
+
+			for(var i = 0; i < $scope.product.sizes.length; i++) {
+
+				$scope.product.sizes[i].checked = false;
+
+			}
+
+		} else {
+
+			for(var i = 0; i < $scope.product.addons.length; i++) {
+
+				$scope.product.addons[i].checked = false;
+
+			}
+
+		}
+
+		
+
 	}
 
 	$scope.init();
@@ -4105,6 +4408,9 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 			$scope.poles = response.data['poles'];
 			$scope.shrinker = response.data['shrinker'];
 			$scope.extras = response.data['extras'];
+			$scope.apparel = response.data['apparel'];
+
+			console.log($scope.apparel);
 
 		}).error(function(response) {
 

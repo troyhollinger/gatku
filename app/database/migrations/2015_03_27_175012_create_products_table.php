@@ -29,6 +29,8 @@ class CreateProductsTable extends Migration {
 			$table->text('trajectory')->nullable();
 			$table->text('balance')->nullable();
 			$table->text('stealth')->nullable();
+			$table->boolean('available')->default(true);
+			$table->boolean('sizeable')->default(false);
 			$table->timestamps();
 		});
 	}

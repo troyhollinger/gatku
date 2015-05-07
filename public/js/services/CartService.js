@@ -1,4 +1,4 @@
-app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', function($rootScope, $http, $cookies, $cookieStore, ipCookie) {
+app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', 'AlertService', function($rootScope, $http, $cookies, $cookieStore, ipCookie, AlertService) {
 
 	var CartService = {};
 	var Cookie = ipCookie;
@@ -20,6 +20,8 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.name = data.name;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.sizeable = data.sizeable;
+		item.sizeId = data.sizeId;
 		item.addons = [];
 
 		// Grab selected addons from the user action,
@@ -46,6 +48,8 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
+
+		AlertService.broadcast('Item added to cart!', 'success');
 
 	}
 	
@@ -81,7 +85,6 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		$rootScope.$broadcast('hide');
 
 	}
-
 	
 	return CartService;
 

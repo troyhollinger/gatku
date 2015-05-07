@@ -25,18 +25,18 @@ Admin
 			<table class="admin-orders-table">
 
 				<tr>
-					<th>Name</th>
+					<th>Info</th>
 					<th>Products</th>
 					<th>Actions</th>
 					<th>Date</th>
 				</tr>
 
 				<tr ng-repeat="order in orders">
-					<td>@{{ order.customer.fullName }}</td>
+					<td>@{{ order.customer.fullName }}<br>@{{ order.address }}<br>@{{ order.city }}, @{{ order.state }} @{{ order.zip }}</td>
 					<td>
 						<ul>
-							<li ng-repeat="item in order.items">
-								@{{ item.product.name }}
+							<li ng-repeat="item in order.items" class="uppercase bold">
+								@{{ item.product.sizeable ? item.size.name : item.product.name }}
 								<ul class="admin-order-addons-list">
 									<li ng-repeat="addon in item.addons">
 										@{{ addon.product.name }}

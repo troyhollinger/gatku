@@ -52,6 +52,12 @@ class ProductController extends BaseController {
 
 	}
 
+
+	/**
+	 * API Hook, get product
+	 *
+	 * @return JSON Response
+	 */
 	public function get($id) {
 
 		$product = $this->product->get($id);
@@ -217,6 +223,16 @@ class ProductController extends BaseController {
 		}
 		
 		return Response::json(['data' => $image], 200);
+
+	}
+
+	public function getSizeBySlug($slug) {
+
+		$size = $this->product->getSizeBySlug($slug);
+
+		if ($size === false) return Response::json(['message' => 'Sorry, something went wrong!'], 404);
+
+		return Response::json(['data' => $size], 200);
 
 	}
 

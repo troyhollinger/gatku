@@ -12,6 +12,7 @@ Route::get('product/by/type', ['as' => 'product.getByType', 'uses' => 'ProductCo
 Route::get('product/by/slug/{slug}', ['as' => 'product.getBySlug', 'uses' => 'ProductController@getBySlug']);
 Route::get('product/get/{id}', ['as' => 'product.get', 'uses' => 'ProductController@get']);
 Route::get('product/photos/{id}', ['as' => 'product.customerPhotos', 'uses' => 'ProductController@photos']);
+Route::get('size/by/slug/{slug}', ['as' => 'size.bySlug', 'uses' => 'ProductController@getSizeBySlug']);
 
 Route::resource('product', 'ProductController');
 

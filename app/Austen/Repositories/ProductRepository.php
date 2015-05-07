@@ -7,6 +7,7 @@ use Product;
 use ProductType;
 use Log;
 use Addon;
+use Size;
 
 class ProductRepository implements ProductRepositoryInterface {
 
@@ -23,7 +24,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			
 			$product = Product::findOrFail($id);
 
-			$product->load('type', 'addons.product');
+			$product->load('type', 'addons.product', 'sizes');
 
 		} catch (Exception $e) {
 			
@@ -137,6 +138,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			$poles = ProductType::where('name', '=', 'pole')->first()->products;
 			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products;
 			$extras = ProductType::where('name', '=', 'extra')->first()->products;
+			$apparel = ProductType::where('name', '=', 'apparel')->first()->products;
 			// $extras = ProductType::where('name', '=', 'extra')
 
 		} catch (Exception $e) {
@@ -151,10 +153,29 @@ class ProductRepository implements ProductRepositoryInterface {
 			'heads' => $heads,
 			'poles' => $poles,
 			'shrinker' => $shrinker,
-			'extras' => $extras
+			'extras' => $extras,
+			'apparel' => $apparel
 		];
 
 		return $products;
+
+	}
+
+	public function getSizeBySlug($slug) {
+
+		try {
+			
+			$size = Size::where('slug', '=', $slug)->first();
+
+		} catch (Exception $e) {
+
+			Log::error($e);
+
+			return false;
+			
+		}
+
+		return $size;
 
 	}
 
@@ -175,7 +196,7 @@ class ProductRepository implements ProductRepositoryInterface {
 		$product->slug = $data['slug'];
 		$product->price = $data['price'];
 		$product->description = $data['description'];
-		$product->metaDescription = $data['metaDescription'];
+		if (isset($data['metaDescription'])) $product->metaDescription = $data['metaDescription'];
 		if (isset($data['length'])) $product->length = $data['length'];
 		if (isset($data['maneuverability'])) $product->maneuverability = $data['maneuverability'];
 		if (isset($data['trajectory'])) $product->trajectory = $data['trajectory'];

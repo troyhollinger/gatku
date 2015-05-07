@@ -385,8 +385,8 @@ class ProductsTableSeeder extends Seeder {
 			'attachedImage' => '',
 			'detachedImage' => '',
 			'thumb' => asset('img/thumbs/band.png'),
-			'name' => 'Extra Bands',
-			'shortName' => 'Extra Bands',
+			'name' => 'Extra Band',
+			'shortName' => 'Extra Band',
 			'slug' => 'bands',
 			'price' => 1400,
 			'description' => '<p>Rubber does not last forever. An extra band is nice 
@@ -409,8 +409,88 @@ class ProductsTableSeeder extends Seeder {
 			'balance' => '',
 			'stealth' => '',
 			'metaDescription' => 'Rubber does not last forever. An extra band is nice  to have on hand.',
+			'length' => '',
+			'sizeable' => true
+		]);
+
+		Product::create([
+			'typeId' => 5, 
+			'attachedImage' => asset('img/apparel/niner/niner-1.jpg'),
+			'detachedImage' => '',
+			'thumb' => asset('img/thumbs/niner-tshirt-thumb.jpg'),
+			'name' => '9\'ER',
+			'shortName' => '9\'ER T-Shirt',
+			'slug' => 'niner-tshirt',
+			'price' => 2500,
+			'description' => '<p>Hybrid Stripes! Slip Tip head w/NINE’ER pole componenents making horizontal stripes across chest. Tagless screenprinted neck label on Black 100% Cotton Fitted Shirt. Print done with specialty discharge ink - virtually unfeelable after first wash</p><p>High fashion feel, we know sexy!</p>',
+			'maneuverability' => '',
+			'trajectory' => '',
+			'balance' => '',
+			'stealth' => '',
+			'metaDescription' => '',
+			'length' => '',
+			'sizeable' => true
+		]);
+
+		Product::create([
+			'typeId' => 5, 
+			'attachedImage' => asset('img/apparel/superhero/superhero-1.jpg'),
+			'detachedImage' => '',
+			'thumb' => asset('img/thumbs/superhero-tshirt-thumb.jpg'),
+			'name' => 'SuperHero',
+			'shortName' => 'SuperHero T-Shirt',
+			'slug' => 'superhero-tshirt',
+			'price' => 2500,
+			'description' => '<p>GATKU Chest Emblem front print on Heather Navy Cotton/Poly Blend Fitted Shirt. Tagless screenprinted neck label.</p> <p>Classy on All Fronts!</p>',
+			'maneuverability' => '',
+			'trajectory' => '',
+			'balance' => '',
+			'stealth' => '',
+			'metaDescription' => '',
+			'length' => '',
+			'sizeable' => true
+		]);
+
+		Product::create([
+			'typeId' => 5, 
+			'attachedImage' => asset('img/apparel/comfort/comfort-1.jpg'),
+			'detachedImage' => '',
+			'thumb' => asset('img/thumbs/comfort-jacket-thumb.jpg'),
+			'name' => 'Comfort',
+			'shortName' => 'Comfort Hoodie',
+			'slug' => 'comfort-hoodie',
+			'price' => 4900,
+			'description' => '<p>Pull Over Hoody, Great for after dive chill and all around town. Abstract GATKU Icon across chest - THE BEST NAME IN SPEARFISHING.</p> <p>80% Poly / 20% Cotton - Black.</p> <p>Conveniently folds up into itself, as seen to the right - (Pouch Ryan Gattoni is holding). Thumb slots in sleeves for added comfort and warmth. GATKU cares!</p>',
+			'maneuverability' => '',
+			'trajectory' => '',
+			'balance' => '',
+			'stealth' => '',
+			'metaDescription' => '',
+			'length' => '',
+			'sizeable' => true
+
+		]);
+
+
+
+		Product::create([
+			'typeId' => 6, 
+			'attachedImage' => '',
+			'detachedImage' => '',
+			'thumb' => '',
+			'name' => 'Shrink Wrap Grip',
+			'shortName' => 'Shrink Wrap',
+			'slug' => 'shrink-wrap',
+			'price' => 1000,
+			'description' => 'Extra shrink wrap for your polespear grip.',
+			'maneuverability' => '',
+			'trajectory' => '',
+			'balance' => '',
+			'stealth' => '',
+			'metaDescription' => 'Extra shrink wrap for your polespear grip.',
 			'length' => ''
 		]);
+
 
 		// Template
 		// Product::create([

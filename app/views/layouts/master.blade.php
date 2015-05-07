@@ -18,12 +18,14 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/skippr/css/jquery.skippr.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower_components/rollerblade/rollerblade.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
         <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
         <script>
             var currentRoute = '{{ Route::currentRouteName() }}';
-            var layoutType = {{ Route::currentRouteName() === 'product.show' ? "'" . $product->type->slug . "'" : "null;" }}
+            var layoutType = {{ Route::currentRouteName() === 'product.show' ? "'" . $product->type->slug . "'" : "null;" }};
+            var slug = {{ Route::currentRouteName() === 'product.show' ? "'" . $product->slug . "'" : "null;" }};
             var CONFIG = {
 
                 base : '{{ URL::to("/") }}'
@@ -53,6 +55,8 @@
 
         @yield('content')
 
+        <alerter></alerter>
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -60,6 +64,9 @@
         <script src="{{ asset('bower_components/fitvids/jquery.fitvids.js') }}"></script>
         <script src="{{ asset('bower_components/ng-file-upload/angular-file-upload.js') }}"></script>
         <script src="{{ asset('bower_components/nanobar/nanobar.js') }}"></script>
+        @if(isset($product) && $product->type->slug === 'apparel')
+        <script src="{{ asset('bower_components/rollerblade/rollerblade.min.js') }}"></script>
+        @endif
         <script src="{{ asset('production/app.js') }}"></script>
 
         <script>

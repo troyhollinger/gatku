@@ -16,7 +16,11 @@ class CreateSizesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
+			$table->string('shortName');
 			$table->string('slug');
+			$table->integer('productId')->unsigned();
+			$table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
+			$table->integer('price');
 			$table->timestamps();
 		});
 	}

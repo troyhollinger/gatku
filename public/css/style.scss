@@ -285,6 +285,13 @@ html {
 	width:1250px;
 	margin:0 auto;
 
+	&.apparel-height {
+
+		height:1400px;
+		margin-bottom: 350px;
+
+	}
+
 }
 
 .navigation-container {
@@ -785,6 +792,12 @@ html {
 
 	}
 
+	&.shrinker {
+
+		height:85%;
+
+	}
+
 }
 
 
@@ -798,7 +811,27 @@ html {
 	float:left;
 	width:50%;
 	height:auto;
-	background-color: white;
+	
+	&.apparel-column {
+
+		position: relative;
+		width:35%;
+		z-index: 4;
+
+		.product-description {
+
+			font-size: 1.45rem;
+
+		}
+
+	}
+
+}
+
+.apparel-column {
+
+	box-sizing:border-box;
+	padding-top: 230px;
 
 }
 
@@ -808,7 +841,12 @@ html {
 	float:right;
 	width:32%;
 	height:auto;
-	background-color: white;
+
+	&.apparel-column {
+
+		width:28%;
+
+	}
 
 }
 
@@ -1712,6 +1750,124 @@ hover-card {
 
 }
 
+.alert-container {
+
+	position: fixed;
+	top:90px;
+	left:50%;
+	@include transform(translate(-50%, 0));
+	width:700px;
+	height:auto;
+	z-index: 12;
+	
+
+	div {
+
+		width:100%;
+		color:white;
+		font-family: $helvetica;
+		font-weight: bold;
+		box-sizing:border-box;
+		padding: 12px 0;
+		text-align: center;
+		border-radius: 2px;
+		box-shadow: 0px 0px 7px rgba(0,0,0,.3);
+		
+	}
+
+	.fa-close {
+
+		color:white;
+		position: absolute;
+		top:3px; 
+		right:5px;
+		cursor: pointer;	
+
+	}
+
+}
+
+.success-alert {
+
+	background-color: $green;
+	border:1px solid darken($green, 10%);
+
+}
+
+.error-alert {
+
+	background-color: $red;
+	border:1px solid darken($red, 10%);
+
+}
+
+.info-alert {
+
+	background-color: $light;
+	border:1px solid darken($light, 10%);
+	color:black !important;
+
+}
 
 
+.empty-alert {
 
+	text-align: center;
+
+}
+
+.slide-up {
+
+	
+	&.ng-hide-add, &.ng-hide-remove {
+
+		@include transition(all .25s ease);
+
+	} 
+
+	&.ng-hide-add {
+
+		opacity: 1;
+		@include transform(translate(-50%, 0));
+
+	}
+
+	&.ng-hide-add-active {
+
+		opacity: 0;
+		@include transform(translate(-50%, 10px));
+
+	}
+
+	&.ng-hide-remove {
+
+		opacity: 0;
+		@include transform(translate(-50%, 10px));
+
+	}
+
+	&.ng-hide-remove-active {
+
+		opacity: 1;
+		@include transform(translate(-50%, 0));
+
+	}
+
+
+}
+
+.apparel-container {
+
+	@include centerHorizontal;
+	// z-index: -1;
+	height:100%;
+	margin:100px 0;
+
+	img {
+
+		height:100%;
+
+	}
+
+
+}

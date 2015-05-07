@@ -11,5 +11,11 @@ class OrderItemAddon extends Eloquent {
 
 	}
 
+	public function size() {
+
+		return $this->hasOne('Size', 'id', 'sizeId');
+
+	}
+
 
 }

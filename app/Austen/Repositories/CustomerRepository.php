@@ -5,7 +5,11 @@ use Customer;
 
 class CustomerRepository {
 
-
+	/**
+	 *
+	 * @todo figure out what the hell stripeId is supposed to be
+	 *
+	 */
 	public function store($input) {
 
 		$customer = new Customer;

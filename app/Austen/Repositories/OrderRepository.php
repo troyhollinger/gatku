@@ -8,9 +8,8 @@ use Austen\Repositories\CustomerRepository;
 use Log;
 use Mail;
 use OrderItemAddon;
-
-
-
+use Size;
+use DB;
 
 /**
  *
@@ -21,6 +20,8 @@ class OrderRepository {
 
 	protected $customer;
 
+	protected $order;
+
 	public function __construct(CustomerRepository $customer) {
 
 		$this->customer = $customer;
@@ -29,7 +30,7 @@ class OrderRepository {
 
 	public function all() {
 
-		$orders = Order::with('items.addons.product', 'items.product', 'customer')->get();
+		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size')->get();
 
 		$orders = $this->assignHumanReadableTimestamps($orders);
 
@@ -37,9 +38,14 @@ class OrderRepository {
 
 	}
 
+
+	/**
+	 * Processes order, payment, and email.
+	 *
+	 * @return boolean
+	 */
 	public function process($input) {
 
-		// validate input
 		if (!$this->validateInput($input)) {
 
 			return false;
@@ -48,30 +54,33 @@ class OrderRepository {
 
 		try {
 			
-			$customer = $this->customer->store($input['form']);
+			DB::transaction(function() {
 
-			//create order object
-			$order = new Order;
-			//assign form data
-			$order = $this->assignFields($order, $customer, $input['form']);
+				$customer = $this->customer->store($input['form']);
 
-			// save order
-			$order->save();
+				$order = new Order;
+				
+				$order = $this->assignFields($order, $customer, $input['form']);
+				
+				$total = $this->calculateTotal($input['items']);
 
-			//calculate total			
-			$total = $this->calculateTotal($input['items']);
+				$order->save();
 
-			//Charge card	
-			Stripe_Charge::create([
+				// Assign current order as class property for use in other methods.
+				$this->order = $order;
 
-				'source' => $input['token']['id'],
-				'amount' => $total,
-				'currency' => 'usd',
+				$this->assignOrderItems($input['items']);
 
-			]);
-	
-			$this->assignOrderItems($input['items'], $order);
+				Stripe_Charge::create([
 
+					'source' => $input['token']['id'],
+					'amount' => $total,
+					'currency' => 'usd',
+
+				]);
+
+			});
+			
 			//Queue Email
 			Mail::send('emails.order', ['items' => $input['items'], 'info' => $input['form'], 'total' => $total], function($message) {
 
@@ -89,8 +98,12 @@ class OrderRepository {
 
 	}
 
+	/**
+	 * If user has checked useBillingForShipping box in cart, 
+	 * replicate billing info, if not, assign the shipping information
+	 * accordingly
+	 */
 	private function assignFields($order, $customer, $input) {
-
 
 		$order->customerId = $customer->id;
 
@@ -114,38 +127,19 @@ class OrderRepository {
 
 		return $order;
 
-
-
 	}
 
-	// TODO: Validate input
+	/**
+	 * Validates the input from the cart. Make sure no shady business is happening.
+	 *
+	 * @todo code this method to validate the input 
+	 */
 	private function validateInput($input) {
 
 		return true;
 
 	}
 
-	private function assignOrderItems($items, $order) {
-
-		foreach($items as $item) {
-
-			$orderItem = new OrderItem;
-			$orderItem->orderId = $order->id;
-			$orderItem->productId = $item['id'];
-			$orderItem->save();
-
-			foreach($item['addons'] as $addon) {
-
-				$itemAddon = new OrderItemAddon;
-				$itemAddon->orderItemId = $orderItem->id;
-				$itemAddon->productId = $addon['id'];
-				$itemAddon->save();
-
-			}
-
-		}
-
-	}
 
 	/**
 	 * 
@@ -154,27 +148,82 @@ class OrderRepository {
 	 */
 	private function calculateTotal($items) {
 
-		$total = 0;
+		try {
+			
+			$total = 0;
+
+			foreach($items as $item) {
+
+				if ($item['sizeable'] && $item['sizeId']) {
+
+					$price = Size::findOrFail($item['sizeId'])->price;
+
+				} else {
+
+					$price = Product::findOrFail($item['id'])->price;
+
+				}
+
+				$total += $price;
+
+				// The 'id' key of the $addon array is the id of the product in the products table,
+				// NOT the id of the record in the addons table.
+				foreach($item['addons'] as $addon) {
+
+					$addonPrice = Product::findOrFail($addon['id'])->price;
+
+					$total += $addonPrice;
+
+				}
+
+			}
+
+			return $total;
+
+		} catch (Exception $e) {
+			
+			Log::error($e);
+
+			$this->order->delete();
+
+			return false;
+
+		}
+
+	}
+
+	/**
+	 * Converts cart items to order Items, 
+	 * Addons the same.
+	 *
+	 */
+	private function assignOrderItems($items) {
+
+		$order = $this->order;
 
 		foreach($items as $item) {
 
-			$price = Product::findOrFail($item['id'])->price;
+			$orderItem = new OrderItem;
+			$orderItem->orderId = $order->id;
+			$orderItem->productId = $item['id'];
 
-			$total += $price;
+			if ($item['sizeable'] && $item['sizeId']) {
+				$orderItem->sizeId = $item['sizeId'];
+			}
 
-			// The 'id' key of the $addon array is the id of the product in the products table,
-			// NOT the id of the record in the addons table.
+			$orderItem->save();
+
 			foreach($item['addons'] as $addon) {
 
-				$addonPrice = Product::findOrFail($addon['id'])->price;
+				$itemAddon = new OrderItemAddon;
+				$itemAddon->orderItemId = $orderItem->id;
+				$itemAddon->productId = $addon['id'];
 
-				$total += $addonPrice;
+				$itemAddon->save();
 
 			}
 
 		}
-
-		return $total;
 
 	}
 
@@ -182,13 +231,12 @@ class OrderRepository {
 
 		foreach($collection as $model) {
 
-			$model->createdAtHuman = $model->created_at->timezone('America/Los_Angeles')->format('F jS Y h:i A');
+			$model->createdAtHuman = $model->created_at->timezone('America/Los_Angeles')->format('F jS Y | g:i A');
 
 		}
 
 		return $collection;
 
 	}
-
 
 }

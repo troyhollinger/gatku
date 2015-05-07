@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="heads-links links">
-		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}">@{{ head.name }}{{-- <span class="detail">/Paralyzer</span> --}}</a></div>
+		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}">@{{ head.shortName }}<span class="detail" ng-if="head.slug === 'signature-paralyzer' || head.slug === 'barbed-paralyzer'">/@{{ head.length }}</span></a></div>
 
 		<div class="clear"></div>
 	</div>
@@ -27,7 +27,7 @@
 
 	<div class="tails-links links">
 
-		<div class="product-link-container" ng-repeat="pole in poles"><a href="{{ route('product.show', ['']) }}/@{{ pole.slug }}">@{{ pole.shortName }}<span class="unbold">'ER</span> {{-- <span class="detail">/152<span class="uncaps">cm</span></span> --}}</a></div>
+		<div class="product-link-container" ng-repeat="pole in poles"><a href="{{ route('product.show', ['']) }}/@{{ pole.slug }}">@{{ pole.shortName }}<span class="unbold">'ER</span> <span class="detail uncaps">/@{{ pole.length }}</span></a></div>
 
 		<div class="clear"></div>
 
@@ -58,26 +58,22 @@
 
 	<h2 class="store-label">Accessories</h2>
 
-	{{-- <div class="apparel-row product-row">
+	<div class="apparel-row product-row">
 
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/shirt1-thumb.jpg') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/shirt2-thumb.jpg') }}"></div>
-		<div class="product-thumb-container"><img src="{{ asset('img/thumbs/jacket1-thumb.jpg') }}"></div>
-
+		<div class="product-thumb-container" ng-repeat="apparelItem in apparel"><a href="{{ route('product.show', ['']) }}/@{{ apparelItem.slug }}"><img ng-src="@{{ apparelItem.thumb }}"></a></div>
+		
 		<div class="clear"></div>
 
 	</div>
 
 	<div class="apparel-links links">
 
-		<div class="product-link-container"><a href="">9'ER</a></div>
-		<div class="product-link-container"><a href="">Superhero</a></div>
-		<div class="product-link-container"><a href="">Comfort Hoody</a></div>
+		<div class="product-link-container" ng-repeat="apparelItem in apparel"><a href="{{ route('product.show', ['']) }}/@{{ apparelItem.slug }}">@{{ apparelItem.name }}</a></div>
 
 		<div class="clear"></div>
 
 	</div>
 
-	<h2 class="store-label">Apparel</h2> --}}
+	<h2 class="store-label">Apparel</h2>
 
 </div>

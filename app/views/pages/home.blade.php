@@ -65,11 +65,11 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 </div>
 
-<div class="home-section you-section" id="you">
+{{-- <div class="home-section you-section" id="you">
 
 	@include('partials.youGrid')
 
-</div>
+</div> --}}
 
 @include('partials.contact')
 

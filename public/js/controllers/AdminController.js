@@ -2,8 +2,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
 	$scope.init = function() {
 
-		// $scope.showProducts = true;
-		$scope.show('you');
+		$scope.show('orders');
 		getOrders();
 		getProducts();
 		getTypes();

@@ -23,5 +23,11 @@ class Product extends Eloquent {
 
 	}
 
+	public function sizes() {
+
+		return $this->hasMany('Size', 'productId', 'id');
+
+	}
+
 
 }

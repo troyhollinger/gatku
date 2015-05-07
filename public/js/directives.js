@@ -166,10 +166,13 @@ app.directive('productBuyers', ['Product', function(Product) {
 
 		scope : false,
 
-		template : '<div class="product-buyers-container">' +
+		template : '<div>' +
+			'<p class="product-buyers-header bold" ng-show="photos.length">Others who have bought this product:</p>' +
+			'<div class="product-buyers-container">' +
 			'<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
 			'<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"></div>' + 
 			'<div class="clear"></div>' +
+			'</div>' +
 			'</div>',
 
 		link : function($scope, element, attrs) {
@@ -195,8 +198,6 @@ app.directive('productBuyers', ['Product', function(Product) {
 			getImages();
 
 		}
-
-		
 
 	}
 
@@ -226,4 +227,70 @@ app.directive('loaded', ['$parse', function ($parse) {
 
     };
 
-  }]);
+}]);
+
+
+
+app.directive('alerter', ['$window', '$timeout', 'AlertService', function($window, $timeout, AlertService) {
+
+	return {
+
+		restrict : 'E',
+
+		template : '<div class="alert-container slide-up" ng-show="show">' +
+		'<div class="success-alert" ng-class="{\'success-bg\' : alertType === \'success\', \'info-bg\' : alertType === \'info\', \'error-bg\' : alertType === \'error\'}">' +
+			'{{ message }}' +
+		'</div>' +
+        '<i class="fa fa-close" ng-click="show = false"></i>' +
+        '</div>',
+
+        scope : false,
+
+		link : function($scope, element, attrs) {
+
+			$scope.message = '';
+			$scope.show = false;
+			$scope.alertType = 'success';
+
+			console.log("is this happening?");
+
+			$scope.$on('successAlert', function() {
+
+				$scope.alertType = 'success';	
+				display();
+
+			});
+
+			$scope.$on('infoAlert', function() {
+
+				$scope.alertType = 'info';
+				display();
+
+			});
+
+			$scope.$on('errorAlert', function() {
+
+				$scope.alertType = 'error';
+				display();
+
+			});
+
+			function display() {
+
+				$scope.message = AlertService.message;
+				$scope.show = true;
+
+				$timeout(function() {
+
+					$scope.show = false;
+
+				}, 4000)
+
+			}
+
+		}
+
+
+	}
+
+}]);

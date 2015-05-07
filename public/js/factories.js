@@ -115,4 +115,18 @@ app.factory('YouImage', ['$http', function($http) {
 
 
 
+app.factory('Size', ['$http', function($http) {
+
+	return {
+
+		getBySlug : function(slug) {
+
+			return $http.get('/size/by/slug/' + slug);
+
+		}
+
+	}
+
+}]);
+
 

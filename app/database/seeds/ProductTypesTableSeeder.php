@@ -11,6 +11,7 @@ class ProductTypesTableSeeder extends Seeder {
 		ProductType::create(['name' => 'Shrinker', 'slug' => 'shrinker', 'shippingPrice' => 600]);
 		ProductType::create(['name' => 'Extra', 'slug' => 'extra', 'shippingPrice' => 600]);
 		ProductType::create(['name' => 'Apparel', 'slug' => 'apparel', 'shippingPrice' => 600]);
+		ProductType::create(['name' => 'Addon', 'slug' => 'addon', 'shippingPrice' => 600]);
 
 		
 		

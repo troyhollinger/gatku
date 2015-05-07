@@ -17,5 +17,11 @@ class OrderItem extends Eloquent {
 		return $this->belongsTo('Product', 'productId');
 
 	}
+
+	public function size() {
+
+		return $this->hasOne('Size', 'id', 'sizeId');
+
+	}
 	
 }

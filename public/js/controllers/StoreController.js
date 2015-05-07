@@ -24,6 +24,9 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 			$scope.poles = response.data['poles'];
 			$scope.shrinker = response.data['shrinker'];
 			$scope.extras = response.data['extras'];
+			$scope.apparel = response.data['apparel'];
+
+			console.log($scope.apparel);
 
 		}).error(function(response) {
 

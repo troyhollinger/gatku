@@ -225,6 +225,74 @@ var PoleScroll = {
 
 }
 
+var ApparelRotator = {
+
+	init : function(slug) {
+
+		var images;
+
+		if (slug === 'niner-tshirt') {
+
+			images = this.photos.niner;
+
+		} else if (slug === 'superhero-tshirt') {
+
+			images = this.photos.superhero;
+
+		} else if (slug === 'comfort-hoodie') {
+
+			images = this.photos.comfort;
+
+		}
+
+		$(".apparel-container").rollerblade({
+
+			imageArray : images
+
+		});
+
+	},
+
+	photos : {
+
+		niner : [
+			CONFIG.base + '/img/apparel/niner/niner-1.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-2.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-3.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-4.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-5.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-6.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-7.jpg',
+			CONFIG.base + '/img/apparel/niner/niner-8.jpg'
+			
+		],
+		superhero : [
+			CONFIG.base + '/img/apparel/superhero/superhero-1.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-2.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-3.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-4.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-5.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-6.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-7.jpg',
+			CONFIG.base + '/img/apparel/superhero/superhero-8.jpg'
+		],
+		comfort : [
+			CONFIG.base + '/img/apparel/comfort/comfort-1.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-2.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-3.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-4.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-5.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-6.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-7.jpg',
+			CONFIG.base + '/img/apparel/comfort/comfort-8.jpg'
+		]
+		
+		
+
+	}
+
+}
+
 $(document).ready(function() {
 
 	Squares.init();
@@ -240,6 +308,12 @@ $(document).ready(function() {
 	if (currentRoute === 'product.show') {
 
 		PurchaseColumn.init();
+
+	}
+
+	if (layoutType === 'apparel' && slug !== null) {
+
+		ApparelRotator.init(slug);
 
 	}
 
