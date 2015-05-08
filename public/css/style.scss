@@ -67,11 +67,17 @@ $brand : #ea6271;
 }
 
 @mixin breakpoint($point) {
-	@if $point == small {
+	@if $point == xxsmall {
+    	@media (max-width: 375px) { @content; }
+	}
+	@else if $point == xsmall {
     	@media (max-width: 500px) { @content; }
 	}
+	@else if $point == small {
+    	@media (max-width: 750px) { @content; }
+	}
 	@else if $point == medium {
-    	@media (max-width: 1250px) { @content; }
+    	@media (max-width: 1300px) { @content; }
 	}
 	@else {
 		@media (max-width: $point) { @content; }
@@ -227,6 +233,13 @@ html {
 	margin:0 auto;
 	position: relative;
 
+	@include breakpoint(1100px) {
+
+		width:90%;
+
+
+	}
+
 }
 
 .skippr-nav-container {
@@ -277,6 +290,12 @@ html {
 
 	}
 
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
 }
 
 .container {
@@ -289,6 +308,20 @@ html {
 
 		height:1400px;
 		margin-bottom: 350px;
+
+	}
+
+	@include breakpoint(medium) {
+
+		width:100%;
+		box-sizing:border-box;
+		padding:0 25px;
+
+	}
+
+	@include breakpoint(xxsmall) {
+
+		padding:0 17px;
 
 	}
 
@@ -363,6 +396,12 @@ html {
 	position: relative;
 	padding:150px 0px;
 
+	@include breakpoint(xsmall) {
+
+		padding:75px 0;
+
+	}
+
 }
 
 .store-container {
@@ -388,12 +427,53 @@ html {
 
 	}
 
+	@include breakpoint(1100px) {
+
+		height:340px;
+
+	}
+
+	@include breakpoint(900px) {
+
+		height:300px;
+
+	}
+
+	@include breakpoint(small) {
+
+		height: 250px;
+
+	}
+
+	@include breakpoint(600px) {
+
+		height:200px;
+
+	}
+
+	@include breakpoint(xsmall) {
+
+		height:150px;
+
+	}
+
+	@include breakpoint(xxsmall) {
+
+		height:115px;
+
+	}
 }
 
 .links {
 
 	text-transform: uppercase;
 	font-weight: bold;
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
 
 }
 
@@ -403,6 +483,12 @@ html {
 	margin-top: 5px;
 	margin-bottom: 50px;
 	font-style: italic;
+
+	@include breakpoint(xsmall) {
+
+		font-size: 1.1rem;
+
+	}
 
 }
 
@@ -578,6 +664,19 @@ html {
 	line-height: 1;
 	letter-spacing: -1px;
 
+	@include breakpoint(medium) {
+
+		font-size: 4rem;
+		width:75%;
+
+	}
+
+	@include breakpoint(small) {
+
+		font-size: 2.2rem;
+
+	}
+
 }
 
 
@@ -712,6 +811,12 @@ html {
 
 		margin-bottom: 40px;
 
+		@include breakpoint(medium) {
+
+			margin-bottom: 20px;
+
+		}
+
 	}
 
 }
@@ -798,6 +903,17 @@ html {
 
 	}
 
+	&.no-attached-state {
+
+		@include breakpoint(medium) {
+
+			width:100%;
+			height:auto;
+
+		}
+
+	}
+
 }
 
 
@@ -826,6 +942,13 @@ html {
 
 	}
 
+	@include breakpoint(small) {
+
+		float:none;
+		width:100%;
+
+	}	
+
 }
 
 .apparel-column {
@@ -848,11 +971,36 @@ html {
 
 	}
 
+	@include breakpoint(medium) {
+
+		width:38%;
+
+	}
+
+	@include breakpoint(small) {
+
+		float:none;
+		width:100%;
+
+	}
+
 }
 
 .product-title {
 
 	font-size: 4.5rem;
+
+	@include breakpoint(medium) {
+
+		font-size: 3rem;
+
+	}
+
+	@include breakpoint(xxsmall) {
+
+		font-size: 2.5rem;
+
+	}
 
 }
 
@@ -863,6 +1011,24 @@ html {
 	p {
 
 		margin-bottom: 30px;
+
+		@include breakpoint(xxsmall) {
+
+			margin-bottom: 20px;
+
+		}
+
+	}
+
+	@include breakpoint(medium) {
+
+		font-size: 1.5rem;
+
+	}
+
+	@include breakpoint(xxsmall) {
+
+		font-size: 1.1rem;
 
 	}
 
@@ -910,6 +1076,12 @@ html {
 
 	height:40px;
 
+	@include breakpoint(xxsmall) {
+
+		height:30px;
+
+	}
+
 }
 
 .product-performance-title {
@@ -922,6 +1094,12 @@ html {
 
 	margin-bottom: 25px;
 
+	@include breakpoint(xxsmall) {
+
+		font-size: 1.1rem;
+
+	}
+
 }
 
 .product-price {
@@ -929,12 +1107,24 @@ html {
 	font-size: 1.4rem;
 	text-align: right;
 
+	@include breakpoint(medium) {
+
+		font-size: 1.1rem;
+
+	}
+
 }
 
 .product-price-amount {
 
 	font-family: $helvetica-thin;
 	font-size: 2em;
+
+	@include breakpoint(medium) {
+
+		font-size: 2.3em;
+
+	}
 
 }
 
@@ -1011,6 +1201,19 @@ html {
 	cursor: pointer;
 	margin-top: 40px;
 
+	@include breakpoint(medium) {
+
+		margin-top: 20px;
+
+	}
+
+	@include breakpoint(medium) {
+
+		font-size: 2rem;
+		height:50px;
+
+	}
+
 }
 
 .addon-container {
@@ -1045,6 +1248,13 @@ html {
 		@include transition(all .2s ease);
 		margin-bottom: 10px;
 
+		@include breakpoint(medium) {
+
+			font-size: 1.4rem;
+			margin-bottom: 4px;
+
+		}
+
 
 	}
 
@@ -1054,6 +1264,12 @@ html {
 
 	float:left;
 	margin-left: 19%;
+
+	@include breakpoint(medium) {
+
+		margin-left: 0;
+
+	}
 
 }
 
@@ -1664,6 +1880,7 @@ html {
 	@include transition(all .25s ease);
 	@include transform(translate(0, 10px));
 	pointer-events:none;
+	
 
 	&.visible {
 
@@ -1692,6 +1909,7 @@ html {
 
 
 	}
+
 
 }
 
@@ -1727,6 +1945,7 @@ hover-card {
 	font-weight: bold;
 	color: $blue;
 	cursor:pointer;
+	white-space: nowrap;
 
 }
 
@@ -1869,5 +2088,90 @@ hover-card {
 
 	}
 
+
+}
+
+
+.mobile-mast {
+
+	display: none;
+
+	@include breakpoint(small) {
+
+		display: inline-block;
+		position: fixed;
+		top:0;
+		width:100%;
+		z-index: 99;
+		box-sizing:border-box;
+		padding:10px;
+
+
+	}
+
+}
+
+.hamburger {
+
+	position: relative;
+	width:40px;
+	height:33px;
+	z-index: 10;
+	cursor: pointer;
+
+	.patty {
+
+		width:100%;
+		height:7px;
+		background-color: black;
+		@include transition(all .15s ease);
+
+		&:first-child {
+			position: absolute;
+			top:0;
+			left:0;
+		}
+
+		&:nth-child(2) {
+			@include center;
+			top:49.25%;
+		}
+
+		&:last-child {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+
+	}	
+
+	&.open {
+
+		.patty {
+
+			background-color: white;
+
+			&:first-child {
+
+				@include transform(translate(0, 13px) rotate(45deg));
+				
+
+			}
+
+			&:nth-child(2) {
+
+				opacity: 0;
+
+			}
+
+			&:last-child {
+
+				@include transform(translate(0, -13px) rotate(-45deg));
+
+			}
+
+		}
+
+	}
 
 }

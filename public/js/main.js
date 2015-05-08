@@ -140,12 +140,16 @@ var PurchaseColumn = {
 
 	init : function() {
 
-		this.parent = this.element.parent();
-		this.parentHeight = this.parent.height();
-		this.initialOffsetTop = this.element.offset().top;
-		this.elementHeight = this.element.height();
+		if ($(window).width() > 1300) {
 
-		requestAnimationFrame(PurchaseColumn.stick);
+			this.parent = this.element.parent();
+			this.parentHeight = this.parent.height();
+			this.initialOffsetTop = this.element.offset().top;
+			this.elementHeight = this.element.height();
+
+			requestAnimationFrame(PurchaseColumn.stick);
+				
+		}
 
 	},
 
@@ -316,6 +320,8 @@ $(document).ready(function() {
 		ApparelRotator.init(slug);
 
 	}
+
+	$("#mobile-navigation").mmenu();
 
 });
 

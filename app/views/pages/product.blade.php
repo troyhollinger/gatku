@@ -15,8 +15,8 @@
 <div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
-	<img class="scroller-image" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
-	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker' : '' }}" ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image {{ $product->slug === 'budk' ? 'no-attached-state' : '' }}" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker no-attached-state' : '' }} " ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
 	@endif
 
 </div>

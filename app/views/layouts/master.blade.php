@@ -17,6 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+        <link rel="stylesheet" href="{{ asset('bower_components/jQuery.mmenu/dist/css/jquery.mmenu.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/skippr/css/jquery.skippr.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/rollerblade/rollerblade.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -45,16 +46,21 @@
     @else
     <body ng-app="gatku">
     @endif
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->   
-
-        @include('partials.cart')
 
         @include('partials.nav')
 
-        @yield('content')
+        <div>
 
+            <!--[if lt IE 8]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->   
+
+            @include('partials.cart')
+
+            @yield('content')
+
+        </div>
+       
         <alerter></alerter>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
