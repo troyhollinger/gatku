@@ -7,7 +7,7 @@
 <div class="cart slide" ng-controller="CartController" ng-show="show" ng-cloak>
 
 	<h2 ng-hide="items.length">Cart</h2>
-	<span class="cart-exit" ng-click="hide()">Back<i class="fa fa-close"></i></span>
+	<span class="cart-exit" ng-click="hide()">Close<i class="fa fa-close"></i></span>
 
 	<p class="cart-empty-message" ng-hide="items.length">Your cart is empty. Put something in it!</p>
 

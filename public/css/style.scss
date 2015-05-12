@@ -334,6 +334,13 @@ html {
 		height:1400px;
 		margin-bottom: 350px;
 
+		@include breakpoint(small) {
+
+			height:auto;
+			margin-bottom: 0;
+
+		}
+
 	}
 
 	@include breakpoint(medium) {
@@ -1072,6 +1079,12 @@ html {
 
 		}
 
+		@include breakpoint(small) {
+
+			width:100%;
+
+		}
+
 	}
 
 	@include breakpoint(small) {
@@ -1088,6 +1101,12 @@ html {
 	box-sizing:border-box;
 	padding-top: 230px;
 
+	@include breakpoint(small) {
+
+		padding-top: 20px;
+
+	}
+
 }
 
 .product-column-right {
@@ -1100,6 +1119,12 @@ html {
 	&.apparel-column {
 
 		width:28%;
+
+		@include breakpoint(small) {
+
+			width:100%;
+
+		}
 
 	}
 
@@ -2319,6 +2344,28 @@ hover-card {
 	img {
 
 		height:100%;
+
+		@include breakpoint(small) {
+
+			height:auto;
+			width:200%;
+			@include centerHorizontal;
+			top:0;
+
+		}
+
+	}
+
+	@include breakpoint(small) {
+
+		position: relative;
+		top:0;
+		left:0;
+		@include transform(translate(0,0));
+		overflow: hidden;
+		margin-bottom: 0;
+		margin-top: 50px;
+		height:500px;
 
 	}
 
