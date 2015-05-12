@@ -970,6 +970,7 @@ html {
 	overflow-y:visible;
 	margin-top: 105px;
 	text-align: center;
+	-webkit-overflow-scrolling: touch;
 
 	&.knife-scroller {
 
@@ -1690,6 +1691,7 @@ html {
 	z-index: 17;
 	overflow-x: hidden;
 	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
 
 	h2 {
 

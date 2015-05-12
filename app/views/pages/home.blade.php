@@ -34,7 +34,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 </div>
 
-<div class="home-section video-section" ng-controller="VideoController" id="videos">
+{{-- <div class="home-section video-section" ng-controller="VideoController" id="videos">
 
 	<div class="home-container">
 
@@ -63,7 +63,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 	</div>
 
-</div>
+</div> --}}
 
 {{-- <div class="home-section you-section" id="you">
 
