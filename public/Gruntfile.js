@@ -13,6 +13,7 @@ module.exports = function(grunt) {
                     'bower_components/angular-cookie/angular-cookie.js',
                     'bower_components/angular-animate/angular-animate.js',
                     'bower_components/angular-stripe/release/angular-stripe.js',
+                    'bower_components/angular-touch/angular-touch.js',
                     'js/config.js',
                     'js/directives.js',
                     'js/services/*.js',
