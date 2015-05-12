@@ -49,11 +49,15 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 
 			$scope.init = function() {
 
-				body.append(hoverCard);
+				if ($window.innerWidth > 750) {
 
-				$scope.positionCard();
+					body.append(hoverCard);
 
-				$scope.fetchProduct();
+					$scope.positionCard();
+
+					$scope.fetchProduct();
+
+				}
 
 			}
 
@@ -88,7 +92,7 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 
 			}
 
-			$scope.getRootOffsetTop = function getRootOffsetTop (elem, val){
+			$scope.getRootOffsetTop = function(elem, val){
 
 				if (elem.offsetParent === null){
 
@@ -100,7 +104,7 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 
 			};
 
-			$scope.getRootOffsetLeft = function getRootOffsetLeft (elem, val){
+			$scope.getRootOffsetLeft = function(elem, val){
 
 			if (elem.offsetParent === null) {
 
@@ -290,6 +294,61 @@ app.directive('alerter', ['$window', '$timeout', 'AlertService', function($windo
 
 		}
 
+
+	}
+
+}]);
+
+app.directive('hamburger', ['NavigationService', function(NavigationService) {
+
+	return {
+
+		restrict : 'E',
+
+		template : '<div class="hamburger" ng-click="action()" ng-class="{ \'open\' : open }">' +
+		'<div class="patty"></div>' +
+		'<div class="patty"></div>' +
+		'<div class="patty"></div>' +
+		'<span class="status">{{ status }}</span>' +
+		'</div>',
+
+		link : function($scope, element, attrs) {
+
+			$scope.open = false;
+
+			$scope.status = 'Menu';
+
+			$scope.action = function() {
+
+				if ($scope.open) {
+
+					NavigationService.close();
+
+				} else {
+
+					NavigationService.open();
+
+				}
+
+			}
+
+			$scope.$on('open', function() {
+
+				$scope.open = true;
+
+				$scope.status = 'Back';
+
+			});
+
+			$scope.$on('close', function() {
+
+				$scope.open = false;
+
+				$scope.status = 'Menu';
+
+			});
+
+		}
 
 	}
 

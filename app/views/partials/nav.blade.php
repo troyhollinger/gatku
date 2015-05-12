@@ -25,23 +25,22 @@
 </div>
 
 <div class="mobile-mast">
-
-	<a href="#mobile-navigation">
-		<div class="hamburger">
-			<div class="patty"></div>
-			<div class="patty"></div>
-			<div class="patty"></div>
-		</div>
-	</a>
+	
+	{{-- <div class="hamburger">
+		<div class="patty"></div>
+		<div class="patty"></div>
+		<div class="patty"></div>
+	</div> --}}
+	<hamburger></hamburger>
 
 </div>
 
-<div class="mobile-navigation" id="mobile-navigation" ng-controller="MobileNavigationController">
+<div class="mobile-navigation" ng-controller="MobileNavigationController" ng-class="{ 'open' : open }">
 
 	<ul>
 		<li><a href="/">Home</a></li>
 		<li><a href="#store">Store</a>
-			<ul>
+			{{-- <ul>
 				<li><a href="#store">Heads</a>
 					<ul>
 						<li ng-repeat="head in heads"><a ng-href="/product/@{{ head.slug }}">@{{ head.name }}</a></li>
@@ -63,9 +62,17 @@
 						<li ng-repeat="apparelItem in apparel"><a ng-href="/product/@{{ apparelItem.slug }}">@{{ apparelItem.name }}</a></li>				
 					</ul>
 				</li>
-			</ul>
+			</ul> --}}
 		</li>
 		<li><a href="#contact">Contact</a></li>
 	</ul>
 
 </div>
+
+
+
+
+
+
+
+

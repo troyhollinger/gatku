@@ -17,7 +17,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-        <link rel="stylesheet" href="{{ asset('bower_components/jQuery.mmenu/dist/css/jquery.mmenu.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/skippr/css/jquery.skippr.css') }}">
         <link rel="stylesheet" href="{{ asset('bower_components/rollerblade/rollerblade.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">

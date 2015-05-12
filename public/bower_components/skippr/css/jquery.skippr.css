@@ -36,7 +36,7 @@
 
 	bottom:25px;
 	overflow: auto;
-	z-index:999;
+	z-index:6;
 
 }
 
@@ -69,7 +69,7 @@
 
 .skippr-arrow {
 	position: absolute;
-	z-index:999;
+	z-index:6;
 	top:50%;
 	-webkit-transform:translate(0%,-50%);
 	-moz-transform:translate(0%,-50%);

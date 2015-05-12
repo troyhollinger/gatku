@@ -10,6 +10,7 @@ $green : #2ECC71;
 $blue : #155683;
 $light : #ECF0F1;
 $brand : #ea6271;
+$dark : #444444;
 
 //Mixins
 @mixin center {
@@ -139,17 +140,35 @@ html {
 
 	display: inline;
 
+	@include breakpoint(small) {
+
+		display: block;
+
+	}
+
 }
 
 .left {
 
 	float:left;
 
+	@include breakpoint(small) {
+
+		float:none;
+
+	}
+
 }
 
 .right {
 
 	float:right;
+
+	@include breakpoint(small) {
+
+		float:none;
+
+	}
 
 }
 
@@ -244,7 +263,7 @@ html {
 
 .skippr-nav-container {
 
-	z-index: 8;
+	z-index: 6;
 
 }
 
@@ -805,6 +824,12 @@ html {
 		@include center;
 		width:550px;
 
+		@include breakpoint(small) {
+
+			width:100%;
+
+		}
+
 	}
 
 	.contact-bottom-margin {
@@ -827,6 +852,12 @@ html {
 	font-size: 4.2rem;
 	margin-bottom: 10px;
 
+	@include breakpoint(small) {
+
+		font-size: 3.2rem;
+
+	}
+
 }
 
 .contact-sub-headline {
@@ -835,6 +866,13 @@ html {
 	font-size: 1.8rem;
 	width:60%;
 	margin:0 auto;
+
+	@include breakpoint(small) {
+
+		font-size: 1.5rem;
+		width:100%;
+
+	}
 
 }
 
@@ -873,12 +911,18 @@ html {
 	background-color:white;
 	overflow-x:scroll;	
 	overflow-y:visible;
-	margin: 105px 0 0 0;
+	margin-top: 105px;
 	text-align: center;
 
 	&.knife-scroller {
 
 		height:220px;
+
+	}
+
+	@include breakpoint(small) {
+
+		margin-top: 50px;
 
 	}
 
@@ -1343,8 +1387,6 @@ html {
 		display: block;
 
 	}
-
-
 
 }
 
@@ -2102,10 +2144,68 @@ hover-card {
 		position: fixed;
 		top:0;
 		width:100%;
-		z-index: 99;
+		z-index: 8;
 		box-sizing:border-box;
 		padding:10px;
 
+
+	}
+
+}
+
+.mobile-navigation {
+
+	display: none;
+	position: fixed;
+	width:80%;
+	background-color: $dark;
+	height:100%;
+	display: none;
+	z-index: 7;
+	top:0;
+	left:0;
+	color:white;
+	// box-shadow:inset 0px 0px 15px -6px black;
+	box-shadow: inset -17px 0px 57px -20px black;
+	box-sizing:border-box;
+	padding:10px;
+	@include transform(translate(-100%, 0));
+	@include transition(all .2s ease);
+
+	ul {
+
+		margin-top: 60px;
+
+	}
+
+	li {
+
+		color:white;
+		font-weight: bold;
+		font-size: 1.2rem;
+		box-sizing:border-box;
+		padding:10px 0;
+		text-transform: uppercase;
+		border-bottom: 1px solid lighten($dark, 10%);
+
+		a {
+
+			color:white;
+
+		}
+
+	}
+
+	&.open {
+
+		@include transform(translate(0, 0));
+
+	}
+
+
+	@include breakpoint(small) {
+
+		display: block;
 
 	}
 
@@ -2137,13 +2237,26 @@ hover-card {
 			top:49.25%;
 		}
 
-		&:last-child {
+		&:nth-child(3) {
 			position: absolute;
 			bottom: 0;
 			left: 0;
 		}
 
 	}	
+
+	.status {
+
+		@include centerLeft;
+		left:115%;
+		font-family: $helvetica;
+		color:black;
+		font-weight: bold;
+		text-transform: uppercase;
+		font-size: 1.2rem;
+		@include transition(all .15s ease);
+
+	}
 
 	&.open {
 
@@ -2164,7 +2277,7 @@ hover-card {
 
 			}
 
-			&:last-child {
+			&:nth-child(3) {
 
 				@include transform(translate(0, -13px) rotate(-45deg));
 
@@ -2172,6 +2285,14 @@ hover-card {
 
 		}
 
+		.status {
+
+			color:white;
+
+		}
+
 	}
+
+
 
 }

@@ -321,7 +321,6 @@ $(document).ready(function() {
 
 	}
 
-	$("#mobile-navigation").mmenu();
 
 });
 

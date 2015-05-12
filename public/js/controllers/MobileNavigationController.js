@@ -1,39 +1,17 @@
 app.controller('MobileNavigationController', ['$scope', 'Product', function($scope, Product) {
 
-	$scope.heads = [];
+	$scope.open = false;
 
-	$scope.poles = [];
+	$scope.$on('open', function() {
 
-	$scope.shrinker = [];
+		$scope.open = true;
 
-	$scope.extras = [];
+	});
 
-	$scope.apparel = [];
+	$scope.$on('close', function() {
 
-	$scope.init = function() {
+		$scope.open = false;
 
-		$scope.getStore();
+	});
 
-	}
-
-	$scope.getStore = function() {
-
-		Product.getByType().success(function(response) {
-
-			$scope.heads = response.data['heads'];
-			$scope.poles = response.data['poles'];
-			$scope.shrinker = response.data['shrinker'];
-			$scope.extras = response.data['extras'];
-			$scope.apparel = response.data['apparel'];
-
-		}).error(function(response) {
-
-			console.log("Something went wrong getting the store data");
-
-		})
-
-	}
-
-	$scope.init();
-
-}]);
+}]); 

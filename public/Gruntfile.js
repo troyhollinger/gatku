@@ -8,7 +8,6 @@ module.exports = function(grunt) {
             dist : {
                 src : [
                     'js/plugins.js',
-                    'bower_components/jQuery.mmenu/dist/js/jquery.mmenu.min.js',
                     'js/main.js',
                     'bower_components/angular-cookies/angular-cookies.js',
                     'bower_components/angular-cookie/angular-cookie.js',
@@ -43,7 +42,10 @@ module.exports = function(grunt) {
         cssmin : {
             combine : {
                 files : {
-                    'production/app.css' : ['css/reset.css','css/style.css', 'bower_components/jQuery.mmenu/dist/css/jquery.mmenu.all.css']
+                    'production/app.css' : [
+                        'css/reset.css',
+                        'css/style.css'
+                    ]
                 }
             }
         },
