@@ -1646,6 +1646,46 @@ html {
 
 	}
 
+	.cart-exit {
+
+		float:right;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		font-weight: bold;
+		display: none;
+
+		i {
+
+			font-size: 1.7rem;
+			margin-left: 5px;
+
+		}
+
+		@include breakpoint(small) {
+
+			display: inline-block;
+
+		}
+
+	}
+
+
+	@include breakpoint(xsmall) {
+
+		width: 100%;
+		padding:20px;
+
+		.button {
+
+			width: 100%;
+			padding: 14px 18px;
+			text-align: center;
+			margin-bottom: 15px;
+
+		}
+
+	}
+
 }
 
 .cart-item {

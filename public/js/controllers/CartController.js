@@ -97,6 +97,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	}
 
+	$scope.hide = function() {
+
+		CartService.hide();
+
+	}
 
 	$scope.emptyCart = function() {
 
