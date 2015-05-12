@@ -937,7 +937,7 @@ html {
 
 	@include breakpoint(small) {
 
-		padding-left: 0;
+		display: none;
 
 	}
 
@@ -950,7 +950,33 @@ html {
 
 	@include breakpoint(small) {
 
-		padding-right: 0;
+		display: none;
+
+	}
+
+}
+
+.contact-email-button {
+
+	display: none;
+
+	@include breakpoint(small) {
+
+		display: inline-block;
+		margin-bottom: 20px;
+		margin-right: 5px;
+
+	}
+
+}
+
+.contact-phone-button {
+
+	display: none;
+
+	@include breakpoint(small) {
+
+		display: inline-block;
 
 	}
 
@@ -972,7 +998,7 @@ html {
 
 	@include breakpoint(xsmall) {
 
-		font-size: .8rem;
+		font-size: .6rem;
 
 	}
 
