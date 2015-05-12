@@ -3891,6 +3891,39 @@ app.directive('hamburger', ['NavigationService', function(NavigationService) {
 	}
 
 }]);
+
+app.directive('cartIcon', ['CartService', function(CartService) {
+
+	return {
+
+		restrict : 'E',
+
+		template : '<div class="cart-icon" ng-click="showCart()">' + 
+		'<span class="mobile-cart-indicator" ng-class="{ \'attention\' : count > 0 }">{{ count }}</span>' +
+		'<i class="fa fa-shopping-cart"></i>' + 
+		'</div>',
+
+		link : function($scope, element, attrs) {
+
+			$scope.count = CartService.getItems().length; 
+
+			$scope.$on('update', function() {
+
+				$scope.count = CartService.getItems().length; 
+
+			});
+
+			$scope.showCart = function() {
+
+				CartService.show();
+
+			}
+
+		}
+
+	}
+
+}]);
 app.factory('AlertService', ['$rootScope', function($rootScope) {
 
 	var AlertService = {};

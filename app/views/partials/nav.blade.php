@@ -24,14 +24,14 @@
 
 </div>
 
+<hamburger></hamburger>
+
 <div class="mobile-mast">
 	
-	{{-- <div class="hamburger">
-		<div class="patty"></div>
-		<div class="patty"></div>
-		<div class="patty"></div>
-	</div> --}}
-	<hamburger></hamburger>
+	{{-- <i class="fa fa-shopping-cart cart-icon"></i> --}}
+	<cart-icon></cart-icon>
+
+	<div class="clear"></div>
 
 </div>
 
