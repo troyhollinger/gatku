@@ -1077,6 +1077,12 @@ html {
 
 			font-size: 1.45rem;
 
+			@include breakpoint(small) {
+
+				font-size: 1.1rem;
+
+			}
+
 		}
 
 		@include breakpoint(small) {
