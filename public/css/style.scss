@@ -789,6 +789,12 @@ html {
 	height:100vh;
 
 
+	@include breakpoint(xsmall) {
+
+		height:auto;
+
+	}
+
 }
 
 .contact-top {
@@ -830,6 +836,17 @@ html {
 
 		}
 
+		@include breakpoint(xsmall) {
+
+			padding: 25px 10px;
+			box-sizing: border-box;
+			position: static;
+			@include transform(translate(0,0));
+			left:0;
+			top:0;
+
+		}
+
 	}
 
 	.contact-bottom-margin {
@@ -844,6 +861,12 @@ html {
 
 	}
 
+	@include breakpoint(xsmall) {
+
+		height:auto;
+
+	}
+
 }
 
 .contact-headline {
@@ -855,6 +878,12 @@ html {
 	@include breakpoint(small) {
 
 		font-size: 3.2rem;
+
+	}
+
+	@include breakpoint(xxsmall) {
+
+		font-size: 2.5rem;
 
 	}
 
@@ -874,6 +903,12 @@ html {
 
 	}
 
+	@include breakpoint(xxsmall) {
+
+		font-size: 1.2rem;
+
+	}
+
 }
 
 
@@ -881,12 +916,24 @@ html {
 
 	padding-left: 50px;
 
+	@include breakpoint(small) {
+
+		padding-left: 0;
+
+	}
+
 }
 
 
 .contact-phone { 
 
 	padding-right: 50px;
+
+	@include breakpoint(small) {
+
+		padding-right: 0;
+
+	}
 
 }
 
@@ -897,6 +944,16 @@ html {
 		color: $gray;
 		font-size: 2.2rem;
 		margin:0 15px;
+
+	}
+
+}
+
+.credits {
+
+	@include breakpoint(xsmall) {
+
+		font-size: .8rem;
 
 	}
 

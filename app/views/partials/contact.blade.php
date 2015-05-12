@@ -30,7 +30,7 @@
 
 			</div>
 
-			<p>2013 - {{ date('Y') }} &copy; GATKU / ALL RIGHTS RESERVED  |  <a href="http://troyhollinger.com" class="faded">MADE BY TROY</a>  |  MEDIA</p>
+			<p class="credits">2013 - {{ date('Y') }} &copy; GATKU / ALL RIGHTS RESERVED  |  <a href="http://troyhollinger.com" class="faded">MADE BY TROY</a>  |  MEDIA</p>
 
 		</div>
 		
