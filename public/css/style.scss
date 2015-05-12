@@ -265,6 +265,12 @@ html {
 
 	z-index: 6;
 
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
 }
 
 .mast {
@@ -400,6 +406,12 @@ html {
 	height:100vh;
 	background-size: cover;
 	background-position: center;
+
+	@include breakpoint(small) {
+
+		background-position: 65% 50%;
+
+	}
 
 }
 
@@ -1083,6 +1095,10 @@ html {
 
 		float:none;
 		width:100%;
+		box-sizing:border-box;
+		padding-bottom: 50px;
+		padding-top: 20px;
+		border-bottom: 2px solid rgba(0,0,0,.1);
 
 	}
 
@@ -1142,6 +1158,22 @@ html {
 	color:$gray;
 	margin:40px 0;
 
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
+}
+
+product-buyers {
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
 }
 
 .product-buyers-header {
@@ -1172,7 +1204,15 @@ html {
 
 	font-size: 1.3rem;
 
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
 }
+
+
 
 .product-performance-icon {
 
@@ -1215,6 +1255,12 @@ html {
 
 	}
 
+	@include breakpoint(small) {
+
+		text-align: left;
+
+	}
+
 }
 
 .product-price-amount {
@@ -1236,6 +1282,12 @@ html {
 	float:right;
 	width:45px;
 	height:50px;
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
 }
 
 .zoom-button {
@@ -1386,6 +1438,12 @@ html {
 
 	margin-top: 100px;
 	margin-bottom: 100px;
+
+	@include breakpoint(small) {
+
+		margin-top: 50px;
+
+	}
 
 }
 
@@ -2142,6 +2200,12 @@ hover-card {
 		top:3px; 
 		right:5px;
 		cursor: pointer;	
+
+	}
+
+	@include breakpoint(small) {
+
+		width:95%;
 
 	}
 
