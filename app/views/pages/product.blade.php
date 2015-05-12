@@ -12,7 +12,7 @@
 @section('content')
 
 @if($product->type->slug != 'apparel')
-<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller' : '' }}">
+<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'inshore-shrinker' ? 'no-attached-state' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
 	<img class="scroller-image {{ $product->slug === 'budk' ? 'no-attached-state' : '' }}" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
@@ -41,7 +41,7 @@
 
 	<div class="product-column-left {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
 
-		<h1 class="product-title"><span class="bold uppercase">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
+		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold uppercase">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
 		<div class="product-description">
 

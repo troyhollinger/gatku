@@ -990,6 +990,18 @@ html {
 
 	}
 
+	&.no-attached-state {
+
+		@include breakpoint(small) {
+
+			height:auto;
+			box-sizing:border-box;
+			padding:20px 0;
+
+		}
+
+	}
+
 	@include breakpoint(small) {
 
 		margin-top: 50px;
@@ -1023,6 +1035,12 @@ html {
 
 			width:100%;
 			height:auto;
+
+		}
+
+		@include breakpoint(small) {
+
+
 
 		}
 
@@ -1111,6 +1129,16 @@ html {
 	@include breakpoint(medium) {
 
 		font-size: 3rem;
+
+	}
+
+	@include breakpoint(small) {
+
+		&.shrinker-title {
+
+			font-size: 2rem;
+
+		}
 
 	}
 
@@ -1354,6 +1382,7 @@ product-buyers {
 	letter-spacing: -1px;
 	cursor: pointer;
 	margin-top: 40px;
+	border-radius: 2px;
 
 	@include breakpoint(medium) {
 
