@@ -153,7 +153,7 @@
 
 </div>
 
-<div class="home-container product-store-section">
+<div class="home-container product-store-section" id="store">
 
 	@include('partials.store')
 

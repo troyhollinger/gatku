@@ -11,6 +11,11 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 	}
 
+	/**
+	 * This method defines what pieces of data 
+	 * you want to use in all of the CartController logic.
+	 *
+	 */
 	CartService.addItem = function(data) {
 
 		var cart = CartService.getItems();
@@ -20,6 +25,9 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.name = data.name;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.type = {};
+		item.type.shippingPrice = data.type.shippingPrice;
+		item.type.slug = data.type.slug;
 		item.sizeable = data.sizeable;
 		item.sizeId = data.sizeId;
 		item.addons = [];

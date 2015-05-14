@@ -99,38 +99,38 @@ var Mast = {
 
 }
 
-var ResponsiveVideo = {
+// var ResponsiveVideo = {
 
-	init : function() {
+// 	init : function() {
 
-		this.responsive();
+// 		this.responsive();
 
-	},
+// 	},
 
-	responsive : function() {
+// 	responsive : function() {
 
-		$(".active-video-container").fitVids();
+// 		$(".active-video-container").fitVids();
 
-		requestAnimationFrame(ResponsiveVideo.responsive);
+// 		requestAnimationFrame(ResponsiveVideo.responsive);
 
-	}
+// 	}
 
-}
+// }
 
-var You = {
+// var You = {
 
-	init : function() {
+// 	init : function() {
 
-		$(".you-panel-slider").skippr({
+// 		$(".you-panel-slider").skippr({
 
-			hidePrevious : true,
-			theme : 'dark'
+// 			hidePrevious : true,
+// 			theme : 'dark'
 
-		});
+// 		});
 
-	}
+// 	}
 
-}
+// }
 
 var Squares = {
 
@@ -329,7 +329,7 @@ $(document).ready(function() {
 	if (currentRoute === 'home') {
 
 		Mast.init();
-		You.init();
+		// You.init();
 		BlurbSlider.init();
 
 	}
@@ -346,6 +346,26 @@ $(document).ready(function() {
 
 	}
 
+	// Smooth scrolling to anchor tag
+	$('a[href*=#]:not([href=#])').on('click', function() {
+
+	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+
+			var target = $(this.hash);
+
+			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+
+			if (target.length) {
+
+				$('html,body').animate({ scrollTop: target.offset().top }, 700);
+
+	        	return false;
+
+			}
+
+	    }
+
+	});
 
 });
 
@@ -3780,7 +3800,7 @@ app.directive('alerter', ['$window', '$timeout', 'AlertService', function($windo
 		restrict : 'E',
 
 		template : '<div class="alert-container slide-up" ng-show="show">' +
-		'<div class="success-alert" ng-class="{\'success-bg\' : alertType === \'success\', \'info-bg\' : alertType === \'info\', \'error-bg\' : alertType === \'error\'}">' +
+		'<div ng-class="{\'success-alert\' : alertType === \'success\', \'info-alert\' : alertType === \'info\', \'error-alert\' : alertType === \'error\'}">' +
 			'{{ message }}' +
 		'</div>' +
         '<i class="fa fa-close" ng-click="show = false"></i>' +
@@ -3988,6 +4008,11 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 	}
 
+	/**
+	 * This method defines what pieces of data 
+	 * you want to use in all of the CartController logic.
+	 *
+	 */
 	CartService.addItem = function(data) {
 
 		var cart = CartService.getItems();
@@ -3997,6 +4022,9 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.name = data.name;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.type = {};
+		item.type.shippingPrice = data.type.shippingPrice;
+		item.type.slug = data.type.slug;
 		item.sizeable = data.sizeable;
 		item.sizeId = data.sizeId;
 		item.addons = [];
@@ -4667,7 +4695,7 @@ app.controller('CartBlinderController', ['$scope', 'CartService', function($scop
 | $scope.validate method to reflect the changes.
 |
 */
-app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', function($scope, CartService, StripeService, Order) {
+app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', function($scope, CartService, StripeService, Order, AlertService) {
 
 	$scope.items = [];
 
@@ -4697,11 +4725,79 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		$scope.items = items;
 
+		console.log($scope.items);
+
+	}
+
+	$scope.shipping = function() {
+
+		var shipping = 0;
+		var poles = [];
+		var heads = [];
+		var others = [];
+
+		for(var i = 0; i < $scope.items.length; i++) {
+
+			var item = $scope.items[i];
+
+			if (item.type.slug === 'pole') {
+
+				poles.push(item);
+
+			} else if (item.type.slug === 'head') {
+
+				heads.push(item);
+
+			} else {
+
+				others.push(item);
+
+			}
+
+		};
+
+		if (poles.length > 0) {
+
+			var poleShippingPrice = poles[0].type.shippingPrice;
+
+			if (poles.length > 1) {
+
+				shipping = poleShippingPrice * poles.length;
+
+			} else {
+
+				shipping = poleShippingPrice;
+
+			}
+
+		} else if (heads.length > 0) {
+
+			var headShippingPrice = heads[0].type.shippingPrice;
+
+			if (heads.length > 1) {
+
+				shipping = headShippingPrice * (Math.ceil(heads.length / 2));
+
+			} else {
+
+				shipping = headShippingPrice;
+
+			}
+
+		} else if (others.length > 0) {
+
+			shipping = others[0].type.shippingPrice;
+
+		}
+
+		return shipping;
+
 	}
 
 	$scope.total = function() {
 
 		var total = 0;
+		var shipping = 0;
 
 		angular.forEach($scope.items, function(value, key) {
 
@@ -4715,15 +4811,17 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		});
 
-		// TODO calculate Shipping
+		shipping = $scope.shipping();
 
-		return total + 2000;
+		return total + shipping;
 
 	}
 
 	$scope.submit = function() {
 
 		var card = extractCardDetails();
+
+		AlertService.broadcast('Processing...', 'info');
 
 		StripeService.createToken(card).then(function(token) {
 
@@ -4737,7 +4835,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
  
 			Order.store(data).success(function(response) {
 
-				console.log("Order was a success!");
+				AlertService.broadcast('Success! Redirecting...', 'success');
 
 				$scope.show = false;
 
@@ -4747,7 +4845,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}).error(function(response) {
 
-				console.log("There was an error");
+				AlertService.broadcast('Sorry, there was an error creating your order. Please try again later', 'error');
 
 			});
 
@@ -4784,6 +4882,8 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.firstName) {
 
 				$scope.status = 'Please enter a first name.';
+				AlertService.broadcast('Please enter a first name', 'error');
+
 				return false;
 
 			}
@@ -4791,6 +4891,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.lastName) {
 
 				$scope.status = 'Please enter a last name.';
+				AlertService.broadcast('Please enter a last name', 'error');
 				return false;
 
 			}
@@ -4798,6 +4899,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.email) {
 
 				$scope.status = 'Please enter an email address.';
+				AlertService.broadcast('Please enter an email address', 'error');
 				return false;
 
 			}
@@ -4805,13 +4907,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.phone) {
 
 				$scope.status = 'Please enter phone number.';
+				AlertService.broadcast('Please enter a phone number', 'error');
 				return false;
 
 			}
 
 			if (!$scope.form.address) {
 
-				$scope.status = 'Please enter phone number.';
+				$scope.status = 'Please enter a street address.';
+				AlertService.broadcast('Please enter a street address', 'error');
 				return false;
 
 			}
@@ -4819,6 +4923,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.city) {
 
 				$scope.status = 'Please enter a city';
+				AlertService.broadcast('Please enter a city', 'error');
 				return false;
 
 			}
@@ -4826,6 +4931,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.state) {
 
 				$scope.status = 'Please enter a state';
+				AlertService.broadcast('Please enter a state', 'error');
 				return false
 
 			}
@@ -4833,6 +4939,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (!$scope.form.country) {
 
 				$scope.status = 'Please enter a country';
+				AlertService.broadcast('Please enter a country', 'error');
 				return false;
 
 			}
@@ -4843,6 +4950,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				if (!$scope.form.shippingAddress) {
 
 					$scope.status = 'Please enter a shipping address';
+					AlertService.broadcast('Please enter a shipping address', 'error');
 					return false;
 
 				}
@@ -4850,13 +4958,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				if (!$scope.form.shippingCity) {
 
 					$scope.status = 'Please enter a shipping city';
+					AlertService.broadcast('Please enter a shipping city', 'error');
 					return false;
 
 				}
 
 				if (!$scope.form.shippingState) {
 
-					$scope.status = 'Please enter a shippingState';
+					$scope.status = 'Please enter a shipping state';
+					AlertService.broadcast('Please enter a shipping state', 'error');
 					return false;
 
 				}
@@ -4864,6 +4974,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				if (!$scope.form.shippingZip) {
 
 					$scope.status = 'Please enter a shipping zip code';
+					AlertService.broadcast('Please enter a shipping zip code', 'error');
 					return false;
 
 				}
@@ -4871,6 +4982,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				if (!$scope.form.shippingCountry) {
 
 					$scope.status = 'Please enter a shipping country';
+					AlertService.broadcast('Please enter a shipping country', 'error');
 					return false;
 
 				}
@@ -4891,6 +5003,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (validation.response === false) {
 
 				$scope.status = validation.message;
+				AlertService.broadcast(validation.messsage, 'error');
 
 				return false;
 
@@ -4914,6 +5027,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 		card.exp_month = $scope.card.expiryMonth;
 		card.exp_year = $scope.card.expiryYear;
 		card.cvc = $scope.card.securityCode;
+		card.name = $scope.form.firstName + ' ' + $scope.form.lastName;
 
 		return card;
 
@@ -5013,6 +5127,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			parseSizeableAddons();
 
 			$scope.loaded = true;
+
+			// console.log($scope.product);
 
 		}).error(function(response) {
 

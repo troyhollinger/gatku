@@ -12,9 +12,7 @@
 
 		<ul class="navigation">
 			<li><a href="#store">Store</a></li>
-			{{-- <li><a href="#videos">Videos</a></li> --}}
-			{{-- <li><a href="#you">You</a></li> --}}
-			<li>Contact</li>
+			<li><a href="#contact">Contact</a></li>
 			<li ng-controller="CartCountController" ng-click="showCart()">Cart <div class="cart-amount-indicator" ng-show="count > 0"><span>@{{ count }}</span></div> </li>
 		</ul>
 

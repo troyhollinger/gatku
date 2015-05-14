@@ -32,6 +32,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 			$scope.loaded = true;
 
+			// console.log($scope.product);
+
 		}).error(function(response) {
 
 			console.log(response.message);

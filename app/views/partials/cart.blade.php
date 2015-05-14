@@ -64,7 +64,7 @@
 
 			<div class="cart-details-row">
 				<span class="cart-item-column">Shipping</span>
-				<span class="cart-price-column shipping-column">$20</span>
+				<span class="cart-price-column shipping-column" ng-bind="'$' + (shipping() | money)"></span>
 
 				<div class="clear"></div>
 
@@ -215,6 +215,26 @@
 				</div>
 
 				<div class="clear"></div>
+
+				<span class="cart-item-addon-title" ng-if="item.addons.length">Addons</span>
+
+				<div class="cart-item-addon-container" ng-repeat="addon in item.addons" ng-if="item.addons.length">
+
+					<div class="cart-item-column">
+
+						<h3>- @{{ addon.name }}</h3>
+
+					</div>
+
+					<div class="cart-price-column">
+
+						<p>$@{{ addon.price | money }}</p>
+
+					</div>
+
+					<div class="clear"></div>
+
+				</div>
 
 			</li>
 		</ul>	

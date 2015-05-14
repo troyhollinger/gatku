@@ -16,6 +16,9 @@
 @endforeach
 
 
+<h2>Shipping</h2>
+<p>{{ $shipping / 100 }}</p>
+
 <h2>Total</h2>
 <p>{{ $total / 100 }}</p>
 

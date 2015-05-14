@@ -53,23 +53,27 @@ class OrderRepository {
 		}	
 
 		try {
-			
-			DB::transaction(function() {
 
-				$customer = $this->customer->store($input['form']);
+			$that = $this;
+			
+			DB::transaction(function() use ($input, $that) {
+
+				$customer = $that->customer->store($input['form']);
 
 				$order = new Order;
 				
-				$order = $this->assignFields($order, $customer, $input['form']);
+				$order = $that->assignFields($order, $customer, $input['form']);
+
+				$shipping = $that->calculateShipping($input['items']);
 				
-				$total = $this->calculateTotal($input['items']);
+				$total = $that->calculateTotal($input['items']);
 
 				$order->save();
 
 				// Assign current order as class property for use in other methods.
-				$this->order = $order;
+				$that->order = $order;
 
-				$this->assignOrderItems($input['items']);
+				$that->assignOrderItems($input['items']);
 
 				Stripe_Charge::create([
 
@@ -79,15 +83,15 @@ class OrderRepository {
 
 				]);
 
+				//Queue Email
+				Mail::send('emails.order', ['items' => $input['items'], 'info' => $input['form'], 'shipping' => $shipping, 'total' => $total], function($message) {
+
+				    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
+
+				});
+
 			});
 			
-			//Queue Email
-			Mail::send('emails.order', ['items' => $input['items'], 'info' => $input['form'], 'total' => $total], function($message) {
-
-			    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
-
-			});
-
 		} catch(Exception $e) {
 
 			return false;
@@ -140,6 +144,75 @@ class OrderRepository {
 
 	}
 
+	/**
+	 * Calculate the shipping.
+	 * There is a similar method in the CartController.js file. These two methods
+	 * should produce identical results. 
+	 *
+	 */
+	private function calculateShipping($items) {
+
+		$shippingPrice = 0;
+		$poles = [];
+		$heads = [];
+		$others = [];
+
+		foreach($items as $item) {
+
+			if ($item['type']['slug'] === 'pole') {
+
+				$poles[] = $item;
+
+			} elseif ($item['type']['slug'] === 'head') {
+
+				$heads[] = $item;
+
+			} else {
+
+				$others[] = $item;
+
+			}
+
+		}
+
+		if (count($poles) > 0) {
+
+			$poleShippingPrice = $poles[0]['type']['shippingPrice'];
+
+			if (count($poles) > 1) {
+
+				$shippingPrice = $poleShippingPrice * count($poles);
+
+			} else {
+
+				$shippingPrice = $poleShippingPrice;
+
+			}
+
+		} elseif (count($heads) > 0) {
+
+			$headShippingPrice = $heads[0]['type']['shippingPrice'];
+
+			if (count($heads) > 1) {
+
+				$shippingPrice = $headShippingPrice * ceil(count($heads) / 2);
+
+			} else {
+
+				$shippingPrice = $headShippingPrice;
+
+			}
+
+		} elseif (count($others) > 0) {
+
+			$shippingPrice = $others[0]['type']['shippingPrice'];
+
+		}
+
+		return $shippingPrice;
+
+	}
+
 
 	/**
 	 * 
@@ -148,47 +221,39 @@ class OrderRepository {
 	 */
 	private function calculateTotal($items) {
 
-		try {
-			
-			$total = 0;
+		$total = 0;
 
-			foreach($items as $item) {
+		foreach($items as $item) {
 
-				if ($item['sizeable'] && $item['sizeId']) {
+			if ($item['sizeable'] && $item['sizeId']) {
 
-					$price = Size::findOrFail($item['sizeId'])->price;
+				$price = Size::findOrFail($item['sizeId'])->price;
 
-				} else {
+			} else {
 
-					$price = Product::findOrFail($item['id'])->price;
-
-				}
-
-				$total += $price;
-
-				// The 'id' key of the $addon array is the id of the product in the products table,
-				// NOT the id of the record in the addons table.
-				foreach($item['addons'] as $addon) {
-
-					$addonPrice = Product::findOrFail($addon['id'])->price;
-
-					$total += $addonPrice;
-
-				}
+				$price = Product::findOrFail($item['id'])->price;
 
 			}
 
-			return $total;
+			$total += $price;
 
-		} catch (Exception $e) {
-			
-			Log::error($e);
+			// The 'id' key of the $addon array is the id of the product in the products table,
+			// NOT the id of the record in the addons table.
+			foreach($item['addons'] as $addon) {
 
-			$this->order->delete();
+				$addonPrice = Product::findOrFail($addon['id'])->price;
 
-			return false;
+				$total += $addonPrice;
+
+			}
 
 		}
+
+		$shipping = $this->calculateShipping($items);
+
+		$total = $total + $shipping;
+
+		return $total;
 
 	}
 

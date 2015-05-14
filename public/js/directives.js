@@ -242,7 +242,7 @@ app.directive('alerter', ['$window', '$timeout', 'AlertService', function($windo
 		restrict : 'E',
 
 		template : '<div class="alert-container slide-up" ng-show="show">' +
-		'<div class="success-alert" ng-class="{\'success-bg\' : alertType === \'success\', \'info-bg\' : alertType === \'info\', \'error-bg\' : alertType === \'error\'}">' +
+		'<div ng-class="{\'success-alert\' : alertType === \'success\', \'info-alert\' : alertType === \'info\', \'error-alert\' : alertType === \'error\'}">' +
 			'{{ message }}' +
 		'</div>' +
         '<i class="fa fa-close" ng-click="show = false"></i>' +

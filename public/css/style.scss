@@ -2262,7 +2262,7 @@ hover-card {
 	@include transform(translate(-50%, 0));
 	width:700px;
 	height:auto;
-	z-index: 12;
+	z-index: 19;
 	
 
 	div {
@@ -2535,6 +2535,7 @@ hover-card {
 	z-index: 10;
 	cursor: pointer;
 	float:left;
+	display: none;
 
 	.patty {
 
@@ -2611,5 +2612,10 @@ hover-card {
 	}
 
 
+	@include breakpoint(small) {
+
+		display: inline-block;
+
+	}
 
 }
