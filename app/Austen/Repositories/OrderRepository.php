@@ -10,6 +10,7 @@ use Mail;
 use OrderItemAddon;
 use Size;
 use DB;
+use Carbon\Carbon;
 
 /**
  *
@@ -30,7 +31,7 @@ class OrderRepository {
 
 	public function all() {
 
-		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size')->get();
+		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size')->orderBy('created_at', 'desc')->get();
 
 		$orders = $this->assignHumanReadableTimestamps($orders);
 
@@ -64,6 +65,8 @@ class OrderRepository {
 				
 				$order = $that->assignFields($order, $customer, $input['form']);
 
+				// $items = $that->convertItemsToEloquent($input['items']);
+
 				$shipping = $that->calculateShipping($input['items']);
 				
 				$total = $that->calculateTotal($input['items']);
@@ -80,11 +83,16 @@ class OrderRepository {
 					'source' => $input['token']['id'],
 					'amount' => $total,
 					'currency' => 'usd',
+					'description' => 'Order : ' . $order->number
 
 				]);
 
+				$order->load('items.addons.product', 'items.product', 'customer', 'items.size');
+
+				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
+
 				//Queue Email
-				Mail::send('emails.order', ['items' => $input['items'], 'info' => $input['form'], 'shipping' => $shipping, 'total' => $total], function($message) {
+				Mail::send('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 				    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
 
@@ -128,6 +136,8 @@ class OrderRepository {
 			$order->zip = $input['shippingZip'];
 
 		}
+
+		$order->number = strtoupper(str_random(15));
 
 		return $order;
 
@@ -291,6 +301,32 @@ class OrderRepository {
 		}
 
 	}
+
+	// private function convertItemsToEloquent($items) {
+
+	// 	$collection = [];
+
+	// 	foreach($items as $item) {
+
+	// 		$model = Product::findOrFail($item['id']);
+	// 		$model->load('type');
+	// 		$model->addons = [];
+
+	// 		foreach($item['addons'] as $addon) {
+
+	// 			$modelAddon = Product::findOrFail($addon['id']);
+
+	// 			$model->addons[] = $modelAddon;
+
+	// 		}
+
+	// 		$collection[] = $model;
+
+	// 	}
+
+	// 	return $collection;
+
+	// }
 
 	private function assignHumanReadableTimestamps($collection) {
 

@@ -332,7 +332,7 @@ $(document).ready(function() {
 
 			if (target.length) {
 
-				$('html,body').animate({ scrollTop: target.offset().top }, 700);
+				$('html,body').animate({ scrollTop: target.offset().top }, 400);
 
 	        	return false;
 

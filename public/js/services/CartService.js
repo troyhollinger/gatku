@@ -23,6 +23,8 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 		item.id = data.id;
 		item.name = data.name;
+		item.shortName = data.shortName;
+		item.length = data.length;
 		item.price = data.price;
 		item.thumb = data.thumb;
 		item.type = {};
