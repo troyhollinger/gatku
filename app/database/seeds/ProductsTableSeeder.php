@@ -175,7 +175,7 @@ class ProductsTableSeeder extends Seeder {
 
 				<p>Great for beginners.</p>
 
-				<p class="detail">Use in conditions such as inshore diving, reefs, low 
+				<p>Use in conditions such as inshore diving, reefs, low 
 				visibility, sitting duck fish, rivers, streams, cracks 
 				and crevices. Typically used when going for smaller 
 				fish under 10lbs.</p>',
@@ -202,15 +202,15 @@ class ProductsTableSeeder extends Seeder {
 				The all aluminum rear section which is 44 inches, 
 				and the carbon graphite front end section which is 
 				29 inches. Heads are sold separately. Usually the 
-				SEVEN\'ER is paired with our Signature Paralyzer 
-				or our Barbed Paralyzer.</p>
+				SEVEN\'ER is paired with our <hover-card slug="signature-paralyzer">Signature Paralyzer</hover-card>
+				or our <hover-card slug="barbed-paralyzer">Barbed Paralyzer</hover-card>.</p>
 
 				<p class="faded">Watch FAQ Video about this Polespear</p>
 
 				<p>Great for beginners. Very similiar to the SIX’ER 
 				just packs more distance and punch. </p>
 
-				<p class="detail">Use in conditions such as inshore diving, reefs, low 
+				<p>Use in conditions such as inshore diving, reefs, low 
 				visibility, sitting duck fish, rivers, streams, cracks 
 				and crevices. Typically used when going for smaller 
 				fish under 10lbs.</p>',
@@ -236,13 +236,13 @@ class ProductsTableSeeder extends Seeder {
 				The all aluminum rear section which is 47 inches, 
 				and the carbon graphite front end section which is 
 				36 inches. Heads are sold separately. Usually the 
-				EIGHTER\'ER is paired with our Flopper Head.</p> 
+				EIGHTER\'ER is paired with our <hover-card slug="flopper">Flopper Head</hover-card>.</p> 
 
 				<p class="faded">Watch FAQ Video about this Polespear</p>
 
 				<p>Good for intermediate divers.</p>
 
-				<p class="detail">The most versatile spear we offer, a weapon for just 
+				<p>The most versatile spear we offer, a weapon for just 
 				about every occasion. Use our Signature Paralyzer 
 				or Barbed Paralyzer with InshoreShrinker for 
 				inshore diving. If going for bigger pelagic fish be 
@@ -270,13 +270,13 @@ class ProductsTableSeeder extends Seeder {
 				The all aluminum rear section which is 55 inches, 
 				and the carbon graphite front end section which is 
 				42 inches. Heads are sold separately. Usually the 
-				NINE\'ER is paired with our SlipTip.</p> 
+				NINE\'ER is paired with our <hover-card slug="slip-tip">SlipTip</hover-card>.</p> 
 
 				<p class="faded">Watch FAQ Video about this Polespear</p>
 
 				<p>More for experienced divers.</p>
 
-				<p class="detail">Perfect weapon for the Bahamas. Go after Hog 
+				<p>Perfect weapon for the Bahamas. Go after Hog 
 				Fish, Snapper, Grouper and all the small stuff too 
 				when coupled with our InshoreShrinker. Also 
 				acceptable for pelagic fish, use our SlipTip.</p>',
@@ -302,13 +302,13 @@ class ProductsTableSeeder extends Seeder {
 				The all aluminum rear section which is 60 inches, 
 				and the carbon graphite front end section which is 
 				42 inches. Heads are sold separately. Usually the 
-				TEN\'ER is paired with our SlipTip.</p> 
+				TEN\'ER is paired with our <hover-card slug="slip-tip">SlipTip</hover-card>.</p> 
 
 				<p class="faded">Watch FAQ Video about this Polespear</p>
 
 				<p>More for experienced divers.</p>
 
-				<p class="detail">Traditionally an open-water only spear, now our
+				<p>Traditionally an open-water only spear, now our
 				InshoreShrinker can be attached to make it more 
 				of a "reef hunter". Go for such fishas Yellowtail, 
 				Wahoo, Amberjack, White Seabass, and Dorado,

@@ -95,6 +95,24 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		$rootScope.$broadcast('hide');
 
 	}
+
+	CartService.productInCart = function(productId) {
+
+		var cookies = Cookie('items') || [];
+
+		if (cookies.length) {
+
+			for(var i = 0; i < cookies.length; i++) {
+
+				if (cookies[i].id === productId) return true;
+
+			}
+
+		}
+
+		return false;		
+
+	}
 	
 	return CartService;
 

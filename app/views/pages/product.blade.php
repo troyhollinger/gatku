@@ -36,12 +36,14 @@
 	@if($product->type->slug === 'apparel')
 	<div class="apparel-container">
 		<img class="rollerblade-img" src="{{ $product->attachedImage}}">
+
+		<span class="drag-indicator"><-- Drag to rotate --></span>
 	</div>
 	@endif
 
 	<div class="product-column-left {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
 
-		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold uppercase">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
+		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold {{ $product->slug !== 'inshore-shrinker' && $product->type->slug !== 'head' ? 'uppercase' : '' }}">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
 		<div class="product-description">
 
@@ -50,8 +52,6 @@
 		</div>
 
 		@if($product->type->slug === 'pole')
-
-		<p class="product-performance-header bold">Buy a GATKU for its:</p>
 
 		<div class="product-performance">
 
@@ -145,7 +145,7 @@
 
 		</div>
 
-		<div class="submit-button" ng-click="addToCart();">Add to Cart</div>
+		<div class="submit-button" ng-click="addToCart();" ng-bind="productInCart()"></div>
 
 	</div>
 

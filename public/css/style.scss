@@ -248,11 +248,11 @@ html {
 
 .home-container {
 
-	width:1000px;
+	width:1250px;
 	margin:0 auto;
 	position: relative;
 
-	@include breakpoint(1100px) {
+	@include breakpoint(1350px) {
 
 		width:90%;
 
@@ -457,7 +457,7 @@ html {
 	position: relative;
 	width:100%;
 	border-bottom: 2px solid black;
-	height: 400px;
+	height: 420px;
 	overflow: hidden;
 
 	img {
@@ -563,7 +563,7 @@ html {
 
 		img {
 
-			width:33%;
+			width:30%;
 
 		}
 
@@ -594,7 +594,7 @@ html {
 
 		img {
 
-			width:45%;
+			width:40%;
 
 		}
 
@@ -626,7 +626,7 @@ html {
 
 		img {
 
-			width:30%;
+			width:28%;
 
 
 		}
@@ -989,12 +989,47 @@ html {
 		color: $gray;
 		font-size: 2.2rem;
 		margin:0 15px;
+		// @include transition(all .2s linear);
+
+	}
+
+	.fa-facebook:hover {
+
+		color:#3b5998;
+
+	}
+
+	.fa-twitter:hover {
+
+		color:#55acee;
+
+	}
+
+	.fa-instagram:hover {
+
+		color:#3f729b;
+
+	}
+
+	.fa-youtube-play:hover {
+
+		color:#cd201f;
 
 	}
 
 }
 
 .credits {
+
+	a {
+
+		&:hover {
+
+			text-decoration: underline;
+
+		}
+
+	}
 
 	@include breakpoint(xsmall) {
 
@@ -1047,6 +1082,8 @@ html {
 .scroller-image {
 
 	height:95%;
+	// safari line fix
+	margin-top: -1px;
 
 	&.fit {
 
@@ -1439,7 +1476,14 @@ product-buyers {
 	letter-spacing: -1px;
 	cursor: pointer;
 	margin-top: 40px;
-	border-radius: 2px;
+	// border-radius: 2px;
+	@include transition(all .1s linear);
+
+	&:hover {
+
+		background-color: $green;
+
+	}
 
 	@include breakpoint(medium) {
 
@@ -1470,6 +1514,8 @@ product-buyers {
 
 		}
 
+
+
 	}
 
 	label {
@@ -1495,6 +1541,12 @@ product-buyers {
 
 		}
 
+		&:hover {
+
+			padding-right: 10px;
+			background-color:$light;
+
+		}
 
 	}
 
@@ -1626,7 +1678,7 @@ product-buyers {
 
 	box-sizing:border-box;
 	padding:10px 18px;
-	border-radius: 3px;
+	// border-radius: 3px;
 	font-weight: bold;
 	display: inline-block;
 	cursor: pointer;
@@ -1816,6 +1868,17 @@ product-buyers {
 		font-size: 5rem;
 		color:darken($light, 10%);
 		cursor: pointer;
+		@include transition(all .1s linear);
+
+	}
+
+	&:hover {
+
+		p {
+
+			color:black;
+
+		}
 
 	}
 
@@ -2141,9 +2204,10 @@ product-buyers {
 	@include center;
 	font-size: 2rem;
 	font-weight: bold;
-	color:darken($light, 20%);
+	color:black;
 	width:100%;
-	text-align: center;
+	text-align: left;
+	margin-left: 25px;
 
 }
 
@@ -2617,5 +2681,14 @@ hover-card {
 		display: inline-block;
 
 	}
+
+}
+
+
+.drag-indicator {
+
+	@include center;
+	color:darken($light, 10%);
+	font-size: .8rem;
 
 }

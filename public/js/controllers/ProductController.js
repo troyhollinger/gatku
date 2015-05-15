@@ -1,4 +1,4 @@
-app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size', function($scope, Product, CartService, Size) {
+app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size', 'AlertService', function($scope, Product, CartService, Size, AlertService) {
 
 	$scope.fullSize = true;
 
@@ -32,11 +32,9 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 			$scope.loaded = true;
 
-			// console.log($scope.product);
-
 		}).error(function(response) {
 
-			console.log(response.message);
+			AlertService.broadcast('Sorry, there is an error. Your page may have not rendered correctly.', 'error');
 
 		});
 
@@ -75,7 +73,6 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 		reset();
 
 	}
-
 
 
 	$scope.poleScrollInit = function() {
@@ -156,8 +153,19 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 		}
 
-		
+	}
 
+	$scope.productInCart = function() {
+
+		if (CartService.productInCart($scope.product.id)) {
+
+			return "Item Added";
+
+		} else {
+
+			return "Add To Cart";
+
+		}
 	}
 
 	$scope.init();
