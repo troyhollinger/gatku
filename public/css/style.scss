@@ -1962,6 +1962,12 @@ product-buyers {
 
 }
 
+.apparel-cart-item {
+
+	padding-bottom: 0;
+
+}
+
 .cart-item-image-container {
 
 	height:50px;
@@ -1974,6 +1980,20 @@ product-buyers {
 		width:40px;
 		@include transform(rotate(90deg) translate(0%, -90%));
 		@include transform-origin(top left);
+
+	}
+
+}
+
+.apparel-cart-item-image-container {
+
+	height:120px;
+	overflow-x:hidden;
+
+	img {
+
+		transform:none;
+		width:100px;
 
 	}
 

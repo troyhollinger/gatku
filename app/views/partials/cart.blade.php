@@ -16,13 +16,13 @@
 		<h2>Cart</h2>
 
 		<ul>	
-			<li ng-repeat="item in items" class="cart-item">
+			<li ng-repeat="item in items" class="cart-item" ng-class="{ 'apparel-cart-item' : item.type.slug === 'apparel' }">
 
 				<div class="cart-item-column">
 
 					<h3>@{{ item.name }}</h3>
 
-					<div class="cart-item-image-container">
+					<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' }">
 
 						<img ng-src="@{{ item.thumb }}">
 
