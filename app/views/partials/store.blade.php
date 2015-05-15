@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="heads-links links">
-		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}">@{{ head.shortName }}<span class="detail" ng-if="head.slug === 'signature-paralyzer' || head.slug === 'barbed-paralyzer'">/@{{ head.length }}</span></a></div>
+		<div class="product-link-container" ng-repeat="head in heads"><a href="{{ route('product.show', ['']) }}/@{{ head.slug }}">@{{ head.shortName }}<span class="detail" ng-if="head.slug === 'signature-paralyzer' || head.slug === 'barbed-paralyzer'"> /@{{ head.length }}</span></a></div>
 
 		<div class="clear"></div>
 	</div>
@@ -41,7 +41,6 @@
 
 		<div class="product-thumb-container" ng-repeat="extra in extras"><a href="{{ route('product.show', ['']) }}/@{{ extra.slug }}"><img ng-src="@{{ extra.thumb }}" ng-class="{ 'knife-thumb' : extra.slug == 'budk' }"></a></div>
 		
-
 		<div class="clear"></div>
 
 	</div>
