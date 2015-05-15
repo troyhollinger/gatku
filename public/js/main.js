@@ -34,9 +34,9 @@ var BlurbSlider = {
 
 			// autoPlay : true,
 			// autoPlayDuration : 4000
-			// navType : 'bubble'
+			navType : 'bubble'
 
-		})
+		});
 
 	}
 
