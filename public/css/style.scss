@@ -309,6 +309,12 @@ html {
 
 	}
 
+	li:hover {
+
+		text-decoration: underline;		
+
+	} 
+
 	a {
 
 		color:white;
@@ -1481,6 +1487,12 @@ product-buyers {
 
 	&:hover {
 
+		// background-color: $green;
+
+	}
+
+	&.alert-state {
+
 		background-color: $green;
 
 	}
@@ -1988,7 +2000,7 @@ product-buyers {
 .apparel-cart-item-image-container {
 
 	height:120px;
-	overflow-x:hidden;
+	overflow-y:hidden;
 
 	img {
 
@@ -2584,6 +2596,7 @@ hover-card {
 		padding:10px 0;
 		text-transform: uppercase;
 		border-bottom: 1px solid lighten($dark, 10%);
+
 
 		a {
 

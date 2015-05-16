@@ -59,7 +59,9 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 		$rootScope.$broadcast('update');
 
-		AlertService.broadcast('Item added to cart!', 'success');
+		$rootScope.$broadcast('itemAdded');
+
+		// AlertService.broadcast('Item added to cart!', 'success');
 
 	}
 	

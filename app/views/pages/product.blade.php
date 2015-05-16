@@ -145,7 +145,7 @@
 
 		</div>
 
-		<div class="submit-button" ng-click="addToCart();" ng-bind="productInCart()"></div>
+		<div class="submit-button" ng-click="addToCart();" ng-bind="productAddedText()" ng-class="{ 'alert-state' : productAdded }"></div>
 
 		<p class="special-message"><span class="bold">Free Shipping</span> on orders over <span class="bold">$300</span> <span class="detail">USA ONLY</span></p>
 

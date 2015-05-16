@@ -1,8 +1,10 @@
-app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size', 'AlertService', function($scope, Product, CartService, Size, AlertService) {
+app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size', 'AlertService', '$timeout', function($scope, Product, CartService, Size, AlertService, $timeout) {
 
 	$scope.fullSize = true;
 
 	$scope.loaded = false;
+
+	$scope.productAdded = false;
 
 	$scope.product = {};
 
@@ -155,9 +157,9 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
-	$scope.productInCart = function() {
+	$scope.productAddedText = function() {
 
-		if (CartService.productInCart($scope.product.id)) {
+		if ($scope.productAdded) {
 
 			return "Item Added";
 
@@ -167,6 +169,25 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 		}
 	}
+
+	function productAddedAnimation() {
+
+		$scope.productAdded = true;
+
+		$timeout(function() {
+
+			$scope.productAdded = false;
+
+		}, 3000);
+
+	}
+
+
+	$scope.$on('itemAdded', function() {
+
+		productAddedAnimation();
+
+	});
 
 	$scope.init();
 
