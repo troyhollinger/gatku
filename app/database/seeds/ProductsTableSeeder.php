@@ -441,7 +441,7 @@ class ProductsTableSeeder extends Seeder {
 			'balance' => '',
 			'stealth' => '',
 			'metaDescription' => '',
-			'length' => '',
+			'length' => 'SHIRT',
 			'sizeable' => true
 		]);
 
@@ -461,7 +461,7 @@ class ProductsTableSeeder extends Seeder {
 			'balance' => '',
 			'stealth' => '',
 			'metaDescription' => '',
-			'length' => '',
+			'length' => 'SHIRT',
 			'sizeable' => true
 		]);
 
@@ -481,7 +481,7 @@ class ProductsTableSeeder extends Seeder {
 			'balance' => '',
 			'stealth' => '',
 			'metaDescription' => '',
-			'length' => '',
+			'length' => 'HOODIE',
 			'sizeable' => true
 
 		]);

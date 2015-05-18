@@ -35,7 +35,7 @@ app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', functio
 			var thisElement = angular.element(element[0]);
 			var template = '<div class="hover-card">' + 
 			'<h2>{{ product.name }}</h2>' + 
-			'<div class="hover-card-image-container"><img ng-src="{{ product.thumb }}"></div>' +
+			'<div class="hover-card-image-container" ng-class="{ \'pole\' : product.type.slug === \'pole\' }"><img ng-src="{{ product.thumb }}"></div>' +
 			'<div class="hover-card-actions"><a ng-href="/product/'+ attrs.slug +'" target="_blank"><div class="button success-bg">See This Product</div></a></div>' +
 			'<div class="hover-card-price">${{ product.price | money }}</div>' + 
 			'<div class="clear"></div>' +

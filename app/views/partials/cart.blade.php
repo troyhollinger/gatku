@@ -22,12 +22,6 @@
 
 					<h3>@{{ item.name }}</h3>
 
-					<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' }">
-
-						<img ng-src="@{{ item.thumb }}">
-
-					</div>
-
 				</div>
 
 				<div class="cart-quantity-column">
@@ -39,6 +33,12 @@
 				</div>
 
 				<div class="clear"></div>
+
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' }">
+
+					<img ng-src="@{{ item.thumb }}">
+
+				</div>
 
 				<span class="cart-item-addon-title" ng-if="item.addons.length">Addons</span>
 
@@ -195,12 +195,6 @@
 
 					<h3>@{{ item.name }}</h3>
 
-					<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' }">
-
-						<img ng-src="@{{ item.thumb }}">
-
-					</div>
-
 				</div>
 
 				<div class="cart-quantity-column">
@@ -212,6 +206,12 @@
 				</div>
 
 				<div class="clear"></div>
+
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' }">
+
+					<img ng-src="@{{ item.thumb }}">
+
+				</div>
 
 				<span class="cart-item-addon-title" ng-if="item.addons.length">Addons</span>
 

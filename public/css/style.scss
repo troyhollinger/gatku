@@ -1225,6 +1225,7 @@ html {
 .product-title {
 
 	font-size: 4.5rem;
+	white-space: nowrap;
 
 	@include breakpoint(medium) {
 
@@ -1487,7 +1488,7 @@ product-buyers {
 
 	&:hover {
 
-		// background-color: $green;
+		background-color: $green;
 
 	}
 
@@ -1988,9 +1989,8 @@ product-buyers {
 
 	img {
 
-		// @include center;
-		width:40px;
-		@include transform(rotate(90deg) translate(0%, -90%));
+		width:50px;
+		@include transform(rotate(90deg) translate(0%, -88%));
 		@include transform-origin(top left);
 
 	}
@@ -2006,6 +2006,19 @@ product-buyers {
 
 		transform:none;
 		width:100px;
+
+	}
+
+}
+
+.pole-cart-item-image-container {
+
+	text-align: right;
+
+	img {
+
+		@include transform(rotate(-90deg) translate(0%, -88%));
+		@include transform-origin(top right);
 
 	}
 
@@ -2426,6 +2439,21 @@ product-buyers {
 	overflow: hidden;
 	border-left: 2px solid black;
 	margin:10px 0 20px 0;
+
+	&.pole {
+
+		border-right: 2px solid black;
+		border-left: 0;
+
+		img {
+
+			@include transform(rotate(-90deg) translate(-50%,-50%));
+			right:auto;
+			left:55%;
+
+		}
+		
+	}
 
 }
 

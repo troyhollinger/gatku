@@ -11,7 +11,7 @@
 		<a href="{{ route('home') }}"><img id="logo-below" src="{{ asset('img/logo-white-bg.png') }}"></a>
 
 		<ul class="navigation">
-			<li><a href="#store">Store</a></li>
+			<li><a href="#store" {{ Route::currentRouteName() === 'product.show' ? 'class="faded"' : '' }}>Store</a></li>
 			<li><a href="#contact">Contact</a></li>
 			<li ng-controller="CartCountController" ng-click="showCart()">Cart <div class="cart-amount-indicator" ng-show="count > 0"><span>@{{ count }}</span></div> </li>
 		</ul>
