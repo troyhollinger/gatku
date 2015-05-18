@@ -29,9 +29,13 @@
 					</div>
 
 				</div>
+
+				<div class="cart-quantity-column">
+					<span>@{{ item.quantity }} <i class="fa fa-angle-left" ng-click="decreaseItemQuantity($index)"><span ng-if="item.quantity == 1">Remove</span></i> <i class="fa fa-angle-right" ng-click="increaseItemQuantity($index)"></i></span>
+				</div>
 				
 				<div class="cart-price-column">
-					<p>$@{{ item.price | money }}</p>
+					<p>$@{{ item.price * item.quantity | money }}</p>
 				</div>
 
 				<div class="clear"></div>
@@ -46,9 +50,13 @@
 
 					</div>
 
+					<div class="cart-quantity-column">
+						<span>@{{ addon.quantity }} <i class="fa fa-angle-left" ng-click="decreaseAddonQuantity($parent.$parent.$index, $index)"><span ng-if="addon.quantity == 1">Remove</span></i> <i class="fa fa-angle-right" ng-click="increaseAddonQuantity($parent.$parent.$index, $index)"></i></span>
+					</div>
+
 					<div class="cart-price-column">
 
-						<p>$@{{ addon.price | money }}</p>
+						<p>$@{{ addon.price * addon.quantity | money }}</p>
 
 					</div>
 
@@ -187,16 +195,20 @@
 
 					<h3>@{{ item.name }}</h3>
 
-					<div class="cart-item-image-container">
+					<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' }">
 
 						<img ng-src="@{{ item.thumb }}">
 
 					</div>
 
 				</div>
+
+				<div class="cart-quantity-column">
+					<span>@{{ item.quantity }}</span>
+				</div>
 				
 				<div class="cart-price-column">
-					<p>$@{{ item.price | money }}</p>
+					<p>$@{{ item.price * item.quantity | money }}</p>
 				</div>
 
 				<div class="clear"></div>
@@ -211,9 +223,13 @@
 
 					</div>
 
+					<div class="cart-quantity-column">
+						<span>@{{ addon.quantity }}</span>
+					</div>
+
 					<div class="cart-price-column">
 
-						<p>$@{{ addon.price | money }}</p>
+						<p>$@{{ addon.price * addon.quantity | money }}</p>
 
 					</div>
 
@@ -228,7 +244,7 @@
 
 			<div class="cart-details-row">
 				<span class="cart-item-column">Shipping</span>
-				<span class="cart-price-column shipping-column">$20</span>
+				<span class="cart-price-column shipping-column" ng-bind="'$' + (shipping() | money)"></span>
 
 				<div class="clear"></div>
 
@@ -247,22 +263,12 @@
 				<h3 class="bold">Ship To :</h3>
 				<div ng-if="form.useBillingForShipping">
 					
-					<p>@{{ form.name }}</p>
+					<p>@{{ form.firstName }} @{{ form.lastName }}</p>
 					<p>@{{ form.address }}</p>
 					<p>@{{ form.city }}, @{{ form.state }}</p>
 					<p>@{{ form.country }}</p>
 
 				</div>
-
-				<div ng-if="!form.useBillingForShipping">
-
-					<p>@{{ form.name }}</p>
-					<p>@{{ form.shippingAddress }}</p>
-					<p>@{{ form.shippingCity }}, @{{ form.shippingState }}</p>
-					<p>@{{ form.shippingCountry }}</p>
-
-				</div>
-
 
 			</div>	
 

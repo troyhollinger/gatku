@@ -85,7 +85,7 @@ class OrderRepository {
 
 				]);
 
-				$order->load('items.addons.product', 'items.product', 'customer', 'items.size');
+				$order->load('items.addons.product','items.addons.size', 'items.product', 'customer', 'items.size');
 
 				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
@@ -95,6 +95,8 @@ class OrderRepository {
 				    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
 
 				});
+
+				Log::info($order);
 
 			});
 			
@@ -211,11 +213,13 @@ class OrderRepository {
 	/**
 	 * 
 	 *
-	 * @todo calculate Shipping
+	 * 
 	 */
 	private function calculateTotal($items) {
 
 		$total = 0;
+
+		Log::info($items);
 
 		foreach($items as $item) {
 
@@ -226,8 +230,10 @@ class OrderRepository {
 			} else {
 
 				$price = Product::findOrFail($item['id'])->price;
-
+		
 			}
+
+			$price = $price * $item['quantity'];
 
 			$total += $price;
 
@@ -235,7 +241,17 @@ class OrderRepository {
 			// NOT the id of the record in the addons table.
 			foreach($item['addons'] as $addon) {
 
-				$addonPrice = Product::findOrFail($addon['id'])->price;
+				if ($addon['sizeable'] && $addon['sizeId']) {
+
+					$addonPrice = Size::findOrFail($addon['sizeId'])->price;
+
+				} else {
+
+					$addonPrice = Product::findOrFail($addon['id'])->price;
+
+				}
+
+				$addonPrice = $addonPrice * $addon['quantity'];
 
 				$total += $addonPrice;
 
@@ -265,6 +281,7 @@ class OrderRepository {
 			$orderItem = new OrderItem;
 			$orderItem->orderId = $order->id;
 			$orderItem->productId = $item['id'];
+			$orderItem->quantity = $item['quantity'];
 
 			if ($item['sizeable'] && $item['sizeId']) {
 				$orderItem->sizeId = $item['sizeId'];
@@ -277,6 +294,12 @@ class OrderRepository {
 				$itemAddon = new OrderItemAddon;
 				$itemAddon->orderItemId = $orderItem->id;
 				$itemAddon->productId = $addon['id'];
+				$itemAddon->quantity = $addon['quantity'];
+				if($addon['sizeable'] && $addon['sizeId']) {
+
+					$itemAddon->sizeId = $addon['sizeId'];
+
+				}
 
 				$itemAddon->save();
 

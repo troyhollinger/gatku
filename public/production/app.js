@@ -4031,6 +4031,7 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.sizeable = data.sizeable;
 		item.sizeId = data.sizeId;
 		item.addons = [];
+		item.quantity = 1;
 
 		// Grab selected addons from the user action,
 		// dump them in the item.addons array
@@ -4044,6 +4045,13 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 				addonToCart.id = addon.product.id;
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
+				addonToCart.sizeable = addon.product.sizeable;
+				if (addon.product.sizeId) {
+
+					addonToCart.sizeId = addon.product.sizeId;
+
+				}
+				addonToCart.quantity = 1;
 
 				item.addons.push(addonToCart);
 
@@ -4069,6 +4077,66 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		if (!cart.length) return false;
 
 		cart.splice(index,1);
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.increaseItemQuantity = function(itemIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].quantity++;
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.decreaseItemQuantity = function(itemIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].quantity--;
+
+		if (cart[itemIndex].quantity == 0) {
+
+			cart.splice(itemIndex, 1);
+
+		} 
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.increaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].addons[addonIndex].quantity++;
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.decreaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].addons[addonIndex].quantity--;
+
+		if (cart[itemIndex].addons[addonIndex].quantity == 0) {
+
+			cart[itemIndex].addons.splice(addonIndex, 1);
+
+		}
 
 		Cookie('items', cart, { path : '/' });
 
@@ -4728,7 +4796,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.form = {};
 
@@ -4759,6 +4827,30 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 	$scope.removeItem = function(index) {
 
 		CartService.removeItem(index);
+
+	}
+
+	$scope.increaseItemQuantity = function(itemIndex) {
+
+		CartService.increaseItemQuantity(itemIndex);
+
+	}
+
+	$scope.decreaseItemQuantity = function(itemIndex) {
+
+		CartService.decreaseItemQuantity(itemIndex);
+
+	}
+
+	$scope.increaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		CartService.increaseAddonQuantity(itemIndex, addonIndex);
+
+	}
+
+	$scope.decreaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		CartService.decreaseAddonQuantity(itemIndex, addonIndex);
 
 	}
 
@@ -4834,11 +4926,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		angular.forEach($scope.items, function(value, key) {
 
-			total += $scope.items[key].price;
+			total += $scope.items[key].price * $scope.items[key].quantity;
 
 			for(var i = 0; i < $scope.items[key].addons.length; i++) {
 
-				total += $scope.items[key].addons[i].price;
+				total += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
 
 			}
 
@@ -5048,11 +5140,9 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 app.controller('CartCountController', ['$scope', 'CartService', function($scope, CartService) {
 
-	$scope.count = CartService.getItems().length; 
-
 	$scope.$on('update', function() {
 
-		$scope.count = CartService.getItems().length; 
+		countItems();
 
 	});
 
@@ -5061,6 +5151,29 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 		CartService.show();
 
 	}
+
+	function countItems() {
+
+		var items = CartService.getItems();
+		var count = 0;
+
+		for(var i = 0; i < items.length; i++) {
+
+			count++;
+
+			for(var ii = 0; ii < items[i].addons.length; ii++) {
+
+				count++;
+
+			}
+
+		}
+
+		$scope.count = count;
+
+	}
+
+	countItems();
 
 
 }]);
@@ -5205,6 +5318,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 				Size.getBySlug(slug).success(function(response) {
 
 					addon.product.price = response.data.price;
+					addon.product.sizeId = response.data.id;
 
 				}).error(function(response) {
 

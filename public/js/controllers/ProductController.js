@@ -122,6 +122,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 				Size.getBySlug(slug).success(function(response) {
 
 					addon.product.price = response.data.price;
+					addon.product.sizeId = response.data.id;
 
 				}).error(function(response) {
 

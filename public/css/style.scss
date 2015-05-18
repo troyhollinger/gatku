@@ -2065,12 +2065,71 @@ product-buyers {
 
 
 
+.cart-quantity-column {
+
+	width:15%;
+	float:left;
+	text-align: center;
+	font-size: 1.3rem;
+
+	span {
+
+		position: relative;
+
+	}
+
+	i {
+
+		color:lighten(black, 85%);
+		position: absolute;
+		font-size: 1.55rem;
+		cursor: pointer;
+
+		span {
+
+			position: absolute;
+			right:150%;
+			font-size: .7rem;
+			top:.5em;
+			visibility: hidden;
+			color:$brand;
+
+		}
+
+		&:hover {
+
+			color:black;
+
+			span {
+
+				visibility: visible;
+
+			}
+
+		}
+
+	}
+
+	.fa-angle-left {
+
+		right:150%;
+		
+	}
+
+	.fa-angle-right {
+
+		left:150%;
+	
+	}
+
+}
+
 .cart-price-column {
 
-	width:30%;
+	width:15%;
 	float:right;
 	text-align: right;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 
 	&.shipping-column {
 
@@ -2089,6 +2148,25 @@ product-buyers {
 		h3 {
 
 			font-size: 1rem;
+
+		}
+
+	}
+
+	.cart-quantity-column {
+
+		font-size: 1rem;
+
+		i {
+
+			font-size: 1.2rem;
+
+			span {
+
+				font-size: 0.5rem;
+				top:0.4em;
+
+			}
 
 		}
 

@@ -1,10 +1,8 @@
 app.controller('CartCountController', ['$scope', 'CartService', function($scope, CartService) {
 
-	$scope.count = CartService.getItems().length; 
-
 	$scope.$on('update', function() {
 
-		$scope.count = CartService.getItems().length; 
+		countItems();
 
 	});
 
@@ -13,6 +11,29 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 		CartService.show();
 
 	}
+
+	function countItems() {
+
+		var items = CartService.getItems();
+		var count = 0;
+
+		for(var i = 0; i < items.length; i++) {
+
+			count++;
+
+			for(var ii = 0; ii < items[i].addons.length; ii++) {
+
+				count++;
+
+			}
+
+		}
+
+		$scope.count = count;
+
+	}
+
+	countItems();
 
 
 }]);

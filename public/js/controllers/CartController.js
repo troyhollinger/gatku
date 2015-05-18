@@ -13,7 +13,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.form = {};
 
@@ -44,6 +44,30 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 	$scope.removeItem = function(index) {
 
 		CartService.removeItem(index);
+
+	}
+
+	$scope.increaseItemQuantity = function(itemIndex) {
+
+		CartService.increaseItemQuantity(itemIndex);
+
+	}
+
+	$scope.decreaseItemQuantity = function(itemIndex) {
+
+		CartService.decreaseItemQuantity(itemIndex);
+
+	}
+
+	$scope.increaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		CartService.increaseAddonQuantity(itemIndex, addonIndex);
+
+	}
+
+	$scope.decreaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		CartService.decreaseAddonQuantity(itemIndex, addonIndex);
 
 	}
 
@@ -119,11 +143,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		angular.forEach($scope.items, function(value, key) {
 
-			total += $scope.items[key].price;
+			total += $scope.items[key].price * $scope.items[key].quantity;
 
 			for(var i = 0; i < $scope.items[key].addons.length; i++) {
 
-				total += $scope.items[key].addons[i].price;
+				total += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
 
 			}
 

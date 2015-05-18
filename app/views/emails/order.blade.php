@@ -280,21 +280,50 @@
 														<table class="addons-table" style="float:right;">
 															<tr class="product-name-row">
 																<!-- Product Name here -->
+																@if($item->product->sizeable)
+																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item->size->name }}</strong></span></td>
+																@else
 																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item->product->shortName }}</strong>@if($item->product->type->slug === 'pole')<span>'ER</span>@endif
 																	@if (strpos($item->product->slug, 'paralyzer') !== false)<small>/{{ $item->product->length }}</small>@endif</span>
 																</td>
+																@endif
+
+																@if($item->product->sizeable)
+																<td>${{ $item->size->price / 100 }}</td>
+																@else
 																<td>${{ $item->product->price / 100 }}</td>
-																<td><span class="product-quantity ">1</span></td>
-																<td><span class="product-final-price">${{ $item->product->price / 100}}</span></td>
+																@endif
+
+
+
+																<td><span class="product-quantity ">{{ $item->quantity }}</span></td>
+
+																@if($item->product->sizeable)
+																<td><span class="product-final-price">${{ ($item->size->price * $item->quantity) / 100}}</span></td>
+																@else
+																<td><span class="product-final-price">${{ ($item->product->price * $item->quantity) / 100}}</span></td>
+																@endif
+
 															</tr>
 
 															@foreach($item->addons as $ii => $addon)
 															<!-- first addon -->
 															<tr class="main-product {{ $ii == 0 ? 'first-opt-set' : '' }}">
 																<td><span class="bold">{{ $addon->product->name }}</span></td>
+
+																@if($addon->product->sizeable)
+																<td>${{ $addon->size->price / 100 }}</td>
+																@else
 																<td>${{ $addon->product->price / 100 }}</td>
-																<td><span class="product-quantity">1</span></td>
-																<td><span class="product-final-price">${{ $addon->product->price / 100 }}</span></td>
+																@endif
+
+																<td><span class="product-quantity">{{ $addon->quantity }}</span></td>
+
+																@if($addon->product->sizeable)
+																<td><span class="product-final-price">${{ ($addon->size->price * $addon->quantity) / 100 }}</span></td>
+																@else
+																<td><span class="product-final-price">${{ ($addon->product->price * $addon->quantity) / 100 }}</span></td>
+																@endif
 															</tr>
 
 															@endforeach

@@ -34,6 +34,7 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.sizeable = data.sizeable;
 		item.sizeId = data.sizeId;
 		item.addons = [];
+		item.quantity = 1;
 
 		// Grab selected addons from the user action,
 		// dump them in the item.addons array
@@ -47,6 +48,13 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 				addonToCart.id = addon.product.id;
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
+				addonToCart.sizeable = addon.product.sizeable;
+				if (addon.product.sizeId) {
+
+					addonToCart.sizeId = addon.product.sizeId;
+
+				}
+				addonToCart.quantity = 1;
 
 				item.addons.push(addonToCart);
 
@@ -72,6 +80,66 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		if (!cart.length) return false;
 
 		cart.splice(index,1);
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.increaseItemQuantity = function(itemIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].quantity++;
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.decreaseItemQuantity = function(itemIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].quantity--;
+
+		if (cart[itemIndex].quantity == 0) {
+
+			cart.splice(itemIndex, 1);
+
+		} 
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.increaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].addons[addonIndex].quantity++;
+
+		Cookie('items', cart, { path : '/' });
+
+		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.decreaseAddonQuantity = function(itemIndex, addonIndex) {
+
+		var cart = Cookie('items') || [];
+
+		cart[itemIndex].addons[addonIndex].quantity--;
+
+		if (cart[itemIndex].addons[addonIndex].quantity == 0) {
+
+			cart[itemIndex].addons.splice(addonIndex, 1);
+
+		}
 
 		Cookie('items', cart, { path : '/' });
 
