@@ -19,11 +19,11 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 
 		for(var i = 0; i < items.length; i++) {
 
-			count++;
+			count+= (1 * items[i].quantity);
 
 			for(var ii = 0; ii < items[i].addons.length; ii++) {
 
-				count++;
+				count+= (1 * items[i].addons[ii].quantity);
 
 			}
 

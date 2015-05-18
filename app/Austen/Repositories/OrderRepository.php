@@ -96,8 +96,6 @@ class OrderRepository {
 
 				});
 
-				Log::info($order);
-
 			});
 			
 		} catch(Exception $e) {

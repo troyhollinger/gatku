@@ -21,7 +21,7 @@ class ProductsTableSeeder extends Seeder {
 				product? You were probably dealing with a three 
 				prong that had no potential for spring function.</p>
 
-				<p class="faded">Watch FAQ Video about this Paralyzer</p>
+				<p class="faded">Coming Soon - Watch FAQ Video about this Paralyzer</p>
 
 				<p>The "spring" action is the mechanism behind a 
 				paralyzer that successfully lands fish and we’ve 
@@ -61,7 +61,7 @@ class ProductsTableSeeder extends Seeder {
 				instance, which can be relatively small, sometimes 
 				only enough to fit two tines into.</p>
 
-				<p class="faded">Watch FAQ Video about this Paralyzer</p>
+				<p class="faded">Coming Soon - Watch FAQ Video about this Paralyzer</p>
 
 				<p>We know our product well, we make it all with our 
 				own hands on our own machines. Trustworthy 
@@ -100,7 +100,7 @@ class ProductsTableSeeder extends Seeder {
 				you well. 8 years in the making, our G2 SlipTip is 
 				the weapon of choice for big fish, no fish is too big.</p>
 
-				<p class="faded"><span class="bold">Watch FAQ Video</span> about this Head</p>
+				<p class="faded">Coming Soon - <span class="bold">Watch FAQ Video</span> about this Head</p>
 
 				<p>Use this head for Grouper, Hogs, Snapper, Halibut,
 				White Seabass, Yellowtail, and other pelagic fish. 
@@ -136,7 +136,7 @@ class ProductsTableSeeder extends Seeder {
 				coming from a machinist)–go ahead, try to bend 
 				it–it won’t give.</p> 
 
-				<p class="faded">Watch FAQ Video about this Head</p>
+				<p class="faded">Coming Soon - Watch FAQ Video about this Head</p>
 
 				<p>With a little locational sharpening, this head will 
 				prove to be a "killer" for a lifetime. Go for such fish
@@ -171,7 +171,7 @@ class ProductsTableSeeder extends Seeder {
 				SIX\'ER is paired with our <hover-card slug="signature-paralyzer">Signature Paralyzer</hover-card> or 
 				our <hover-card slug="barbed-paralyzer">Barbed Paralyzer.</hover-card></p>
 
-				<p class="faded">Watch FAQ Video about this Polespear</p>
+				<p class="faded"><span class="bold">Coming Soon</span> - Watch FAQ Video about this Polespear</p>
 
 				<p>Great for beginners.</p>
 
@@ -205,7 +205,7 @@ class ProductsTableSeeder extends Seeder {
 				SEVEN\'ER is paired with our <hover-card slug="signature-paralyzer">Signature Paralyzer</hover-card>
 				or our <hover-card slug="barbed-paralyzer">Barbed Paralyzer</hover-card>.</p>
 
-				<p class="faded">Watch FAQ Video about this Polespear</p>
+				<p class="faded"><span class="bold">Coming Soon</span> - Watch FAQ Video about this Polespear</p>
 
 				<p>Great for beginners. Very similiar to the SIX’ER 
 				just packs more distance and punch. </p>
@@ -238,15 +238,15 @@ class ProductsTableSeeder extends Seeder {
 				36 inches. Heads are sold separately. Usually the 
 				EIGHTER\'ER is paired with our <hover-card slug="flopper">Flopper Head</hover-card>.</p> 
 
-				<p class="faded">Watch FAQ Video about this Polespear</p>
+				<p class="faded"><span class="bold">Coming Soon</span> - Watch FAQ Video about this Polespear</p>
 
 				<p>Good for intermediate divers.</p>
 
 				<p>The most versatile spear we offer, a weapon for just 
-				about every occasion. Use our Signature Paralyzer 
-				or Barbed Paralyzer with InshoreShrinker for 
+				about every occasion. Use our <hover-card slug="signature-paralyzer">Signature Paralyzer</hover-card> 
+				or <hover-card slug="barbed-paralyzer">Barbed Paralyzer</hover-card> with <hover-card slug="inshore-shrinker">InshoreShrinker</hover-card> for 
 				inshore diving. If going for bigger pelagic fish be 
-				sure to get our SlipTip.</p>',
+				sure to get our <hover-card slug="slip-tip">SlipTip</hover-card>.</p>',
 			'maneuverability' => 'Sleek, 3/8” diameter, carbon graphite front end allows diver to  effortlessly swing polespear with minimized drag in the water;  This is especially a benefit when tracking fish.',
 			'trajectory' => 'Extended section in front of loaded hand allows you to see  where the polespear is headed. Eliminating the \'shooting from  the hip\' factor. Instead, you are capable of pinpointing target  with limited guesswork.',
 			'balance' => 'Polespear won\'t feel so \'weighted down\' in the rear with the  tip 3’ away from loaded hand; Resulting in natural tracking  movements plus a more comfortable hold.',
@@ -272,13 +272,13 @@ class ProductsTableSeeder extends Seeder {
 				42 inches. Heads are sold separately. Usually the 
 				NINE\'ER is paired with our <hover-card slug="slip-tip">SlipTip</hover-card>.</p> 
 
-				<p class="faded">Watch FAQ Video about this Polespear</p>
+				<p class="faded"><span class="bold">Coming Soon</span> - Watch FAQ Video about this Polespear</p>
 
 				<p>More for experienced divers.</p>
 
 				<p>Perfect weapon for the Bahamas. Go after Hog 
 				Fish, Snapper, Grouper and all the small stuff too 
-				when coupled with our InshoreShrinker. Also 
+				when coupled with our <hover-card slug="inshore-shrinker">InshoreShrinker</hover-card>. Also 
 				acceptable for pelagic fish, use our SlipTip.</p>',
 			'maneuverability' => 'Sleek, 3/8” diameter, carbon graphite front end allows diver to  effortlessly swing polespear with minimized drag in the water;  This is especially a benefit when tracking fish.',
 			'trajectory' => 'Extended section in front of loaded hand allows you to see  where the polespear is headed. Eliminating the \'shooting from  the hip\' factor. Instead, you are capable of pinpointing target  with limited guesswork.',
@@ -304,12 +304,12 @@ class ProductsTableSeeder extends Seeder {
 				42 inches. Heads are sold separately. Usually the 
 				TEN\'ER is paired with our <hover-card slug="slip-tip">SlipTip</hover-card>.</p> 
 
-				<p class="faded">Watch FAQ Video about this Polespear</p>
+				<p class="faded"><span class="bold">Coming Soon</span> - Watch FAQ Video about this Polespear</p>
 
 				<p>More for experienced divers.</p>
 
 				<p>Traditionally an open-water only spear, now our
-				InshoreShrinker can be attached to make it more 
+				<hover-card slug="inshore-shrinker">InshoreShrinker</hover-card> can be attached to make it more 
 				of a "reef hunter". Go for such fishas Yellowtail, 
 				Wahoo, Amberjack, White Seabass, and Dorado,
 				etc.</p>',

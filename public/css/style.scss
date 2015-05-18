@@ -2451,6 +2451,12 @@ hover-card {
 	cursor:pointer;
 	white-space: nowrap;
 
+	&[slug="inshore-shrinker"] {
+
+		color:$brand;
+
+	}
+
 }
 
 
