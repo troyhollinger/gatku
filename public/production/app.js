@@ -230,7 +230,7 @@ var PoleScroll = {
 
 		var scroller = $(".scroller");
 
-		if (layoutType === 'head') {
+		if (layoutType === 'head' || slug === 'bands' ) {
 
 			if ($(window).width() < 1000) {
 

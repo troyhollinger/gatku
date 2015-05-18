@@ -1064,6 +1064,12 @@ html {
 
 	}
 
+	&.band-scroller {
+
+		height:230px;
+
+	}
+
 	&.no-attached-state {
 
 		@include breakpoint(small) {

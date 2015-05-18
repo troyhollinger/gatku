@@ -393,7 +393,7 @@ class ProductsTableSeeder extends Seeder {
 
 		Product::create([
 			'typeId' => 4, 
-			'attachedImage' => '',
+			'attachedImage' => asset('img/full-size/hardcore-band-attached.jpg'),
 			'detachedImage' => '',
 			'thumb' => asset('img/thumbs/band.png'),
 			'emailImage' => asset('img/email-assets/thumbs/band-e.png'),

@@ -34,7 +34,7 @@
 
 				<div class="clear"></div>
 
-				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' }">
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
 
 					<img ng-src="@{{ item.thumb }}">
 
@@ -207,7 +207,7 @@
 
 				<div class="clear"></div>
 
-				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' }">
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
 
 					<img ng-src="@{{ item.thumb }}">
 
