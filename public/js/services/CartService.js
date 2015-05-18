@@ -27,6 +27,7 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.length = data.length;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.slug = data.slug;
 		item.type = {};
 		item.type.shippingPrice = data.type.shippingPrice;
 		item.type.slug = data.type.slug;
@@ -61,12 +62,18 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 		$rootScope.$broadcast('itemAdded');
 
-		// AlertService.broadcast('Item added to cart!', 'success');
-
 	}
 	
 
-	CartService.removeItem = function(id) {
+	CartService.removeItem = function(index) {
+
+		var cart = CartService.getItems();
+
+		if (!cart.length) return false;
+
+		cart.splice(index,1);
+
+		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
 

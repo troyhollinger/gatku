@@ -4024,6 +4024,7 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		item.length = data.length;
 		item.price = data.price;
 		item.thumb = data.thumb;
+		item.slug = data.slug;
 		item.type = {};
 		item.type.shippingPrice = data.type.shippingPrice;
 		item.type.slug = data.type.slug;
@@ -4058,12 +4059,18 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 		$rootScope.$broadcast('itemAdded');
 
-		// AlertService.broadcast('Item added to cart!', 'success');
-
 	}
 	
 
-	CartService.removeItem = function(id) {
+	CartService.removeItem = function(index) {
+
+		var cart = CartService.getItems();
+
+		if (!cart.length) return false;
+
+		cart.splice(index,1);
+
+		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
 
@@ -4747,7 +4754,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		$scope.items = items;
 
-		console.log($scope.items);
+	}
+
+	$scope.removeItem = function(index) {
+
+		CartService.removeItem(index);
 
 	}
 
@@ -4963,52 +4974,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				$scope.status = 'Please enter a country';
 				AlertService.broadcast('Please enter a country', 'error');
 				return false;
-
-			}
-
-			if (!$scope.form.useBillingForShipping) {
-
-
-				if (!$scope.form.shippingAddress) {
-
-					$scope.status = 'Please enter a shipping address';
-					AlertService.broadcast('Please enter a shipping address', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingCity) {
-
-					$scope.status = 'Please enter a shipping city';
-					AlertService.broadcast('Please enter a shipping city', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingState) {
-
-					$scope.status = 'Please enter a shipping state';
-					AlertService.broadcast('Please enter a shipping state', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingZip) {
-
-					$scope.status = 'Please enter a shipping zip code';
-					AlertService.broadcast('Please enter a shipping zip code', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingCountry) {
-
-					$scope.status = 'Please enter a shipping country';
-					AlertService.broadcast('Please enter a shipping country', 'error');
-					return false;
-
-				}
-
 
 			}
 

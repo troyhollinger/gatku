@@ -65,15 +65,13 @@ class OrderRepository {
 				
 				$order = $that->assignFields($order, $customer, $input['form']);
 
-				// $items = $that->convertItemsToEloquent($input['items']);
-
 				$shipping = $that->calculateShipping($input['items']);
 				
 				$total = $that->calculateTotal($input['items']);
 
 				$order->save();
 
-				// Assign current order as class property for use in other methods.
+				// Assign current order as class property for use in assignOrderItems.
 				$that->order = $order;
 
 				$that->assignOrderItems($input['items']);
@@ -118,25 +116,11 @@ class OrderRepository {
 	private function assignFields($order, $customer, $input) {
 
 		$order->customerId = $customer->id;
-
-		if($input['useBillingForShipping']) {
-
-			$order->address = $input['address'];
-			$order->city = $input['city'];
-			$order->state = $input['state'];
-			$order->country = $input['country'];
-			$order->zip = $input['zip'];
-
-		} else {
-
-			$order->address = $input['shippingAddress'];
-			$order->city = $input['shippingCity'];
-			$order->state = $input['shippingState'];
-			$order->country = $input['shippingCountry'];
-			$order->zip = $input['shippingZip'];
-
-		}
-
+		$order->address = $input['address'];
+		$order->city = $input['city'];
+		$order->state = $input['state'];
+		$order->country = $input['country'];
+		$order->zip = $input['zip'];
 		$order->number = strtoupper(str_random(15));
 
 		return $order;
@@ -301,32 +285,6 @@ class OrderRepository {
 		}
 
 	}
-
-	// private function convertItemsToEloquent($items) {
-
-	// 	$collection = [];
-
-	// 	foreach($items as $item) {
-
-	// 		$model = Product::findOrFail($item['id']);
-	// 		$model->load('type');
-	// 		$model->addons = [];
-
-	// 		foreach($item['addons'] as $addon) {
-
-	// 			$modelAddon = Product::findOrFail($addon['id']);
-
-	// 			$model->addons[] = $modelAddon;
-
-	// 		}
-
-	// 		$collection[] = $model;
-
-	// 	}
-
-	// 	return $collection;
-
-	// }
 
 	private function assignHumanReadableTimestamps($collection) {
 

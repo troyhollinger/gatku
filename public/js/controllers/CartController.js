@@ -39,7 +39,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		$scope.items = items;
 
-		console.log($scope.items);
+	}
+
+	$scope.removeItem = function(index) {
+
+		CartService.removeItem(index);
 
 	}
 
@@ -255,52 +259,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 				$scope.status = 'Please enter a country';
 				AlertService.broadcast('Please enter a country', 'error');
 				return false;
-
-			}
-
-			if (!$scope.form.useBillingForShipping) {
-
-
-				if (!$scope.form.shippingAddress) {
-
-					$scope.status = 'Please enter a shipping address';
-					AlertService.broadcast('Please enter a shipping address', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingCity) {
-
-					$scope.status = 'Please enter a shipping city';
-					AlertService.broadcast('Please enter a shipping city', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingState) {
-
-					$scope.status = 'Please enter a shipping state';
-					AlertService.broadcast('Please enter a shipping state', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingZip) {
-
-					$scope.status = 'Please enter a shipping zip code';
-					AlertService.broadcast('Please enter a shipping zip code', 'error');
-					return false;
-
-				}
-
-				if (!$scope.form.shippingCountry) {
-
-					$scope.status = 'Please enter a shipping country';
-					AlertService.broadcast('Please enter a shipping country', 'error');
-					return false;
-
-				}
-
 
 			}
 

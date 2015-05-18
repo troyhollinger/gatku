@@ -2111,6 +2111,51 @@ product-buyers {
 
 }
 
+.cart-item-actions {
+
+	ul {
+
+		overflow: auto;
+
+	}
+
+	li {
+
+		color:darken($light, 25%);
+		float:left;
+
+		&:not(.cart-item-actions-seperator) {
+
+			font-size: .85rem;
+			cursor: pointer;
+
+		}
+		
+		margin-right: 5px;
+
+		&:hover {
+
+			text-decoration: underline;
+
+		}
+
+	}
+
+}
+
+.cart-item-actions-seperator {
+
+	font-size: .6rem;
+	margin-top: 3px;
+
+	&:hover {
+
+		text-decoration: none;
+
+	}
+
+}
+
 .cart-details {
 
 	margin:10px 0;

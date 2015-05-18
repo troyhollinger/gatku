@@ -56,6 +56,14 @@
 
 				</div>
 
+				<div class="cart-item-actions">
+					<ul>
+						<a href="/product/@{{ item.slug }}"><li>View</li></a>
+						<li class="cart-item-actions-seperator">&bull;</li>
+						<li ng-click="removeItem($index)">Remove</li>
+					</ul>
+				</div>
+
 			</li>
 
 		</ul>	
@@ -122,29 +130,6 @@
 
 			<label for="country">Country</label>
 			<input type="text" name="country" id="country" ng-model="form.country">
-
-			<label for="use-billing-for-shipping">Ship to above address?</label>
-			<input type="checkbox" name="use-billing-for-shipping" id="use-billing-for-shipping" ng-model="form.useBillingForShipping" checked>
-
-			<div ng-hide="form.useBillingForShipping">
-
-				<label for="shipping-address">Shipping Address</label>
-				<input type="text" name="shipping-address" id="shipping-address" ng-model="form.shippingAddress">
-
-				<label for="shipping-city">Shipping City</label>
-				<input type="text" name="shipping-city" id="shipping-city" ng-model="form.shippingCity">
-
-				<label for="shipping-state">Shipping State / Province</label>
-				<input type="text" name="shipping-state" id="shipping-state" ng-model="form.shippingState">
-
-				<label for="shipping-zip">Shipping Zip Code</label>
-				<input type="text" name="shipping-zip" id="shipping-zip" ng-model="form.shippingZip">
-
-				<label for="shipping-country">Shipping Country</label>
-				<input type="text" name="shipping-country" id="shipping-country" ng-model="form.shippingCountry">
-
-			</div>
-
 
 		</div>
 
