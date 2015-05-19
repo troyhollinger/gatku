@@ -1164,7 +1164,7 @@ html {
 .product-column-left {
 
 	float:left;
-	width:50%;
+	width:45%;
 	height:auto;
 	
 	&.apparel-column {
@@ -1175,7 +1175,7 @@ html {
 
 		.product-description {
 
-			font-size: 1.45rem;
+			font-size: 1.25rem;
 
 			@include breakpoint(small) {
 
@@ -1525,13 +1525,15 @@ product-buyers {
 
 	&:hover {
 
-		background-color: $green;
+		// background-color: $green;
+		color:$green;
 
 	}
 
 	&.alert-state {
 
 		background-color: $green;
+		color:white !important;
 
 	}
 

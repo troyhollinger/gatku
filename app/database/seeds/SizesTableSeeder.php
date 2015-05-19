@@ -23,10 +23,10 @@ class SizesTableSeeder extends Seeder {
 		Size::create(['name' => 'X Large SuperHero T-Shirt', 'shortName' => 'X Large', 'slug' => 'xlarge-superhero-tshirt', 'productId' => 14, 'price' => 2500]);
 		Size::create(['name' => 'XX Large SuperHero T-Shirt', 'shortName' => 'XX Large', 'slug' => 'xxlarge-superhero-tshirt', 'productId' => 14, 'price' => 2500]);
 
-		Size::create(['name' => 'Medium Comfort Hoodie', 'shortName' => 'Medium', 'slug' => 'medium-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
-		Size::create(['name' => 'Large Comfort Hoodie', 'shortName' => 'Large', 'slug' => 'large-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
-		Size::create(['name' => 'X Large Comfort Hoodie', 'shortName' => 'X Large', 'slug' => 'xlarge-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
-		Size::create(['name' => 'XX Large Comfort Hoodie', 'shortName' => 'XX Large', 'slug' => 'xxlarge-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
+		Size::create(['name' => 'Medium Comfort Hoody', 'shortName' => 'Medium', 'slug' => 'medium-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
+		Size::create(['name' => 'Large Comfort Hoody', 'shortName' => 'Large', 'slug' => 'large-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
+		Size::create(['name' => 'X Large Comfort Hoody', 'shortName' => 'X Large', 'slug' => 'xlarge-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
+		Size::create(['name' => 'XX Large Comfort Hoody', 'shortName' => 'XX Large', 'slug' => 'xxlarge-comfort-hoodie', 'productId' => 15, 'price' => 4900]);
 
 		Size::create(['name' => 'SIX\'ER Band', 'shortName' => 'SIX\'ER Band', 'slug' => 'sixer-band', 'productId' => 12, 'price' => 1000]);
 		Size::create(['name' => 'SEVEN\'ER Band', 'shortName' => 'SEVEN\'ER Band', 'slug' => 'sevener-band', 'productId' => 12, 'price' => 1200]);

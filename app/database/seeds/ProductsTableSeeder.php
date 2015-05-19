@@ -472,8 +472,8 @@ class ProductsTableSeeder extends Seeder {
 			'thumb' => asset('img/thumbs/comfort-jacket-thumb.jpg'),
 			'emailImage' => asset('img/email-assets/thumbs/comfort-e.jpg'),
 			'name' => 'Comfort',
-			'shortName' => 'Comfort Hoodie',
-			'slug' => 'comfort-hoodie',
+			'shortName' => 'Comfort Hoody',
+			'slug' => 'comfort-hoody',
 			'price' => 4900,
 			'description' => '<p>Pull Over Hoody, Great for after dive chill and all around town. Abstract GATKU Icon across chest - THE BEST NAME IN SPEARFISHING.</p> <p>80% Poly / 20% Cotton - Black.</p> <p>Conveniently folds up into itself, as seen to the right - (Pouch Ryan Gattoni is holding). Thumb slots in sleeves for added comfort and warmth. GATKU cares!</p>',
 			'maneuverability' => '',
@@ -481,7 +481,7 @@ class ProductsTableSeeder extends Seeder {
 			'balance' => '',
 			'stealth' => '',
 			'metaDescription' => '',
-			'length' => 'HOODIE',
+			'length' => 'HOODY',
 			'sizeable' => true
 
 		]);

@@ -5476,7 +5476,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 		} else {
 
-			return "Add To Cart";
+			return "Add to Cart";
 
 		}
 	}

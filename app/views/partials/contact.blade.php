@@ -33,7 +33,7 @@
 
 			</div>
 
-			<p class="credits">2013 - {{ date('Y') }} &copy; GATKU / ALL RIGHTS RESERVED  |  <a href="http://troyhollinger.com">MADE BY TROY</a> |  <a href="{{ route('media') }}">MEDIA</a> </p>
+			<p class="credits">2013 - {{ date('Y') }} &copy; GATKU / ALL RIGHTS RESERVED  |  <a href="http://troyhollinger.com">WEBSITE MADE BY TROY</a> |  <a href="{{ route('media') }}">MEDIA</a> </p>
 
 		</div>
 		
