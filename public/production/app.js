@@ -3972,11 +3972,11 @@ app.directive('cartIcon', ['CartService', function(CartService) {
 
 		link : function($scope, element, attrs) {
 
-			$scope.count = CartService.getItems().length; 
+			$scope.count = CartService.count(); 
 
 			$scope.$on('update', function() {
 
-				$scope.count = CartService.getItems().length; 
+				$scope.count = CartService.count(); 
 
 			});
 
@@ -4198,6 +4198,27 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
+
+	}
+
+	CartService.count = function() {
+
+		var items = CartService.getItems();
+		var count = 0;
+
+		for(var i = 0; i < items.length; i++) {
+
+			count+= (1 * items[i].quantity);
+
+			for(var ii = 0; ii < items[i].addons.length; ii++) {
+
+				count+= (1 * items[i].addons[ii].quantity);
+
+			}
+
+		}
+
+		return count;
 
 	}
 
@@ -5271,22 +5292,7 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 
 	function countItems() {
 
-		var items = CartService.getItems();
-		var count = 0;
-
-		for(var i = 0; i < items.length; i++) {
-
-			count+= (1 * items[i].quantity);
-
-			for(var ii = 0; ii < items[i].addons.length; ii++) {
-
-				count+= (1 * items[i].addons[ii].quantity);
-
-			}
-
-		}
-
-		$scope.count = count;
+		$scope.count = CartService.count();
 
 	}
 

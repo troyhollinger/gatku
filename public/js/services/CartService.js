@@ -87,6 +87,27 @@ app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', '
 
 	}
 
+	CartService.count = function() {
+
+		var items = CartService.getItems();
+		var count = 0;
+
+		for(var i = 0; i < items.length; i++) {
+
+			count+= (1 * items[i].quantity);
+
+			for(var ii = 0; ii < items[i].addons.length; ii++) {
+
+				count+= (1 * items[i].addons[ii].quantity);
+
+			}
+
+		}
+
+		return count;
+
+	}
+
 	CartService.increaseItemQuantity = function(itemIndex) {
 
 		var cart = Cookie('items') || [];

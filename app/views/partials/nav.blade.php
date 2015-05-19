@@ -38,6 +38,7 @@
 		<li><a href="/">Home</a></li>
 		<li><smooth-link text="Store" destination="store"></smooth-link></li>
 		<li><smooth-link text="Contact" destination="contact"></smooth-link></li>
+		<li><a href="{{ route('quote') }}">Int'l Shipping?</a></li>
 	</ul>
 
 </div>

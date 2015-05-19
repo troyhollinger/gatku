@@ -365,11 +365,11 @@ app.directive('cartIcon', ['CartService', function(CartService) {
 
 		link : function($scope, element, attrs) {
 
-			$scope.count = CartService.getItems().length; 
+			$scope.count = CartService.count(); 
 
 			$scope.$on('update', function() {
 
-				$scope.count = CartService.getItems().length; 
+				$scope.count = CartService.count(); 
 
 			});
 
