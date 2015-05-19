@@ -297,9 +297,52 @@ var ApparelRotator = {
 
 }
 
+var Grid = {
+
+    init : function() {
+
+        this.squarify();
+        this.rectanglify();
+        
+    },
+
+    squarify : function() {
+
+        $(".media-square").each(function(){
+
+            var width = $(this).width();
+
+            $(this).height(width);
+
+        }); 
+
+    },
+
+    rectanglify : function() {
+
+        $(".media-rectangle").each(function() {
+
+            var width = $(this).width();
+
+            $(this).height(width * 1.5);
+
+        });
+
+    }
+
+}
+
+
+
 $(document).ready(function() {
 
 	Squares.init();
+
+	if (currentRoute === 'media') {
+
+		Grid.init();
+
+	}
 
 	if (currentRoute === 'home') {
 
@@ -349,5 +392,11 @@ $(document).ready(function() {
 $(window).resize(function() {
 
 	Squares.init();
+
+	if (currentRoute === 'media') {
+
+		Grid.init();
+
+	}
 
 });

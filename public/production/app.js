@@ -322,9 +322,52 @@ var ApparelRotator = {
 
 }
 
+var Grid = {
+
+    init : function() {
+
+        this.squarify();
+        this.rectanglify();
+        
+    },
+
+    squarify : function() {
+
+        $(".media-square").each(function(){
+
+            var width = $(this).width();
+
+            $(this).height(width);
+
+        }); 
+
+    },
+
+    rectanglify : function() {
+
+        $(".media-rectangle").each(function() {
+
+            var width = $(this).width();
+
+            $(this).height(width * 1.5);
+
+        });
+
+    }
+
+}
+
+
+
 $(document).ready(function() {
 
 	Squares.init();
+
+	if (currentRoute === 'media') {
+
+		Grid.init();
+
+	}
 
 	if (currentRoute === 'home') {
 
@@ -374,6 +417,12 @@ $(document).ready(function() {
 $(window).resize(function() {
 
 	Squares.init();
+
+	if (currentRoute === 'media') {
+
+		Grid.init();
+
+	}
 
 });
 
@@ -5215,6 +5264,33 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 
 
 }]);
+app.controller('MediaController', function($scope) {
+
+    // Determines which page is shown first on load.
+    $scope.productPage = true;
+    $scope.brandPage = false;
+
+    $scope.toProductPage = function() {
+
+        $scope.productPage = true;
+        $scope.brandPage = false;
+        
+        //Fixes bug where grid initiation is premature
+        //to images loading.
+        setTimeout(function(){Grid.init()}, 200);
+
+
+    }
+
+    $scope.toBrandPage = function() {
+
+        $scope.productPage = false;
+        $scope.brandPage = true;
+
+
+    }
+
+});
 app.controller('MobileNavigationController', ['$scope', 'Product', function($scope, Product) {
 
 	$scope.open = false;

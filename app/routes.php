@@ -62,3 +62,9 @@ Route::get('quote', ['as' => 'quote', 'uses' => 'QuoteController@index']);
 Route::post('quote', ['as' => 'quote.post', 'uses' => 'QuoteController@sendEmail']);
 
 
+Route::get('media', ['as' => 'media', function() {
+
+	return View::make('pages.media');
+
+}]);
+
