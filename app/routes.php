@@ -58,3 +58,7 @@ Route::get('images', function() {
 });
 
 
+Route::get('quote', ['as' => 'quote', 'uses' => 'QuoteController@index']);
+Route::post('quote', ['as' => 'quote.post', 'uses' => 'QuoteController@sendEmail']);
+
+

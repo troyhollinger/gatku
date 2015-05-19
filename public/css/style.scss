@@ -2903,3 +2903,146 @@ hover-card {
 	}
 
 }
+
+
+.quote-form-container {
+
+	margin-top: 120px;
+	width:100%;
+	min-height: 100%;
+	min-height: 100vh;
+	position: relative;
+
+	@extend .checkout-form;
+
+	h1 {
+
+		display: block;
+		border-bottom: 3px solid black;
+		font-size: 1.5rem;
+		font-weight: bold;
+		padding-bottom: 5px;
+		margin-bottom: 15px;
+
+	}
+
+	.column-left {
+
+		width:50%;
+		float:left;
+		box-sizing:border-box;
+		padding-right:25px;
+
+		@include breakpoint(xsmall) {
+
+			width:100%;
+			float:none;
+			padding-right: 0;
+
+		}
+
+
+	}
+
+
+	.column-right {
+
+		width:50%;
+		float:right;
+		box-sizing:border-box;
+		padding-left: 25px;
+
+		@include breakpoint(xsmall) {
+
+			width:100%;
+			float:none;
+			padding-left: 0;
+
+		}
+
+	}
+
+	textarea, select {
+
+		border-radius: 2px;
+		box-sizing:border-box;
+		padding:7px 10px;
+		outline:none;
+		box-shadow: none;
+		border:1px solid darken($light, 20%);
+		margin-bottom: 10px;
+
+		&:not(.native) {
+
+			width:100%;
+			display: block;
+
+		}
+
+		&:focus {
+
+			border:1px solid black;
+
+		}
+
+	}
+
+	textarea {
+
+		height:100px;
+
+	}
+
+	option {
+
+		text-transform: uppercase;
+		font-weight: bold;
+
+	}
+
+	.invalid {
+
+		border-color:$red;
+
+	}
+
+	.big-button {
+
+		@include center;
+		top:40%;
+
+	}
+
+	@include breakpoint(small) {
+
+		margin-top: 50px;
+		min-height: auto;
+		height:auto;
+		box-sizing:border-box;
+		padding-bottom: 50px;
+
+	}
+
+}
+
+.quote-form-actions {
+
+	margin-top: 40px;
+
+	.button {
+
+		margin-right: 10px;
+
+	}
+
+}
+
+
+.big-button {
+
+	@extend .button;
+
+	font-size: 3.5rem;
+
+}
+

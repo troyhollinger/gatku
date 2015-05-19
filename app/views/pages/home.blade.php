@@ -34,43 +34,6 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 </div>
 
-{{-- <div class="home-section video-section" ng-controller="VideoController" id="videos">
-
-	<div class="home-container">
-
-		<div class="active-video-section">
-
-			<div class="active-video-container">
-
-				<iframe ng-src="@{{ activeVideo.link }}"></iframe>
-
-			</div>
-
-			<h3 class="video-title">@{{ activeVideo.title }}</h3>
-			<p class="video-description">@{{ activeVideo.description }}</p>
-
-		</div>
-
-		<div class="video-list-section">
-
-			<ul>
-				<li ng-repeat="video in videos" ng-click="setActiveVideo($index)">@{{ video.shortTitle }}</li>
-			</ul>
-
-		</div>
-
-		<div class="clear"></div>
-
-	</div>
-
-</div> --}}
-
-{{-- <div class="home-section you-section" id="you">
-
-	@include('partials.youGrid')
-
-</div> --}}
-
 @include('partials.contact')
 
 @stop
