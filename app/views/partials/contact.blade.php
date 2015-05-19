@@ -29,7 +29,7 @@
 				<a href="https://instagram.com/ryangattoni/" target="_blank"><i class="fa fa-instagram"></i></a>
 				<a href="http://www.facebook.com/gatku" target="_blank"><i class="fa fa-facebook"></i></a>
 				<a href="http://www.twitter.com/gatku" target="_blank"><i class="fa fa-twitter"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-youtube-play"></i></a>
+				<a href="http://www.youtube.com/ryangattoni" target="_blank"><i class="fa fa-youtube-play"></i></a>
 
 			</div>
 

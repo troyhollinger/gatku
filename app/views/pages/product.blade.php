@@ -103,7 +103,7 @@
 			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> / 
 			@endif
 			@if($product->type->slug === 'pole')
-			+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <span class="bold">Request Quote</span></p>
+			+ $20 Shipping within USA <br><span class="bold">Int’l</span> Rates Vary <a href="{{ route('quote') }}" target="_blank"><span class="bold">Request Quote</span></a></p>
 			@else
 			Ships Free w/ Pole Purchase
 			@endif

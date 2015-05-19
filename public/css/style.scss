@@ -98,6 +98,12 @@ html {
 
 }
 
+.frozen {
+
+	overflow: hidden;
+
+}
+
 .success-bg {
 
 	background-color: $green;
@@ -1383,6 +1389,12 @@ product-buyers {
 
 	font-size: 1.4rem;
 	text-align: right;
+
+	a:hover {
+
+		text-decoration: underline;
+
+	}
 
 	@include breakpoint(medium) {
 

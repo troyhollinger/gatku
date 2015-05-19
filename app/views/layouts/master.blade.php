@@ -39,11 +39,11 @@
         @endif
     </head>
     @if(Route::currentRouteName() === 'product.show') 
-    <body ng-app="gatku" ng-controller="ProductController">
+    <body ng-app="gatku" ng-controller="ProductController" body-freeze>
     @elseif(Route::currentRouteName() === 'admin.index')
-    <body ng-app="gatku" class="admin-body">
+    <body ng-app="gatku" class="admin-body" body-freeze>
     @else
-    <body ng-app="gatku">
+    <body ng-app="gatku" body-freeze>
     @endif
 
         @include('partials.nav')

@@ -3944,6 +3944,44 @@ app.directive('cartIcon', ['CartService', function(CartService) {
 	}
 
 }]);
+
+
+
+app.directive('bodyFreeze', ['CartService', function(CartService) {
+
+	return {
+
+		restrict : 'A',
+
+		link : function($scope, element, attrs) {
+
+			$scope.$on('show', function() {
+
+				element.addClass('frozen');
+
+			});
+
+			$scope.$on('hide', function() {
+
+				element.removeClass('frozen');
+
+			});
+
+		}
+
+	}
+
+}]);
+
+
+
+
+
+
+
+
+
+
 app.factory('AlertService', ['$rootScope', function($rootScope) {
 
 	var AlertService = {};
