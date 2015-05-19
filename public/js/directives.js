@@ -256,8 +256,6 @@ app.directive('alerter', ['$window', '$timeout', 'AlertService', function($windo
 			$scope.show = false;
 			$scope.alertType = 'success';
 
-			console.log("is this happening?");
-
 			$scope.$on('successAlert', function() {
 
 				$scope.alertType = 'success';	
@@ -416,7 +414,39 @@ app.directive('bodyFreeze', ['CartService', function(CartService) {
 }]);
 
 
+app.directive('smoothLink', ['$window', '$location', 'NavigationService', function($window, $location, NavigationService) {
 
+	return {
+
+		restrict : 'E',
+
+		scope : {},
+
+		template : '<a href="#" ng-click="click()">{{ text }}</a>',
+
+		link : function($scope, element, attrs) {
+
+			$scope.text = attrs.text;
+
+			$scope.click = function() {
+
+				var target = angular.element($window.document.getElementById(attrs.destination));
+				var body = $window.document.getElementsByTagName('body')[0];
+
+				NavigationService.close();
+				// console.log(target[0].ofsetTop);
+				// body.scrollTop = target[0].offsetTop;
+				$('html,body').animate({ scrollTop: target[0].offsetTop }, 400);
+
+	        	return false;
+
+	    	}
+
+		}
+
+	}
+
+}]);
 
 
 

@@ -298,6 +298,16 @@ html {
 
 }
 
+.skippr-arrow {
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
+}
+
 .mast {
 
 	position: fixed;
@@ -1052,6 +1062,8 @@ html {
 
 .credits {
 
+	font-size: .8rem;
+
 	a {
 
 		&:hover {
@@ -1626,12 +1638,13 @@ product-buyers {
 
 .product-store-section {
 
-	margin-top: 100px;
-	margin-bottom: 100px;
+	box-sizing:border-box;
+	padding-top: 100px;
+	padding-bottom: 100px;
 
 	@include breakpoint(small) {
 
-		margin-top: 50px;
+		padding-top: 50px;
 
 	}
 
@@ -2919,6 +2932,12 @@ hover-card {
 	@include center;
 	color:darken($light, 10%);
 	font-size: .8rem;
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
 
 }
 

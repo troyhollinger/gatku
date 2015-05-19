@@ -36,8 +36,8 @@
 
 	<ul>
 		<li><a href="/">Home</a></li>
-		<li><a href="#store">Store</a></li>
-		<li><a href="#contact">Contact</a></li>
+		<li><smooth-link text="Store" destination="store"></smooth-link></li>
+		<li><smooth-link text="Contact" destination="contact"></smooth-link></li>
 	</ul>
 
 </div>

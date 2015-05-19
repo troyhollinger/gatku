@@ -1,6 +1,18 @@
-app.controller('MobileNavigationController', ['$scope', 'Product', function($scope, Product) {
+app.controller('MobileNavigationController', ['$scope', 'Product', 'NavigationService', function($scope, Product, NavigationService) {
 
 	$scope.open = false;
+
+	$scope.openAction = function() {
+
+		NavigationService.open();
+
+	}
+
+	$scope.closeAction = function() {
+
+		NavigationService.close();
+
+	}
 
 	$scope.$on('open', function() {
 
