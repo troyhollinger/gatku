@@ -255,7 +255,7 @@
 	                                 	{{ $order->address }}<br>
 	                                 	{{ $order->city }}, {{ $order->state }} {{ $order->zip }}<br>
 	                                 	{{ $order->country }}<br>
-	                                 	Phone: {{ $order->customer->phone }}<br>
+	                                 	{{-- Phone: {{ $order->customer->phone }}<br> --}}
 	                                 	Email: {{ $order->customer->email }}
 	                             	</p>
 										

@@ -307,7 +307,7 @@ app.directive('hamburger', ['NavigationService', function(NavigationService) {
 		'<div class="patty"></div>' +
 		'<div class="patty"></div>' +
 		'<div class="patty"></div>' +
-		'<span class="status">{{ status }}</span>' +
+		// '<span class="status">{{ status }}</span>' +
 		'</div>',
 
 		link : function($scope, element, attrs) {

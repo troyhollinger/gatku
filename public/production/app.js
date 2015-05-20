@@ -3914,7 +3914,7 @@ app.directive('hamburger', ['NavigationService', function(NavigationService) {
 		'<div class="patty"></div>' +
 		'<div class="patty"></div>' +
 		'<div class="patty"></div>' +
-		'<span class="status">{{ status }}</span>' +
+		// '<span class="status">{{ status }}</span>' +
 		'</div>',
 
 		link : function($scope, element, attrs) {
@@ -4934,7 +4934,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.form = {};
 
@@ -5167,13 +5167,13 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}
 
-			if (!$scope.form.phone) {
+			// if (!$scope.form.phone) {
 
-				$scope.status = 'Please enter phone number.';
-				AlertService.broadcast('Please enter a phone number', 'error');
-				return false;
+			// 	$scope.status = 'Please enter phone number.';
+			// 	AlertService.broadcast('Please enter a phone number', 'error');
+			// 	return false;
 
-			}
+			// }
 
 			if (!$scope.form.address) {
 

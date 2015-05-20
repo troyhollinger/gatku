@@ -15,6 +15,13 @@
 
 		<h2>Cart</h2>
 
+		<div class="cart-actions">
+
+			<div class="button success-bg" ng-click="toStage(1)">Checkout</div>
+			<div class="button info-bg" ng-click="emptyCart()">Empty Cart</div>
+
+		</div>
+
 		<ul>	
 			<li ng-repeat="item in items" class="cart-item" ng-class="{ 'apparel-cart-item' : item.type.slug === 'apparel' }">
 
@@ -121,10 +128,10 @@
 			<label for="email">Email Address</label>
 			<input type="text" name="email" id="email" ng-model="form.email">
 
-			<label for="phone">Phone</label>
-			<input type="text" name="phone" id="phone" ng-model="form.phone">
+			{{-- <label for="phone">Phone</label>
+			<input type="text" name="phone" id="phone" ng-model="form.phone"> --}}
 
-			<label for="address">Billing Address</label>
+			<label for="address">Shipping Address</label>
 			<input type="text" name="address" id="address" ng-model="form.address">
 
 			<label for="city">City</label>
@@ -274,7 +281,7 @@
 
 		</div>
 
-		<p>By Clicking finish, your card will be charged.</p>
+		<p style="margin-bottom:10px;">By Clicking finish, your card will be charged.</p>
 
 		<div class="cart-actions">
 
