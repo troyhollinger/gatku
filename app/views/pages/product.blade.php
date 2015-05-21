@@ -12,11 +12,14 @@
 @section('content')
 
 @if($product->type->slug != 'apparel')
-<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'inshore-shrinker' ? 'no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }}">
+<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
+
+	@if($product->attachedImage)
 	<img class="scroller-image {{ $product->slug === 'budk' ? 'no-attached-state' : '' }}" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
-	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker no-attached-state' : '' }} " ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
+	@endif
+	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker' : '' }} " ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
 	@endif
 
 </div>

@@ -325,7 +325,7 @@ class ProductsTableSeeder extends Seeder {
 		Product::create([
 			'typeId' => 3, 
 			'attachedImage' => '',
-			'detachedImage' => asset('img/full-size/inshore-shrinker-detached.jpg'),
+			'detachedImage' => asset('img/full-size/inshore-shrinker-detached-2.jpg'),
 			'thumb' => asset('img/thumbs/inshore-shrinker.png'),
 			'emailImage' => asset('img/email-assets/thumbs/shrinker-e.png'),
 			'name' => 'InshoreShrinker',

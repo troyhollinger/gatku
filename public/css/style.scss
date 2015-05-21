@@ -75,7 +75,7 @@ $dark : #444444;
     	@media (max-width: 500px) { @content; }
 	}
 	@else if $point == small {
-    	@media (max-width: 750px) { @content; }
+    	@media (max-width: 770px) { @content; }
 	}
 	@else if $point == medium {
     	@media (max-width: 1300px) { @content; }
@@ -94,7 +94,7 @@ $dark : #444444;
     	@media (min-width: 500px) { @content; }
 	}
 	@else if $point == small {
-    	@media (min-width: 750px) { @content; }
+    	@media (min-width: 770px) { @content; }
 	}
 	@else if $point == medium {
     	@media (min-width: 1300px) { @content; }
@@ -260,6 +260,12 @@ html {
 	border-bottom:solid $gray thin;
 	@include transform(rotate(45deg));
 	margin-left:30px;
+
+	@include breakpoint(small) {
+
+		margin-left: 15px;
+
+	}
 }
 .right-arrow {
 	float:right;
@@ -269,6 +275,12 @@ html {
 	border-bottom:solid $gray thin;
 	@include transform(rotate(-45deg));
 	margin-right:30px;
+
+	@include breakpoint(small) {
+
+		margin-right: 15px;
+
+	}
 }
 
 .home-container {
@@ -1139,6 +1151,7 @@ html {
 	@include breakpoint(small) {
 
 		margin-top: 50px;
+		padding-bottom:35px;
 
 	}
 
@@ -2123,6 +2136,14 @@ product-buyers {
 
 	margin:0 0 20px 0;
 
+	.submit-button {
+
+		margin-bottom: 15px;
+		height:50px;
+		font-size: 2rem;
+
+	}
+
 	.button {
 
 		margin-right: 5px;
@@ -2703,9 +2724,15 @@ hover-card {
 		@include breakpoint(small) {
 
 			height:auto;
-			width:200%;
+			width:115%;
 			@include centerHorizontal;
 			top:0;
+
+		}
+
+		@include breakpoint(xsmall) {
+
+			width:200%;
 
 		}
 
@@ -2743,7 +2770,11 @@ hover-card {
 		padding:10px;
 		background-color: white;
 
+		&.above-fold {
 
+			background-color: transparent;
+			
+		}
 
 	}
 
@@ -2941,7 +2972,8 @@ hover-card {
 
 	@include breakpoint(small) {
 
-		display: none;
+		top:90%;
+		// display: none;
 
 	}
 

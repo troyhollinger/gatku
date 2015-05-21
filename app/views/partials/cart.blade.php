@@ -285,7 +285,7 @@
 
 		<div class="cart-actions">
 
-			<div class="button success-bg" ng-click="submit()">Finish</div>
+			<div class="submit-button" ng-click="submit()">Finish</div>
 			<div class="button info-bg" ng-click="toStage(2)">Go Back</div>
 
 		</div>

@@ -75,7 +75,7 @@ var Mast = {
 
 	},
 
-	element : $(".mast"),
+	element : $(".mobile-mast"),
 
 	track : function() {
 
@@ -83,13 +83,13 @@ var Mast = {
 		var height = Mast.element.height();
 		var windowHeight = $(window).height();
 
-		if (distance > (windowHeight - height)) {
+		if (distance < (windowHeight - height)) {
 
-			Mast.element.addClass('below-fold');
+			Mast.element.addClass('above-fold');
 
 		} else {
 
-			Mast.element.removeClass('below-fold');
+			Mast.element.removeClass('above-fold');
 
 		}
 
@@ -229,10 +229,12 @@ var PoleScroll = {
 	scrollPosition : function() {
 
 		var scroller = $(".scroller");
+		var windowWidth = $(window).width();
+
 
 		if (layoutType === 'head' || slug === 'bands') {
 
-			if ($(window).width() < 1000) {
+			if (windowWidth < 1000) {
 
 				scroller.scrollLeft($(".scroller-image.visible").width() - 600);
 
@@ -242,9 +244,23 @@ var PoleScroll = {
 
 			}
 
-		} else if(layoutType === 'shrinker') {
+		} else if(layoutType === 'shrinker') {	
 
-			scroller.scrollLeft($(".scroller-image").width() - 3100);			
+			if (windowWidth > 1100) {
+
+				scroller.scrollLeft($(".scroller-image").width() - 2900);			
+
+			} else if (windowWidth < 1100 && windowWidth > 500) {
+
+				scroller.scrollLeft($(".scroller-image").width() - 2450);			
+
+			} else if(windowWidth <= 500) {
+
+				scroller.scrollLeft($(".scroller-image").width() - 1780);			
+
+			}
+
+			
 
 		}
 
