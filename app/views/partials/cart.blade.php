@@ -164,7 +164,7 @@
 		<div class="checkout-form">
 
 			<label for="card-number">Card Number</label>
-			<input type="text" name="card-number" id="card-number" ng-model="card.number" placeholder="xxxxxxxxxxxxxxxx">
+			<input type="text" name="card-number" id="card-number" ng-model="card.number" placeholder="xxxx xxxx xxxx xxxx" cc-number cc-format>
 
 			<span class="left">
 				<label for="card-expiry-month">Expires</label>
