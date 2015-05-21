@@ -3966,8 +3966,8 @@ app.directive('cartIcon', ['CartService', function(CartService) {
 		restrict : 'E',
 
 		template : '<div class="cart-icon" ng-click="showCart()">' + 
-		'<span class="mobile-cart-indicator" ng-class="{ \'attention\' : count > 0 }">{{ count }}</span>' +
-		'<i class="fa fa-shopping-cart"></i>' + 
+		'Cart' +
+		'<span class="mobile-cart-indicator">{{ count }}</span>' +
 		'</div>',
 
 		link : function($scope, element, attrs) {
