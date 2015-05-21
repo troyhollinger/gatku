@@ -335,7 +335,7 @@ var ApparelRotator = {
 
 			images = this.photos.superhero;
 
-		} else if (slug === 'comfort-hoodie') {
+		} else if (slug === 'comfort-hoody') {
 
 			images = this.photos.comfort;
 
