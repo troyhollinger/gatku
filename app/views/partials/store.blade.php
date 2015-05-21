@@ -20,7 +20,7 @@
 
 	$tailsRow = '<div class="tails-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><img ng-src="{{ pole.thumb }}"></a></div>
+		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><img ng-src="{{ pole.thumb }}"></a>  <span class="mobile-product-name" ng-cloak>{{ $index + 6 }}\'<span class="mobile-product-name-suffix">ER<span></span></div>
 		
 
 		<div class="clear"></div>

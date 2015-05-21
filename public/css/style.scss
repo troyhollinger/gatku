@@ -744,6 +744,35 @@ html {
 
 }
 
+.mobile-product-name {
+
+	position: absolute;
+	top:25px;
+	left:10px;
+	font-size: .9rem;
+	font-weight: bold;
+	display: none;
+
+	@include breakpoint(small) {
+
+		display: inline-block;
+
+	}
+
+}
+
+.mobile-product-name-suffix {
+
+
+	@include breakpoint(xxsmall) {
+
+		display: none;
+
+	}
+
+
+}
+
 .hero-blurb {
 
 	@include center;
