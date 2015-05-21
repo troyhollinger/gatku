@@ -1101,12 +1101,6 @@ html {
 
 	}
 
-	&.band-scroller {
-
-		height:230px;
-
-	}
-
 	&.no-attached-state {
 
 		@include breakpoint(small) {
@@ -1114,6 +1108,29 @@ html {
 			height:auto;
 			box-sizing:border-box;
 			padding:20px 0;
+
+		}
+
+	}
+
+	&.band-scroller {
+
+		height:130px;
+		margin-bottom: 30px;
+
+		@include breakpoint(small) {
+			
+			height:auto;
+			margin-bottom:20px;
+			margin-top: 70px;
+			// margin:20px 0;		
+
+			& .scroller-image {
+
+				width:100%;
+				height:auto;
+
+			}
 
 		}
 
