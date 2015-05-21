@@ -299,7 +299,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			if (validation.response === false) {
 
 				$scope.status = validation.message;
-				AlertService.broadcast(validation.messsage, 'error');
+				AlertService.broadcast($scope.status, 'error');
 
 				return false;
 
