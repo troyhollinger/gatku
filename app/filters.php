@@ -43,9 +43,27 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::route('login.index');
 		}
 	}
+});
+
+Route::filter('admin', function() {
+
+	if (Auth::user()->admin === false) {
+
+		if(Request::ajax()) {
+
+			return Response::make('Unauthorized', 401);
+
+		} else {
+
+			return Redirect::route('login.index');
+
+		}
+
+	}
+
 });
 
 

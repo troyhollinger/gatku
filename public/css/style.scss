@@ -2375,7 +2375,7 @@ product-buyers {
 		border:1px solid darken($light, 20%);
 		margin-bottom: 10px;
 
-		&:not(.native) {
+		&:not(.native):not(.button) {
 
 			width:100%;
 			display: block;
@@ -3585,7 +3585,40 @@ hover-card {
 }
 
 
+.login-form {
 
+	@include center;
+	width:320px;
+	// height:400px;
+	height:auto;
+	background-color: $light;
+	border:1px solid darken($light, 20%);
+	border-radius: 3px;
+	box-sizing:border-box;
+	padding:15px 20px;
+
+	@extend .checkout-form;
+
+
+	.button {
+
+		border:none;
+
+	}
+
+	label {
+
+		font-weight: bold;
+
+	}
+
+	input[type=text] {
+
+
+
+	}
+
+}
 
 
 

@@ -16,7 +16,12 @@ Route::get('size/by/slug/{slug}', ['as' => 'size.bySlug', 'uses' => 'ProductCont
 
 Route::resource('product', 'ProductController');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function() {
+
+Route::get('login', ['as' => 'login.index', 'uses' => 'AuthenticationController@index']);
+Route::post('login', ['as' => 'login.authenticate', 'uses' => 'AuthenticationController@authenticate']);
+Route::get('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
+
+Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'before' => 'auth|admin'], function() {
 
 	Route::get('/', ['as' => 'admin.index', function() {
 
