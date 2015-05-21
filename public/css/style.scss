@@ -1268,6 +1268,12 @@ html {
 
 		width:30%;
 
+		@include breakpoint(medium) {
+
+			width:27%;
+
+		}
+
 		@include breakpoint(small) {
 
 			width:100%;
@@ -2714,6 +2720,8 @@ hover-card {
 
 	@include centerHorizontal;
 	// z-index: -1;
+	width:100%;
+	text-align: center;
 	height:100%;
 	margin:100px 0;
 
