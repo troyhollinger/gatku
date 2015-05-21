@@ -2763,7 +2763,8 @@ hover-card {
 	display: none;
 	position: fixed;
 	width:80%;
-	background-color: $dark;
+	background-color: white;
+	color:black;
 	height:100%;
 	display: none;
 	z-index: 8;
@@ -2771,7 +2772,8 @@ hover-card {
 	left:0;
 	color:white;
 	// box-shadow:inset 0px 0px 15px -6px black;
-	box-shadow: inset -17px 0px 57px -20px black;
+	// box-shadow: inset -17px 0px 57px -20px black;
+	border:1px solid darken($light, 10%);
 	box-sizing:border-box;
 	padding:10px;
 	@include transform(translate(-100%, 0));
@@ -2785,7 +2787,7 @@ hover-card {
 
 	li {
 
-		color:white;
+		color:black;
 		font-weight: bold;
 		font-size: 1.2rem;
 		box-sizing:border-box;
@@ -2796,7 +2798,7 @@ hover-card {
 
 		a {
 
-			color:white;
+			color:black;
 
 		}
 
@@ -2873,7 +2875,7 @@ hover-card {
 
 		.patty {
 
-			background-color: white;
+			// background-color: white;
 
 			&:first-child {
 
@@ -2898,7 +2900,7 @@ hover-card {
 
 		.status {
 
-			color:white;
+			// color:white;
 
 		}
 
