@@ -76,6 +76,12 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
+	$scope.scrollAcross = function() {
+
+		PoleScroll.scrollAcross();
+
+	}
+
 
 	$scope.poleScrollInit = function() {
 

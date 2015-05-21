@@ -87,7 +87,7 @@
 		@if($product->attachedImage && $product->detachedImage)
 		<div class="pole-view-actions">
 
-			<p class="attachment-button faded" ng-click="attached = !attached">
+			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
 				<span ng-show="attached">TAKE POLE APART</span>
 				<span ng-show="attached === false">PUT POLE TOGETHER</span>
 			</p>

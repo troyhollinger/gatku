@@ -266,6 +266,25 @@ var PoleScroll = {
 
 		scroller = null;
 
+	},
+
+	scrollAcross : function() {
+
+		var scroller = $(".scroller");
+		var width = $(".scroller-image").width();
+		var left = scroller.scrollLeft();
+
+		if (left < width / 2) {
+
+			scroller.stop().animate({ scrollLeft: width }, 2500);
+
+		} else {
+
+			scroller.stop().animate({ scrollLeft: 0 }, 2500);
+
+		}
+
+
 	}
 
 }
@@ -5447,6 +5466,12 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 		}
 
 		reset();
+
+	}
+
+	$scope.scrollAcross = function() {
+
+		PoleScroll.scrollAcross();
 
 	}
 
