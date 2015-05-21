@@ -75,7 +75,7 @@ var Mast = {
 
 	},
 
-	element : $(".mobile-mast"),
+	element : $(".mast"),
 
 	track : function() {
 
@@ -83,17 +83,49 @@ var Mast = {
 		var height = Mast.element.height();
 		var windowHeight = $(window).height();
 
-		if (distance < (windowHeight - height)) {
+		if (distance > (windowHeight - height)) {
 
-			Mast.element.addClass('above-fold');
+			Mast.element.addClass('below-fold');
 
 		} else {
 
-			Mast.element.removeClass('above-fold');
+			Mast.element.removeClass('below-fold');
 
 		}
 
 		requestAnimationFrame(Mast.track);
+
+	}
+
+}
+
+var MobileMast = {
+
+	init : function() {
+
+		requestAnimationFrame(MobileMast.track);
+
+	},
+
+	element : $(".mobile-mast"),
+
+	track : function() {
+
+		var distance = $(document).scrollTop();
+		var height = MobileMast.element.height();
+		var windowHeight = $(window).height();
+
+		if (distance < (windowHeight - height)) {
+
+			MobileMast.element.addClass('above-fold');
+
+		} else {
+
+			MobileMast.element.removeClass('above-fold');
+
+		}
+
+		requestAnimationFrame(MobileMast.track);
 
 	}
 
@@ -407,6 +439,7 @@ $(document).ready(function() {
 	if (currentRoute === 'home') {
 
 		Mast.init();
+		MobileMast.init();
 		// You.init();
 		BlurbSlider.init();
 
