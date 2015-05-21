@@ -6115,18 +6115,22 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 		if ($scope.product.sizeable) {
 
-			var size = verifySizeIsChecked();
+			var sizes = verifySizeIsChecked();
 
-			if (size) {
+			if (sizes.length) {
 
-				$scope.sizedProduct = angular.copy($scope.product);
+				for(var i = 0; i < sizes.length; i++) {
 
-				$scope.sizedProduct.name = size.name;
-				$scope.sizedProduct.price = size.price;
-				$scope.sizedProduct.shortName = size.shortName;
-				$scope.sizedProduct.sizeId = size.id;
+				 	var sizedProduct = angular.copy($scope.product);
 
-				CartService.addItem($scope.sizedProduct);
+					sizedProduct.name = sizes[i].name;
+					sizedProduct.price = sizes[i].price;
+					sizedProduct.shortName = sizes[i].shortName;
+					sizedProduct.sizeId = sizes[i].id;
+
+					CartService.addItem(sizedProduct);
+
+				}
 
 			} else {
 
@@ -6169,17 +6173,19 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	function verifySizeIsChecked() {
 
+		var checkedSizes = [];
+
 		for(var i = 0; i < $scope.product.sizes.length; i++) {
 
 			if ($scope.product.sizes[i].checked) {
 
-				return $scope.product.sizes[i];
+				checkedSizes.push($scope.product.sizes[i]);
 
 			}
 
 		}
 
-		return false;
+		return checkedSizes;
 
 	}
 
