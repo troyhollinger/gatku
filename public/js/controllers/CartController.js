@@ -27,6 +27,8 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.toStage = function(index) {
 
+		Inputs.blur();
+
 		if ($scope.validate(index) === false) return false;
 
 		$scope.currentStage = $scope.stages[index];

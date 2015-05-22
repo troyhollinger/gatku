@@ -456,6 +456,20 @@ $(document).ready(function() {
 });
 
 
+var Inputs = {
+
+	blur : function() {
+
+		$("input").each(function() {
+
+			$(this).blur();
+
+		});
+
+	}
+
+}
+
 
 $(window).resize(function() {
 

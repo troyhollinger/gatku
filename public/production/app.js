@@ -481,6 +481,20 @@ $(document).ready(function() {
 });
 
 
+var Inputs = {
+
+	blur : function() {
+
+		$("input").each(function() {
+
+			$(this).blur();
+
+		});
+
+	}
+
+}
+
 
 $(window).resize(function() {
 
@@ -5657,6 +5671,8 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 	$scope.currentStage = $scope.stages[0];
 
 	$scope.toStage = function(index) {
+
+		Inputs.blur();
 
 		if ($scope.validate(index) === false) return false;
 
