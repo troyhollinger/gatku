@@ -111,7 +111,6 @@
 			Ships Free w/ Pole Purchase
 			@endif
 
-
 		<p class="addon-title right">Click to add to order</p>
 
 		<div class="clear"></div>

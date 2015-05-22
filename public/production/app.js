@@ -5709,6 +5709,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 		var heads = [];
 		var others = [];
 
+		if ($scope.subtotal() >= 30000) {
+
+			return 0;
+
+		}
+
 		for(var i = 0; i < $scope.items.length; i++) {
 
 			var item = $scope.items[i];
@@ -5767,26 +5773,32 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	}
 
-	$scope.total = function() {
+	$scope.subtotal = function() {
 
-		var total = 0;
-		var shipping = 0;
-
+		var subtotal = 0;
+		
 		angular.forEach($scope.items, function(value, key) {
 
-			total += $scope.items[key].price * $scope.items[key].quantity;
+			subtotal += $scope.items[key].price * $scope.items[key].quantity;
 
 			for(var i = 0; i < $scope.items[key].addons.length; i++) {
 
-				total += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+				subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
 
 			}
 
 		});
 
-		shipping = $scope.shipping();
+		return subtotal;
 
-		return total + shipping;
+	}
+
+	$scope.total = function() {
+
+		var subtotal =  $scope.subtotal();
+		var shipping = $scope.shipping();
+
+		return subtotal + shipping;
 
 	}
 
@@ -6189,11 +6201,21 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
+
+	/**
+	 * Currently, this method only works when one addon is
+	 * sizeable. At the moment (5.22.15), the only sizeable addon
+	 * is the bands. This could change in the future
+	 */
 	function parseSizeableAddons() {
 
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 
 			var addon = $scope.product.addons[i];
+
+			console.log("here is the selected addon");
+			console.log(addon.product.sizeable);
+			console.log(addon.product.slug);
 
 			if (addon.product.sizeable && addon.product.slug === 'bands') {
 
@@ -6204,11 +6226,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 					addon.product.price = response.data.price;
 					addon.product.sizeId = response.data.id;
 
+					console.log("here is the updated addon");
+					console.log(addon);
+
 				}).error(function(response) {
 
 					$scope.product.addons.splice(i, 1);
 
 				});
+
+				break;
 
 			}
 

@@ -65,16 +65,18 @@ class OrderRepository {
 				
 				$order = $that->assignFields($order, $customer, $input['form']);
 
-				$shipping = $that->calculateShipping($input['items']);
-				
-				$total = $that->calculateTotal($input['items']);
-
 				$order->save();
+			
+				$that->assignOrderItems($order, $input['items']);
 
-				// Assign current order as class property for use in assignOrderItems.
-				$that->order = $order;
+				$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
-				$that->assignOrderItems($input['items']);
+				// $subtotal = $that->calculateSubTotal($input['items']);
+				$subtotal = $that->calculateSubTotal($order);
+
+				$shipping = $that->calculateShipping($order);
+
+				$total = $that->calculateTotal($order);
 
 				Stripe_Charge::create([
 
@@ -84,8 +86,6 @@ class OrderRepository {
 					'description' => 'Order : ' . $order->number
 
 				]);
-
-				$order->load('items.addons.product','items.addons.size', 'items.product', 'customer', 'items.size');
 
 				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
@@ -109,9 +109,10 @@ class OrderRepository {
 	}
 
 	/**
-	 * If user has checked useBillingForShipping box in cart, 
-	 * replicate billing info, if not, assign the shipping information
-	 * accordingly
+	 * Assigns the order destination fields
+	 *
+	 * @param $order $customer $input
+	 * @return Eloquent Object $order
 	 */
 	private function assignFields($order, $customer, $input) {
 
@@ -138,40 +139,94 @@ class OrderRepository {
 
 	}
 
+
+
+	private function calculateSubTotal($order) {
+
+		$subtotal = 0;
+
+		$items = $order->items;
+
+		foreach($items as $item) {
+
+			if ($item->product->sizeable && $item->sizeId) {
+
+				$price = $item->size->price;
+
+			} else {
+
+				$price = $item->product->price;
+		
+			}
+
+			$price = $price * $item->quantity;
+
+			$subtotal += $price;
+
+			// The 'id' key of the $addon array is the id of the product in the products table,
+			// NOT the id of the record in the addons table.
+			foreach($item->addons as $addon) {
+
+				if ($addon->product->sizeable && $addon->sizeId) {
+
+					$addonPrice = $addon->size->price;
+
+				} else {
+
+					$addonPrice = $addon->product->price;
+
+				}
+
+				$addonPrice = $addonPrice * $addon->quantity;
+
+				$subtotal += $addonPrice;
+
+			}
+
+		}
+
+		return $subtotal;
+
+	}
+
+
+
 	/**
 	 * Calculate the shipping.
 	 * There is a similar method in the CartController.js file. These two methods
 	 * should produce identical results. 
 	 *
 	 */
-	private function calculateShipping($items) {
+	private function calculateShipping($order) {
 
 		$shippingPrice = 0;
 		$poles = [];
 		$heads = [];
 		$others = [];
 
+		$items = $order->items;
+
+		if ($this->calculateSubTotal($order) >= 30000) return 0;
+
 		foreach($items as $item) {
 
-			if ($item['type']['slug'] === 'pole') {
+			if ($item->type->slug === 'pole') {
 
 				$poles[] = $item;
 
-			} elseif ($item['type']['slug'] === 'head') {
+			} elseif ($item->type->slug === 'head') {
 
 				$heads[] = $item;
 
 			} else {
 
 				$others[] = $item;
-
 			}
-
 		}
 
 		if (count($poles) > 0) {
 
-			$poleShippingPrice = $poles[0]['type']['shippingPrice'];
+			$poleShippingPrice = $poles[0]->type->shippingPrice;
 
 			if (count($poles) > 1) {
 
@@ -185,7 +240,7 @@ class OrderRepository {
 
 		} elseif (count($heads) > 0) {
 
-			$headShippingPrice = $heads[0]['type']['shippingPrice'];
+			$headShippingPrice = $heads[0]->type->shippingPrice;
 
 			if (count($heads) > 1) {
 
@@ -199,7 +254,7 @@ class OrderRepository {
 
 		} elseif (count($others) > 0) {
 
-			$shippingPrice = $others[0]['type']['shippingPrice'];
+			$shippingPrice = $others[0]->type->shippingPrice;
 
 		}
 
@@ -207,59 +262,13 @@ class OrderRepository {
 
 	}
 
+	private function calculateTotal($order) {
 
-	/**
-	 * 
-	 *
-	 * 
-	 */
-	private function calculateTotal($items) {
+		$subtotal = $this->calculateSubTotal($order);
 
-		$total = 0;
+		$shipping = $this->calculateShipping($order);
 
-		Log::info($items);
-
-		foreach($items as $item) {
-
-			if ($item['sizeable'] && $item['sizeId']) {
-
-				$price = Size::findOrFail($item['sizeId'])->price;
-
-			} else {
-
-				$price = Product::findOrFail($item['id'])->price;
-		
-			}
-
-			$price = $price * $item['quantity'];
-
-			$total += $price;
-
-			// The 'id' key of the $addon array is the id of the product in the products table,
-			// NOT the id of the record in the addons table.
-			foreach($item['addons'] as $addon) {
-
-				if ($addon['sizeable'] && $addon['sizeId']) {
-
-					$addonPrice = Size::findOrFail($addon['sizeId'])->price;
-
-				} else {
-
-					$addonPrice = Product::findOrFail($addon['id'])->price;
-
-				}
-
-				$addonPrice = $addonPrice * $addon['quantity'];
-
-				$total += $addonPrice;
-
-			}
-
-		}
-
-		$shipping = $this->calculateShipping($items);
-
-		$total = $total + $shipping;
+		$total = $subtotal + $shipping;
 
 		return $total;
 
@@ -270,9 +279,7 @@ class OrderRepository {
 	 * Addons the same.
 	 *
 	 */
-	private function assignOrderItems($items) {
-
-		$order = $this->order;
+	private function assignOrderItems($order, $items) {
 
 		foreach($items as $item) {
 

@@ -123,6 +123,12 @@ html {
 
 }
 
+.smaller {
+
+	font-size: .8em;
+
+}
+
 .success-bg {
 
 	background-color: $green;
@@ -1440,6 +1446,7 @@ product-buyers {
 .product-performance {
 
 	font-size: 1.3rem;
+	margin-top: 40px;
 
 	@include breakpoint(small) {
 

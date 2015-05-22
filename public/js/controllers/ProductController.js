@@ -121,11 +121,21 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
+
+	/**
+	 * Currently, this method only works when one addon is
+	 * sizeable. At the moment (5.22.15), the only sizeable addon
+	 * is the bands. This could change in the future
+	 */
 	function parseSizeableAddons() {
 
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 
 			var addon = $scope.product.addons[i];
+
+			console.log("here is the selected addon");
+			console.log(addon.product.sizeable);
+			console.log(addon.product.slug);
 
 			if (addon.product.sizeable && addon.product.slug === 'bands') {
 
@@ -136,11 +146,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 					addon.product.price = response.data.price;
 					addon.product.sizeId = response.data.id;
 
+					console.log("here is the updated addon");
+					console.log(addon);
+
 				}).error(function(response) {
 
 					$scope.product.addons.splice(i, 1);
 
 				});
+
+				break;
 
 			}
 
