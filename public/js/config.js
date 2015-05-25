@@ -2,6 +2,6 @@ var app = angular.module('gatku', ['angularFileUpload', 'ngCookies', 'ipCookie',
 
 app.config(function(stripeProvider) {
 
-    stripeProvider.setPublishableKey('pk_test_ridkQh4sxzTmvXFqSMtpzCcm');
+    stripeProvider.setPublishableKey('pk_test_iTOIZYCF15Qmpq7CYOqltHCJ');
     
 });
