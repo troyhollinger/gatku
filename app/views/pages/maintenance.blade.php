@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>GATKU is down for Maintenance</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="{{ asset('production/app.css') }}">
 </head>
 <body>

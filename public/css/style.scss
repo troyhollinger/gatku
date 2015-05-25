@@ -3709,11 +3709,13 @@ hover-card {
 	text-align: center;
 	box-sizing:border-box;
 	padding:0 15px;
-	// width:400px;
+	width:1000px;
 
 	img {
 
-		width:400px;
+		max-width:400px;
+		width:80%;
+
 
 	}
 
@@ -3721,6 +3723,12 @@ hover-card {
 
 		font-weight: bold;
 		font-size: 1.2rem;
+
+	}
+
+	@include breakpoint(1000px) {
+
+		width:100%;
 
 	}
 
