@@ -308,11 +308,11 @@ html {
 
 	z-index: 6;
 
-	@include breakpoint(small) {
+	// @include breakpoint(small) {
 
-		display: none;
+	// 	display: none;
 
-	}
+	// }
 
 }
 
