@@ -210,11 +210,11 @@ class OrderRepository {
 
 		foreach($items as $item) {
 
-			if ($item->type->slug === 'pole') {
+			if ($item->product->type->slug === 'pole') {
 
 				$poles[] = $item;
 
-			} elseif ($item->type->slug === 'head') {
+			} elseif ($item->product->type->slug === 'head') {
 
 				$heads[] = $item;
 
@@ -226,7 +226,7 @@ class OrderRepository {
 
 		if (count($poles) > 0) {
 
-			$poleShippingPrice = $poles[0]->type->shippingPrice;
+			$poleShippingPrice = $poles[0]->product->type->shippingPrice;
 
 			if (count($poles) > 1) {
 
@@ -240,7 +240,7 @@ class OrderRepository {
 
 		} elseif (count($heads) > 0) {
 
-			$headShippingPrice = $heads[0]->type->shippingPrice;
+			$headShippingPrice = $heads[0]->product->type->shippingPrice;
 
 			if (count($heads) > 1) {
 
@@ -254,7 +254,7 @@ class OrderRepository {
 
 		} elseif (count($others) > 0) {
 
-			$shippingPrice = $others[0]->type->shippingPrice;
+			$shippingPrice = $others[0]->product->type->shippingPrice;
 
 		}
 
