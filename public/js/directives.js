@@ -7,7 +7,7 @@ app.filter('money', function () {
 
 });
 
-app.directive('backImg', function(){
+app.directive('backImg',['', function(){
     return function(scope, element, attrs){
         attrs.$observe('backImg', function(value) {
             element.css({
@@ -16,7 +16,7 @@ app.directive('backImg', function(){
             });
         });
     };
-});
+}]);
 
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
@@ -207,7 +207,7 @@ app.directive('productBuyers', ['Product', function(Product) {
 
 }]);
 
-app.directive('loaded', ['$parse', function ($parse) {
+app.directive('loaded', ['$parse', function($parse) {
 
     return {
 

@@ -3703,6 +3703,60 @@ hover-card {
 
 
 
+.maintenance-message-container {
+
+	@include center;
+	text-align: center;
+	box-sizing:border-box;
+	padding:0 15px;
+	// width:400px;
+
+	img {
+
+		width:400px;
+
+	}
+
+	p {
+
+		font-weight: bold;
+		font-size: 1.2rem;
+
+	}
+
+}
+
+.floating{
+
+    @include animation-name(floating);
+    @include animation-duration(3s);
+    @include animation-iteration-count(infinite);  
+    @include animation-timing-function(ease-in-out);
+  
+}
+
+@include keyframes(floating) {
+
+	from {
+
+		@include transform(translate(0, 0px));
+
+	}
+
+	65% {
+
+		@include transform(translate(0, 20px));
+
+	}
+
+	to {
+
+		@include transform(translate(0, -0px));
+
+	}
+
+}
+
 
 
 

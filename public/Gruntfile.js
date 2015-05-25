@@ -7,6 +7,8 @@ module.exports = function(grunt) {
         concat: {
             dist : {
                 src : [
+                    'bower_components/skippr/js/jquery.skippr.js',
+                    'bower_components/nanobar/nanobar.js',
                     'js/plugins.js',
                     'js/main.js',
                     'bower_components/angular-cookies/angular-cookies.js',
@@ -45,7 +47,10 @@ module.exports = function(grunt) {
             combine : {
                 files : {
                     'production/app.css' : [
+                        'css/font-awesome.min.css',
                         'css/reset.css',
+                        'bower_components/skippr/css/jquery.skippr.css',
+                        'bower_components/rollerblade/rollerblade.css',
                         'css/style.css'
                     ]
                 }

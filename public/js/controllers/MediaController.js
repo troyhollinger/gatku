@@ -1,4 +1,4 @@
-app.controller('MediaController', function($scope) {
+app.controller('MediaController', ['$scope', function($scope) {
 
     // Determines which page is shown first on load.
     $scope.productPage = true;
@@ -24,4 +24,4 @@ app.controller('MediaController', function($scope) {
 
     }
 
-});
+}]);
