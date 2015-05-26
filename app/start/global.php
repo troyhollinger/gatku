@@ -64,7 +64,14 @@ App::error(function(Exception $exception, $code)
 
 App::down(function()
 {
-	return Response::view('pages.maintenance', array(), 503);
+
+	if (!Auth::user() || !Auth::user()->admin) {
+
+		return Response::view('pages.maintenance', array(), 503);
+
+	}
+
+	
 });
 
 /*
