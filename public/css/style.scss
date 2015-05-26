@@ -3818,7 +3818,29 @@ hover-card {
 
 
 
+.spinning {
 
+	@include animation(spinning 20s infinite linear);
+	@include transform-origin(center);
+
+}
+
+
+@include keyframes(spinning) {
+
+	from {
+
+		@include transform(rotate(0deg));
+
+	}
+
+	to {
+
+		@include transform(rotate(360deg));
+
+	}
+
+}
 
 
 

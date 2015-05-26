@@ -8,7 +8,7 @@
 
 	<div class="maintenance-message-container">
 
-		<img src="{{ asset('img/logo-circle.png') }}">
+		<img src="{{ asset('img/logo-circle.png') }}" class="spinning">
 
 		<div>
 			<p>Sorry, we are down for maintenance <span class="bold"> and improvements</span>. We are preparing some new features for you. Please <span class="bold">check back soon...</span></p>
