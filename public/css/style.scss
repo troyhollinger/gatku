@@ -1606,7 +1606,7 @@ product-buyers {
 	cursor: pointer;
 	margin-top: 40px;
 	// border-radius: 2px;
-	@include transition(all .1s linear);
+	@include transition(all .1s ease-in-out);
 
 	&:hover {
 
@@ -1622,6 +1622,15 @@ product-buyers {
 
 	}
 
+	&.post-added-state {
+
+		width:48%;
+		float:left;
+		font-size: 2rem;
+		height:50px;
+
+	}
+
 	@include breakpoint(medium) {
 
 		margin-top: 20px;
@@ -1634,6 +1643,17 @@ product-buyers {
 		height:50px;
 
 	}
+
+}
+
+.checkout-button {
+
+	@extend .submit-button; 
+
+	width:0px;
+	background-color: $green;
+	color:white !important;
+	float:right !important;
 
 }
 

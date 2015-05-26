@@ -6892,6 +6892,12 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
+	$scope.openCart = function() {
+
+		CartService.show();
+
+	}
+
 	$scope.scrollAcross = function() {
 
 		PoleScroll.scrollAcross();
@@ -7025,7 +7031,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.$on('itemAdded', function() {
 
-		productAddedAnimation();
+		// productAddedAnimation();
+		$scope.productAdded = true;
 
 	});
 
