@@ -71,7 +71,6 @@ class OrderRepository {
 
 				$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
-				// $subtotal = $that->calculateSubTotal($input['items']);
 				$subtotal = $that->calculateSubTotal($order);
 
 				$shipping = $that->calculateShipping($order);
@@ -89,7 +88,6 @@ class OrderRepository {
 
 				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
-				//Queue Email
 				Mail::send('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 				    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
@@ -163,8 +161,6 @@ class OrderRepository {
 
 			$subtotal += $price;
 
-			// The 'id' key of the $addon array is the id of the product in the products table,
-			// NOT the id of the record in the addons table.
 			foreach($item->addons as $addon) {
 
 				if ($addon->product->sizeable && $addon->sizeId) {

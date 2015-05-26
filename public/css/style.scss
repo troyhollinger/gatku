@@ -12,6 +12,7 @@ $light : #ECF0F1;
 $brand : #ea6271;
 $dark : #444444;
 
+
 //Mixins
 @mixin center {
 	position: absolute;
@@ -3701,34 +3702,83 @@ hover-card {
 
 }
 
+.maintenance-body {
 
+	background-color: $gray;
+
+}
+
+.maintenance-credits {
+
+	position: absolute;
+	bottom:20px;
+	width:100%;
+	text-align: center;
+	color:white;
+	font-size: .9rem;
+	box-sizing:border-box;
+	padding:0 15px;
+
+	a {
+
+		color:white !important;
+
+	}
+
+	@include breakpoint(600px) {
+
+		span:not(.divider) {
+
+			display: block;
+			text-align: center;
+
+		}
+
+		.divider {
+
+			display: none;
+
+		}
+
+	}
+
+
+}
 
 .maintenance-message-container {
 
 	@include center;
+	top:40%;
 	text-align: center;
 	box-sizing:border-box;
 	padding:0 15px;
-	width:1000px;
+	width:600px;
 
 	img {
 
-		max-width:400px;
-		width:80%;
+		max-width:200px;
+		width:40%;
+		margin-bottom: 15px;
 
 
 	}
 
 	p {
 
-		font-weight: bold;
-		font-size: 1.2rem;
+		font-size: 2rem;
+		color:white;
 
 	}
 
-	@include breakpoint(1000px) {
+	@include breakpoint(600px) {
 
 		width:100%;
+
+		p {
+
+			font-size: 1.5rem;
+
+		}
 
 	}
 

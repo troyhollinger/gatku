@@ -773,8 +773,8 @@ var BlurbSlider = {
 
 		$(".slideshow").skippr({
 
-			// autoPlay : true,
-			// autoPlayDuration : 4000
+			autoPlay : true,
+			autoPlayDuration : 4000,
 			navType : 'bubble'
 
 		});
