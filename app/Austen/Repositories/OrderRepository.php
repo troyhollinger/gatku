@@ -96,6 +96,12 @@ class OrderRepository {
 
 				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
+					$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
+				  
+				});
+
+				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
 					$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
 				  
 				});
@@ -105,6 +111,8 @@ class OrderRepository {
 					$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
 				  
 				});
+
+				
 
 			});
 			
