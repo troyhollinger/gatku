@@ -5042,7 +5042,7 @@ var app = angular.module('gatku', ['angularFileUpload', 'ngCookies', 'ipCookie',
 
 app.config(function(stripeProvider) {
 
-    stripeProvider.setPublishableKey('pk_test_iTOIZYCF15Qmpq7CYOqltHCJ');
+    stripeProvider.setPublishableKey('pk_live_5MrQVqT1OSrL1lyeYe54NWgs');
     
 });
 app.filter('money', function () { 
