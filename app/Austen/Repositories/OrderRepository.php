@@ -88,10 +88,22 @@ class OrderRepository {
 
 				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
-				Mail::send('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
 
-				    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
+					$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
+				  
+				});
 
+				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+					$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
+				  
+				});
+
+				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+					$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
+				  
 				});
 
 			});

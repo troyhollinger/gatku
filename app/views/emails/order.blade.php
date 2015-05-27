@@ -240,7 +240,7 @@
 									</th>
 								</tr>
 								<tr>
-									<th id="order-info" colspan="2" padding="0" align="left" style="width: 100%;height: 35px;border-bottom: 1px solid black;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px;color:#E24A62"><span id="status" style="font-size: 16px;font-weight: 200;">Order : {{ $order->number }} - </span><span id="date" style="font-size: 20px;font-weight: 200;">{{ $date }}</span></th>
+									<th id="order-info" colspan="2" padding="0" align="left" style="width: 100%;height: 35px;border-bottom: 1px solid black;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px;color:#E24A62"><span id="status" style="font-size: 16px;font-weight: 200;">Order : {{ $order['number'] }} - </span><span id="date" style="font-size: 20px;font-weight: 200;">{{ $date }}</span></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -249,14 +249,14 @@
 
 									<!-- Address And Name here -->
 
-									<p style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif; font-weight:bold;">{{ $order->customer->fullName }}</p>
+									<p style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif; font-weight:bold;">{{ $order['customer']['fullName'] }}</p>
 
 	                                <p style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif;">
-	                                 	{{ $order->address }}<br>
-	                                 	{{ $order->city }}, {{ $order->state }} {{ $order->zip }}<br>
-	                                 	{{ $order->country }}<br>
+	                                 	{{ $order['address'] }}<br>
+	                                 	{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }}<br>
+	                                 	{{ $order['country'] }}<br>
 	                                 	{{-- Phone: {{ $order->customer->phone }}<br> --}}
-	                                 	Email: {{ $order->customer->email }}
+	                                 	Email: {{ $order['customer']['email'] }}
 	                             	</p>
 										
 								</td>
@@ -266,63 +266,63 @@
 									<div style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif;">
 
 
-										@foreach($order->items as $i => $item)
+										@foreach($order['items'] as $i => $item)
 										<div class="product" style="{{ $i == 0 ? 'padding-top:20px;' : 'padding-top:30px; border-top:1px solid black; ' }}padding-bottom:0px;border-bottom:1px solid black;height:290px; overflow:hidden;">
 											<table style="width:100%;">
 												<tr>
 													<td class="product-image-cell">
 														<div class="image-container" style="width:100%;text-align:left;">
 															<!-- Product thumb here -->
-															<img class="product-image" style="width:200px;height:auto;vertical-align: bottom;" src="{{ $item->product->emailImage }}" >
+															<img class="product-image" style="width:200px;height:auto;vertical-align: bottom;" src="{{ $item['product']['emailImage'] }}" >
 														</div>
 													</td>
 													<td class="product-data-cell">
 														<table class="addons-table" style="float:right;">
 															<tr class="product-name-row">
 																<!-- Product Name here -->
-																@if($item->product->sizeable)
-																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item->size->name }}</strong></span></td>
+																@if($item['product']['sizeable'])
+																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item['size']['name'] }}</strong></span></td>
 																@else
-																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item->product->shortName }}</strong>@if($item->product->type->slug === 'pole')<span>'ER</span>@endif
-																	@if (strpos($item->product->slug, 'paralyzer') !== false)<small>/{{ $item->product->length }}</small>@endif</span>
+																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item['product']['shortName'] }}</strong>@if($item['product']['type']['slug'] === 'pole')<span>'ER</span>@endif
+																	@if (strpos($item['product']['slug'], 'paralyzer') !== false)<small>/{{ $item['product']['length'] }}</small>@endif</span>
 																</td>
 																@endif
 
-																@if($item->product->sizeable)
-																<td>${{ $item->size->price / 100 }}</td>
+																@if($item['product']['sizeable'])
+																<td>${{ $item['size']['price'] / 100 }}</td>
 																@else
-																<td>${{ $item->product->price / 100 }}</td>
+																<td>${{ $item['product']['price'] / 100 }}</td>
 																@endif
 
 
 
-																<td><span class="product-quantity ">{{ $item->quantity }}</span></td>
+																<td><span class="product-quantity ">{{ $item['quantity'] }}</span></td>
 
-																@if($item->product->sizeable)
-																<td><span class="product-final-price">${{ ($item->size->price * $item->quantity) / 100}}</span></td>
+																@if($item['product']['sizeable'])
+																<td><span class="product-final-price">${{ ($item['size']['price'] * $item['quantity']) / 100}}</span></td>
 																@else
-																<td><span class="product-final-price">${{ ($item->product->price * $item->quantity) / 100}}</span></td>
+																<td><span class="product-final-price">${{ ($item['product']['price'] * $item['quantity']) / 100}}</span></td>
 																@endif
 
 															</tr>
 
-															@foreach($item->addons as $ii => $addon)
+															@foreach($item['addons'] as $ii => $addon)
 															<!-- first addon -->
 															<tr class="main-product {{ $ii == 0 ? 'first-opt-set' : '' }}">
-																<td><span class="bold">{{ $addon->product->name }}</span></td>
+																<td><span class="bold">{{ $addon['product']['name'] }}</span></td>
 
-																@if($addon->product->sizeable)
-																<td>${{ $addon->size->price / 100 }}</td>
+																@if($addon['product']['sizeable'])
+																<td>${{ $addon['size']['price'] / 100 }}</td>
 																@else
-																<td>${{ $addon->product->price / 100 }}</td>
+																<td>${{ $addon['product']['price'] / 100 }}</td>
 																@endif
 
-																<td><span class="product-quantity">{{ $addon->quantity }}</span></td>
+																<td><span class="product-quantity">{{ $addon['quantity'] }}</span></td>
 
-																@if($addon->product->sizeable)
-																<td><span class="product-final-price">${{ ($addon->size->price * $addon->quantity) / 100 }}</span></td>
+																@if($addon['product']['sizeable'])
+																<td><span class="product-final-price">${{ ($addon['size']['price'] * $addon['quantity']) / 100 }}</span></td>
 																@else
-																<td><span class="product-final-price">${{ ($addon->product->price * $addon->quantity) / 100 }}</span></td>
+																<td><span class="product-final-price">${{ ($addon['product']['price'] * $addon['quantity']) / 100 }}</span></td>
 																@endif
 															</tr>
 
@@ -363,17 +363,17 @@
 
 											<?php 
 
-												foreach($order->items as $item) {
+												foreach($order['items'] as $item) {
 
-													if($item->product->slug === 'eighter' || $item->product->slug === 'niner' || $item->product->slug === 'tener') {
+													if($item['product']['slug'] === 'eighter' || $item['product']['slug'] === 'niner' || $item['product']['slug'] === 'tener') {
 
 														$displayShrinker = true;
 
 													}
 
-													foreach($item->addons as $addon) {
+													foreach($item['addons'] as $addon) {
 
-														if ($addon->product->slug === 'inshore-shrinker') {
+														if ($addon['product']['slug'] === 'inshore-shrinker') {
 
 															$displayShrinker = false;
 

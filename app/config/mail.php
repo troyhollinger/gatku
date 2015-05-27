@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mailgun',
+	'driver' => 'mandrill',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => 'smtp.mandrillapp.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'purchase@gmail.com', 'name' => 'GATKU Polespears'),
+	'from' => array('address' => 'purchase@gatku.com', 'name' => 'GATKU Polespears'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'gatkuweb@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => 'RiLGONQqlPWY6GdrFJweRQ',
 
 	/*
 	|--------------------------------------------------------------------------
