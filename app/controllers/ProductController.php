@@ -24,11 +24,19 @@ class ProductController extends BaseController {
 	 * @return Response
 	 */
 	public function index() {
+
+		if (Request::ajax()) {
+
+			$products = $this->product->all();
+
+			return Response::json(['data' => $products], 200);
+
+		} else {
+
+			return Redirect::route('home');
+
+		}
 		
-		$products = $this->product->all();
-
-		return Response::json(['data' => $products], 200);
-
 	}
 
 	
