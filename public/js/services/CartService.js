@@ -1,4 +1,4 @@
-app.factory('CartService', ['$rootScope', '$http', '$cookies', '$cookieStore', 'ipCookie', 'AlertService', function($rootScope, $http, $cookies, $cookieStore, ipCookie, AlertService) {
+app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', function($rootScope, $http, ipCookie, AlertService) {
 
 	var CartService = {};
 	var Cookie = ipCookie;

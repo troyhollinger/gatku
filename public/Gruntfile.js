@@ -9,9 +9,7 @@ module.exports = function(grunt) {
                 src : [
                     'bower_components/skippr/js/jquery.skippr.js',
                     'bower_components/nanobar/nanobar.js',
-                    'js/plugins.js',
                     'js/main.js',
-                    'bower_components/angular-cookies/angular-cookies.js',
                     'bower_components/angular-cookie/angular-cookie.js',
                     'bower_components/angular-animate/angular-animate.js',
                     'bower_components/angular-stripe/release/angular-stripe.js',
