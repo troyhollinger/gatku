@@ -260,13 +260,13 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}
 
-			// if (!$scope.form.phone) {
+			if (!$scope.form.phone) {
 
-			// 	$scope.status = 'Please enter phone number.';
-			// 	AlertService.broadcast('Please enter a phone number', 'error');
-			// 	return false;
+				$scope.status = 'Please enter phone number.';
+				AlertService.broadcast('Please enter a phone number', 'error');
+				return false;
 
-			// }
+			}
 
 			if (!$scope.form.address) {
 

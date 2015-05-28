@@ -17,7 +17,7 @@ class CustomerRepository {
 		$customer->lastName = $input['lastName'];
 		$customer->fullName = $input['firstName'] . ' ' . $input['lastName'];
 		$customer->email = $input['email'];
-		// $customer->phone = $input['phone'];
+		$customer->phone = $input['phone'];
 		$customer->address = $input['address'];
 		$customer->city = $input['city'];
 		$customer->state = $input['state'];

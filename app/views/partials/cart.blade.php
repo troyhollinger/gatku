@@ -136,8 +136,8 @@
 			<label for="email">Email Address</label>
 			<input type="text" name="email" id="email" ng-model="form.email">
 
-			{{-- <label for="phone">Phone</label>
-			<input type="text" name="phone" id="phone" ng-model="form.phone"> --}}
+			<label for="phone">Phone</label>
+			<input type="text" name="phone" id="phone" ng-model="form.phone">
 
 			<label for="address">Shipping Address</label>
 			<input type="text" name="address" id="address" ng-model="form.address">

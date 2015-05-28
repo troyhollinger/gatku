@@ -11,6 +11,7 @@ use OrderItemAddon;
 use Size;
 use DB;
 use Carbon\Carbon;
+use App;
 
 /**
  *
@@ -88,31 +89,33 @@ class OrderRepository {
 
 				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
-				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
+				if (App::environment('production')) {
 
-					$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
-				  
-				});
+					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
 
-				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+						$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
+					  
+					});
 
-					$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
-				  
-				});
+					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+						$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
+					  
+					});
+
+					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+						$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
+					  
+					});
+
+				}
 
 				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 					$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
 				  
 				});
-
-				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-					$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
-				  
-				});
-
-				
 
 			});
 			
