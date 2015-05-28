@@ -211,12 +211,13 @@
 		.multiple {
 			display:block;
 			background-color:#E24A62;
-			width:25px;
-			height:25px;
+			width:18px;
+			height:18px;
 			text-align:center;
 			border-radius:50%;
 			box-sizing:border-box;
-			padding-top:4px;
+			padding-top:2px;
+			color:white;
 		}
 
         .product-image {
@@ -294,9 +295,7 @@
 																<td>${{ $item['product']['price'] / 100 }}</td>
 																@endif
 
-
-
-																<td><span class="product-quantity ">{{ $item['quantity'] }}</span></td>
+																<td><span class="product-quantity @if($item['quantity'] > 1) multiple @endif">{{ $item['quantity'] }}</span></td>
 
 																@if($item['product']['sizeable'])
 																<td><span class="product-final-price">${{ ($item['size']['price'] * $item['quantity']) / 100}}</span></td>
@@ -317,7 +316,7 @@
 																<td>${{ $addon['product']['price'] / 100 }}</td>
 																@endif
 
-																<td><span class="product-quantity">{{ $addon['quantity'] }}</span></td>
+																<td><span class="product-quantity @if($addon['quantity'] > 1) multiple @endif">{{ $addon['quantity'] }}</span></td>
 
 																@if($addon['product']['sizeable'])
 																<td><span class="product-final-price">${{ ($addon['size']['price'] * $addon['quantity']) / 100 }}</span></td>
