@@ -10,7 +10,7 @@
         <meta name="description" content="@yield('description')">
         <meta property="og:title" content="GATKU Polespears">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="http://www.gatku.com/">
+        <meta property="og:url" content="https://www.gatku.com/">
         <meta property="og:image" content="{{ asset('img/fbscreenshot.jpg') }}" />
         <meta property="og:description" content="@yield('description')">
         <meta property="og:site_name" content="GATKU">
