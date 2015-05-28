@@ -120,8 +120,8 @@
 			@if($product->sizeable)
 
 			<div ng-repeat="size in product.sizes" ng-cloak>
-				<input type="checkbox"  name="size-@{{ $index }}" id="size-@{{ $index }}" ng-model="size.checked">
-				<label for="size-@{{ $index }}"><span class="addon-name">@{{ size.shortName }} -</span>  <span class="addon-price">$@{{ size.price | money }}</span></label>
+				<input type="checkbox"  name="size-@{{ $index }}" id="size-@{{ $index }}" ng-model="size.checked" ng-disabled="!size.available">
+				<label for="size-@{{ $index }}" ng-class="{ 'faded' : !size.available }"><span class="addon-name">@{{ size.shortName }} -</span>  <span class="addon-price">$@{{ size.price | money }}</span></label>
 			</div>
 
 			@foreach($product->sizes as $size)

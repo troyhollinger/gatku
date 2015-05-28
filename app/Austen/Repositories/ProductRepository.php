@@ -139,7 +139,6 @@ class ProductRepository implements ProductRepositoryInterface {
 			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products;
 			$extras = ProductType::where('name', '=', 'extra')->first()->products;
 			$apparel = ProductType::where('name', '=', 'apparel')->first()->products;
-			// $extras = ProductType::where('name', '=', 'extra')
 
 		} catch (Exception $e) {
 			
