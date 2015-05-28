@@ -19,7 +19,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 		<div><p class="hero-blurb">Made in America by Americans. We touch every pole that has the GATKU name on it. <span class="detail">In House MFG</span></p></div>
 		<div><p class="hero-blurb">The #1 Trusted Name in the Industry. Since 2005.</p></div>
 		<div><p class="hero-blurb">We’ve finessed &amp; perfected the stick-n-rubberband approach to killing fish.</p></div>
-		<div><p class="hero-blurb">Expect the highest quality-innovation the market has to offer. Then expect to be served with the most principled business practices practiced.</p></div>
+		<div><p class="hero-blurb smaller">Expect the highest quality-innovation the market has to offer. Then expect to be served with the most principled business practices practiced.</p></div>
 	</div>
 
 </div>
