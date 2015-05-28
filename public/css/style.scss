@@ -569,7 +569,11 @@ html {
 
 	@include breakpoint(small) {
 
-		display: none;
+		&:not(.tails-links) {
+
+			display: none;
+
+		}
 
 	}
 
@@ -603,6 +607,12 @@ html {
 	@extend .product-thumb-container;
 
 	&:first-child {
+
+		text-align: left;
+
+	}
+
+	@include breakpoint(small) {
 
 		text-align: left;
 
@@ -751,13 +761,19 @@ html {
 
 }
 
+.default-product-name {
+
+	@include breakpoint(small) {
+
+		display: none;
+
+	}
+
+}
+
 .mobile-product-name {
 
-	position: absolute;
-	top:25px;
-	left:10px;
 	font-size: .9rem;
-	font-weight: bold;
 	display: none;
 
 	@include breakpoint(small) {

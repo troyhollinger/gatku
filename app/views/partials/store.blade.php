@@ -20,16 +20,15 @@
 
 	$tailsRow = '<div class="tails-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><img ng-src="{{ pole.thumb }}"></a>  <span class="mobile-product-name" ng-cloak>{{ $index + 6 }}\'<span class="mobile-product-name-suffix">ER<span></span></div>
+		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><img ng-src="{{ pole.thumb }}"></a></div>
 		
-
 		<div class="clear"></div>
 
 	</div>
 
 	<div class="tails-links links">
 
-		<div class="product-link-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}">{{ pole.shortName }}<span class="unbold">\'ER</span> <span class="detail uncaps">/{{ pole.length }}</span></a></div>
+		<div class="product-link-container" ng-repeat="pole in poles" ng-cloak><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><span class="default-product-name">{{ pole.shortName }}<span class="unbold">\'ER</span> <span class="detail uncaps">/{{ pole.length }}</span></span><span class="mobile-product-name">{{ $index + 6 }}\'ER</span></a></div>
 
 		<div class="clear"></div>
 
