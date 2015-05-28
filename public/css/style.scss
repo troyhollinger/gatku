@@ -2540,19 +2540,30 @@ product-buyers {
 	width:100vw;
 	height:100vh;
 
-	p {
+}
 
-		@include center;
-		font-size: 5rem;
+.thank-you-section-message {
+
+	@include center;
+	text-align: center;
+	color:$brand;
+
+	h1 {
+
+		font-size: 4.2rem;
 		font-weight: bold;
-		text-align: center;
-		color:$brand;
-		line-height: 5rem;
+		// line-height: 5rem;
 
 	}
 
-}
+	h2 {
 
+		font-size: 1.75rem;
+
+	}
+
+} 
+ 
 .cart-empty-message {
 
 	@include center;

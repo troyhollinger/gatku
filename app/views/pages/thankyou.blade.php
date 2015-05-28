@@ -8,7 +8,14 @@
 
 	<div class="thank-you-section">
 
-		<p>Thank You For Your Purchase!</p>
+		<div class="thank-you-section-message">
+
+			<h1>Thank You for Purchase!</h1>
+			<h2>You will receive a confirmation email shortly.</h2>
+
+		</div>
+
+		
 
 	</div>
 
