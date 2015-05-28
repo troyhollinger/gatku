@@ -1698,7 +1698,17 @@ product-buyers {
 
 		}
 
-		&:hover {
+		&.faded {
+
+			&:hover {
+
+				cursor: default;
+
+			}
+
+		}
+
+		&:hover:not(.faded) {
 
 			padding-right: 10px;
 			background-color:$light;
