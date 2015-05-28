@@ -176,13 +176,13 @@
 
 			<span class="left">
 				<label for="card-expiry-month">Expires</label>
-				<input type="text" class="native" name="card-expiry-month" size="3" id="expire-month" ng-model="card.expiryMonth" placeholder="MM">
-				<input type="text" class="native" name="card-expiry-year" size="5" id="expire-year" ng-model="card.expiryYear" placeholder="YYYY">
+				<input type="text" class="native" name="card-expiry-month" size="3" id="expire-month" ng-model="card.expiryMonth" placeholder="MM" cc-exp-month>
+				<input type="text" class="native" name="card-expiry-year" size="5" id="expire-year" ng-model="card.expiryYear" placeholder="YYYY" cc-exp-year full-year>
 			</span>
 			
 			<span class="left" style="margin-left:15px">
 				<label for="card-security-code">CVC</label>
-				<input type="text" class="native" size="5" name="card-security-code" id="card-secutiry-code" ng-model="card.securityCode" placeholder="000">
+				<input type="text" class="native" size="5" name="card-security-code" id="card-secutiry-code" ng-model="card.securityCode" placeholder="000" cc-cvc>
 			</span>
 			
 			<div class="clear"></div>
