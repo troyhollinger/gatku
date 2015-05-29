@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
-
-
+@section('title')
+Thank You For Your Purchase!
+@stop
 
 @section('content')
 
@@ -18,6 +19,12 @@
 		
 
 	</div>
+
+<div class="home-container product-store-section" id="store">
+
+	@include('partials.store')
+
+</div>
 
 @include('partials.contact');
 
