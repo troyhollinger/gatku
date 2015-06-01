@@ -1651,21 +1651,25 @@ product-buyers {
 		font-size: 2rem;
 		height:50px;
 
+		@include breakpoint(small) {
+
+			font-size: 1.4rem;
+			line-height: 2.25;
+
+		}
+
 	}
 
 	@include breakpoint(medium) {
 
 		margin-top: 20px;
-
-	}
-
-	@include breakpoint(medium) {
-
 		font-size: 2rem;
 		height:50px;
 
+
 	}
 
+	
 }
 
 .checkout-button {
