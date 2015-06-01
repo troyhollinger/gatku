@@ -6594,6 +6594,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.productAdded = false;
 
+	$scope.productAddedText = "Add to Cart";
+
 	$scope.product = {};
 
 	if (layoutType === 'pole' || layoutType === 'extra') {
@@ -6663,6 +6665,8 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			CartService.addItem($scope.product);
 
 		}
+
+		$scope.productAddedTextChange();
 
 		reset();
 
@@ -6772,17 +6776,26 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	}
 
-	$scope.productAddedText = function() {
+	$scope.productAddedTextChange = function() {
 
-		if ($scope.productAdded) {
+		// if ($scope.productAdded) {
 
-			return "Item Added";
+		// 	return "Item Added";
 
-		} else {
+		// } else {
 
-			return "Add to Cart";
+		// 	return "Add to Cart";
 
-		}
+		// }
+
+		$scope.productAddedText = "Item Added!";
+
+		$timeout(function() {
+
+			$scope.productAddedText = "Add to Cart";
+
+		}, 4000);
+
 	}
 
 	function productAddedAnimation() {

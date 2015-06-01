@@ -147,7 +147,7 @@
 
 		</div>
 
-		<div class="submit-button" ng-click="addToCart();" ng-bind="productAddedText()" ng-class="{ 'post-added-state' : productAdded }"></div>
+		<div class="submit-button" ng-click="addToCart();" ng-bind="productAddedText" ng-class="{ 'post-added-state' : productAdded }"></div>
 		<div class="checkout-button" ng-click="openCart();" ng-class="{ 'post-added-state' : productAdded }" ng-show="productAdded">Checkout</div>
 
 		<div class="clear"></div>
