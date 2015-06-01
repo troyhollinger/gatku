@@ -6150,7 +6150,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = true;
+	$scope.show = false;
 
 	$scope.form = {};
 
