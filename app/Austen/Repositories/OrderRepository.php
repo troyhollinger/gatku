@@ -144,6 +144,7 @@ class OrderRepository {
 		$order->country = $input['country'];
 		$order->zip = $input['zip'];
 		$order->number = strtoupper(str_random(15));
+		if (isset($input['comments'])) $order->comments = $input['comments'];
 
 		return $order;
 

@@ -2498,7 +2498,7 @@ product-buyers {
 
 	}
 
-	input {
+	input, textarea {
 
 		border-radius: 2px;
 		box-sizing:border-box;
@@ -2520,6 +2520,12 @@ product-buyers {
 			border:1px solid black;
 
 		}
+
+	}
+
+	textarea {
+
+		height:5rem;
 
 	}
 

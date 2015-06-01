@@ -259,6 +259,14 @@
 	                                 	Phone: {{ $order['customer']['phone'] }}<br>
 	                                 	Email: {{ $order['customer']['email'] }}
 	                             	</p>
+
+	                             	@if(isset($order['comments']))
+	                             	<p style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif;">
+	                             		Comments :<br>
+	                             		{{ $order['comments'] }}
+	                             	</p>
+	                             	@endif
+
 										
 								</td>
 

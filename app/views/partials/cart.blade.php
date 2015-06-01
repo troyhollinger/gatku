@@ -154,6 +154,9 @@
 			<label for="country">Country</label>
 			<input type="text" name="country" id="country" ng-model="form.country">
 
+			<label for="comments">Additional Comments <span class="faded bold">(optional)</span></label>
+			<textarea type="text" name="comments" id="comments" ng-model="form.comments"></textarea>
+
 		</div>
 
 		<div class="cart-actions">
