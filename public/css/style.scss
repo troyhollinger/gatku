@@ -1681,6 +1681,12 @@ product-buyers {
 	color:white !important;
 	float:right !important;
 
+	&:hover {
+
+		background-color: darken($green, 5%);
+
+	}
+
 }
 
 .addon-container {

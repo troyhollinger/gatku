@@ -190,16 +190,6 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.productAddedTextChange = function() {
 
-		// if ($scope.productAdded) {
-
-		// 	return "Item Added";
-
-		// } else {
-
-		// 	return "Add to Cart";
-
-		// }
-
 		$scope.productAddedText = "Item Added!";
 
 		$timeout(function() {
