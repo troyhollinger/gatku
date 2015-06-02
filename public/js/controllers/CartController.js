@@ -13,7 +13,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.form = {};
 

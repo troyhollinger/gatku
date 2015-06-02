@@ -1,7 +1,7 @@
 app.controller('CartBlinderController', ['$scope', 'CartService', function($scope, CartService) {
 
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.hide = function() {
 

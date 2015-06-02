@@ -6114,7 +6114,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 app.controller('CartBlinderController', ['$scope', 'CartService', function($scope, CartService) {
 
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.hide = function() {
 
@@ -6150,7 +6150,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.items = [];
 
-	$scope.show = false;
+	$scope.show = true;
 
 	$scope.form = {};
 

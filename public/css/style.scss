@@ -2070,6 +2070,20 @@ product-buyers {
 		cursor: pointer;
 		@include transition(all .1s linear);
 
+		@include breakpoint(medium) {
+
+			@include transform(translate(0%,-50%));
+			left:10%;
+			font-size: 3rem;
+
+		}
+
+		@include breakpoint(900px) {
+
+			display: none;
+
+		}
+
 	}
 
 	&:hover {
