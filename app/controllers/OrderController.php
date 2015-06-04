@@ -40,14 +40,20 @@ class OrderController extends BaseController {
 	 * @return Response
 	 */
 	public function store() {
-
-		// Log::info(Input::all());
 		
 		$order = $this->order->process(Input::all());
 
-		if ($order === false) {
+		if ($order !== true) {
 
-			return Response::json(['message' => 'Sorry, the order could not be made'], 404);
+			if ($order !== false) {
+
+				return Response::json(['message' => $order], 404);
+
+			} else {
+
+				return Response::json(['message' => 'Sorry, something went wrong on our end. We are fixing it.'], 404);
+
+			}
 
 		}
 

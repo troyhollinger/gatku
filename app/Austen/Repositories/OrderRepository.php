@@ -12,6 +12,7 @@ use Size;
 use DB;
 use Carbon\Carbon;
 use App;
+use Stripe_CardError;
 
 /**
  *
@@ -54,77 +55,93 @@ class OrderRepository {
 
 		}	
 
+		DB::beginTransaction();
+
 		try {
 
-			$that = $this;
+			$customer = $this->customer->store($input['form']);
+
+			$order = new Order;
 			
-			DB::transaction(function() use ($input, $that) {
+			$order = $this->assignFields($order, $customer, $input['form']);
 
-				$customer = $that->customer->store($input['form']);
+			$order->save();
+		
+			$this->assignOrderItems($order, $input['items']);
 
-				$order = new Order;
-				
-				$order = $that->assignFields($order, $customer, $input['form']);
+			$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
-				$order->save();
-			
-				$that->assignOrderItems($order, $input['items']);
+			$subtotal = $this->calculateSubTotal($order);
 
-				$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
+			$shipping = $this->calculateShipping($order);
 
-				$subtotal = $that->calculateSubTotal($order);
+			$total = $this->calculateTotal($order);
 
-				$shipping = $that->calculateShipping($order);
-
-				$total = $that->calculateTotal($order);
-
-				Stripe_Charge::create([
-
-					'source' => $input['token']['id'],
-					'amount' => $total,
-					'currency' => 'usd',
-					'description' => 'Order : ' . $order->number
-
-				]);
-
-				$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
-
-				if (App::environment('production')) {
-
-					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
-
-						$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
-					  
-					});
-
-					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-						$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
-					  
-					});
-
-					Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-						$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
-					  
-					});
-
-				}
-
-				Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-					$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
-				  
-				});
-
-			});
-			
 		} catch(Exception $e) {
+
+			Log::error($e);
+
+			DB::rollback();
 
 			return false;
 
 		}
 
+		try {
+			
+			Stripe_Charge::create([
+
+				'source' => $input['token']['id'],
+				'amount' => $total,
+				'currency' => 'usd',
+				'description' => 'Order : ' . $order->number
+
+			]);
+
+		} catch (Stripe_CardError $e) {
+			
+			Log::error($e);
+
+			DB::rollback();
+
+			return $e;
+
+		}
+
+		DB::commit();
+
+		$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
+
+		if (App::environment('production')) {
+
+			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
+
+				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
+			  
+			});
+
+			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
+			  
+			});
+
+			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
+			  
+			});
+
+		}
+
+		Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+			$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
+		  
+		});
+			
+
+		
 		return true;
 
 	}

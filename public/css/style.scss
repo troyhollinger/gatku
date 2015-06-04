@@ -473,6 +473,7 @@ html {
 	height:100vh;
 	background-size: cover;
 	background-position: center;
+	background-color: $gray;
 
 	@include breakpoint(small) {
 
@@ -3949,7 +3950,56 @@ hover-card {
 
 }
 
+.slide-over {
 
+	position: absolute;
+	width:100%;
+	width:100vw;
+	height:100%;
+	height:100vh;
+
+	@include transform(translate3d(0%, 0%, 0));
+	
+	opacity: 1;
+
+
+	&.ng-hide-add, &.ng-hide-remove {
+
+		@include transition(all 0s linear);
+
+	}
+
+	&.ng-hide-add-active, &.ng-hide-remove-active {
+
+		@include transition(all .5s ease);
+
+	}
+
+	&.ng-hide-add.ng-hide-add-active {
+
+		@include transform(translate3d(-100%, 0%, 0));
+
+	}
+
+	&.ng-hide-remove {
+
+		@include transform(translate3d(100%, 0%, 0));
+
+	}
+	
+	&.ng-hide-remove.ng-hide-remove-active {
+
+		@include transform(translate3d(0%, 0%, 0));
+
+	}
+
+	@include stretchpoint(large) {
+
+		position: fixed;
+
+	}
+		
+}
 
 
 

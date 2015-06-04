@@ -201,7 +201,17 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}).error(function(response) {
 
-				AlertService.broadcast('Sorry, there was an error creating your order. Please try again later', 'error');
+				console.log(response);
+
+				if ('error' in response.message.jsonBody) {
+
+					AlertService.broadcast(response.message.jsonBody.error.message, 'error');
+
+				} else {
+
+					AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');					
+
+				}
 
 			});
 
