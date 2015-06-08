@@ -4830,7 +4830,7 @@ app.filter('money', function () {
 
 });
 
-app.directive('backImg',['', function(){
+app.directive('backImg',['$window', function($window){
     return function(scope, element, attrs){
         attrs.$observe('backImg', function(value) {
             element.css({
