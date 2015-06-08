@@ -4830,8 +4830,9 @@ app.filter('money', function () {
 
 });
 
-app.directive('backImg',['$window', function($window){
-    return function(scope, element, attrs){
+
+app.directive('backImg',['$window', function($window) {
+    return function(scope, element, attrs) {
         attrs.$observe('backImg', function(value) {
             element.css({
                 'background-image': 'url(' + value +')',
@@ -5643,7 +5644,7 @@ app.factory('Image', ['$http', '$upload', function($http, $upload) {
 
 app.factory('Product', ['$http', function($http) {
 
-	return  {
+	return {
 
 		all : function() {
 
@@ -5692,8 +5693,6 @@ app.factory('Product', ['$http', function($http) {
 			return $http.get('/product/photos/' + productId);
 
 		}
-
-
 
 	}
 

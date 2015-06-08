@@ -7,8 +7,9 @@ app.filter('money', function () {
 
 });
 
-app.directive('backImg',['$window', function($window){
-    return function(scope, element, attrs){
+
+app.directive('backImg',['$window', function($window) {
+    return function(scope, element, attrs) {
         attrs.$observe('backImg', function(value) {
             element.css({
                 'background-image': 'url(' + value +')',
