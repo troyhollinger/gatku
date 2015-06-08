@@ -15,7 +15,7 @@ app.factory('Image', ['$http', '$upload', function($http, $upload) {
 
 app.factory('Product', ['$http', function($http) {
 
-	return  {
+	return {
 
 		all : function() {
 
@@ -64,8 +64,6 @@ app.factory('Product', ['$http', function($http) {
 			return $http.get('/product/photos/' + productId);
 
 		}
-
-
 
 	}
 

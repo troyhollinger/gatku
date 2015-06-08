@@ -1,4 +1,4 @@
-<?php
+3<?php
 
 
 use Austen\Repositories\ProductRepositoryInterface;
@@ -25,17 +25,19 @@ class ProductController extends BaseController {
 	 */
 	public function index() {
 
-		if (Request::ajax()) {
+		// if (Request::wantsJson()) {
 
 			$products = $this->product->all();
 
+			Log::info($products);
+
 			return Response::json(['data' => $products], 200);
 
-		} else {
+		// } else {
 
-			return Redirect::route('home');
+			// return Redirect::route('home');
 
-		}
+		// }
 		
 	}
 
