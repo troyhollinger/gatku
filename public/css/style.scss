@@ -2283,7 +2283,7 @@ product-buyers {
 
 	img {
 
-		transform:none;
+		@include transform(translate(0,0));
 		width:100px;
 
 	}
