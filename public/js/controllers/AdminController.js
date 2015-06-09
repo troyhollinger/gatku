@@ -1,4 +1,4 @@
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', function($scope, Image, Product, Order, YouImage) {
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService) {
 
 	$scope.init = function() {
 
@@ -7,12 +7,15 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 		getProducts();
 		getTypes();
 		getYouImages();
+		getAvailabilityTypes();
 
 	}
 
 	$scope.orders = [];
 
 	$scope.types = [];
+
+	$scope.availabilityTypes = [];
 
 	$scope.products = [];
 
@@ -67,6 +70,20 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
 	}
 
+	function getAvailabilityTypes() {
+
+		AvailabilityType.all().success(function(response) {
+
+			$scope.availabilityTypes = response.data;
+
+		}).error(function(response) {
+
+			console.log("Something went wrong on our end");
+
+		});
+
+	}
+
 	$scope.saveProduct = function() {
 
 		var nanobar = new Nanobar({ bg : '#fff' });
@@ -78,11 +95,12 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 			getProducts();
 			$scope.reset();
 			nanobar.go(100);
+			AlertService.broadcast('Product saved!', 'success');
 
 		}).error(function(response) {
 
 			nanobar.go(100);
-			console.log("Sorry, something went wrong");
+			AlertService.broadcast('There was a problem', 'error');
 
 		});
 
@@ -121,11 +139,12 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 			getProducts();
 			$scope.reset();
 			nanobar.go(100);
+			AlertService.broadcast('Product updated!', 'success');
 
 		}).error(function(response) {
 
 			nanobar.go(100);
-			console.log("Sorry, something went wrong");
+			AlertService.broadcast('There was a problem.', 'error');
 
 		});
 

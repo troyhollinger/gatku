@@ -41,7 +41,7 @@
 
 				<div class="clear"></div>
 
-				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' || item.type.slug === 'glass', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
 
 					<img ng-src="@{{ item.thumb }}">
 
@@ -84,6 +84,14 @@
 		</ul>	
 
 		<div class="cart-details">
+
+			<div class="cart-details-row" ng-if="eligibleForDiscount">
+				<span class="cart-item-column">Discounts - <span class="smaller faded bold">@{{ discountText }}</span></span>
+				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discounts() | money)"></span>
+
+				<div class="clear"></div>
+
+			</div>
 
 			<div class="cart-details-row">
 				<span class="cart-item-column">Subtotal <span class="smaller faded bold" ng-if="subtotal() < 30000">- get to $300 for free shipping!</span><span class="smaller faded bold" ng-if="subtotal() >= 30000">You get free shipping!</span></span>
@@ -225,7 +233,7 @@
 
 				<div class="clear"></div>
 
-				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' || item.type.slug === 'glass', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
 
 					<img ng-src="@{{ item.thumb }}">
 
@@ -259,6 +267,14 @@
 		</ul>	
 
 		<div class="cart-details">
+
+			<div class="cart-details-row" ng-if="eligibleForDiscount">
+				<span class="cart-item-column">Discounts - <span class="smaller faded bold">@{{ discountText }}</span></span>
+				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discounts() | money)"></span>
+
+				<div class="clear"></div>
+
+			</div>
 
 			<div class="cart-details-row">
 				<span class="cart-item-column">Shipping</span>

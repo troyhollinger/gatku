@@ -12,6 +12,19 @@ app.factory('Image', ['$http', '$upload', function($http, $upload) {
 
 }]);
 
+app.factory('AvailabilityType', ['$http', function($http) {
+
+	return {
+
+		all : function() {
+
+			return $http.get('/availability-type');
+
+		}
+
+	}
+
+}]);	
 
 app.factory('Product', ['$http', function($http) {
 

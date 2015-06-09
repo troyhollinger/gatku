@@ -76,6 +76,16 @@
 
 	<h2 class="store-label">Apparel</h2>';
 
+	$glassRow = '<div class="product-row glass-row">
+		<div class="product-thumb-container" ng-repeat="glass in glasses"><a href="' . route('product.show', ['']) . '/{{ glass.slug }}"><img ng-src="{{ glass.thumb }}"></a></div>
+	</div>
+
+	<div class="links glass-links">
+		<div class="product-link-container" ng-repeat="glass in glasses"><a href="' . route('product.show', ['']) . '/{{ glass.slug }}">{{ glass.shortName }} <span class="detail"> /{{ glass.length }}</span></a></div>
+
+		<div class="clear"></div>
+	</div>
+	<h2 class="store-label">Glasses</h2>';
 
  ?>
 
@@ -83,33 +93,38 @@
 <div class="store-container" ng-controller="StoreController">
 
 
+
 	@if(isset($product))
 
 		@if($product->type->slug === 'head')
 
-		{{ $headsRow . $tailsRow . $extrasRow . $apparelRow  }}		
+		{{ $headsRow . $tailsRow . $extrasRow . $apparelRow . $glassRow  }}		
 
 		@elseif($product->type->slug === 'pole')
 
-		{{ $tailsRow . $headsRow . $extrasRow . $apparelRow  }}		
+		{{ $tailsRow . $headsRow . $extrasRow . $apparelRow . $glassRow }}		
 
 		@elseif($product->type->slug === 'extra' || $product->type->slug === 'shrinker')
 
-		{{ $extrasRow . $headsRow . $tailsRow . $apparelRow  }}		
+		{{ $extrasRow . $headsRow . $tailsRow . $apparelRow . $glassRow }}		
 
 		@elseif($product->type->slug === 'apparel')
 
-		{{ $apparelRow . $headsRow . $tailsRow . $extrasRow  }}
+		{{ $apparelRow . $headsRow . $tailsRow . $extrasRow . $glassRow }}
+
+		@elseif($product->type->slug === 'glass')
+
+		{{ $glassRow . $headsRow . $tailsRow . $extrasRow . $apparelRow}}
 
 		@else
 		
-		{{ $headsRow . $tailsRow . $extrasRow . $apparelRow }}
+		{{ $headsRow . $tailsRow . $extrasRow . $apparelRow . $glassRow }}
 
 		@endif
 
 	@else
 
-	{{ $headsRow . $tailsRow . $extrasRow . $apparelRow }}
+	{{ $headsRow . $tailsRow . $extrasRow . $apparelRow . $glassRow}}
 
 	@endif
 

@@ -11,7 +11,7 @@
 
 @section('content')
 
-@if($product->type->slug != 'apparel')
+@if($product->type->slug != 'apparel' && $product->type->slug != 'glass')
 <div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
@@ -34,7 +34,7 @@
 </div>
 @endif
 
-<div class="container {{ $product->type->slug === 'apparel' ? 'apparel-height' : ''}}">
+<div class="container {{ $product->type->slug === 'apparel' ? 'apparel-height' : ''}} {{ $product->type->slug === 'glass' ? 'glass-height' : '' }}">
 
 	@if($product->type->slug === 'apparel')
 	<div class="apparel-container">
@@ -44,11 +44,17 @@
 	</div>
 	@endif
 
-	<div class="product-column-left {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
+	@if($product->type->slug === 'glass')
+	<div class="apparel-container">
+		<img class="rollerblade-img" src="{{ $product->attachedImage }}">
+	</div>
+	@endif
+
+	<div class="product-column-left {{ $product->type->slug === 'apparel' || $product->type->slug === 'glass' ? 'apparel-column' : ''}}">
 
 		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold {{ $product->type->slug === 'pole' ? 'uppercase' : '' }}">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
-		<div class="product-description">
+		<div class="product-description {{ $product->type->slug === 'apparel' ? 'apparel-description' : '' }} {{ $product->type->slug === 'glass' ? 'glass-description' : '' }}">
 
 			{{ $product->description }}
 			
@@ -82,7 +88,7 @@
 
 	</div>
 
-	<div class="product-column-right {{ $product->type->slug === 'apparel' ? 'apparel-column' : ''}}">
+	<div class="product-column-right {{ $product->type->slug === 'apparel' || $product->type->slug === 'glass' ? 'apparel-column' : ''}}">
 		<!-- Increase the width of this element to increase margin between children -->
 		@if($product->attachedImage && $product->detachedImage)
 		<div class="pole-view-actions">

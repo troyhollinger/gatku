@@ -71,6 +71,8 @@ class OrderRepository {
 
 			$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
+			$discount = $this->calculateDiscount($order);
+
 			$subtotal = $this->calculateSubTotal($order);
 
 			$shipping = $this->calculateShipping($order);
@@ -114,19 +116,19 @@ class OrderRepository {
 
 		if (App::environment('production')) {
 
-			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
 
 				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
 			  
 			});
 
-			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
 			  
 			});
 
-			Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
 			  
@@ -134,7 +136,7 @@ class OrderRepository {
 
 		}
 
-		Mail::queue('emails.order', ['order' => $order, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+		Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 
 			$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
 		  
@@ -183,6 +185,7 @@ class OrderRepository {
 	private function calculateSubTotal($order) {
 
 		$subtotal = 0;
+		$discount = 0;
 
 		$items = $order->items;
 
@@ -222,10 +225,52 @@ class OrderRepository {
 
 		}
 
-		return $subtotal;
+		$discount = $this->calculateDiscount($order);
+
+		return $subtotal - $discount;
 
 	}
 
+	private function calculateDiscount($order) {
+
+		$amount = 0;
+		$glassCheck = 0;
+		$glassPrice = 0;
+
+		$items = $order->items;
+
+		foreach($items as $item) {
+
+			if ($item->product->type->slug === 'glass') {
+
+				$glassCheck += $item->quantity;
+				$glassPrice = $item->product->price;
+
+			}
+
+			foreach($item->addons as $addon) {
+
+				if ($addon->product->type->slug === 'glass') {
+
+					$glassCheck += $addon->quantity;
+
+				}
+
+			}
+
+		}
+
+		if ($glassCheck >= 4) {
+
+			$amount = ($glassPrice * 4) - 4000;
+
+		}
+
+		Log::info($amount);
+
+		return $amount;
+
+	}
 
 
 	/**

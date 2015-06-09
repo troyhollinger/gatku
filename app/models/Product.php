@@ -29,11 +29,11 @@ class Product extends Eloquent {
 
 	}
 
-	// public function availability() {
+	public function availability() {
 
-	// 	return $this->hasOne('AvailabilityType', 'id', 'availabilityTypeId');
+		return $this->hasOne('AvailabilityType', 'id', 'availabilityTypeId');
 
-	// }
+	}
 
 
 }

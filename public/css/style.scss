@@ -143,6 +143,18 @@ html {
 
 }
 
+.success {
+
+	color:$green;
+
+}
+
+.error {
+
+	color:$red;
+
+}
+
 .error-bg {
 
 	background-color: $red;
@@ -393,6 +405,21 @@ html {
 
 		height:1400px;
 		margin-bottom: 350px;
+
+		@include breakpoint(small) {
+
+			height:auto;
+			margin-bottom: 0;
+
+		}
+
+	}
+
+	&.glass-height {
+
+		height:85%;
+		height:85vh;
+		margin-bottom: 200px;
 
 		@include breakpoint(small) {
 
@@ -749,6 +776,43 @@ html {
 
 			width:33.3333%;
 			width:calc(100% / 3);
+
+			&:first-child {
+
+				text-align: center;
+
+			}
+
+		}
+
+	}
+
+}
+
+.glass {
+
+	&-row {
+
+		.product-thumb-container {
+
+			width:25%;
+
+		}
+
+		img {
+
+			width:74%;
+			@include transform(rotate(0deg));
+			@include transform(translate(0, 9%));
+		}
+
+	}
+
+	&-links {
+
+		.product-link-container {
+
+			width:25%;
 
 			&:first-child {
 
@@ -1274,18 +1338,6 @@ html {
 		width:35%;
 		z-index: 4;
 
-		.product-description {
-
-			font-size: 1.25rem;
-
-			@include breakpoint(small) {
-
-				font-size: 1.1rem;
-
-			}
-
-		}
-
 		@include breakpoint(small) {
 
 			width:100%;
@@ -1392,6 +1444,24 @@ html {
 .product-description {
 
 	font-size: 1.7rem;
+
+	&.apparel-description {
+
+		font-size: 1.25rem;
+
+		@include breakpoint(small) {
+
+			font-size: 1.1rem;
+
+		}
+
+	}
+
+	&.glass-description {
+
+		font-size: 1.5rem;
+
+	}
 
 	p {
 
@@ -2637,7 +2707,7 @@ product-buyers {
 	@include transition(all .25s ease);
 	@include transform(translate(0, 10px));
 	pointer-events:none;
-	
+	z-index: 9;
 
 	&.visible {
 

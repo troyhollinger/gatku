@@ -25,6 +25,10 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.currentStage = $scope.stages[0];
 
+	$scope.eligibleForDiscount = false;
+
+	$scope.discountText = '';
+
 	$scope.toStage = function(index) {
 
 		Inputs.blur();
@@ -158,9 +162,55 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}
 
+		});	
+
+		return subtotal - $scope.discounts();
+
+	}
+
+	/**
+	 * This function will change quite a bit depending 
+	 * on what current discounts you want plugged into the system
+	 *
+	 */
+	$scope.discounts = function() {
+
+		var amount = 0;
+		var glassCheck = 0;
+		var glassPrice = 0;
+
+		angular.forEach($scope.items, function(value, key) {
+
+			if($scope.items[key].type.slug === 'glass') {
+
+				glassCheck += parseInt($scope.items[key].quantity);
+				glassPrice = $scope.items[key].price;
+
+			}
+
+			for(var i = 0; i < $scope.items[key].addons.length; i++) {
+
+				if ($scope.items[key].addons[i].type.slug === 'glass') glassCheck += parseInt($scope.items[key].addons[i].quantity);
+
+			}
+
 		});
 
-		return subtotal;
+		if (glassCheck >= 4) {
+
+			amount = (glassPrice * 4) - 4000;
+
+			$scope.eligibleForDiscount = true;
+			$scope.discountText = '4 Glasses for $40';
+
+		} else {
+
+			$scope.eligibleForDiscount = false;
+			$scope.discountText = '';
+
+		}
+
+		return amount;
 
 	}
 

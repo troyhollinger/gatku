@@ -5380,6 +5380,8 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
 				addonToCart.sizeable = addon.product.sizeable;
+				addonToCart.type = {};
+				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
 
 					addonToCart.sizeId = addon.product.sizeId;
@@ -5641,6 +5643,19 @@ app.factory('Image', ['$http', '$upload', function($http, $upload) {
 
 }]);
 
+app.factory('AvailabilityType', ['$http', function($http) {
+
+	return {
+
+		all : function() {
+
+			return $http.get('/availability-type');
+
+		}
+
+	}
+
+}]);	
 
 app.factory('Product', ['$http', function($http) {
 
@@ -5758,7 +5773,7 @@ app.factory('Size', ['$http', function($http) {
 
 
 
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', function($scope, Image, Product, Order, YouImage) {
+app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService) {
 
 	$scope.init = function() {
 
@@ -5767,12 +5782,15 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 		getProducts();
 		getTypes();
 		getYouImages();
+		getAvailabilityTypes();
 
 	}
 
 	$scope.orders = [];
 
 	$scope.types = [];
+
+	$scope.availabilityTypes = [];
 
 	$scope.products = [];
 
@@ -5827,6 +5845,20 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
 	}
 
+	function getAvailabilityTypes() {
+
+		AvailabilityType.all().success(function(response) {
+
+			$scope.availabilityTypes = response.data;
+
+		}).error(function(response) {
+
+			console.log("Something went wrong on our end");
+
+		});
+
+	}
+
 	$scope.saveProduct = function() {
 
 		var nanobar = new Nanobar({ bg : '#fff' });
@@ -5838,11 +5870,12 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 			getProducts();
 			$scope.reset();
 			nanobar.go(100);
+			AlertService.broadcast('Product saved!', 'success');
 
 		}).error(function(response) {
 
 			nanobar.go(100);
-			console.log("Sorry, something went wrong");
+			AlertService.broadcast('There was a problem', 'error');
 
 		});
 
@@ -5881,11 +5914,12 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 			getProducts();
 			$scope.reset();
 			nanobar.go(100);
+			AlertService.broadcast('Product updated!', 'success');
 
 		}).error(function(response) {
 
 			nanobar.go(100);
-			console.log("Sorry, something went wrong");
+			AlertService.broadcast('There was a problem.', 'error');
 
 		});
 
@@ -6161,6 +6195,10 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.currentStage = $scope.stages[0];
 
+	$scope.eligibleForDiscount = false;
+
+	$scope.discountText = '';
+
 	$scope.toStage = function(index) {
 
 		Inputs.blur();
@@ -6294,9 +6332,55 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			}
 
+		});	
+
+		return subtotal - $scope.discounts();
+
+	}
+
+	/**
+	 * This function will change quite a bit depending 
+	 * on what current discounts you want plugged into the system
+	 *
+	 */
+	$scope.discounts = function() {
+
+		var amount = 0;
+		var glassCheck = 0;
+		var glassPrice = 0;
+
+		angular.forEach($scope.items, function(value, key) {
+
+			if($scope.items[key].type.slug === 'glass') {
+
+				glassCheck += parseInt($scope.items[key].quantity);
+				glassPrice = $scope.items[key].price;
+
+			}
+
+			for(var i = 0; i < $scope.items[key].addons.length; i++) {
+
+				if ($scope.items[key].addons[i].type.slug === 'glass') glassCheck += parseInt($scope.items[key].addons[i].quantity);
+
+			}
+
 		});
 
-		return subtotal;
+		if (glassCheck >= 4) {
+
+			amount = (glassPrice * 4) - 4000;
+
+			$scope.eligibleForDiscount = true;
+			$scope.discountText = '4 Glasses for $40';
+
+		} else {
+
+			$scope.eligibleForDiscount = false;
+			$scope.discountText = '';
+
+		}
+
+		return amount;
 
 	}
 
@@ -6911,6 +6995,7 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 			$scope.shrinker = response.data['shrinker'];
 			$scope.extras = response.data['extras'];
 			$scope.apparel = response.data['apparel'];
+			$scope.glasses = response.data['glasses'];
 
 		}).error(function(response) {
 

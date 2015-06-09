@@ -293,7 +293,7 @@
 																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item['size']['name'] }}</strong></span></td>
 																@else
 																<td><span class="product-name" style="text-transform:uppercase;"><strong>{{ $item['product']['shortName'] }}</strong>@if($item['product']['type']['slug'] === 'pole')<span>'ER</span>@endif
-																	@if (strpos($item['product']['slug'], 'paralyzer') !== false)<small>/{{ $item['product']['length'] }}</small>@endif</span>
+																	@if (strpos($item['product']['slug'], 'paralyzer') !== false || $item['product']['type']['slug'] === 'glass')<small>/{{ $item['product']['length'] }}</small>@endif</span>
 																</td>
 																@endif
 
@@ -347,7 +347,12 @@
 									</div>
 
 									<p id="total" style="-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif;border-top: 1px solid black;padding-top: 10px;font-weight: bold;">
-										<span style="font-weight:normal">Shipping Charge : ${{ $shipping / 100 }}</span><br>Total : ${{ $total / 100 }}
+										@if($discount > 0)
+										<span style="font-weight:normal">Discount: <span style="color:#2ECC71;">- ${{ $discount / 100 }}</span></span><br>
+										@endif
+										<span style="font-weight:normal">Subtotal: ${{ $subtotal / 100 }}</span><br>
+										<span style="font-weight:normal">Shipping: ${{ $shipping / 100 }}</span><br>
+										Total : ${{ $total / 100 }}
 									</p>
 
 								</td>

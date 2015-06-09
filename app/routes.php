@@ -73,3 +73,5 @@ Route::get('media', ['as' => 'media', function() {
 
 }]);
 
+
+Route::get('availability-type', ['as' => 'availabilityType.index', 'uses' => 'AvailabilityController@index']);

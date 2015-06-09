@@ -49,6 +49,8 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
 				addonToCart.sizeable = addon.product.sizeable;
+				addonToCart.type = {};
+				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
 
 					addonToCart.sizeId = addon.product.sizeId;

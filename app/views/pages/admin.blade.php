@@ -79,6 +79,9 @@ Admin
 					<label>Slug</label>
 					<input type="text" ng-model="newProduct.slug">
 
+					<label>Availability</label>
+					<select ng-options="availabilityType.id as availabilityType.name for availabilityType in availabilityTypes" ng-model="newProduct.availabilityTypeId"></select>
+
 					<label>Description</label>
 					<textarea ng-model="newProduct.description"></textarea>
 
@@ -118,6 +121,13 @@ Admin
 						<input type="file" ng-file-select="upload($files, 'thumb')">
 					</div>
 
+					<label>Email Image</label>
+					<div class="upload-field" ng-style="{'background-image':'url(' + newProduct.emailImage + ')'}">
+						<i class="fa fa-image" ng-hide="newProduct.emailImage"></i>
+						<input type="text" ng-model="newProduct.emailImage" class="image-path-storage-input">
+						<input type="file" ng-file-select="upload($files, 'emailImage')">
+					</div>
+
 					<label>Maneuverability</label>
 					<input type="text" ng-model="newProduct.maneuverability">
 
@@ -146,11 +156,13 @@ Admin
 					<tr>
 						<th>Name</th>
 						<th>Type</th>
+						<th>Stock</th>
 						<th>Actions (hover)</th>
 					</tr>
 					<tr ng-repeat="product in products">
 						<td class="bold uppercase">@{{ product.name }}</td>
 						<td class="faded">@{{ product.type.name }}</td>
+						<td class="faded">@{{ product.availability.name }}</td>
 						<td>
 							<a href="/product/@{{ product.slug }}" target="_blank"><div class="button info-bg">View</div></a>
 							<div class="button info-bg" ng-click="editProduct(product)">Edit</div>

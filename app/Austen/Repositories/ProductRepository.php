@@ -14,7 +14,7 @@ class ProductRepository implements ProductRepositoryInterface {
 	
 	public function all() {
 
-		$products = Product::with('type', 'addons')->get();
+		$products = Product::with('type', 'addons', 'availability')->get();
 
 		Log::info($products);
 
@@ -28,7 +28,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			
 			$product = Product::findOrFail($id);
 
-			$product->load('type', 'addons.product', 'sizes');
+			$product->load('type', 'addons.product.type', 'sizes');
 
 		} catch (Exception $e) {
 			
@@ -143,6 +143,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products;
 			$extras = ProductType::where('name', '=', 'extra')->first()->products;
 			$apparel = ProductType::where('name', '=', 'apparel')->first()->products;
+			$glasses = ProductType::where('name', '=', 'glass')->first()->products;
 
 		} catch (Exception $e) {
 			
@@ -157,7 +158,8 @@ class ProductRepository implements ProductRepositoryInterface {
 			'poles' => $poles,
 			'shrinker' => $shrinker,
 			'extras' => $extras,
-			'apparel' => $apparel
+			'apparel' => $apparel,
+			'glasses' => $glasses
 		];
 
 		return $products;
@@ -193,7 +195,9 @@ class ProductRepository implements ProductRepositoryInterface {
 		$product->typeId = $data['typeId'];
 		if (isset($data['attachedImage'])) $product->attachedImage = $data['attachedImage'];
 		if (isset($data['detachedImage'])) $product->detachedImage = $data['detachedImage'];
+		if (isset($data['emailImage'])) $product->emailImage = $data['emailImage'];
 		if (isset($data['thumb'])) $product->thumb = $data['thumb'];
+		if (isset($data['availabilityTypeId'])) $product->availabilityTypeId = $data['availabilityTypeId'];
 		$product->name = $data['name'];
 		$product->shortName = $data['shortName'];
 		$product->slug = $data['slug'];
