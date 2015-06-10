@@ -36,10 +36,10 @@ Admin
 					<td>
 						<ul>
 							<li ng-repeat="item in order.items" class="uppercase bold">
-								@{{ item.product.sizeable ? item.size.name : item.product.name }}
+								@{{ item.product.sizeable ? item.size.name : item.product.name }} <span ng-show="item.quantity > 1" class="lowercase brand">x @{{ item.quantity }}</span>
 								<ul class="admin-order-addons-list">
 									<li ng-repeat="addon in item.addons">
-										@{{ addon.product.name }}
+										@{{ addon.product.name }} <span ng-show="addon.quantity > 1" class="lowercase brand">x @{{ addon.quantity }}</span>
 									</li>
 								</ul>
 							</li>
