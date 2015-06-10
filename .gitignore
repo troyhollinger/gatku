@@ -5,4 +5,5 @@ Thumbs.db
 vendor
 public/img/uploads/*
 public/img/you-images/*
+public/node_modules/*
 

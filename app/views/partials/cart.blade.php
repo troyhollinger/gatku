@@ -102,7 +102,7 @@
 			</div>
 
 			<div class="cart-details-row">
-				<span class="cart-item-column">Shipping</span>
+				<span class="cart-item-column">Shipping <span class="smaller faded bold">Non-U.S.A shipping may vary</span></span>
 				<span class="cart-price-column shipping-column" ng-bind="'$' + (shipping() | money)"></span>
 
 				<div class="clear"></div>
@@ -159,8 +159,11 @@
 			<label for="zip">Zip Code</label>
 			<input type="text" name="zip" id="zip" ng-model="form.zip">
 
-			<label for="country">Country</label>
+			<label for="country">Country <span class="faded bold"></span></label>
 			<input type="text" name="country" id="country" ng-model="form.country">
+
+			<label>Note to International Orders -</label>
+			<p class="cart-note">When shipping outside the USA rates vary. We have found it best to apply rates order specific. Go ahead and place your order now and we will PayPal request the difference in shipping paid on order placed with the actual shipping cost. Thank you.</p>
 
 			<label for="comments">Additional Comments <span class="faded bold">(optional)</span></label>
 			<textarea type="text" name="comments" id="comments" ng-model="form.comments"></textarea>

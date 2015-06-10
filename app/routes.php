@@ -16,6 +16,8 @@ Route::get('size/by/slug/{slug}', ['as' => 'size.bySlug', 'uses' => 'ProductCont
 
 Route::resource('product', 'ProductController');
 
+Route::resource('user', 'UserController', ['except' => ['create']]);
+
 
 Route::get('login', ['as' => 'login.index', 'uses' => 'AuthenticationController@index']);
 Route::post('login', ['as' => 'login.authenticate', 'uses' => 'AuthenticationController@authenticate']);
