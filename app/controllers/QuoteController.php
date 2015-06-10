@@ -14,11 +14,23 @@ class QuoteController extends BaseController {
 		$form = Input::all();
 		$name = Input::get('name');
 
-		Mail::send('emails.inquiry', array('form' => $form), function($message) use ($name) {
+		if (App::environment('production')) {
+
+			Mail::queue('emails.inquiry', array('form' => $form), function($message) use ($name) {
+
+			    $message->to('dustin@gatku.com', 'GATKU Polespears')->subject('New Shipping Inquiry from ' . $name);
+
+			});
+
+		} 
+
+		Mail::queue('emails.inquiry', array('form' => $form), function($message) use ($name) {
 
 		    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New Shipping Inquiry from ' . $name);
 
 		});
+
+	
 
 	} 
 
