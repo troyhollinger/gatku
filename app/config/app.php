@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => '4xs9YhTdjKC03oAXPTFSsovmnzA6Xll8',
+	'key' => $_ENV['encryption_key'],
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
