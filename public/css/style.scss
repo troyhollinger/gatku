@@ -561,7 +561,11 @@ html {
 	overflow: hidden;
 
 	img {
+
+		@include transition(all .15s ease);
 		@include transform(rotate(20deg));
+
+		
 
 	}
 
@@ -675,6 +679,12 @@ html {
 
 			width:30%;
 
+			&:hover {
+
+				@include transform(rotate(20deg) translate(0, -20px));
+
+			}
+
 		}
 
 	}
@@ -705,6 +715,12 @@ html {
 		img {
 
 			width:40%;
+
+			&:hover {
+
+				@include transform(rotate(20deg) translate(0, -20px));
+
+			}
 
 		}
 
@@ -737,6 +753,12 @@ html {
 		img {
 
 			width:28%;
+
+			&:hover {
+
+				@include transform(rotate(20deg) translate(0, -20px));
+
+			}
 
 
 		}
@@ -778,6 +800,12 @@ html {
 			width:88%;
 			@include transform(rotate(0deg));
 
+			&:hover {
+
+				width:90%;
+
+			}
+
 		}
 
 	}
@@ -816,6 +844,12 @@ html {
 			width:74%;
 			@include transform(rotate(0deg));
 			@include transform(translate(0, 9%));
+
+			&:hover {
+
+				@include transform(rotate(0deg) translate(0, 5px));
+
+			}
 		}
 
 	}
