@@ -77,3 +77,10 @@ Route::get('media', ['as' => 'media', function() {
 
 
 Route::get('availability-type', ['as' => 'availabilityType.index', 'uses' => 'AvailabilityController@index']);
+
+
+Route::post('shipping-request/pay', ['as' => 'shipping-request.pay', 'uses' => 'ShippingRequestController@pay']);
+Route::resource('shipping-request', 'ShippingRequestController', ['except' => ['index', 'create', 'edit', 'update']]);
+
+
+

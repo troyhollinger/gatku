@@ -35,6 +35,13 @@
             var productId = '{{ $product->id }}';
         </script>
         @endif
+
+        @if(Route::currentRouteName() === 'shipping-request.show')
+        <script>
+            var shippingRequestId = '{{ $request->id }}';
+            var shippingRequestFullName = '{{ $request->order->customer->fullName }}'
+        </script>
+        @endif
     </head>
     @if(Route::currentRouteName() === 'product.show') 
     <body ng-app="gatku" ng-controller="ProductController" body-freeze>

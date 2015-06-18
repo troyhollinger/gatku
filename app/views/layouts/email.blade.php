@@ -12,7 +12,7 @@
 		body, #body-table, #body-cell {
 			height:100% !important;
 			margin:0;
-			padding:0;
+			padding:20px;
 			/*width:100% !important;*/
 		}
 		table {
@@ -59,7 +59,7 @@
 
 		</style>
 	</head>	
-	<body>
+	<body style="padding:20px;">
 		
 		@yield('content')
 

@@ -5,7 +5,8 @@ Admin
 @stop
 
 @section('content')
-
+	
+	
 
 	<div class="admin-container" ng-controller="AdminController">
 
@@ -45,7 +46,7 @@ Admin
 							</li>
 						</ul>
 					</td>
-					<td><div class="button info-bg">Print Label</div></td>
+					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request></td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
 

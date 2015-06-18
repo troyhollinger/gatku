@@ -141,3 +141,23 @@ app.factory('Size', ['$http', function($http) {
 }]);
 
 
+app.factory('ShippingRequest', ['$http', function($http) {
+
+	return {
+
+		send : function(data) {
+
+			return $http.post('/shipping-request', data);
+
+		},
+
+		pay : function(data) {
+
+			return $http.post('/shipping-request/pay', data);
+
+		}
+
+	}
+
+}]);
+

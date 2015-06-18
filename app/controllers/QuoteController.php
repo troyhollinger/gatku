@@ -22,6 +22,12 @@ class QuoteController extends BaseController {
 
 			});
 
+			Mail::queue('emails.inquiry', array('form' => $form), function($message) use ($name) {
+
+			    $message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New Shipping Inquiry from ' . $name);
+
+			});
+
 		} 
 
 		Mail::queue('emails.inquiry', array('form' => $form), function($message) use ($name) {

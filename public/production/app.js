@@ -5273,6 +5273,79 @@ app.directive('smoothLink', ['$window', '$location', 'NavigationService', functi
 }]);
 
 
+app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'AlertService', function($window, $compile, ShippingRequest, AlertService) {
+
+	return {
+
+		restrict : 'E',
+
+		template : '<div class="button info-bg" shipping-request ng-click="open = !open">Request Shipping</div>',
+
+		scope : {
+			order : '='
+		},
+
+		link : function($scope, element, attrs) {
+
+			var template = '<div class="shipping-request-panel" ng-show="open">' +
+				'<h2>Sending shipping request to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
+				'<form>' +
+					'<label>Amount <span class="faded bold">(in dollars)</span></label>' +
+					'<input type="number" ng-model="price">' +
+					'<div class="button success-bg" ng-click="send()">Send</div>' +
+				'</form>' +
+				'<i class="fa fa-close" ng-click="open = false;"></i>' +
+			'</div>';
+			var body = angular.element($window.document.getElementsByTagName('body')[0]);
+			var shippingRequestPanel = $compile(template)($scope);	
+
+			$scope.price = 0;
+
+			$scope.open = false;	
+
+			function init() {
+
+				body.append(shippingRequestPanel);
+
+			}
+
+			$scope.send = function() {
+
+				var nanobar = new Nanobar({ bg : '#fff' });
+				var data = { 
+
+					price : $scope.price * 100, 
+					orderId : $scope.order.id
+				}
+
+				nanobar.go(60);
+
+				ShippingRequest.send(data).success(function(response) {
+
+					$scope.open = false;
+					nanobar.go(100);
+					AlertService.broadcast('Shipping Request Sent!', 'success');
+
+				}).error(function(response) {
+
+					nanobar.go(100);
+					AlertService.broadcast('Sorry, there was a problem.', 'error');
+
+				});
+
+			}
+
+			init();
+
+		}
+
+	}
+
+}]);
+
+
+
+
 
 
 
@@ -5771,6 +5844,26 @@ app.factory('Size', ['$http', function($http) {
 
 }]);
 
+
+app.factory('ShippingRequest', ['$http', function($http) {
+
+	return {
+
+		send : function(data) {
+
+			return $http.post('/shipping-request', data);
+
+		},
+
+		pay : function(data) {
+
+			return $http.post('/shipping-request/pay', data);
+
+		}
+
+	}
+
+}]);
 
 
 app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService) {
@@ -6964,6 +7057,84 @@ app.controller('QuoteFormController', ['$scope', 'Product', '$http', 'AlertServi
 			AlertService.broadcast('Please Fill in required fields', 'error');
 
 		}
+
+	}
+
+}]);
+app.controller('ShippingRequestPaymentController', ['$scope', 'AlertService', 'StripeService', 'ShippingRequest', function($scope, AlertService, StripeService, ShippingRequest) {
+
+	$scope.card = {};
+	$scope.success = false;
+
+	if (typeof(shippingRequestId) !== undefined) {
+
+		$scope.shippingRequestId = shippingRequestId;
+
+	} else {
+
+		$scope.shippingRequestId = null;
+
+	}
+
+	$scope.pay = function() {
+
+		var card = extractCardDetails();
+
+		AlertService.broadcast('Processing...', 'info');
+
+		StripeService.createToken(card).then(function(token) {
+
+			var data = {
+
+				shippingRequestId : $scope.shippingRequestId,
+				token : token
+
+			}
+		
+			ShippingRequest.pay(data).success(function(response) {
+
+				AlertService.broadcast('Success!', 'success');
+				$scope.success = true;
+
+			}).error(function(response) {
+
+				if ('error' in response.message.jsonBody) {
+
+					AlertService.broadcast(response.message.jsonBody.error.message, 'error');
+
+				} else {
+
+					AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');					
+
+				}
+
+			});
+
+		});
+
+	}
+
+
+	function extractCardDetails() {
+
+		var card = {};
+
+		card.number = $scope.card.number;
+		card.exp_month = $scope.card.expiryMonth;
+		card.exp_year = $scope.card.expiryYear;
+		card.cvc = $scope.card.securityCode;
+
+		if (typeof(shippingRequestId) !== undefined) {
+
+			card.name = shippingRequestFullName;
+
+		} else {
+
+			card.name = null;
+
+		}
+
+		return card;
 
 	}
 

@@ -4137,4 +4137,73 @@ hover-card {
 }
 
 
+.shipping-request-panel {
+
+	@include center;
+	width:400px;
+	height:auto;
+	background-color: white;
+	box-shadow: 0 0 15px rgba(0,0,0,.4);
+	border-radius: 3px;
+	z-index: 4;
+	box-sizing:border-box;
+	padding:25px;
+
+	h2 {
+
+		display: block;
+		border-bottom: 3px solid black;
+		font-size: 1.2rem;
+		font-weight: bold;
+		padding-bottom: 5px;
+		margin-bottom: 15px;
+
+	}
+
+	form {
+
+		@extend .checkout-form;
+
+	}
+
+	i {
+
+		position: absolute;
+		top:15px;
+		right:10px;
+		cursor: pointer;
+
+	}
+
+}
+
+
+.shipping-payment-panel {
+
+	@extend .shipping-request-panel; 
+
+}
+
+.shipping-payment-success {
+
+	text-align: center;
+
+	i {
+
+		font-size: 5rem;
+
+
+	}
+
+
+	h3 {
+
+		font-size: 2rem;
+		color:$green;
+
+
+	}
+
+	color:$green;
+}
 
