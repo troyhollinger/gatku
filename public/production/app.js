@@ -6292,6 +6292,8 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.discountText = '';
 
+	$scope.enabled = true;
+
 	$scope.toStage = function(index) {
 
 		Inputs.blur();
@@ -6490,6 +6492,10 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		var card = extractCardDetails();
 
+		if ($scope.enabled === false) return false;
+
+		$scope.enabled = false;
+
 		AlertService.broadcast('Processing...', 'info');
 
 		StripeService.createToken(card).then(function(token) {
@@ -6510,11 +6516,13 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 				$scope.emptyCart();
 
+				$scope.enabled = true;
+
 				window.location.replace("/thankyou");
 
 			}).error(function(response) {
 
-				console.log(response);
+				$scope.enabled = true;
 
 				if ('error' in response.message.jsonBody) {
 

@@ -73,7 +73,7 @@
 
 				<div class="cart-item-actions">
 					<ul>
-						<a href="/product/@{{ item.slug }}"><li>View</li></a>
+						<li><a href="/product/@{{ item.slug }}">View</a></li>
 						<li class="cart-item-actions-seperator">&bull;</li>
 						<li ng-click="removeItem($index)">Remove</li>
 					</ul>
@@ -315,7 +315,7 @@
 
 		<div class="cart-actions">
 
-			<div class="submit-button" ng-click="submit()">Finish</div>
+			<div class="submit-button" ng-click="submit()">@{{ enabled ? 'Finish' : 'Processing...' }}</div>
 			<div class="button info-bg" ng-click="toStage(2)">Go Back</div>
 
 		</div>

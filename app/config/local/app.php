@@ -15,6 +15,6 @@ return array(
 
 	'debug' => true,
 
-	'url' => 'http://gatku.dev:8000',
+	'url' => 'http://gatku.dev',
 
 );
