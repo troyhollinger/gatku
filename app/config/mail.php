@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'purchase@gatku.com', 'name' => 'GATKU Polespears'),
+	'from' => array('address' => 'dustin@gatku.com', 'name' => 'GATKU Polespears'),
 
 	/*
 	|--------------------------------------------------------------------------
