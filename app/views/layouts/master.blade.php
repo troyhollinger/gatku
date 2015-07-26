@@ -33,6 +33,7 @@
         @if(Route::currentRouteName() === 'product.show')
         <script>
             var productId = '{{ $product->id }}';
+            var productSlug = '{{ $product->slug }}';
         </script>
         @endif
 

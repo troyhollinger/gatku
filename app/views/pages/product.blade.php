@@ -117,48 +117,58 @@
 			Ships Free w/ Pole Purchase
 			@endif
 
-		<p class="addon-title right">Click to add to order</p>
+		@if($product->availability->slug === 'available')
 
-		<div class="clear"></div>
+			<p class="addon-title right">Click to add to order</p>
 
-		<div class="addon-container">
-	
-			@if($product->sizeable)
+			<div class="clear"></div>
 
-			<div ng-repeat="size in product.sizes" ng-cloak>
-				<input type="checkbox"  name="size-@{{ $index }}" id="size-@{{ $index }}" ng-model="size.checked" ng-disabled="!size.available">
-				<label for="size-@{{ $index }}" ng-class="{ 'faded' : !size.available }"><span class="addon-name">@{{ size.shortName }} -</span>  <span class="addon-price">$@{{ size.price | money }}</span></label>
+			<div class="addon-container">
+		
+				@if($product->sizeable)
+
+				<div ng-repeat="size in product.sizes" ng-cloak>
+					<input type="checkbox"  name="size-@{{ $index }}" id="size-@{{ $index }}" ng-model="size.checked" ng-disabled="!size.available">
+					<label for="size-@{{ $index }}" ng-class="{ 'faded' : !size.available }"><span class="addon-name">@{{ size.shortName }} -</span>  <span class="addon-price">$@{{ size.price | money }}</span></label>
+				</div>
+
+				@foreach($product->sizes as $size)
+				<div ng-hide="loaded">
+					<input type="checkbox">
+					<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
+				</div>
+				@endforeach
+				@else
+
+				<div ng-repeat="addon in product.addons" ng-cloak>
+					<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
+					<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
+				</div>
+
+				@foreach($product->addons as $addon)
+				<div ng-hide="loaded">
+					<input type="checkbox">
+					<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
+				</div>
+				@endforeach
+				@endif
+
 			</div>
 
-			@foreach($product->sizes as $size)
-			<div ng-hide="loaded">
-				<input type="checkbox">
-				<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
-			</div>
-			@endforeach
-			@else
+			<div class="submit-button" ng-click="addToCart();" ng-bind="productAddedText" ng-class="{ 'post-added-state' : productAdded }"></div>
+			<div class="checkout-button" ng-click="openCart();" ng-class="{ 'post-added-state' : productAdded }" ng-show="productAdded">Checkout</div>
 
-			<div ng-repeat="addon in product.addons" ng-cloak>
-				<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
-				<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
-			</div>
+			<div class="clear"></div>
 
-			@foreach($product->addons as $addon)
-			<div ng-hide="loaded">
-				<input type="checkbox">
-				<label><span class="addon-name">Loading-</span>  <span class="addon-price">...</span></label>
-			</div>
-			@endforeach
-			@endif
+			<p class="special-message"><span class="bold">Free Shipping</span> on orders over <span class="bold">$300</span> <span class="detail">USA ONLY</span></p>
 
-		</div>
+		@endif
 
-		<div class="submit-button" ng-click="addToCart();" ng-bind="productAddedText" ng-class="{ 'post-added-state' : productAdded }"></div>
-		<div class="checkout-button" ng-click="openCart();" ng-class="{ 'post-added-state' : productAdded }" ng-show="productAdded">Checkout</div>
+		@if($product->availability->slug === 'preorder')
 
-		<div class="clear"></div>
+			<preorder-button></preorder-button>
 
-		<p class="special-message"><span class="bold">Free Shipping</span> on orders over <span class="bold">$300</span> <span class="detail">USA ONLY</span></p>
+		@endif
 
 	</div>
 

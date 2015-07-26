@@ -31,7 +31,7 @@ class Product extends Eloquent {
 
 	public function availability() {
 
-		return $this->hasOne('AvailabilityType', 'id', 'availabilityTypeId');
+		return $this->belongsTo('AvailabilityType', 'availabilityTypeId');
 
 	}
 

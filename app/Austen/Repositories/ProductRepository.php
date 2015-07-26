@@ -28,7 +28,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			
 			$product = Product::findOrFail($id);
 
-			$product->load('type', 'addons.product.type', 'sizes');
+			$product->load('type', 'addons.product.type', 'sizes', 'availability');
 
 		} catch (Exception $e) {
 			

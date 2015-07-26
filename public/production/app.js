@@ -822,38 +822,6 @@ var MobileMast = {
 
 }
 
-// var ResponsiveVideo = {
-
-// 	init : function() {
-
-// 		this.responsive();
-
-// 	},
-
-// 	responsive : function() {
-
-// 		$(".active-video-container").fitVids();
-
-// 		requestAnimationFrame(ResponsiveVideo.responsive);
-
-// 	}
-
-// }
-
-// var You = {
-
-// 	init : function() {
-
-// 		$(".you-panel-slider").skippr({
-
-// 			hidePrevious : true,
-// 			theme : 'dark'
-
-// 		});
-
-// 	}
-
-// }
 
 var Squares = {
 
@@ -983,7 +951,10 @@ var PoleScroll = {
 
 			}
 
-			
+		} else if(typeof slug != 'undefined' && slug === 'g-string') {
+
+			scroller.scrollLeft($(".scroller-image").width() - 5150);
+			console.log("test");
 
 		}
 
