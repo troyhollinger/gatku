@@ -6,7 +6,7 @@ class ShippingRequest extends Eloquent {
 
 	public function order() {
 
-		return $this->belongsTo('order', 'orderId');
+		return $this->belongsTo('Order', 'orderId');
 
 	}
 
