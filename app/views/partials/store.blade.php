@@ -40,7 +40,7 @@
 
 		<div class="product-thumb-container" ng-repeat="shrinkerItem in shrinker"><a href="' . route('product.show', ['']) . '/{{ shrinkerItem.slug }}"><img ng-src="{{ shrinkerItem.thumb }}"></a></div>
 
-		<div class="product-thumb-container" ng-repeat="extra in extras"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\' }"></a></div>
+		<div class="product-thumb-container" ng-repeat="extra in extras"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' }"></a></div>
 		
 		<div class="clear"></div>
 
