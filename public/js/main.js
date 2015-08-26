@@ -195,11 +195,13 @@ var PoleScroll = {
 
 	init : function() {
 
-		this.scrollPosition();
+		var _ = this;
+
+		_.scrollPosition();
 
 		setTimeout(function() {
 
-			this.scrollPosition();
+			_.scrollPosition();
 
 		}, 100);
 
@@ -243,7 +245,7 @@ var PoleScroll = {
 
 		} else if(typeof slug != 'undefined' && slug === 'g-string') {
 
-			scroller.scrollLeft($(".scroller-image").width() - 3800);
+			scroller.scrollLeft($(".scroller-image").width() - 5050);
 
 		}
 

@@ -1319,6 +1319,12 @@ html {
 
 	}
 
+	&.g-string-scroller {
+
+		height:193px;
+
+	}
+
 	@include breakpoint(small) {
 
 		margin-top: 50px;
@@ -1348,6 +1354,7 @@ html {
 		height:85%;
 
 	}
+
 
 	&.no-attached-state {
 

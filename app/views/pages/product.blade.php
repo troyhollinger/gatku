@@ -12,7 +12,7 @@
 @section('content')
 
 @if($product->type->slug != 'apparel' && $product->type->slug != 'glass')
-<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }}">
+<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }} {{ $product->slug === 'g-string' ? 'g-string-scroller' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
 
