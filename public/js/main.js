@@ -270,6 +270,13 @@ var PoleScroll = {
 		}
 
 
+	},
+
+	center : function() {
+
+		var scroller = $(".scroller");		
+		scroller.scrollLeft($(".scroller-image").width() - 5300);
+
 	}
 
 }

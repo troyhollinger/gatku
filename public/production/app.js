@@ -986,6 +986,13 @@ var PoleScroll = {
 		}
 
 
+	},
+
+	center : function() {
+
+		var scroller = $(".scroller");		
+		scroller.scrollLeft($(".scroller-image").width() - 5300);
+
 	}
 
 }
@@ -6852,7 +6859,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.scrollAcross = function() {
 
-		PoleScroll.scrollAcross();
+		if ($scope.product.slug === 'g-string') {
+
+			PoleScroll.center();
+
+		} else {
+
+			PoleScroll.scrollAcross();
+
+		}
+		
 
 	}
 

@@ -92,7 +92,16 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.scrollAcross = function() {
 
-		PoleScroll.scrollAcross();
+		if ($scope.product.slug === 'g-string') {
+
+			PoleScroll.center();
+
+		} else {
+
+			PoleScroll.scrollAcross();
+
+		}
+		
 
 	}
 
