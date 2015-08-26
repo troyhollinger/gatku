@@ -1600,6 +1600,13 @@ product-buyers {
 	background-size: cover;
 	background-position: center;
 	padding:6px;
+	@include filter(grayscale(100%));
+
+	&:hover {
+
+		@include filter(grayscale(0%));
+
+	}
 
 
 }
