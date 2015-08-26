@@ -17,9 +17,9 @@
 	@if($product->attachedImage || $product->detachedImage)
 
 	@if($product->attachedImage)
-	<img class="scroller-image {{ $product->slug === 'budk' ? 'no-attached-state' : '' }}" ng-show="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image {{ $product->slug === 'budk' ? 'no-attached-state' : '' }}" ng-if="attached" src="{{ $product->attachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached }" ng-cloak loaded="poleScrollInit()">
 	@endif
-	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker' : '' }} " ng-hide="attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
+	<img class="scroller-image {{ $product->slug === 'inshore-shrinker' ? 'shrinker' : '' }} " ng-if="!attached" src="{{ $product->detachedImage }}" ng-class="{'fit' : fullSize === false, 'visible' : attached === false }" ng-cloak loaded="poleScrollInit()">
 	@endif
 
 </div>
@@ -94,8 +94,8 @@
 		<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
-				<span ng-show="attached">@if($product->slug === 'g-string') WITHOUT POLE @else TAKE POLE APART @endif</span>
-				<span ng-show="attached === false">@if($product->slug === 'g-string') WITH POLE @else PUT POLE TOGETHER @endif</span>
+				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
 			</p>
 
 

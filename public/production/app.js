@@ -993,6 +993,8 @@ var PoleScroll = {
 		var scroller = $(".scroller");		
 		scroller.scrollLeft($(".scroller-image").width() - 5300);
 
+		console.log("centering");
+
 	}
 
 }
@@ -1099,7 +1101,6 @@ var Grid = {
     }
 
 }
-
 
 
 $(document).ready(function() {
