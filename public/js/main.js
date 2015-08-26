@@ -203,7 +203,7 @@ var PoleScroll = {
 
 			_.scrollPosition();
 
-		}, 100);
+		}, 1000);
 
 	},
 
@@ -245,7 +245,7 @@ var PoleScroll = {
 
 		} else if(typeof slug != 'undefined' && slug === 'g-string') {
 
-			scroller.scrollLeft($(".scroller-image").width() - 5050);
+			scroller.scrollLeft($(".scroller-image").width() - 5300);
 
 		}
 
