@@ -397,7 +397,8 @@
 
 											 ?>
 
-											@if($displayShrinker)
+											{{-- Inshore Message temporatily turned off. --}}
+											{{-- @if($displayShrinker)
 											<tr id="add-inshore" style="border-top:solid black 1px; border-bottom:solid black 1px;">
 												<td style="width:100%; font-size:30px; letter-spacing:-1px; padding:10px 0; text-align:center;" colspan="2"><span style="font-weight:bold">Add InshoreShrinker</span> - Its like <span style="font-weight:bold">2 poles for only $49 more</span></td>
 											</tr>
@@ -415,7 +416,7 @@
 
 												</td>
 											</tr>
-											@endif
+											@endif --}}
 											
 											<tr id="thefooter" style="border-top:solid black 1px; border-bottom:solid black 1px;">
 												<td style="color:#E24A62;font-size:16px; padding:15px 0;" colspan="1">Customer Service - Email: dustin@gatku.com / Phone: +001 619 507-3860</td>
