@@ -41,7 +41,7 @@
 
 				<div class="clear"></div>
 
-				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' || item.type.slug === 'glass', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' }">
+				<div class="cart-item-image-container" ng-class="{ 'apparel-cart-item-image-container' : item.type.slug === 'apparel' || item.type.slug === 'glass', 'pole-cart-item-image-container' : item.type.slug === 'pole' || item.slug === 'bands' || item.slug === 'hardcore-bands' }">
 
 					<img ng-src="@{{ item.thumb }}">
 
