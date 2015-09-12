@@ -776,6 +776,26 @@ html {
 
 		}
 
+		.monty-thumb {
+
+			width:111%;
+
+			@include transform(rotate(0) translate(0,0));
+
+			&:hover {
+
+				@include transform(rotate(0deg) translate(0, 0px));				
+
+			}
+
+		}
+
+		.big-game-thumb {
+
+			width:50%;
+
+		}
+
 	}
 
 	&-links {
