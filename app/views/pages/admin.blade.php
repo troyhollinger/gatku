@@ -33,7 +33,11 @@ Admin
 				</tr>
 
 				<tr ng-repeat="order in orders">
-					<td>@{{ order.customer.fullName }}<br>@{{ order.address }}<br>@{{ order.city }}, @{{ order.state }} @{{ order.zip }}</td>
+					<td><span class="brand">@{{ order.number }}</span><br>
+						<span class="bold">@{{ order.customer.fullName }}</span><br>
+						@{{ order.address }}<br>
+						@{{ order.city }}, @{{ order.state }} @{{ order.zip }}
+					</td>
 					<td>
 						<ul>
 							<li ng-repeat="item in order.items" class="uppercase bold">
