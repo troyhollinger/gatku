@@ -931,7 +931,7 @@ var PoleScroll = {
 		var windowWidth = $(window).width();
 
 
-		if (layoutType === 'head' || slug === 'bands') {
+		if (layoutType === 'head' || slug === 'bands' || slug === 'cable-w-tip' || slug === 'cable') {
 
 			if (windowWidth < 1000) {
 
@@ -992,8 +992,6 @@ var PoleScroll = {
 
 		var scroller = $(".scroller");		
 		scroller.scrollLeft($(".scroller-image").width() - 5300);
-
-		console.log("centering");
 
 	}
 
@@ -7171,6 +7169,7 @@ app.controller('StoreController', ['$scope', 'Product', function($scope, Product
 			$scope.shrinker = response.data['shrinker'];
 			$scope.extras1 = response.data['extras'].slice(0,3);
 			$scope.extras2 = response.data['extras'].slice(3,7);
+			$scope.extras3 = response.data['extras'].slice(7, 11);
 			$scope.apparel = response.data['apparel'];
 			$scope.glasses = response.data['glasses'];
 

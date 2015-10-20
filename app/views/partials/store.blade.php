@@ -60,7 +60,7 @@
 
 	$extras2Row = '<div class="extras-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="extra in extras2"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\' }"></a></div>
+		<div class="product-thumb-container" ng-repeat="extra in extras2"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' }"></a></div>
 		
 		<div class="clear"></div>
 
@@ -69,6 +69,24 @@
 	<div class="extras-links links">
 
 		<div class="product-link-container" ng-repeat="extra in extras2"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
+		
+		<div class="clear"></div>
+
+	</div>
+
+	<h2 class="store-label">Accessories</h2>';
+
+	$extras3Row = '<div class="extras-row product-row">
+
+		<div class="product-thumb-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' || \'cable\' || \'tips\' }"></a></div>
+		
+		<div class="clear"></div>
+
+	</div>
+
+	<div class="extras-links links">
+
+		<div class="product-link-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
 		
 		<div class="clear"></div>
 
@@ -117,33 +135,33 @@
 
 		@if($product->type->slug === 'head')
 
-		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $apparelRow . $glassRow  }}		
+		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow  }}		
 
 		@elseif($product->type->slug === 'pole')
 
-		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $apparelRow . $glassRow }}		
+		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}		
 
 		@elseif($product->type->slug === 'extra' || $product->type->slug === 'shrinker')
 
-		{{ $extras1Row . $extras2Row . $headsRow . $tailsRow . $apparelRow . $glassRow }}		
+		{{ $extras1Row . $extras2Row . $extras3Row . $headsRow . $tailsRow . $apparelRow . $glassRow }}		
 
 		@elseif($product->type->slug === 'apparel')
 
-		{{ $apparelRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $glassRow }}
+		{{ $apparelRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $glassRow }}
 
 		@elseif($product->type->slug === 'glass')
 
-		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $apparelRow}}
+		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow}}
 
 		@else
 		
-		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $apparelRow . $glassRow }}
+		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
 
 		@endif
 
 	@else
 
-	{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $apparelRow . $glassRow}}
+	{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow}}
 
 	@endif
 

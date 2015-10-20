@@ -215,7 +215,7 @@ var PoleScroll = {
 		var windowWidth = $(window).width();
 
 
-		if (layoutType === 'head' || slug === 'bands') {
+		if (layoutType === 'head' || slug === 'bands' || slug === 'cable-w-tip' || slug === 'cable') {
 
 			if (windowWidth < 1000) {
 
@@ -276,8 +276,6 @@ var PoleScroll = {
 
 		var scroller = $(".scroller");		
 		scroller.scrollLeft($(".scroller-image").width() - 5300);
-
-		console.log("centering");
 
 	}
 
