@@ -29,7 +29,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.discountText = '';
 
+	$scope.discountAmount = 0;
+
 	$scope.enabled = true;
+
+	$scope.blackFriday = true;
 
 	$scope.toStage = function(index) {
 
@@ -87,6 +91,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 		var others = [];
 
 		if ($scope.subtotal() >= 30000) {
+
+			return 0;
+
+		}
+
+		if ($scope.blackFriday) {
 
 			return 0;
 
@@ -166,7 +176,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 		});	
 
-		return subtotal - $scope.discounts();
+		return subtotal - $scope.discounts(subtotal);
 
 	}
 
@@ -175,11 +185,27 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 	 * on what current discounts you want plugged into the system
 	 *
 	 */
-	$scope.discounts = function() {
+	$scope.discounts = function(subtotal) {
 
 		var amount = 0;
+		var subtotal = subtotal || false;
 		var glassCheck = 0;
 		var glassPrice = 0;
+
+		if (subtotal && $scope.blackFriday) {
+
+			$scope.discountText = 'Black Friday Discount - 20% off';
+
+			amount = Math.ceil((subtotal * 0.2));
+
+			$scope.eligibleForDiscount = true;
+			$scope.discountAmount = amount;
+
+			return amount;
+
+		}
+
+		if ($scope.blackFriday) return 0;
 
 		angular.forEach($scope.items, function(value, key) {
 
@@ -211,6 +237,8 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 			$scope.discountText = '';
 
 		}
+
+		$scope.discountAmount = amount;
 
 		return amount;
 

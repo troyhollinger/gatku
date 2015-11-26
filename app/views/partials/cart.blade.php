@@ -87,14 +87,14 @@
 
 			<div class="cart-details-row" ng-if="eligibleForDiscount">
 				<span class="cart-item-column">Discounts - <span class="smaller faded bold">@{{ discountText }}</span></span>
-				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discounts() | money)"></span>
+				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discountAmount | money)"></span>
 
 				<div class="clear"></div>
 
 			</div>
 
 			<div class="cart-details-row">
-				<span class="cart-item-column">Subtotal <span class="smaller faded bold" ng-if="subtotal() < 30000">- get to $300 for free shipping!</span><span class="smaller faded bold" ng-if="subtotal() >= 30000">You get free shipping!</span></span>
+				<span class="cart-item-column">Subtotal <span class="smaller faded bold" ng-if="subtotal() < 30000 && !blackFriday">- get to $300 for free shipping!</span><span class="smaller faded bold" ng-if="subtotal() >= 30000 && !blackFriday">You get free shipping!</span></span>
 				<span class="cart-price-column shipping-column" ng-bind="'$' + (subtotal() | money)"></span>
 
 				<div class="clear"></div>
@@ -102,7 +102,7 @@
 			</div>
 
 			<div class="cart-details-row">
-				<span class="cart-item-column">Shipping <span class="smaller faded bold">Non-U.S.A shipping may vary</span></span>
+				<span class="cart-item-column">Shipping <span class="smaller faded bold" ng-if="!blackFriday">Non-U.S.A shipping may vary</span></span>
 				<span class="cart-price-column shipping-column" ng-bind="'$' + (shipping() | money)"></span>
 
 				<div class="clear"></div>
@@ -273,7 +273,7 @@
 
 			<div class="cart-details-row" ng-if="eligibleForDiscount">
 				<span class="cart-item-column">Discounts - <span class="smaller faded bold">@{{ discountText }}</span></span>
-				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discounts() | money)"></span>
+				<span class="cart-price-column shipping-column success bold" ng-bind="'- $' + (discountAmount | money)"></span>
 
 				<div class="clear"></div>
 

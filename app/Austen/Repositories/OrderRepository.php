@@ -25,6 +25,8 @@ class OrderRepository {
 
 	protected $order;
 
+	public $blackFriday = true;
+
 	public function __construct(CustomerRepository $customer) {
 
 		$this->customer = $customer;
@@ -225,17 +227,26 @@ class OrderRepository {
 
 		}
 
-		$discount = $this->calculateDiscount($order);
+		$discount = $this->calculateDiscount($order, $subtotal);
 
 		return $subtotal - $discount;
 
 	}
 
-	private function calculateDiscount($order) {
+	private function calculateDiscount($order, $subtotal = false) {
 
 		$amount = 0;
 		$glassCheck = 0;
 		$glassPrice = 0;
+
+		if($subtotal && $this->blackFriday) {
+
+			$amount = ($subtotal * 0.2);
+			$amount = ceil($amount);
+
+			return $amount;
+
+		}
 
 		$items = $order->items;
 
@@ -289,6 +300,7 @@ class OrderRepository {
 		$items = $order->items;
 
 		if ($this->calculateSubTotal($order) >= 30000) return 0;
+		if ($this->blackFriday) return 0;
 
 		foreach($items as $item) {
 
