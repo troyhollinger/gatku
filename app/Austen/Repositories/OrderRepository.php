@@ -136,6 +136,12 @@ class OrderRepository {
 			  
 			});
 
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+
+				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');
+			  
+			});
+
 		}
 
 		Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
