@@ -241,8 +241,8 @@ class OrderRepository {
 
 		if($subtotal && $this->blackFriday) {
 
-			$amount = ($subtotal * 0.2);
-			$amount = ceil($amount);
+			$amount = ($subtotal * 0.2) / 100;
+			$amount = ceil($amount) * 100;
 
 			return $amount;
 

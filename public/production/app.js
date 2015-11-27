@@ -6443,7 +6443,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 			$scope.discountText = 'Black Friday Discount - 20% off';
 
-			amount = Math.ceil((subtotal * 0.2));
+			amount = Math.ceil(((subtotal * 0.2) / 100)) * 100;
 
 			$scope.eligibleForDiscount = true;
 			$scope.discountAmount = amount;
