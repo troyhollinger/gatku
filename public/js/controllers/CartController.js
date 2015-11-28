@@ -33,7 +33,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
 	$scope.enabled = true;
 
-	$scope.blackFriday = true;
+	$scope.blackFriday = false;
 
 	$scope.toStage = function(index) {
 

@@ -25,7 +25,7 @@ class OrderRepository {
 
 	protected $order;
 
-	public $blackFriday = true;
+	public $blackFriday = false;
 
 	public function __construct(CustomerRepository $customer) {
 
