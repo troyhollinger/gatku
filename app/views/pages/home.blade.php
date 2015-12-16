@@ -15,7 +15,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 	<div class="slideshow">
 		<div><p class="hero-blurb">Internationally recognized, <br>Locally produced. <span class="detail">/San Diego, CA</span></p></div>
 		<div><p class="hero-blurb">Acclaimed to be the best the industry has to offer -</p></div>
-		<div><p class="hero-blurb">We strive to provide our user the most adequate spearfishing products in the world.</p></div>
+		<div><p class="hero-blurb">We strive to provide our user the most exceptional spearfishing products in the world.</p></div>
 		<div><p class="hero-blurb">Made in America by Americans. We touch every pole that has the GATKU name on it. <span class="detail">In House MFG</span></p></div>
 		<div><p class="hero-blurb">The #1 Trusted Name in the Industry. Since 2005.</p></div>
 		<div><p class="hero-blurb">We’ve finessed &amp; perfected the stick-n-rubberband approach to killing fish.</p></div>
