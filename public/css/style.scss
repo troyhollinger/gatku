@@ -4263,6 +4263,15 @@ hover-card {
 	text-align: center;
 	@include center;
 
+	@include breakpoint(small) {
+		position: static;
+		box-sizing:border-box;
+		padding:10px;
+		left:0;
+		top:0;
+		@include transform(translate(0,0));
+	}
+
 	&-title {
 		font-weight: bold;
 		font-size:4rem;
@@ -4272,6 +4281,12 @@ hover-card {
 		@include breakpoint(medium) {
 			margin-top: 100px;
 		}
+
+		@include breakpoint(small) {
+			margin-top: 30px;
+			font-size:2.5rem;
+			margin-bottom: 10px;
+		}
 	}
 
 	&-content {
@@ -4279,6 +4294,14 @@ hover-card {
 		font-weight: 200;
 		p {
 			margin-bottom: 30px;
+
+			@include breakpoint(small) {
+				margin-bottom:15px;
+			}
+		}
+
+		@include breakpoint(small) {
+			font-size:1rem;
 		}
 	}
 
