@@ -743,144 +743,86 @@ var Nanobar = (function () {
 }());
 
 var BlurbSlider = {
-
 	init : function() {
-
 		$(".slideshow").skippr({
-
 			autoPlay : true,
 			autoPlayDuration : 4000,
 			navType : 'bubble'
-
 		});
-
 	}
-
 }
 
 var Mast = {
-
 	init : function() {
-
 		requestAnimationFrame(Mast.track);
-
 	},
-
 	element : $(".mast"),
-
 	track : function() {
-
 		var distance = $(document).scrollTop();
 		var height = Mast.element.height();
 		var windowHeight = $(window).height();
 
 		if (distance > (windowHeight - height)) {
-
 			Mast.element.addClass('below-fold');
-
 		} else {
-
 			Mast.element.removeClass('below-fold');
-
 		}
-
 		requestAnimationFrame(Mast.track);
-
 	}
-
 }
 
 var MobileMast = {
-
 	init : function() {
-
 		requestAnimationFrame(MobileMast.track);
-
 	},
-
 	element : $(".mobile-mast"),
-
 	track : function() {
-
 		var distance = $(document).scrollTop();
 		var height = MobileMast.element.height();
 		var windowHeight = $(window).height();
 
 		if (distance < (windowHeight - height)) {
-
 			MobileMast.element.addClass('above-fold');
-
 		} else {
-
 			MobileMast.element.removeClass('above-fold');
-
 		}
-
 		requestAnimationFrame(MobileMast.track);
-
 	}
-
 }
 
-
 var Squares = {
-
 	init : function() {
-
 		Squares.squarify();
-
-		// setTimeout(function(){ Squares.init() }, 5);
 		setTimeout(function(){ Squares.init() }, 100);
-
 	},
-
 	squarify : function(){
-
 		var squares = $(".square");
 
 		squares.each(function() {
-
 			var width = $(this).width();
-
 			$(this).height(width);
-
 		});
-
 		squares = null;
-
 	}
-
 }
 
 var PurchaseColumn = {
-
 	init : function() {
-
 		if ($(window).width() > 1300) {
-
 			this.parent = this.element.parent();
 			this.parentHeight = this.parent.height();
 			this.initialOffsetTop = this.element.offset().top;
 			this.elementHeight = this.element.height();
 
-			requestAnimationFrame(PurchaseColumn.stick);
-				
+			requestAnimationFrame(PurchaseColumn.stick);			
 		}
-
 	},
-
 	element : $(".product-column-right"),
-
 	parent : null,
-
 	parentHeight : null,
-
 	initialOffsetTop : 0,
-
 	elementHeight : null,
-
 	stick : function() {
-
 		var distance = $(document).scrollTop();
 		var offset = PurchaseColumn.initialOffsetTop;
 		var height = PurchaseColumn.elementHeight;
@@ -888,81 +830,48 @@ var PurchaseColumn = {
 		var amount = (distance - offset) + 70;
 
 		if (distance > offset - 70 && distance < ((offset - 70) + (parentHeight - height)) ) {
-
 			PurchaseColumn.element.css('top', amount + 'px');
-
 		} else if (distance >= ((offset - 70) + (parentHeight - height)) ) {
-
 			PurchaseColumn.element.css('top', (parentHeight - height) + 'px');
-
 		} else {
-
 			PurchaseColumn.element.css('top', '0px');
-
 		}
 
 		requestAnimationFrame(PurchaseColumn.stick);
-
 	}
-
 }
 
 var PoleScroll = {
-
 	init : function() {
-
 		var _ = this;
 
 		_.scrollPosition();
 
 		setTimeout(function() {
-
 			_.scrollPosition();
-
 		}, 1000);
-
 	},
-
 	element : $(".scroller"),
-
 	scrollPosition : function() {
-
 		var scroller = $(".scroller");
 		var windowWidth = $(window).width();
 
-
 		if (layoutType === 'head' || slug === 'bands' || slug === 'cable-w-tip' || slug === 'cable') {
-
 			if (windowWidth < 1000) {
-
 				scroller.scrollLeft($(".scroller-image.visible").width() - 600);
-
 			} else {
-
 				scroller.scrollLeft($(".scroller-image.visible").width());
-
 			}
-
 		} else if(layoutType === 'shrinker') {	
-
 			if (windowWidth > 1100) {
-
 				scroller.scrollLeft($(".scroller-image").width() - 2900);			
-
 			} else if (windowWidth < 1100 && windowWidth > 500) {
-
 				scroller.scrollLeft($(".scroller-image").width() - 2450);			
-
 			} else if(windowWidth <= 500) {
-
 				scroller.scrollLeft($(".scroller-image").width() - 1780);			
-
 			}
-
 		} else if(typeof slug != 'undefined' && slug === 'g-string') {
-
 			scroller.scrollLeft($(".scroller-image").width() - 5300);
-
 		}
 
 		scroller = null;
@@ -970,7 +879,6 @@ var PoleScroll = {
 	},
 
 	scrollAcross : function() {
-
 		var scroller = $(".scroller");
 		var width = $(".scroller-image").width();
 		var left = scroller.scrollLeft();
@@ -1111,7 +1019,7 @@ $(document).ready(function() {
 
 	}
 
-	if (currentRoute === 'home') {
+	if (currentRoute === 'home' || currentRoute === 'australia') {
 
 		Mast.init();
 		MobileMast.init();

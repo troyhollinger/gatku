@@ -1,9 +1,11 @@
 <?php
 
 Route::get('/', ['as' => 'home', function() {
-	
 	return View::make('pages.home');
-	
+}]);
+
+Route::get('au', ['as' => 'australia', function() {
+	return View::make('pages.australia');
 }]);
 
 Route::post('product/image', ['as' => 'product.image', 'uses' => 'ProductController@upload']);

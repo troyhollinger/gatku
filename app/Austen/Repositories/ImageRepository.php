@@ -1,20 +1,16 @@
 <?php 
-
-
 namespace Austen\Repositories;
 
 use Image;
 use Log;
 
-class ImageRepository {
-
-
-	public function upload($file, $directory, $thumbDirectory = null) {
-
+class ImageRepository 
+{
+	public function upload($file, $directory, $thumbDirectory = null) 
+	{
 		$response = [];
 
 		try {
-
 			$image = $file->getRealPath();
 			$imageName = $file->getClientOriginalName();
 			// remove spaces
@@ -54,54 +50,37 @@ class ImageRepository {
 					    default :
 					    	$parsedImage = $rotateImage;
 					}
-
 				} else {
-
 					$parsedImage = $image;
-
 				}
 
 			} else {
-
 				$parsedImage = $image;
-
 			}
 			
 			Image::make($parsedImage)->save($imagePath);
 
 			if ($thumbDirectory !== null) {
-
 				Image::make($parsedImage)->resize('45',null, function($constraint){ $constraint->aspectRatio();})->save($thumbPath);
-
 			}
 			
 		} catch(Exception $e) {
-
 			Log::error($e);
-
 			return false;
-
 		}
 
 		$response['imagePath'] = asset($directory .  $imageName);
 
 		if ($thumbDirectory !== null) {
-
 			$response['thumbPath'] = asset($thumbDirectory .  $imageName);
-
 		}
-
 		return $response;
-
 	}
 
 
-	public function all() {
-
+	public function all() 
+	{
 		$photos = glob( public_path() .'img/uploads/*.*');
-
 		return $photos;
-
 	}
-
 }

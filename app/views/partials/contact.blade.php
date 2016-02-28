@@ -1,22 +1,14 @@
 <div class="contact-section" id="contact">
-
 	<div class="contact-top">
-
 		<div class="home-container">
-
 			<h2 class="contact-headline">Thank You for Visiting!</h2>
 			<p class="contact-sub-headline">We hope you enjoyed your virtual shopping experience. Please let us know if we can help you with anything else. </p>
-
 		</div>
-
 	</div>
-
 	<div class="contact-bottom">
-
 		<div class="home-container">
-
 			<h2 class="bold">GATKU</h2>	
-			<p class="contact-bottom-margin">1250 Pioneer Way Suite H, El Cajon, CA 92020 </p>
+			<p class="contact-bottom-margin"><span class="bold">USA</span> : 1250 Pioneer Way Suite H, El Cajon, CA 92020 <br> <span class="bold">AU</span> : Beach Street Fremantle, Wa 6160</p>
 
 			<a href="mailto:dustin@gatku.com" class="contact-email-button"><div class="button info-bg">Email</div></a>
 			<a href="tel:6195073860" class="contact-phone-button"><div class="button info-bg">Phone</div></a>

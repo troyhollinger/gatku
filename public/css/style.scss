@@ -259,9 +259,12 @@ html {
 }
 
 .brand {
-
 	color:$brand;
 
+	a {
+		text-decoration: underline;
+		color:$brand !important;
+	}
 }
 
 .lowercase {
@@ -1129,15 +1132,11 @@ html {
 	}
 
 	.contact-bottom-margin {
-
-		margin-bottom: 40px;
+		margin-bottom: 30px;
 
 		@include breakpoint(medium) {
-
 			margin-bottom: 20px;
-
 		}
-
 	}
 
 	@include breakpoint(xsmall) {
@@ -4257,5 +4256,38 @@ hover-card {
 	}
 
 	color:$green;
+}
+
+.AustraliaMessage {
+	color:white;
+	text-align: center;
+	@include center;
+
+	&-title {
+		font-weight: bold;
+		font-size:4rem;
+		text-transform: uppercase;
+		margin-bottom: 40px;
+
+		@include breakpoint(medium) {
+			margin-top: 100px;
+		}
+	}
+
+	&-content {
+		font-size:1.3rem;
+		font-weight: 200;
+		p {
+			margin-bottom: 30px;
+		}
+	}
+
+	&-shop {
+		a {
+			color:white;
+			text-decoration: underline;
+			font-size: 2rem;
+		}
+	}
 }
 
