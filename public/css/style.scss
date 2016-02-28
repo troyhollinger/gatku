@@ -4301,7 +4301,7 @@ hover-card {
 		}
 
 		@include breakpoint(small) {
-			font-size:1rem;
+			font-size:1.1rem;
 		}
 	}
 
@@ -4310,6 +4310,12 @@ hover-card {
 			color:white;
 			text-decoration: underline;
 			font-size: 2rem;
+		}
+	}
+
+	&Hero {
+		@include breakpoint(small) {
+			height:auto;
 		}
 	}
 }
