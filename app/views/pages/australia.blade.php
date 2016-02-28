@@ -19,11 +19,15 @@ Our Australian shipping rates will now match our U.S. Shipping Rates!
             will be fulfilled at the beginning of April and thereafter at a much more rapid pace</p>
             <p>All Australian orders, from now on, will ship from Australia. <span class="bold">This will cause dramatic improvement to the $150 shipping rates and long shipping times that once applied.</span> Thank you for bearing with us through this new venture, <span class="bold">our goal is to
             provide you superlative spearfishing products and a supreme shopping experience.</span></p>
-            <p class="AustraliaMessage-shop"><a href="{{ route('home') }}">Shop Now</a></p>
+            <p class="AustraliaMessage-shop"><a href="#store">Shop Now</a></p>
         </div>
     </div>
 </div>
 
-@include('partials.contact-without-message');
+<div class="home-container product-store-section" id="store">
+    @include('partials.store')
+</div>
+
+@include('partials.contact');
 
 @stop

@@ -3308,19 +3308,15 @@ hover-card {
 	font-size: .8rem;
 
 	@include breakpoint(small) {
-
 		top:90%;
 		// display: none;
-
 	}
-
 }
 
 .special-message {
-
 	color:gray;
 	margin-top: 15px;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	text-align: center;
 
 	@include breakpoint(small) {
