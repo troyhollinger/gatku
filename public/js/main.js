@@ -154,6 +154,14 @@ var PoleScroll = {
 			} else if(windowWidth <= 500) {
 				scroller.scrollLeft($(".scroller-image").width() - 1780);			
 			}
+		} else if(typeof slug != 'undefined' && slug === 'offshore-striker') {	
+			if (windowWidth > 1100) {
+				scroller.scrollLeft($(".scroller-image").width() - 2500);			
+			} else if (windowWidth < 1100 && windowWidth > 500) {
+				scroller.scrollLeft($(".scroller-image").width() - 2250);			
+			} else if(windowWidth <= 500) {
+				scroller.scrollLeft($(".scroller-image").width() - 1580);			
+			}
 		} else if(typeof slug != 'undefined' && slug === 'g-string') {
 			scroller.scrollLeft($(".scroller-image").width() - 5300);
 		}
