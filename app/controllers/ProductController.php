@@ -102,17 +102,13 @@ class ProductController extends BaseController {
 	 * @return Response
 	 */
 	public function show($slug) {
-		
 		$product = $this->product->find($slug);
 
 		if ($product === false || $product === null) {
-
 			return Redirect::route('home');
-
 		}	
-
+		Log::info($product);
 		return View::make('pages.product', ['product' => $product]);
-
 	}
 
 

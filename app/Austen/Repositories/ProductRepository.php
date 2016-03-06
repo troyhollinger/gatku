@@ -43,21 +43,15 @@ class ProductRepository implements ProductRepositoryInterface {
 	}
 
 	public function find($slug) {
-
 		try {
-			
 			$product = Product::where('slug', '=', $slug)->with('type')->first();
-
+			Log::info($product);
 		} catch (Exception $e) {
-			
 			Log::error($e);
-
 			return false;
-
 		}
 
 		return $product;
-
 	}
 
 

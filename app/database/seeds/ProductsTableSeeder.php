@@ -6,6 +6,7 @@ class ProductsTableSeeder extends Seeder {
 	public function run() {
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 2, 
 			'attachedImage' => asset('img/full-size/signature-paralyzer-attached.jpg'),
 			'detachedImage' => asset('img/full-size/signature-paralyzer-detached.jpg'),
@@ -44,6 +45,7 @@ class ProductsTableSeeder extends Seeder {
 
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 2, 
 			'attachedImage' => asset('img/full-size/barbed-paralyzer-attached.jpg'),
 			'detachedImage' => asset('img/full-size/barbed-paralyzer-detached.jpg'),
@@ -83,6 +85,7 @@ class ProductsTableSeeder extends Seeder {
 
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 2, 
 			'attachedImage' => asset('img/full-size/sliptip-attached.jpg'),
 			'detachedImage' => asset('img/full-size/sliptip-detached.jpg'),
@@ -121,6 +124,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 2, 
 			'attachedImage' => asset('img/full-size/flopper-attached.jpg'),
 			'detachedImage' => asset('img/full-size/flopper-detached.jpg'),
@@ -155,6 +159,7 @@ class ProductsTableSeeder extends Seeder {
 			
 		
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 1, 
 			'attachedImage' => asset('img/full-size/sixer-attached.jpg'),
 			'detachedImage' => asset('img/full-size/sixer-detached.jpg'),
@@ -189,6 +194,7 @@ class ProductsTableSeeder extends Seeder {
 
 		
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 1, 
 			'attachedImage' => asset('img/full-size/sevener-attached.jpg'),
 			'detachedImage' => asset('img/full-size/sevener-detached.jpg'),
@@ -223,6 +229,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 			
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 1, 
 			'attachedImage' => asset('img/full-size/eighter-attached.jpg'),
 			'detachedImage' => asset('img/full-size/eighter-detached.jpg'),
@@ -257,6 +264,7 @@ class ProductsTableSeeder extends Seeder {
 
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 1, 
 			'attachedImage' => asset('img/full-size/niner-attached.jpg'),
 			'detachedImage' => asset('img/full-size/niner-detached.jpg'),
@@ -289,6 +297,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 	
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 1, 
 			'attachedImage' => asset('img/full-size/tener-attached.jpg'),
 			'detachedImage' => asset('img/full-size/tener-detached.jpg'),
@@ -323,6 +332,7 @@ class ProductsTableSeeder extends Seeder {
 
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 3, 
 			'attachedImage' => '',
 			'detachedImage' => asset('img/full-size/inshore-shrinker-detached-2.jpg'),
@@ -361,6 +371,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 		
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 4, 
 			'attachedImage' => asset('img/full-size/knife-attached.jpg'),
 			'detachedImage' => '',
@@ -392,6 +403,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 4, 
 			'attachedImage' => asset('img/full-size/hardcore-band-attached.jpg'),
 			'detachedImage' => '',
@@ -426,6 +438,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 5, 
 			'attachedImage' => asset('img/apparel/niner/niner-1.jpg'),
 			'detachedImage' => '',
@@ -446,6 +459,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 5, 
 			'attachedImage' => asset('img/apparel/superhero/superhero-1.jpg'),
 			'detachedImage' => '',
@@ -466,6 +480,7 @@ class ProductsTableSeeder extends Seeder {
 		]);
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 5, 
 			'attachedImage' => asset('img/apparel/comfort/comfort-1.jpg'),
 			'detachedImage' => '',
@@ -489,6 +504,7 @@ class ProductsTableSeeder extends Seeder {
 
 
 		Product::create([
+			'availabilityTypeId' => 1,
 			'typeId' => 6, 
 			'attachedImage' => '',
 			'detachedImage' => '',
@@ -510,6 +526,7 @@ class ProductsTableSeeder extends Seeder {
 
 		// Template
 		// Product::create([
+		//'availabilityTypeId' => 1,
 		// 	'typeId' => 0, 
 		// 	'attachedImage' => '',
 		// 	'detachedImage' => '',
