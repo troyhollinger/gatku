@@ -44,21 +44,14 @@ class OrderController extends BaseController {
 		$order = $this->order->process(Input::all());
 
 		if ($order !== true) {
-
 			if ($order !== false) {
-
 				return Response::json(['message' => $order], 404);
-
 			} else {
-
 				return Response::json(['message' => 'Sorry, something went wrong on our end. We are fixing it.'], 404);
-
 			}
-
 		}
 
 		return Response::json(['message' => 'Thank you for the order!'], 200);
-
 	}
 
 	/**

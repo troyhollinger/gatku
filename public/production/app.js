@@ -876,7 +876,7 @@ var PoleScroll = {
 			} else if (windowWidth < 1100 && windowWidth > 500) {
 				scroller.scrollLeft($(".scroller-image").width() - 2250);			
 			} else if(windowWidth <= 500) {
-				scroller.scrollLeft($(".scroller-image").width() - 1780);			
+				scroller.scrollLeft($(".scroller-image").width() - 1580);			
 			}
 		} else if(typeof slug != 'undefined' && slug === 'g-string') {
 			scroller.scrollLeft($(".scroller-image").width() - 5300);
@@ -6174,453 +6174,359 @@ app.controller('CartBlinderController', ['$scope', 'CartService', function($scop
 */
 app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', function($scope, CartService, StripeService, Order, AlertService) {
 
-	$scope.items = [];
-
-	$scope.show = false;
-
-	$scope.form = {};
-
-	$scope.form.useBillingForShipping = true;
-
-	$scope.status = '';
-
-	$scope.stages = ['cart', 'checkout', 'payment', 'confirmation'];
-
-	$scope.currentStage = $scope.stages[0];
-
-	$scope.eligibleForDiscount = false;
-
-	$scope.discountText = '';
-
-	$scope.discountAmount = 0;
-
-	$scope.enabled = true;
-
-	$scope.blackFriday = false;
-
-	$scope.toStage = function(index) {
-
-		Inputs.blur();
-
-		if ($scope.validate(index) === false) return false;
-
-		$scope.currentStage = $scope.stages[index];
-
-	}
-
-	$scope.getItems = function() {
-
-		var items = CartService.getItems();
-
-		$scope.items = items;
-
-	}
-
-	$scope.removeItem = function(index) {
-
-		CartService.removeItem(index);
-
-	}
-
-	$scope.increaseItemQuantity = function(itemIndex) {
-
-		CartService.increaseItemQuantity(itemIndex);
-
-	}
-
-	$scope.decreaseItemQuantity = function(itemIndex) {
-
-		CartService.decreaseItemQuantity(itemIndex);
-
-	}
-
-	$scope.increaseAddonQuantity = function(itemIndex, addonIndex) {
-
-		CartService.increaseAddonQuantity(itemIndex, addonIndex);
-
-	}
-
-	$scope.decreaseAddonQuantity = function(itemIndex, addonIndex) {
-
-		CartService.decreaseAddonQuantity(itemIndex, addonIndex);
-
-	}
-
-	$scope.shipping = function() {
-
-		var shipping = 0;
-		var poles = [];
-		var heads = [];
-		var others = [];
-
-		if ($scope.subtotal() >= 30000) {
-
-			return 0;
-
-		}
-
-		if ($scope.blackFriday) {
-
-			return 0;
-
-		}
-
-		for(var i = 0; i < $scope.items.length; i++) {
-
-			var item = $scope.items[i];
-
-			if (item.type.slug === 'pole') {
-
-				poles.push(item);
-
-			} else if (item.type.slug === 'head') {
-
-				heads.push(item);
-
-			} else {
-
-				others.push(item);
-
-			}
-
-		};
-
-		if (poles.length > 0) {
-
-			var poleShippingPrice = poles[0].type.shippingPrice;
-
-			if (poles.length > 1) {
-
-				shipping = poleShippingPrice * poles.length;
-
-			} else {
-
-				shipping = poleShippingPrice;
-
-			}
-
-		} else if (heads.length > 0) {
-
-			var headShippingPrice = heads[0].type.shippingPrice;
-
-			if (heads.length > 1) {
-
-				shipping = headShippingPrice * (Math.ceil(heads.length / 2));
-
-			} else {
-
-				shipping = headShippingPrice;
-
-			}
-
-		} else if (others.length > 0) {
-
-			shipping = others[0].type.shippingPrice;
-
-		}
-
-		return shipping;
-
-	}
-
-	$scope.subtotal = function() {
-
-		var subtotal = 0;
-		
-		angular.forEach($scope.items, function(value, key) {
-
-			subtotal += $scope.items[key].price * $scope.items[key].quantity;
-
-			for(var i = 0; i < $scope.items[key].addons.length; i++) {
-
-				subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
-
-			}
-
-		});	
-
-		return subtotal - $scope.discounts(subtotal);
-
-	}
-
-	/**
-	 * This function will change quite a bit depending 
-	 * on what current discounts you want plugged into the system
-	 *
-	 */
-	$scope.discounts = function(subtotal) {
-
-		var amount = 0;
-		var subtotal = subtotal || false;
-		var glassCheck = 0;
-		var glassPrice = 0;
-
-		if (subtotal && $scope.blackFriday) {
-
-			$scope.discountText = 'Black Friday Discount - 20% off';
-
-			amount = Math.ceil(((subtotal * 0.2) / 100)) * 100;
-
-			$scope.eligibleForDiscount = true;
-			$scope.discountAmount = amount;
-
-			return amount;
-
-		}
-
-		if ($scope.blackFriday) return 0;
-
-		angular.forEach($scope.items, function(value, key) {
-
-			if($scope.items[key].type.slug === 'glass') {
-
-				glassCheck += parseInt($scope.items[key].quantity);
-				glassPrice = $scope.items[key].price;
-
-			}
-
-			for(var i = 0; i < $scope.items[key].addons.length; i++) {
-
-				if ($scope.items[key].addons[i].type.slug === 'glass') glassCheck += parseInt($scope.items[key].addons[i].quantity);
-
-			}
-
-		});
-
-		if (glassCheck >= 4) {
-
-			amount = (glassPrice * 4) - 4000;
-
-			$scope.eligibleForDiscount = true;
-			$scope.discountText = '4 Glasses for $40';
-
-		} else {
-
-			$scope.eligibleForDiscount = false;
-			$scope.discountText = '';
-
-		}
-
-		$scope.discountAmount = amount;
-
-		return amount;
-
-	}
-
-	$scope.total = function() {
-
-		var subtotal =  $scope.subtotal();
-		var shipping = $scope.shipping();
-
-		return subtotal + shipping;
-
-	}
-
-	$scope.submit = function() {
-
-		var card = extractCardDetails();
-
-		if ($scope.enabled === false) return false;
-
-		$scope.enabled = false;
-
-		AlertService.broadcast('Processing...', 'info');
-
-		StripeService.createToken(card).then(function(token) {
-
-			var data = {
-
-				items : $scope.items,
-				form : $scope.form,
-				token : token
-
-			}
+    $scope.items = [];
+    $scope.show = false;
+    $scope.form = {};
+    $scope.form.useBillingForShipping = true;
+    $scope.status = '';
+    $scope.stages = ['cart', 'checkout', 'payment', 'confirmation'];
+    $scope.currentStage = $scope.stages[0];
+    $scope.eligibleForDiscount = false;
+    $scope.discountText = '';
+    $scope.discountAmount = 0;
+    $scope.enabled = true;
+    $scope.blackFriday = false;
+
+    $scope.toStage = function(index) {
+        Inputs.blur();
+
+        if ($scope.validate(index) === false) return false;
+
+        $scope.currentStage = $scope.stages[index];
+    }
+
+    $scope.getItems = function() {
+        var items = CartService.getItems();
+
+        $scope.items = items;
+    }
+
+    $scope.removeItem = function(index) {
+        CartService.removeItem(index);
+    }
+
+    $scope.increaseItemQuantity = function(itemIndex) {
+        CartService.increaseItemQuantity(itemIndex);
+    }
+
+    $scope.decreaseItemQuantity = function(itemIndex) {
+        CartService.decreaseItemQuantity(itemIndex);
+    }
+
+    $scope.increaseAddonQuantity = function(itemIndex, addonIndex) {
+        CartService.increaseAddonQuantity(itemIndex, addonIndex);
+    }
+
+    $scope.decreaseAddonQuantity = function(itemIndex, addonIndex) {
+        CartService.decreaseAddonQuantity(itemIndex, addonIndex);
+    }
+
+    $scope.shipping = function() {
+        var shipping = 0;
+        var poles = [];
+        var heads = [];
+        var others = [];
+
+        if ($scope.subtotal() >= 30000) {
+            return 0;
+        }
+
+        if ($scope.blackFriday) {
+            return 0;
+        }
+
+        for(var i = 0; i < $scope.items.length; i++) {
+            var item = $scope.items[i];
+
+            if (item.type.slug === 'pole') {
+                poles.push(item);
+            } else if (item.type.slug === 'head') {
+                heads.push(item);
+            } else {
+                others.push(item);
+            }
+        };
+
+        if (poles.length > 0) {
+            var poleShippingPrice = poles[0].type.shippingPrice;
+
+            if (poles.length > 1) {
+                shipping = poleShippingPrice * poles.length;
+            } else {
+                shipping = poleShippingPrice;
+            }
+        } else if (heads.length > 0) {
+            var headShippingPrice = heads[0].type.shippingPrice;
+
+            if (heads.length > 1) {
+                shipping = headShippingPrice * (Math.ceil(heads.length / 2));
+            } else {
+                shipping = headShippingPrice;
+            }
+
+        } else if (others.length > 0) {
+            shipping = others[0].type.shippingPrice;
+        }
+
+        return shipping;
+    }
+
+    $scope.subtotal = function() {
+        var subtotal = 0;
+        
+        angular.forEach($scope.items, function(value, key) {
+            subtotal += $scope.items[key].price * $scope.items[key].quantity;
+
+            for(var i = 0; i < $scope.items[key].addons.length; i++) {
+                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+            }
+        }); 
+
+        return subtotal - $scope.discounts(subtotal);
+    }
+
+    /**
+     * This function will change quite a bit depending 
+     * on what current discounts you want plugged into the system
+     *
+     */
+    $scope.discounts = function(subtotal) {
+        var amount = 0;
+        var subtotal = subtotal || false;
+        var glassCheck = 0;
+        var glassPrice = 0;
+
+        if (subtotal && $scope.blackFriday) {
+            $scope.discountText = 'Black Friday Discount - 20% off';
+            amount = Math.ceil(((subtotal * 0.2) / 100)) * 100;
+            $scope.eligibleForDiscount = true;
+            $scope.discountAmount = amount;
+
+            return amount;
+        }
+
+        if ($scope.blackFriday) return 0;
+
+        angular.forEach($scope.items, function(value, key) {
+            if($scope.items[key].type.slug === 'glass') {
+                glassCheck += parseInt($scope.items[key].quantity);
+                glassPrice = $scope.items[key].price;
+            }
+
+            for(var i = 0; i < $scope.items[key].addons.length; i++) {
+                if ($scope.items[key].addons[i].type.slug === 'glass') glassCheck += parseInt($scope.items[key].addons[i].quantity);
+            }
+        });
+
+        if (glassCheck >= 4) {
+            amount = (glassPrice * 4) - 4000;
+            $scope.eligibleForDiscount = true;
+            $scope.discountText = '4 Glasses for $40';
+        } else {
+            $scope.eligibleForDiscount = false;
+            $scope.discountText = '';
+        }
+        $scope.discountAmount = amount;
+
+        return amount;
+    }
+
+    $scope.total = function() {
+
+        var subtotal =  $scope.subtotal();
+        var shipping = $scope.shipping();
+
+        return subtotal + shipping;
+
+    }
+
+    $scope.submit = function() {
+        var card = extractCardDetails();
+
+        if ($scope.enabled === false) return false;
+
+        $scope.enabled = false;
+
+        AlertService.broadcast('Processing...', 'info');
+
+        StripeService.createToken(card).then(function(token) {
+            var data = {
+                items : $scope.items,
+                form : $scope.form,
+                token : token
+            }
  
-			Order.store(data).success(function(response) {
+            Order.store(data).success(function(response) {
+                AlertService.broadcast('Success! Redirecting...', 'success');
+                $scope.show = false;
+                $scope.emptyCart();
+                $scope.enabled = true;
+                window.location.replace("/thankyou");
+            }).error(function(response) {
+                $scope.enabled = true;
+                if ('error' in response.message.jsonBody) {
+                    AlertService.broadcast(response.message.jsonBody.error.message, 'error');
+                } else {
+                    AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');                  
+                }
+            });
+        });
+    }
 
-				AlertService.broadcast('Success! Redirecting...', 'success');
+    $scope.hide = function() {
 
-				$scope.show = false;
+        CartService.hide();
 
-				$scope.emptyCart();
+    }
 
-				$scope.enabled = true;
+    $scope.emptyCart = function() {
 
-				window.location.replace("/thankyou");
+        CartService.empty();
 
-			}).error(function(response) {
+        $scope.getItems();
 
-				$scope.enabled = true;
+    }
 
-				if ('error' in response.message.jsonBody) {
+    $scope.validate = function(index) {
 
-					AlertService.broadcast(response.message.jsonBody.error.message, 'error');
+        $scope.status = '';
 
-				} else {
+        if (index == 1) {
+            return true;
+        }
 
-					AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');					
+        if (index == 2) {
+            if (!$scope.form.firstName) {
+                $scope.status = 'Please enter a first name.';
+                AlertService.broadcast('Please enter a first name', 'error');
 
-				}
+                return false;
 
-			});
+            }
 
-		});
+            if (!$scope.form.lastName) {
+                $scope.status = 'Please enter a last name.';
+                AlertService.broadcast('Please enter a last name', 'error');
+                return false;
+            }
 
-	}
+            if (!$scope.form.email) {
+                $scope.status = 'Please enter an email address.';
+                AlertService.broadcast('Please enter an email address', 'error');
+                return false;
+            }
 
-	$scope.hide = function() {
+            if (!validateEmail($scope.form.email)) {
+                $scope.status = 'Please enter a valid email address.';
+                AlertService.broadcast('Please enter a valid email address', 'error');
+                return false;
+            }
 
-		CartService.hide();
+            if (!$scope.form.phone) {
 
-	}
+                $scope.status = 'Please enter phone number.';
+                AlertService.broadcast('Please enter a phone number', 'error');
+                return false;
 
-	$scope.emptyCart = function() {
+            }
 
-		CartService.empty();
+            if (!$scope.form.address) {
 
-		$scope.getItems();
+                $scope.status = 'Please enter a street address.';
+                AlertService.broadcast('Please enter a street address', 'error');
+                return false;
 
-	}
+            }
 
-	$scope.validate = function(index) {
+            if (!$scope.form.city) {
 
-		$scope.status = '';
+                $scope.status = 'Please enter a city';
+                AlertService.broadcast('Please enter a city', 'error');
+                return false;
 
-		if (index == 1) {
+            }
 
-			return true;
+            if (!$scope.form.state) {
 
-		}
+                $scope.status = 'Please enter a state';
+                AlertService.broadcast('Please enter a state', 'error');
+                return false
 
-		if (index == 2) {
+            }
 
-			if (!$scope.form.firstName) {
+            if (!$scope.form.country) {
 
-				$scope.status = 'Please enter a first name.';
-				AlertService.broadcast('Please enter a first name', 'error');
+                $scope.status = 'Please enter a country';
+                AlertService.broadcast('Please enter a country', 'error');
+                return false;
 
-				return false;
+            }
 
-			}
+            return true;
 
-			if (!$scope.form.lastName) {
+        }
 
-				$scope.status = 'Please enter a last name.';
-				AlertService.broadcast('Please enter a last name', 'error');
-				return false;
+        if (index == 3) {
 
-			}
+            var card = extractCardDetails();
 
-			if (!$scope.form.email) {
+            var validation = StripeService.validate(card)
 
-				$scope.status = 'Please enter an email address.';
-				AlertService.broadcast('Please enter an email address', 'error');
-				return false;
+            if (validation.response === false) {
 
-			}
+                $scope.status = validation.message;
+                AlertService.broadcast($scope.status, 'error');
 
-			if (!$scope.form.phone) {
+                return false;
 
-				$scope.status = 'Please enter phone number.';
-				AlertService.broadcast('Please enter a phone number', 'error');
-				return false;
+            } else if (validation.response) {
 
-			}
+                $scope.status = '';
 
-			if (!$scope.form.address) {
+                return true;
 
-				$scope.status = 'Please enter a street address.';
-				AlertService.broadcast('Please enter a street address', 'error');
-				return false;
+            }
 
-			}
+        }
 
-			if (!$scope.form.city) {
+    }
 
-				$scope.status = 'Please enter a city';
-				AlertService.broadcast('Please enter a city', 'error');
-				return false;
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
 
-			}
+    function extractCardDetails() {
+        var card = {};
 
-			if (!$scope.form.state) {
+        card.number = $scope.card.number;
+        card.exp_month = $scope.card.expiryMonth;
+        card.exp_year = $scope.card.expiryYear;
+        card.cvc = $scope.card.securityCode;
+        card.name = $scope.form.firstName + ' ' + $scope.form.lastName;
 
-				$scope.status = 'Please enter a state';
-				AlertService.broadcast('Please enter a state', 'error');
-				return false
+        return card;
+    }
 
-			}
+    $scope.$on('update', function() {
 
-			if (!$scope.form.country) {
+        $scope.getItems();
 
-				$scope.status = 'Please enter a country';
-				AlertService.broadcast('Please enter a country', 'error');
-				return false;
+    });
 
-			}
+    $scope.$on('show', function() {
 
-			return true;
+        $scope.show = true;
 
-		}
+    });
 
-		if (index == 3) {
+    $scope.$on('hide', function() {
 
-			var card = extractCardDetails();
+        $scope.show = false;
 
-			var validation = StripeService.validate(card)
+    });
 
-			if (validation.response === false) {
-
-				$scope.status = validation.message;
-				AlertService.broadcast($scope.status, 'error');
-
-				return false;
-
-			} else if (validation.response) {
-
-				$scope.status = '';
-
-				return true;
-
-			}
-
-		}
-
-	}
-
-	function extractCardDetails() {
-
-		var card = {};
-
-		card.number = $scope.card.number;
-		card.exp_month = $scope.card.expiryMonth;
-		card.exp_year = $scope.card.expiryYear;
-		card.cvc = $scope.card.securityCode;
-		card.name = $scope.form.firstName + ' ' + $scope.form.lastName;
-
-		return card;
-
-	}
-
-	$scope.$on('update', function() {
-
-		$scope.getItems();
-
-	});
-
-	$scope.$on('show', function() {
-
-		$scope.show = true;
-
-	});
-
-	$scope.$on('hide', function() {
-
-		$scope.show = false;
-
-	});
-
-	$scope.getItems();
+    $scope.getItems();
 
 }]);
 

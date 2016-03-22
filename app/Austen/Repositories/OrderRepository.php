@@ -1,4 +1,5 @@
-<?php namespace Austen\Repositories;
+<?php 
+namespace Austen\Repositories;
 
 use Order;
 use OrderItem;
@@ -22,8 +23,8 @@ use Stripe_CardError;
 class OrderRepository {
 
 	protected $customer;
-
 	protected $order;
+	protected $error_message;
 
 	public $blackFriday = false;
 
@@ -62,11 +63,8 @@ class OrderRepository {
 		try {
 
 			$customer = $this->customer->store($input['form']);
-
 			$order = new Order;
-			
 			$order = $this->assignFields($order, $customer, $input['form']);
-
 			$order->save();
 		
 			$this->assignOrderItems($order, $input['items']);
@@ -74,42 +72,28 @@ class OrderRepository {
 			$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
 			$discount = $this->calculateDiscount($order);
-
 			$subtotal = $this->calculateSubTotal($order);
-
 			$shipping = $this->calculateShipping($order);
-
 			$total = $this->calculateTotal($order);
 
 		} catch(Exception $e) {
-
 			Log::error($e);
-
 			DB::rollback();
 
 			return false;
-
 		}
 
 		try {
-			
 			Stripe_Charge::create([
-
 				'source' => $input['token']['id'],
 				'amount' => $total,
 				'currency' => 'usd',
 				'description' => 'Order : ' . $order->number
-
 			]);
-
 		} catch (Stripe_CardError $e) {
-			
 			Log::error($e);
-
 			DB::rollback();
-
 			return $e;
-
 		}
 
 		DB::commit();
@@ -183,6 +167,11 @@ class OrderRepository {
 	 * @todo code this method to validate the input 
 	 */
 	private function validateInput($input) {
+
+		$email = $input['form']['email'];
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			return false; 
+		}
 
 		return true;
 
