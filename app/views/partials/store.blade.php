@@ -77,23 +77,14 @@
 	<h2 class="store-label">Accessories</h2>';
 
 	$extras3Row = '<div class="extras-row product-row">
-
-		<div class="product-thumb-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\' || extra.slug == \'offshore-striker\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' || extra.slug == \'cable\' || extra.slug == \'tips\' }"></a></div>
-		
+		<div class="product-thumb-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\' || extra.slug == \'offshore-striker\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' || extra.slug == \'cable\' || extra.slug == \'tips\', \'flashers-thumb\' : extra.slug == \'fin-flashers\' }"></a></div>
 		<div class="clear"></div>
-
 	</div>
-
 	<div class="extras-links links">
-
-		<div class="product-link-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
-		
+		<div class="product-link-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>	
 		<div class="clear"></div>
-
 	</div>
-
 	<h2 class="store-label">Accessories</h2>';
-
 
 	$apparelRow = '<div class="apparel-row product-row">
 
