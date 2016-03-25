@@ -7,9 +7,7 @@ class OrderController extends BaseController {
 	protected $order;
 
 	public function __construct(OrderRepository $order) {
-
 		$this->order = $order;
-
 	}
 
 	/**
@@ -19,17 +17,13 @@ class OrderController extends BaseController {
 	 * @return Response
 	 */
 	public function index() {
-		
 		$orders = $this->order->all();
 
 		if (!$orders) {
-
 			return Response::json(['message' => 'Sorry, there was an error'], 404);
-
 		}
 
 		return Response::json(['data' => $orders], 200);
-
 	}
 
 	
