@@ -226,7 +226,7 @@
             <div class="container">
 
                 <div class="brand-logo-description brand-dark brand-left brand-padding-right">
-                    <p>USE THIS ON <span class="bold">LIGHT</span> BACKGROUND &nbsp;-&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForDarkBG.png') }}" download>PNG</a> &nbsp;|&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForDarkBG.png') }}" download>SVG</a></p>
+                    <p>USE THIS ON <span class="bold">DARK</span> BACKGROUND &nbsp;-&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForDarkBG.png') }}" download>PNG</a> &nbsp;|&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForDarkBG.png') }}" download>SVG</a></p>
                 </div>
                 <div class="brand-logo-container brand-dark brand-left">
                     <img src="{{ asset('/img/media-page-assets/GATKU_LogoForDarkBG.png') }}">
@@ -235,7 +235,7 @@
                     <img src="{{ asset('/img/media-page-assets/GATKU_LogoForLightBG.png') }}">
                 </div>
                 <div class="brand-logo-description brand-light brand-left">
-                    <p>USE THIS ON <span class="bold">DARK</span> BACKGROUND &nbsp;-&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForLightBG.png') }}" download>PNG</a> &nbsp;|&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForLightBG.png') }}" download>SVG</a></p>
+                    <p>USE THIS ON <span class="bold">LIGHT</span> BACKGROUND &nbsp;-&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForLightBG.png') }}" download>PNG</a> &nbsp;|&nbsp; <a href="{{ asset('/img/media-page-assets/GATKU_LogoForLightBG.png') }}" download>SVG</a></p>
                 </div>
 
                 <div class="brand-logo-caps brand-dark">
