@@ -32,12 +32,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>5,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>5,
-		'childId'=>12,
-		] );
-					
+							
 		Addon::create( [
 		'parentId'=>5,
 		'childId'=>16,
@@ -67,12 +62,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>6,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>6,
-		'childId'=>12,
-		] );
-					
+								
 		Addon::create( [
 		'parentId'=>6,
 		'childId'=>16,
@@ -97,12 +87,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>7,
 		'childId'=>10,
 		] );
-					
-		Addon::create( [
-		'parentId'=>7,
-		'childId'=>12,
-		] );
-					
+											
 		Addon::create( [
 		'parentId'=>7,
 		'childId'=>16,
@@ -127,12 +112,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>8,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>8,
-		'childId'=>12,
-		] );
-					
+											
 		Addon::create( [
 		'parentId'=>8,
 		'childId'=>13,
@@ -167,12 +147,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>9,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>9,
-		'childId'=>12,
-		] );
-					
+									
 		Addon::create( [
 		'parentId'=>9,
 		'childId'=>16,
@@ -197,12 +172,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>1,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>1,
-		'childId'=>12,
-		] );
-					
+											
 		Addon::create( [
 		'parentId'=>2,
 		'childId'=>1,
@@ -222,12 +192,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>2,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>2,
-		'childId'=>12,
-		] );
-					
+												
 		Addon::create( [
 		'parentId'=>3,
 		'childId'=>1,
@@ -247,12 +212,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>3,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>3,
-		'childId'=>12,
-		] );
-					
+							
 		Addon::create( [
 		'parentId'=>4,
 		'childId'=>1,
@@ -277,12 +237,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>4,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>4,
-		'childId'=>12,
-		] );
-					
+										
 		Addon::create( [
 		'parentId'=>10,
 		'childId'=>1,
@@ -302,12 +257,7 @@ class AddonsTableSeeder extends Seeder {
 		'parentId'=>10,
 		'childId'=>11,
 		] );
-					
-		Addon::create( [
-		'parentId'=>10,
-		'childId'=>12,
-		] );
-					
+										
 		Addon::create( [
 		'parentId'=>11,
 		'childId'=>1,
