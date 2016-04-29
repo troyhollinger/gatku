@@ -6624,10 +6624,12 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 	}
 
 	$scope.addToCart = function() {
+		console.log("Attempting to add to cart");
 		if ($scope.product.sizeable) {
 			var sizes = verifySizeIsChecked();
-
+			console.log("Product is sizeable");
 			if (sizes.length) {
+				console.log("there are sizes");
 				for(var i = 0; i < sizes.length; i++) {
 				 	var sizedProduct = angular.copy($scope.product);
 
@@ -6643,7 +6645,9 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			}
 
 		} else {
+			console.log("about to add item");
 			CartService.addItem($scope.product);
+			console.log("added item");
 		}
 		$scope.productAddedTextChange();
 
