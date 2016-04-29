@@ -27,7 +27,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 
 	$scope.addToCart = function() {
 		console.log("Attempting to add to cart");
-		if ($scope.product.sizeable) {
+		if ($scope.product.sizeable !== "0" && $scope.product.sizeable) {
 			var sizes = verifySizeIsChecked();
 			console.log("Product is sizeable");
 			if (sizes.length) {
@@ -115,7 +115,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 	}
 
 	function reset() {
-		if ($scope.product.sizeable) {
+		if ($scope.product.sizeable !== "0" && $scope.product.sizeable) {
 			for(var i = 0; i < $scope.product.sizes.length; i++) {
 				$scope.product.sizes[i].checked = false;
 			}
