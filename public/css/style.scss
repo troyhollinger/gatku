@@ -3001,43 +3001,25 @@ hover-card {
 }
 
 .slide-up {
-
-	
 	&.ng-hide-add, &.ng-hide-remove {
-
 		@include transition(all .25s ease);
-
 	} 
-
 	&.ng-hide-add {
-
 		opacity: 1;
 		@include transform(translate(-50%, 0));
-
 	}
-
 	&.ng-hide-add-active {
-
 		opacity: 0;
 		@include transform(translate(-50%, 10px));
-
 	}
-
 	&.ng-hide-remove {
-
 		opacity: 0;
 		@include transform(translate(-50%, 10px));
-
 	}
-
 	&.ng-hide-remove-active {
-
 		opacity: 1;
 		@include transform(translate(-50%, 0));
-
 	}
-
-
 }
 
 .apparel-container {

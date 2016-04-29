@@ -5308,11 +5308,9 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 	var Cookie = ipCookie;
 
 	CartService.getItems = function() {
-
 		var cookies = Cookie('items') || [];
 
 		return cookies;
-
 	}
 
 	/**
@@ -5321,7 +5319,6 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 	 *
 	 */
 	CartService.addItem = function(data) {
-
 		var cart = CartService.getItems();
 		var item = {};
 
@@ -5343,12 +5340,10 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		// Grab selected addons from the user action,
 		// dump them in the item.addons array
 		for(var i = 0; i < data.addons.length; i++) {
-
 			var addon = data.addons[i];
 			var addonToCart = {};
 
 			if (addon.checked) {
-
 				addonToCart.id = addon.product.id;
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
@@ -5356,29 +5351,22 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.type = {};
 				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
-
 					addonToCart.sizeId = addon.product.sizeId;
-
 				}
 				addonToCart.quantity = 1;
 
 				item.addons.push(addonToCart);
-
 			}
-
 		}
 
 		cart.push(item);
-
+		console.log("Items added before cookie");
 		Cookie('items', cart, { path : '/' });
-
 		$rootScope.$broadcast('update');
-
 		$rootScope.$broadcast('itemAdded');
-
+		console.log("Items added after cookie");
 	}
 	
-
 	CartService.removeItem = function(index) {
 
 		var cart = CartService.getItems();
