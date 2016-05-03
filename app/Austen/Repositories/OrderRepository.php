@@ -98,43 +98,34 @@ class OrderRepository {
 		$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
 		if (App::environment('production')) {
-
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
-
-				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
-			  
+				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');			 
 			});
 
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
-			  
+				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');			 
 			});
 
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
-			  
+				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');			  
 			});
 
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-
-				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');
-			  
+				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');			  
 			});
-
 		}
 
-		Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+		if (App::environment('local')) {
+			if (isset($_ENV['test_transaction_email'])) {
+				Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+					$message->to($_ENV['test_transaction_email'], 'Austen Payan')->subject('New order from GATKU');		 
+				});	
+			}
+		}
 
-			$message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New order from GATKU');
-		  
-		});
-			
-
+					
 		
 		return true;
-
 	}
 
 	/**
