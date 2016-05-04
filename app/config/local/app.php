@@ -12,9 +12,8 @@ return array(
 	| application. If disabled, a simple generic error page is shown.
 	|
 	*/
-
 	'debug' => true,
 
-	'url' => 'http://gatkutest.dev',
+	'url' => 'http://localhost:8000',
 
 );

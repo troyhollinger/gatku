@@ -141,13 +141,29 @@ app.factory('ShippingRequest', ['$http', function($http) {
 
 		send : function(data) {
 
-			return $http.post('/shipping-request', data);
+			return $http.post('/shipping-request1', data);
 
 		},
 
 		pay : function(data) {
 
 			return $http.post('/shipping-request/pay', data);
+
+		}
+
+	}
+
+}]);
+
+
+app.factory('ShippingTrack', ['$http', function($http) {
+
+
+	return {
+
+		send : function(data) {
+
+			return $http.post('/shipping-track', data);
 
 		}
 
