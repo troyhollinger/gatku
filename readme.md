@@ -15,6 +15,7 @@ Email me for the specific values for these keys. Below is a running list of what
 * mailgun_secret
 * db_password
 * encryption_key
+* test_transaction_email
 
 ##### Migrations & Seeds
 Once your environment is set up, ssh into homestead and locate your gatku directory. Type `php artisan migrate` to run migrations and then `php artisan db:seed` to run the seed files.
