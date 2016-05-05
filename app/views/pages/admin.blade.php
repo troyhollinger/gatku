@@ -50,7 +50,8 @@ Admin
 							</li>
 						</ul>
 					</td>
-					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request></td>
+					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request>
+					<shipping-track order="order"></shipping-track></td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
 
