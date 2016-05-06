@@ -27,7 +27,7 @@ class ShippingTrackController extends BaseController {
 
 		if ($request === false) return Response::json(['message' => 'Sorry, there was an error on our end'], 404);
 
-		return Response::json(['message' => 'request was created'], 200);
+		return Response::json(['message' => 'request was created', "data" => $request], 200);
 
 	}
 

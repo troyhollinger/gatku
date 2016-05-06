@@ -51,7 +51,13 @@ Admin
 						</ul>
 					</td>
 					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request>
-					<shipping-track order="order"></shipping-track></td>
+						<div ng-if="!order.tracking" style="float:left;">
+							<shipping-track order="order"></shipping-track>	
+						</div>
+						<div ng-if="order.tracking" style="float:left;">
+							<a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+						</div>
+					</td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
 

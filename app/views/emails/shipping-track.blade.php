@@ -253,7 +253,7 @@
 									<th id="order-info" colspan="2" padding="0" align="left" style="width: 100%;height: 35px;border-bottom: 1px solid black;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px;color:#E24A62"><span id="status" style="font-size: 16px;font-weight: 200;">Order : {{ $order['number'] }} - </span><span id="date" style="font-size: 20px;font-weight: 200;">{{ $date }}</span></th>
 								</tr>
 								<tr>
-									<th id="track-info" colspan="2" padding="0" align="left" style="width: 100%;height: 35px;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px;"><span id="status" style="font-size: 16px;font-weight: 200;">Tracking # : {{$trackId}}</span></th>
+									<th id="track-info" colspan="2" padding="0" align="left" style="width: 100%;height: 35px;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px;"><span id="status" style="font-size: 16px;font-weight: 200;">Tracking # : <a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums={{ $trackId }}">{{ $trackId }}</a></span></th>
 								</tr>
 							</thead>
 							<tbody>

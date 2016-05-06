@@ -35,7 +35,7 @@ class OrderRepository {
 	}
 
 	public function all() {
-		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size')->orderBy('created_at', 'desc')->take(10)->get();
+		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking')->orderBy('created_at', 'desc')->take(10)->get();
 		$orders = $this->assignHumanReadableTimestamps($orders);
 
 		return $orders;

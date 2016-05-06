@@ -5243,77 +5243,78 @@ app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'Aler
 
 }]);
 
-// for shipping tack number
 app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertService', function($window, $compile, ShippingTrack, AlertService) {
 
+	return {
 
-    return {
+		restrict : 'E',
 
-        restrict : 'E',
+		template : '<div class="button info-bg" shipping-track ng-click="open = !open">Set Tracking</div>',
 
-        template : '<div class="button info-bg" shipping-track ng-click="open = !open">Tracking Number</div>',
+		scope : {
+			order : '='
+		},
 
-        scope : {
-            order : '='
-        },
+		link : function($scope, element, attrs) {
 
-        link : function($scope, element, attrs) {
-
-            var template = '<div class="shipping-request-panel" ng-show="open">' +
-                '<h2>Applying Tracking Number to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
+			var template = '<div class="shipping-request-panel" ng-show="open">' +
+               '<h2>Applying Tracking Number to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
                 '<form>' +
-                    '<label>Tracking Number</label>' +
-                    '<input type="text" ng-model="track_id">' +
-                    '<div class="button success-bg" ng-click="send()">Apply</div>' +
-                '</form>' +
-                '<i class="fa fa-close" ng-click="open = false;"></i>' +
-            '</div>';
-            var body = angular.element($window.document.getElementsByTagName('body')[0]);
-            var shippingTrackPanel = $compile(template)($scope);  
+                     '<label>Tracking Number</label>' +
+                     '<input type="text" ng-model="track_id">' +
+                     '<div class="button success-bg" ng-click="send()">Apply</div>' +
+                 '</form>' +
+                 '<i class="fa fa-close" ng-click="open = false;"></i>' +
+             '</div>';
+			var body = angular.element($window.document.getElementsByTagName('body')[0]);
+			var shippingTrackPanel = $compile(template)($scope);	
 
-            $scope.track_id = '';
+			$scope.price = 0;
 
-            $scope.open = false;    
+			$scope.open = false;	
 
-            function init() {
+			function init() {
 
-                body.append(shippingTrackPanel);
+				body.append(shippingTrackPanel);
 
-            }
+			}
 
-            $scope.send = function() {
+			$scope.send = function() {
 
-                var nanobar = new Nanobar({ bg : '#fff' });
-                var data = { 
+				var nanobar = new Nanobar({ bg : '#fff' });
+                 var data = { 
+ 
+                     track_id : $scope.track_id, 
+                     orderId : $scope.order.id
+                 }
+ 
+                 nanobar.go(60);
+ 
+                 ShippingTrack.send(data).success(function(response) {
+ 					
+ 					$scope.order.tracking = response.data;
+					$scope.open = false;
+					shippingTrackPanel.remove();
+					nanobar.go(100);
+					AlertService.broadcast('Shipping Request Sent!', 'success');
+ 
+                 }).error(function(response) {
+                     console.log(response);
+                     nanobar.go(100);
+                     AlertService.broadcast('Sorry, there was a problem.', 'error');
+ 
+                 });
 
-                    track_id : $scope.track_id, 
-                    orderId : $scope.order.id
-                }
+			}
 
-                nanobar.go(60);
+			init();
 
-                ShippingTrack.send(data).success(function(response) {
+		}
 
-                    $scope.open = false;
-                    nanobar.go(100);
-                    AlertService.broadcast('Shipping Request Sent!', 'success');
-
-                }).error(function(response) {
-                    console.log(response);
-                    nanobar.go(100);
-                    AlertService.broadcast('Sorry, there was a problem.', 'error');
-
-                });
-
-            }
-
-            init();
-
-        }
-
-    }
+	}
 
 }]);
+
 
 
 
@@ -5805,7 +5806,7 @@ app.factory('ShippingRequest', ['$http', function($http) {
 
 		send : function(data) {
 
-			return $http.post('/shipping-request', data);
+			return $http.post('/shipping-request1', data);
 
 		},
 
@@ -5819,20 +5820,21 @@ app.factory('ShippingRequest', ['$http', function($http) {
 
 }]);
 
+
 app.factory('ShippingTrack', ['$http', function($http) {
 
-    return {
 
-        send : function(data) {
+	return {
 
-            return $http.post('/shipping-track', data);
+		send : function(data) {
 
-        }
+			return $http.post('/shipping-track', data);
 
-    }
+		}
+
+	}
 
 }]);
-
 
 
 app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService) {

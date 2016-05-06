@@ -1,6 +1,7 @@
 <?php
 
 class ShippingTrack extends Eloquent {
+    
 	protected $table = 'shipping_tracks';
 
 	public function order() {

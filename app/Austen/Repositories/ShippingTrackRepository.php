@@ -22,7 +22,6 @@ class ShippingTrackRepository {
 	public function store($input) 
 	{	
 		
-
 		try {
 		
 			$request = new ShippingTrack;
@@ -49,7 +48,7 @@ class ShippingTrackRepository {
 
 		}
 
-		return true;
+		return $request;
 
 	}
 
@@ -249,7 +248,7 @@ class ShippingTrackRepository {
 		$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 		Mail::queue('emails.shipping-track', ['order' => $request->order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date, 'trackId' => $request->track_id], function($message) use ($request){
 
-				$message->to($request->order->customer->email, $request->order->customer->email)->subject('GATKU | Order Confirmation');
+				$message->to($request->order->customer->email, $request->order->customer->email)->subject('GATKU | Here is your package tracking number!');
 			  
 			});
 

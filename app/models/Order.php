@@ -10,4 +10,8 @@ class Order extends Eloquent {
 	public function customer() {
 		return $this->belongsTo('Customer', 'customerId');
 	}
+
+    public function tracking() {
+        return $this->hasOne('ShippingTrack', 'orderId');
+    }
 }
