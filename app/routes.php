@@ -1,7 +1,9 @@
 <?php
 
 Route::get('/', ['as' => 'home', function() {
-	return View::make('pages.home');
+	$homeSetting = HomeSetting::orderBy('id', 'desc')->first();
+	
+	return View::make('pages.home')->with('homeSetting',  $homeSetting);
 }]);
 
 Route::get('au', ['as' => 'australia', function() {
@@ -39,6 +41,10 @@ Route::resource('order', 'OrderController');
 
 Route::resource('you-image', 'YouImageController', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::post('you-image/upload', ['as' => 'you-image.upload', 'uses' => 'YouImageController@upload']);
+
+Route::resource('home-setting', 'HomeSettingController', ['only' => ['index', 'store', 'update', 'destroy']]);
+
+Route::post('home-image/upload', ['as' => 'home-image.upload', 'uses' => 'HomeSettingController@upload']);
 
 Route::get('thankyou', ['as' => 'thankyou', function() {
 
