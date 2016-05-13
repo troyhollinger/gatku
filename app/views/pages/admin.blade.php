@@ -17,6 +17,7 @@ Admin
 			<div class="admin-navigation-tab" ng-click="show('products')" ng-class="{'selected' : showProducts}">Products</div>
 			<div class="admin-navigation-tab" ng-click="show('you')" ng-class="{'selected' : showYou}">You</div>
 			<div class="admin-navigation-tab" ng-click="show('videos')" ng-class="{'selected' : showVideos}">Videos</div>
+			<div class="admin-navigation-tab" ng-click="show('home-setting')" ng-class="{'selected' : showHomeSetting}">Home</div>
 			<div class="clear"></div>
 		</div>
 
@@ -222,8 +223,30 @@ Admin
 			<h2>Videos</h2>
 
 		</div>
+		<div class="admin-section" ng-show="showHomeSetting" ng-cloak>
+			<h2>Home</h2>
+
+			<div class="admin-sub-section">
+				<!-- <div class="grid-square square"  back-img="@{{ HomeSettings.image }}"></div> -->
+				<div class="button success-bg" ng-hide="editState" ng-file-select="uploadHomeImage($files)">Upload New</div>
+				<span ng-show="editState" class="edit-indicator">Setting Home Image</span>
+					
+				<div class="admin-you-image-staging" ng-show="editState">
+					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.image + ')'}"></div>
+				</div>
+				<form name="home-setting" class="home-setting-form">
+				<label>On Site Live Til</label>
+					<input type="text" ng-model="homeSetting.image_info"> 
+
+				<label>Image Credit</label>
+				<input type="text" ng-model="homeSetting.image_credit">
+				</form>
+				<div class="button success-bg" ng-click="saveHomeSetting()">Save</div> 
+			</div>
+			
+		</div>
 
 	</div>
 
-
+</style>
 @stop
