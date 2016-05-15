@@ -103,6 +103,25 @@ app.factory('Order', ['$http', function($http) {
 	}
 
 }]);
+app.factory('HomeSetting', ['$http', function($http) {
+
+	return {
+
+		all : function() {
+
+			return $http.get('/home-setting');
+
+		},
+
+		save : function(data) {
+
+			return $http.post('/home-setting', data);
+
+		}
+
+	}
+
+}]);
 
 app.factory('YouImage', ['$http', function($http) {
 
@@ -123,6 +142,8 @@ app.factory('YouImage', ['$http', function($http) {
 	}
 
 }]);
+
+
 
 
 

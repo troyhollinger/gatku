@@ -2034,7 +2034,7 @@ product-buyers {
 
 	position: relative;
 	float:left;
-	width:25%;
+	width:20%;
 	height:100%;
 	line-height: 2.75;
 	text-align: center;
@@ -2072,8 +2072,12 @@ product-buyers {
 	margin-left: 10px;
 
 }
-
-
+.home-setting-form{ 
+	padding-bottom: 10px; 
+}
+.home-image-info{
+	position: absolute;top: 90%;left: 60%;color: #fff;
+}
 .upload-field {
 
 	position: relative;

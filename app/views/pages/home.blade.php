@@ -10,7 +10,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 @section('content')
 
-<div class="hero" style="background-image:url({{ asset('img/diver.jpg') }})">
+<div class="hero" style="position: relative; background-image:url({{$homeSetting['image']}})">
 
 	<div class="slideshow">
 		<div><p class="hero-blurb">Internationally recognized, <br>Locally produced. <span class="detail">/San Diego, CA</span></p></div>
@@ -20,6 +20,10 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 		<div><p class="hero-blurb">The #1 Trusted Name in the Industry. Since 2005.</p></div>
 		<div><p class="hero-blurb">We’ve finessed &amp; perfected the stick-n-rubberband approach to killing fish.</p></div>
 		<div><p class="hero-blurb smaller">Expect the highest quality-innovation the market has to offer. Then expect to be served with the most principled business practices practiced.</p></div>
+	</div>
+	<div class="home-image-info">
+		<p class="live-till">{{$homeSetting['image_info']}}</p>
+		<p class="photo-credit">{{$homeSetting['image_credit']}}</p>
 	</div>
 
 </div>
