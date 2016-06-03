@@ -15,10 +15,13 @@ module.exports = function(grunt) {
                     'bower_components/angular-stripe/release/angular-stripe.js',
                     'bower_components/angular-touch/angular-touch.js',
                     'bower_components/angular-credit-cards/release/angular-credit-cards.js',
+                    'bower_components/fancybox-plus/dist/jquery.fancybox-plus.js',
+                    'bower_components/angular-fancybox-plus/js/angular-fancybox-plus.js',
                     'js/config.js',
                     'js/directives.js',
                     'js/services/*.js',
                     'js/factories.js',
+                    'js/checklist-model.js',
                     'js/controllers/*.js'
                 ],
                 dest: 'production/app.js'
@@ -49,6 +52,7 @@ module.exports = function(grunt) {
                         'css/reset.css',
                         'bower_components/skippr/css/jquery.skippr.css',
                         'bower_components/rollerblade/rollerblade.css',
+                        'bower_components/fancybox-plus/css/jquery.fancybox-plus.css',
                         'css/style.css'
                     ]
                 }
