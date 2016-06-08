@@ -198,9 +198,14 @@ Admin
 
 				<div class="admin-you-image-staging" ng-show="editState">
 					<div class="upload-field" ng-style="{'background-image':'url(' + newYouImage.image + ')'}"></div>
+					<label>Select Products</label>
 
-					<label>Select corresponding product (optional)</label>
-					<p><select ng-options="product.id as product.name for product in products" ng-model="newYouImage.productId"></select></p>
+					<div class="you-image-checkbox-container" ng-repeat="product in products">
+
+						<input type="checkbox" checklist-model="newYouImage.products" checklist-value="product.id">&nbsp;<span class="uppercase">@{{ product.name }}</span>
+					</div> 
+					<!-- <label>Select corresponding product (optional)</label>
+					<p><select ng-options="product.id as product.name for product in products" ng-model="newYouImage.productId"></select></p> -->
 
 					<div class="button success-bg" ng-click="saveYouImage()">Save</div> 
 					<div class="button error-bg" ng-click="reset()">Cancel</div>

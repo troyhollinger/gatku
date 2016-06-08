@@ -21,8 +21,8 @@ class YouImageController extends BaseController {
 	public function index() {
 		
 		try {
-			
-			$images = YouImage::all();	
+			$images = YouImage::groupBy('image')->get();
+			//$images = YouImage::all();	
 
 		} catch (Exception $e) {
 			
@@ -43,18 +43,21 @@ class YouImageController extends BaseController {
 	 */
 	public function store() {
 		
-		try {
 		
-			$image = new YouImage;
-			$image->image = Input::get('image');
+		try {
+			$productIds = Input::get('products');
+			foreach ($productIds as $productId) {
+				$image = new YouImage;
+				$image->image = Input::get('image');
+				$image->productId = $productId;
+				$image->save();	
+			}
 			
-			if (Input::has('productId')) {
+			/*if (Input::has('productId')) {
 
 				$image->productId = Input::get('productId');
 
-			}
-
-			$image->save();
+			}*/
 
 		} catch (Exception $e) {
 			
