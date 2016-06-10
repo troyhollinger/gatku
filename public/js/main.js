@@ -372,7 +372,7 @@ var Inputs = {
 $(document).ready(function() {
 	setTimeout(function(){
    		$("a.grouped_elements").fancyboxPlus();
-	}, 2000);
+	}, 500);
    
 
  });
