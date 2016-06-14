@@ -19,7 +19,7 @@ class Product extends Eloquent {
 
 	public function images() {
 
-		return $this->hasMany('YouImage', 'productId', 'id');
+		return $this->hasMany('YouImage', 'productId', 'id')->orderBy('created_at', 'desc');
 
 	}
 

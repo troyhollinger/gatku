@@ -23,9 +23,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'gatku',
-			'username'  => 'root',
-			'password'  => '123456',
+			'database'  => 'forge',
+			'username'  => 'forge',
+			'password'  => $_ENV['db_password'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
