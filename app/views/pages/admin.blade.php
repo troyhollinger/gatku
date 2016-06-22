@@ -238,14 +238,25 @@ Admin
 			<h2>Home</h2>
 
 			<div class="admin-sub-section">
+			<form name="home-setting" class="home-setting-form">
 				<!-- <div class="grid-square square"  back-img="@{{ HomeSettings.image }}"></div> -->
-				<div class="button success-bg" ng-hide="editState" ng-file-select="uploadHomeImage($files)">Upload New</div>
-				<span ng-show="editState" class="edit-indicator">Setting Home Image</span>
+				
+				<!-- upload mobile image -->
+				<label>Home Image</label>
+					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.image + ')'}">
+						<i class="fa fa-image" ng-hide="homeSetting.mobile_image"></i>
+						<input type="text" ng-model="homeSetting.image" class="image-path-storage-input">
+						<input type="file" ng-file-drop ng-file-select="uploadHomeImage($files, 'image')">
+					</div>
+
+				<label>Mobile Image</label>
+					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.mobile_image + ')'}">
+						<i class="fa fa-image" ng-hide="homeSetting.mobile_image"></i>
+						<input type="text" ng-model="homeSetting.mobile_image" class="image-path-storage-input">
+						<input type="file" ng-file-drop ng-file-select="uploadHomeImage($files, 'mobile_image')">
+					</div>
 					
-				<div class="admin-you-image-staging" ng-show="editState">
-					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.image + ')'}"></div>
-				</div>
-				<form name="home-setting" class="home-setting-form">
+				
 				<label>On Site Live Til</label>
 					<input type="text" ng-model="homeSetting.image_info"> 
 
