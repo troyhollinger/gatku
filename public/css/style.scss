@@ -2077,6 +2077,11 @@ product-buyers {
 }
  .home-image-info{
 	font-size: 20px;
+	@include breakpoint(small) {
+
+			font-size: 14px;
+
+		}
 } 
 .live-till{
 	position: absolute;top: 90%;right: 3%;color: $light;	
