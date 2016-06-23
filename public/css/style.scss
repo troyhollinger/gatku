@@ -2075,8 +2075,14 @@ product-buyers {
 .home-setting-form{ 
 	padding-bottom: 10px; 
 }
-.home-image-info{
-	position: absolute;top: 90%;left: 60%;color: #fff;
+ .home-image-info{
+	font-size: 20px;
+} 
+.live-till{
+	position: absolute;top: 90%;right: 3%;color: $light;	
+}
+.photo-credit{
+	position: absolute;top: 95%;right: 3%;color: #fff;	
 }
 .upload-field {
 
