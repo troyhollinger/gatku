@@ -48,6 +48,7 @@ class HomeSettingController extends BaseController {
 		
 			$homeSetting = new HomeSetting;
 			$homeSetting->image = Input::get('image');
+			$homeSetting->mobile_image = Input::get('mobile_image');
 			$homeSetting->image_info = Input::get('image_info');
 			$homeSetting->image_credit = Input::get('image_credit');
 			$homeSetting->save();

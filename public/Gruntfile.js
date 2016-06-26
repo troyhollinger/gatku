@@ -17,6 +17,7 @@ module.exports = function(grunt) {
                     'bower_components/angular-credit-cards/release/angular-credit-cards.js',
                     'bower_components/fancybox-plus/dist/jquery.fancybox-plus.js',
                     'bower_components/angular-fancybox-plus/js/angular-fancybox-plus.js',
+                    'bower_components/angularUtils-pagination/dirPagination.js',
                     'js/config.js',
                     'js/directives.js',
                     'js/services/*.js',

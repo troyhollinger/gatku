@@ -10,8 +10,21 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 @section('content')
 
-<div class="hero" style="position: relative; background-image:url({{$homeSetting['image']}})">
+<div class="hero gatku-home-banner">
+<style>
+	@media only screen and (max-width: 480px) {
+		.gatku-home-banner{
+			position: relative;
+			background-image:url({{$homeSetting['mobile_image']}});
+		}
+	}
+	@media only screen and (min-width: 480px) {
+	.gatku-home-banner{
+			background-image:url({{$homeSetting['image']}});
+		}
+	}
 
+</style>
 	<div class="slideshow">
 		<div><p class="hero-blurb">Internationally recognized, <br>Locally produced. <span class="detail">/San Diego, CA</span></p></div>
 		<div><p class="hero-blurb">Acclaimed to be the best the industry has to offer -</p></div>

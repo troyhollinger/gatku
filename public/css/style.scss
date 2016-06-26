@@ -2075,8 +2075,19 @@ product-buyers {
 .home-setting-form{ 
 	padding-bottom: 10px; 
 }
-.home-image-info{
-	position: absolute;top: 90%;left: 60%;color: #fff;
+ .home-image-info{
+	font-size: 20px;
+	@include breakpoint(small) {
+
+			font-size: 14px;
+
+		}
+} 
+.live-till{
+	position: absolute;top: 90%;right: 3%;color: $light;	
+}
+.photo-credit{
+	position: absolute;top: 95%;right: 3%;color: #fff;	
 }
 .upload-field {
 
@@ -2189,6 +2200,30 @@ product-buyers {
 	@extend .admin-table;
 
 }
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin-top: 20px;
+
+
+    li {
+    	display: inline;
+    	a {
+		    color: black;
+		    float: left;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+		a:hover:not(.active) {background-color: #ddd;}
+    }
+
+    
+	li.active a {
+	    background-color: #2ecc71;
+	    color: white;
+	}
+}
+
 
 .admin-order-addons-list {
 

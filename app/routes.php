@@ -37,7 +37,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'before' => 'auth|adm
 
 });
 
+
+
 Route::resource('order', 'OrderController');
+
+
+Route::get('orderall/{itemsPerPage}/{pagenumber}', ['as' => 'order.orderall', 'uses' => 'OrderController@orderall']);
 
 Route::resource('you-image', 'YouImageController', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::post('you-image/upload', ['as' => 'you-image.upload', 'uses' => 'YouImageController@upload']);

@@ -2,7 +2,6 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     $scope.init = function() {
         $scope.show('orders');
-        getOrders();
         getProducts();
         getTypes();
         getYouImages();
@@ -192,13 +191,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
     }
 
     //Orders
-    function getOrders() {
+    /*function getOrders() {
         Order.all().success(function(response) {
             $scope.orders = response.data;
         }).error(function(response) {
             console.log(response.message);
         });
-    }
+    }*/
 
     // You
     $scope.youImages = [];
@@ -260,20 +259,21 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         });
     }
 
-    $scope.uploadHomeImage = function($files) {    
+    $scope.uploadHomeImage = function($files, model) {    
         var file = $files[0];
 
         if (!file) return false;
 
         var data = {
-            url : '/you-image/upload',
+            url : '/home-image/upload',
             file : file
         }
 
         $scope.editState = true;
 
         Image.upload(data).success(function(response) {
-            $scope.homeSetting.image = response.data;
+            console.log(model);
+           $scope.homeSetting[model] = response.data;
         }).error(function(response) {
             AlertService.broadcast('Sorry, there was an error, please try again', 'error');
         });
