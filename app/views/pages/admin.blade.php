@@ -21,10 +21,10 @@ Admin
 			<div class="clear"></div>
 		</div>
 
-		<div class="admin-section" ng-show="showOrders" ng-cloak>
+		<div class="admin-section" ng-show="showOrders" ng-controller="AdminordersController as data" ng-cloak>
 			<h2>Orders</h2>
 
-			<table class="admin-orders-table">
+    <table class="admin-orders-table">
 
 				<tr>
 					<th>Info</th>
@@ -33,7 +33,7 @@ Admin
 					<th>Date</th>
 				</tr>
 
-				<tr ng-repeat="order in orders">
+				<tr dir-paginate="order in orders|itemsPerPage:15" total-items="data.total_count">
 					<td><span class="brand">@{{ order.number }}</span><br>
 						<span class="bold">@{{ order.customer.fullName }}</span><br>
 						@{{ order.address }}<br>
@@ -61,12 +61,15 @@ Admin
 					</td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
-
-
-
-			</table>
-
+			</table> <dir-pagination-controls
+                   max-size="8"
+                   direction-links="true"
+                   boundary-links="true"
+                   on-page-change="data.getData(newPageNumber)" >
+                </dir-pagination-controls>
+           
 		</div>
+
 
 		<div class="admin-section" ng-if="showProducts" ng-cloak>
 			

@@ -1,4 +1,4 @@
-var app = angular.module('gatku', ['angularFileUpload', 'ipCookie', 'ngAnimate', 'angular-stripe', 'ngTouch', 'credit-cards', 'checklist-model']);
+var app = angular.module('gatku', ['angularFileUpload', 'ipCookie', 'ngAnimate', 'angular-stripe', 'ngTouch', 'credit-cards', 'checklist-model','angularUtils.directives.dirPagination']);
 
 app.config(function(stripeProvider) {
 

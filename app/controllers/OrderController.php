@@ -22,10 +22,16 @@ class OrderController extends BaseController {
 		if (!$orders) {
 			return Response::json(['message' => 'Sorry, there was an error'], 404);
 		}
-
-		return Response::json(['data' => $orders], 200);
+		$totalCount = DB::table('orders')->count();
+		return Response::json(['data' => $orders, 'total_count' => $totalCount], 200);
 	}
 
+
+	public function orderall($itemsPerPage, $pagenumber){
+		$totalCount = DB::table('orders')->count();
+		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();
+		return Response::json(['data' => $orders, 'total_count' => $totalCount], 200);
+	}
 	
 	/**
 	 * Store a newly created resource in storage.

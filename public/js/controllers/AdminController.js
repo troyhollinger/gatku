@@ -2,7 +2,6 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     $scope.init = function() {
         $scope.show('orders');
-        getOrders();
         getProducts();
         getTypes();
         getYouImages();
@@ -192,13 +191,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
     }
 
     //Orders
-    function getOrders() {
+    /*function getOrders() {
         Order.all().success(function(response) {
             $scope.orders = response.data;
         }).error(function(response) {
             console.log(response.message);
         });
-    }
+    }*/
 
     // You
     $scope.youImages = [];
