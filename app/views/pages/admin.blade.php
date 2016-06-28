@@ -56,7 +56,7 @@ Admin
 							<shipping-track order="order"></shipping-track>	
 						</div>
 						<div ng-if="order.tracking" style="float:left;">
-							<a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+							<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
 						</div>
 					</td>
 					<td>@{{ order.createdAtHuman }}</td>

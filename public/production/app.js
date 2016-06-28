@@ -6916,10 +6916,10 @@ app.config(function(stripeProvider) {
 });
 app.filter('money', function () { 
 
-	return function (amount) { 
+    return function (amount) { 
 
-		return (amount / 100); 
-	}
+        return (amount / 100); 
+    }
 
 });
 
@@ -6938,189 +6938,189 @@ app.directive('backImg',['$window', function($window) {
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		scope : true,
+        scope : true,
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.product = {};
+            $scope.product = {};
 
-			var moneyFilter = $filter('money');
-			var thisElement = angular.element(element[0]);
-			var template = '<div class="hover-card">' + 
-			'<h2>{{ product.name }}</h2>' + 
-			'<div class="hover-card-image-container" ng-class="{ \'pole\' : product.type.slug === \'pole\' }"><img ng-src="{{ product.thumb }}"></div>' +
-			'<div class="hover-card-actions"><a ng-href="/product/'+ attrs.slug +'" target="_blank"><div class="button success-bg">See This Product</div></a></div>' +
-			'<div class="hover-card-price">${{ product.price | money }}</div>' + 
-			'<div class="clear"></div>' +
-			'<div class="hover-card-carot shadowed"></div>'+
-			'<div class="hover-card-carot"></div>'+
-			'</div>';
-			var body = angular.element($window.document.getElementsByTagName('body')[0]);
-			var hoverCard = $compile(template)($scope);
+            var moneyFilter = $filter('money');
+            var thisElement = angular.element(element[0]);
+            var template = '<div class="hover-card">' + 
+            '<h2>{{ product.name }}</h2>' + 
+            '<div class="hover-card-image-container" ng-class="{ \'pole\' : product.type.slug === \'pole\' }"><img ng-src="{{ product.thumb }}"></div>' +
+            '<div class="hover-card-actions"><a ng-href="/product/'+ attrs.slug +'" target="_blank"><div class="button success-bg">See This Product</div></a></div>' +
+            '<div class="hover-card-price">${{ product.price | money }}</div>' + 
+            '<div class="clear"></div>' +
+            '<div class="hover-card-carot shadowed"></div>'+
+            '<div class="hover-card-carot"></div>'+
+            '</div>';
+            var body = angular.element($window.document.getElementsByTagName('body')[0]);
+            var hoverCard = $compile(template)($scope);
 
-			$scope.productFetched = false;
+            $scope.productFetched = false;
 
-			$scope.init = function() {
+            $scope.init = function() {
 
-				if ($window.innerWidth > 750) {
+                if ($window.innerWidth > 750) {
 
-					body.append(hoverCard);
+                    body.append(hoverCard);
 
-					$scope.positionCard();
+                    $scope.positionCard();
 
-					$scope.fetchProduct();
+                    $scope.fetchProduct();
 
-				}
+                }
 
-			}
+            }
 
-			$scope.fetchProduct = function() {
+            $scope.fetchProduct = function() {
 
-				Product.getBySlug(attrs.slug).success(function(response) {
+                Product.getBySlug(attrs.slug).success(function(response) {
 
-					$scope.product = response.data;
+                    $scope.product = response.data;
 
-					$scope.productFetched = true;
+                    $scope.productFetched = true;
 
-					$scope.positionCard();
+                    $scope.positionCard();
 
-				}).error(function(response) {
+                }).error(function(response) {
 
-					console.log(response.message);
+                    console.log(response.message);
 
-				});
+                });
 
-			}
+            }
 
-			$scope.positionCard = function() {
+            $scope.positionCard = function() {
 
-				var offsetTop = $scope.getRootOffsetTop(thisElement[0], 0);
-				var offsetLeft = $scope.getRootOffsetLeft(thisElement[0], 0);
-				var width = thisElement[0].offsetWidth;
-				var cardHeight = hoverCard[0].offsetHeight;
-				var top = offsetTop - (cardHeight / 2);
-				var left = offsetLeft + width;
+                var offsetTop = $scope.getRootOffsetTop(thisElement[0], 0);
+                var offsetLeft = $scope.getRootOffsetLeft(thisElement[0], 0);
+                var width = thisElement[0].offsetWidth;
+                var cardHeight = hoverCard[0].offsetHeight;
+                var top = offsetTop - (cardHeight / 2);
+                var left = offsetLeft + width;
 
-				hoverCard.css({ top : top + 'px', left : left + 'px'});
+                hoverCard.css({ top : top + 'px', left : left + 'px'});
 
-			}
+            }
 
-			$scope.getRootOffsetTop = function(elem, val){
+            $scope.getRootOffsetTop = function(elem, val){
 
-				if (elem.offsetParent === null){
+                if (elem.offsetParent === null){
 
-					return val + elem.offsetTop;
+                    return val + elem.offsetTop;
 
-				}
+                }
 
-				return $scope.getRootOffsetTop(elem.offsetParent, val + elem.offsetTop);
+                return $scope.getRootOffsetTop(elem.offsetParent, val + elem.offsetTop);
 
-			};
+            };
 
-			$scope.getRootOffsetLeft = function(elem, val){
+            $scope.getRootOffsetLeft = function(elem, val){
 
-			if (elem.offsetParent === null) {
+            if (elem.offsetParent === null) {
 
-				return val + elem.offsetLeft;
+                return val + elem.offsetLeft;
 
-			}
+            }
 
-			return $scope.getRootOffsetLeft(elem.offsetParent, val + elem.offsetLeft);
+            return $scope.getRootOffsetLeft(elem.offsetParent, val + elem.offsetLeft);
 
-			};
+            };
 
-			thisElement.bind('mouseover', function show() {
+            thisElement.bind('mouseover', function show() {
 
-				if (!$scope.productFetched) {
+                if (!$scope.productFetched) {
 
-					$scope.fetchProduct();
+                    $scope.fetchProduct();
 
-				} 
+                } 
 
-				hoverCard.addClass('visible');
+                hoverCard.addClass('visible');
 
-			});
+            });
 
-			thisElement.bind('mouseleave', function hide() {
+            thisElement.bind('mouseleave', function hide() {
 
-				hoverCard.removeClass('visible');
+                hoverCard.removeClass('visible');
 
-			});
+            });
 
-			hoverCard.bind('mouseover', function show() {
+            hoverCard.bind('mouseover', function show() {
 
-				hoverCard.addClass('visible');
+                hoverCard.addClass('visible');
 
-			});
+            });
 
-			hoverCard.bind('mouseleave', function hide() {
+            hoverCard.bind('mouseleave', function hide() {
 
-				hoverCard.removeClass('visible');
-				
-			});
+                hoverCard.removeClass('visible');
+                
+            });
 
-			angular.element($window).bind('resize', function onResize() {
+            angular.element($window).bind('resize', function onResize() {
 
-				$scope.positionCard();
+                $scope.positionCard();
 
-			});
+            });
 
-			$scope.init();
-			
+            $scope.init();
+            
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 
 app.directive('productBuyers', ['Product', function(Product) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		scope : false,
+        scope : false,
 
-		template : '<div>' +
-			'<p class="product-buyers-header bold" ng-show="photos.length">Others who have bought this product:</p>' +
-			'<div class="product-buyers-container">' +
-			'<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
-			'<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"><a class="grouped_elements" rel="group1" href="{{photo.image}}"><img src="{{photo.image}}" alt="" style="width: 100%;height: 100%;vertical-align: top; opacity:0;"/></a></div>' + 
-			'<div class="clear"></div>' +
-			'</div>' +
-			'</div>',
+        template : '<div>' +
+            '<p class="product-buyers-header bold" ng-show="photos.length">Others who have bought this product:</p>' +
+            '<div class="product-buyers-container">' +
+            '<div class="product-buyer placeholder square" ng-hide="photos.length"></div>' + 
+            '<div class="product-buyer square" ng-repeat="photo in photos | limitTo:3" ng-style="{\'background-image\':\'url(\' + photo.image + \')\'}"><a class="grouped_elements" rel="group1" href="{{photo.image}}"><img src="{{photo.image}}" alt="" style="width: 100%;height: 100%;vertical-align: top; opacity:0;"/></a></div>' + 
+            '<div class="clear"></div>' +
+            '</div>' +
+            '</div>',
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.photos = [];
+            $scope.photos = [];
 
-			function getImages() {
+            function getImages() {
 
-				Product.customerPhotos(attrs.productId).success(function(response) {
+                Product.customerPhotos(attrs.productId).success(function(response) {
 
-					$scope.photos = response.data;
+                    $scope.photos = response.data;
 
-					Squares.init();
+                    Squares.init();
 
-				}).error(function(response) {
+                }).error(function(response) {
 
-					console.log("There was a problem getting the product images");
+                    console.log("There was a problem getting the product images");
 
-				});
+                });
 
-			}
+            }
 
-			getImages();
+            getImages();
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
@@ -7128,23 +7128,23 @@ app.directive('loaded', ['$parse', function($parse) {
 
     return {
 
-		restrict: 'A',
+        restrict: 'A',
 
-		link: function (scope, elem, attrs) {
+        link: function (scope, elem, attrs) {
 
-			var fn = $parse(attrs.loaded);
+            var fn = $parse(attrs.loaded);
 
-			elem.on('load', function (event) {
+            elem.on('load', function (event) {
 
-				scope.$apply(function() {
+                scope.$apply(function() {
 
-					fn(scope, { $event: event });
+                    fn(scope, { $event: event });
 
-				});
+                });
 
-			});
+            });
 
-		}
+        }
 
     };
 
@@ -7154,151 +7154,151 @@ app.directive('loaded', ['$parse', function($parse) {
 
 app.directive('alerter', ['$window', '$timeout', 'AlertService', function($window, $timeout, AlertService) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		template : '<div class="alert-container slide-up" ng-show="show">' +
-		'<div ng-class="{\'success-alert\' : alertType === \'success\', \'info-alert\' : alertType === \'info\', \'error-alert\' : alertType === \'error\'}">' +
-			'{{ message }}' +
-		'</div>' +
+        template : '<div class="alert-container slide-up" ng-show="show">' +
+        '<div ng-class="{\'success-alert\' : alertType === \'success\', \'info-alert\' : alertType === \'info\', \'error-alert\' : alertType === \'error\'}">' +
+            '{{ message }}' +
+        '</div>' +
         '<i class="fa fa-close" ng-click="show = false"></i>' +
         '</div>',
 
         scope : false,
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.message = '';
-			$scope.show = false;
-			$scope.alertType = 'success';
+            $scope.message = '';
+            $scope.show = false;
+            $scope.alertType = 'success';
 
-			$scope.$on('successAlert', function() {
+            $scope.$on('successAlert', function() {
 
-				$scope.alertType = 'success';	
-				display();
+                $scope.alertType = 'success';   
+                display();
 
-			});
+            });
 
-			$scope.$on('infoAlert', function() {
+            $scope.$on('infoAlert', function() {
 
-				$scope.alertType = 'info';
-				display();
+                $scope.alertType = 'info';
+                display();
 
-			});
+            });
 
-			$scope.$on('errorAlert', function() {
+            $scope.$on('errorAlert', function() {
 
-				$scope.alertType = 'error';
-				display();
+                $scope.alertType = 'error';
+                display();
 
-			});
+            });
 
-			function display() {
+            function display() {
 
-				$scope.message = AlertService.message;
-				$scope.show = true;
+                $scope.message = AlertService.message;
+                $scope.show = true;
 
-				$timeout(function() {
+                $timeout(function() {
 
-					$scope.show = false;
+                    $scope.show = false;
 
-				}, 4000)
+                }, 4000)
 
-			}
+            }
 
-		}
+        }
 
 
-	}
+    }
 
 }]);
 
 app.directive('hamburger', ['NavigationService', function(NavigationService) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		template : '<div class="hamburger" ng-click="action()" ng-class="{ \'open\' : open }">' +
-		'<div class="patty"></div>' +
-		'<div class="patty"></div>' +
-		'<div class="patty"></div>' +
-		// '<span class="status">{{ status }}</span>' +
-		'</div>',
+        template : '<div class="hamburger" ng-click="action()" ng-class="{ \'open\' : open }">' +
+        '<div class="patty"></div>' +
+        '<div class="patty"></div>' +
+        '<div class="patty"></div>' +
+        // '<span class="status">{{ status }}</span>' +
+        '</div>',
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.open = false;
+            $scope.open = false;
 
-			$scope.status = 'Menu';
+            $scope.status = 'Menu';
 
-			$scope.action = function() {
+            $scope.action = function() {
 
-				if ($scope.open) {
+                if ($scope.open) {
 
-					NavigationService.close();
+                    NavigationService.close();
 
-				} else {
+                } else {
 
-					NavigationService.open();
+                    NavigationService.open();
 
-				}
+                }
 
-			}
+            }
 
-			$scope.$on('open', function() {
+            $scope.$on('open', function() {
 
-				$scope.open = true;
+                $scope.open = true;
 
-				$scope.status = 'Back';
+                $scope.status = 'Back';
 
-			});
+            });
 
-			$scope.$on('close', function() {
+            $scope.$on('close', function() {
 
-				$scope.open = false;
+                $scope.open = false;
 
-				$scope.status = 'Menu';
+                $scope.status = 'Menu';
 
-			});
+            });
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 app.directive('cartIcon', ['CartService', function(CartService) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		template : '<div class="cart-icon" ng-click="showCart()">' + 
-		'Cart' +
-		'<span class="mobile-cart-indicator">{{ count }}</span>' +
-		'</div>',
+        template : '<div class="cart-icon" ng-click="showCart()">' + 
+        'Cart' +
+        '<span class="mobile-cart-indicator">{{ count }}</span>' +
+        '</div>',
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.count = CartService.count(); 
+            $scope.count = CartService.count(); 
 
-			$scope.$on('update', function() {
+            $scope.$on('update', function() {
 
-				$scope.count = CartService.count(); 
+                $scope.count = CartService.count(); 
 
-			});
+            });
 
-			$scope.showCart = function() {
+            $scope.showCart = function() {
 
-				CartService.show();
+                CartService.show();
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
@@ -7306,151 +7306,145 @@ app.directive('cartIcon', ['CartService', function(CartService) {
 
 app.directive('bodyFreeze', ['CartService', function(CartService) {
 
-	return {
+    return {
 
-		restrict : 'A',
+        restrict : 'A',
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.$on('show', function() {
+            $scope.$on('show', function() {
 
-				element.addClass('frozen');
+                element.addClass('frozen');
 
-			});
+            });
 
-			$scope.$on('hide', function() {
+            $scope.$on('hide', function() {
 
-				element.removeClass('frozen');
+                element.removeClass('frozen');
 
-			});
+            });
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 
 app.directive('smoothLink', ['$window', '$location', 'NavigationService', function($window, $location, NavigationService) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		scope : {},
+        scope : {},
 
-		template : '<a href="#" ng-click="click()">{{ text }}</a>',
+        template : '<a href="#" ng-click="click()">{{ text }}</a>',
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			$scope.text = attrs.text;
+            $scope.text = attrs.text;
 
-			$scope.click = function() {
+            $scope.click = function() {
 
-				var target = angular.element($window.document.getElementById(attrs.destination));
-				var body = $window.document.getElementsByTagName('body')[0];
+                var target = angular.element($window.document.getElementById(attrs.destination));
+                var body = $window.document.getElementsByTagName('body')[0];
 
-				NavigationService.close();
-				// console.log(target[0].ofsetTop);
-				// body.scrollTop = target[0].offsetTop;
-				$('html,body').animate({ scrollTop: target[0].offsetTop }, 400);
+                NavigationService.close();
+                // console.log(target[0].ofsetTop);
+                // body.scrollTop = target[0].offsetTop;
+                $('html,body').animate({ scrollTop: target[0].offsetTop }, 400);
 
-	        	return false;
+                return false;
 
-	    	}
+            }
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 
 app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'AlertService', function($window, $compile, ShippingRequest, AlertService) {
 
-	return {
+    return {
 
-		restrict : 'E',
+        restrict : 'E',
 
-		template : '<div class="button info-bg" shipping-request ng-click="open = !open">Request Shipping</div>',
+        template : '<div class="button info-bg" shipping-request ng-click="open = !open">Request Shipping</div>',
 
-		scope : {
-			order : '='
-		},
+        scope : {
+            order : '='
+        },
 
-		link : function($scope, element, attrs) {
+        link : function($scope, element, attrs) {
 
-			var template = '<div class="shipping-request-panel" ng-show="open">' +
-				'<h2>Sending shipping request to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
-				'<form>' +
-					'<label>Amount <span class="faded bold">(in dollars)</span></label>' +
-					'<input type="number" ng-model="price">' +
-					'<div class="button success-bg" ng-click="send()">Send</div>' +
-				'</form>' +
-				'<i class="fa fa-close" ng-click="open = false;"></i>' +
-			'</div>';
-			var body = angular.element($window.document.getElementsByTagName('body')[0]);
-			var shippingRequestPanel = $compile(template)($scope);	
+            var template = '<div class="shipping-request-panel" ng-show="open">' +
+                '<h2>Sending shipping request to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
+                '<form>' +
+                    '<label>Amount <span class="faded bold">(in dollars)</span></label>' +
+                    '<input type="number" ng-model="price">' +
+                    '<div class="button success-bg" ng-click="send()">Send</div>' +
+                '</form>' +
+                '<i class="fa fa-close" ng-click="open = false;"></i>' +
+            '</div>';
+            var body = angular.element($window.document.getElementsByTagName('body')[0]);
+            var shippingRequestPanel = $compile(template)($scope);  
 
-			$scope.price = 0;
+            $scope.price = 0;
 
-			$scope.open = false;	
+            $scope.open = false;    
 
-			function init() {
+            function init() {
 
-				body.append(shippingRequestPanel);
+                body.append(shippingRequestPanel);
 
-			}
+            }
 
-			$scope.send = function() {
+            $scope.send = function() {
 
-				var nanobar = new Nanobar({ bg : '#fff' });
-				var data = { 
+                var nanobar = new Nanobar({ bg : '#fff' });
+                var data = { 
 
-					price : $scope.price * 100, 
-					orderId : $scope.order.id
-				}
+                    price : $scope.price * 100, 
+                    orderId : $scope.order.id
+                }
 
-				nanobar.go(60);
+                nanobar.go(60);
 
-				ShippingRequest.send(data).success(function(response) {
+                ShippingRequest.send(data).success(function(response) {
 
-					$scope.open = false;
-					nanobar.go(100);
-					AlertService.broadcast('Shipping Request Sent!', 'success');
+                    $scope.open = false;
+                    nanobar.go(100);
+                    AlertService.broadcast('Shipping Request Sent!', 'success');
 
-				}).error(function(response) {
+                }).error(function(response) {
 
-					nanobar.go(100);
-					AlertService.broadcast('Sorry, there was a problem.', 'error');
+                    nanobar.go(100);
+                    AlertService.broadcast('Sorry, there was a problem.', 'error');
 
-				});
+                });
 
-			}
+            }
 
-			init();
+            init();
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertService', function($window, $compile, ShippingTrack, AlertService) {
-
-	return {
-
-		restrict : 'E',
-
-		template : '<div class="button info-bg" shipping-track ng-click="open = !open">Set Tracking</div>',
-
-		scope : {
-			order : '='
-		},
-
-		link : function($scope, element, attrs) {
-
-			var template = '<div class="shipping-request-panel" ng-show="open">' +
+    return {
+        restrict : 'E',
+        template : '<div class="button info-bg" shipping-track ng-click="open = !open">Set Tracking</div>',
+        scope : {
+            order : '='
+        },
+        link : function($scope, element, attrs) {
+            var template = '<div class="shipping-request-panel" ng-show="open">' +
                '<h2>Applying Tracking Number to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
                 '<form>' +
                      '<label>Tracking Number</label>' +
@@ -7459,52 +7453,42 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
                  '</form>' +
                  '<i class="fa fa-close" ng-click="open = false;"></i>' +
              '</div>';
-			var body = angular.element($window.document.getElementsByTagName('body')[0]);
-			var shippingTrackPanel = $compile(template)($scope);	
+            var body = angular.element($window.document.getElementsByTagName('body')[0]);
+            var shippingTrackPanel = $compile(template)($scope);    
 
-			$scope.price = 0;
+            $scope.price = 0;
+            $scope.open = false;    
 
-			$scope.open = false;	
+            function init() {
+                body.append(shippingTrackPanel);
+            }
 
-			function init() {
-
-				body.append(shippingTrackPanel);
-
-			}
-
-			$scope.send = function() {
-
-				var nanobar = new Nanobar({ bg : '#fff' });
-                 var data = { 
+            $scope.send = function() {
+                var nanobar = new Nanobar({ bg : '#fff' });
+                var data = { 
+                    track_id : $scope.track_id, 
+                    orderId : $scope.order.id
+                }
  
-                     track_id : $scope.track_id, 
-                     orderId : $scope.order.id
-                 }
- 
-                 nanobar.go(60);
- 
-                 ShippingTrack.send(data).success(function(response) {
- 					
- 					$scope.order.tracking = response.data;
-					$scope.open = false;
-					shippingTrackPanel.remove();
-					nanobar.go(100);
-					AlertService.broadcast('Shipping Request Sent!', 'success');
- 
-                 }).error(function(response) {
-                     console.log(response);
-                     nanobar.go(100);
-                     AlertService.broadcast('Sorry, there was a problem.', 'error');
- 
-                 });
+                nanobar.go(60);
 
-			}
+                ShippingTrack.send(data).success(function(response) {   
+                    $scope.order.tracking = response.data;
+                    $scope.open = false;
+                    shippingTrackPanel.remove();
+                    nanobar.go(100);
+                    AlertService.broadcast('Tracking Number set!', 'success');
+                }).error(function(response) {
+                    console.log(response);
+                    nanobar.go(100);
+                    AlertService.broadcast('Sorry, there was a problem.', 'error');
+                });
+            }
 
-			init();
+            init();
+        }
 
-		}
-
-	}
+    }
 
 }]);
 
