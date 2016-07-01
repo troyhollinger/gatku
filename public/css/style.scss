@@ -2075,19 +2075,19 @@ product-buyers {
 .home-setting-form{ 
 	padding-bottom: 10px; 
 }
- .home-image-info{
-	font-size: 20px;
+.live-till{
+	position: absolute;top: 92%;right: 3%;color: $light; font-family: $helvetica;font-size: 14px;
+}
+.photo-credit{
+	position: absolute;top: 95%;right: 3%;color: #fff;font-family: $helvetica; font-size: 19px;	
+	a{
+		color: #fff;
+	}
 	@include breakpoint(small) {
 
 			font-size: 14px;
 
 		}
-} 
-.live-till{
-	position: absolute;top: 90%;right: 3%;color: $light;	
-}
-.photo-credit{
-	position: absolute;top: 95%;right: 3%;color: #fff;	
 }
 .upload-field {
 
