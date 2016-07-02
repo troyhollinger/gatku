@@ -43,27 +43,20 @@ class HomeSettingController extends BaseController {
 	 * @return Response
 	 */
 	public function store() {
-		
 		try {
-		
 			$homeSetting = new HomeSetting;
 			$homeSetting->image = Input::get('image');
 			$homeSetting->mobile_image = Input::get('mobile_image');
 			$homeSetting->image_info = Input::get('image_info');
 			$homeSetting->image_credit = Input::get('image_credit');
 			$homeSetting->save();
-
 		} catch (Exception $e) {
-			
 			Log::error($e);
 
 			return Response::json(['message' => 'Sorry, there was a problem saving the image'], 404);
-
 		}
 
 		return Response::json(['message' => 'Home setting saved!'], 200);
-
-
 	}
 
 	

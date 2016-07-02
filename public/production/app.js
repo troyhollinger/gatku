@@ -7842,85 +7842,85 @@ app.factory('StripeService', ['stripe', function(stripe) {
 }]);
 app.factory('Image', ['$http', '$upload', function($http, $upload) {
 
-	return {
+    return {
 
-		upload : function(data) {
+        upload : function(data) {
 
-			return $upload.upload(data);
+            return $upload.upload(data);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
 app.factory('AvailabilityType', ['$http', function($http) {
 
-	return {
+    return {
 
-		all : function() {
+        all : function() {
 
-			return $http.get('/availability-type');
+            return $http.get('/availability-type');
 
-		}
+        }
 
-	}
+    }
 
-}]);	
+}]);    
 
 app.factory('Product', ['$http', function($http) {
 
-	return {
+    return {
 
-		all : function() {
+        all : function() {
 
-			return $http.get('/product');
+            return $http.get('/product');
 
-		},
+        },
 
-		get : function(productId) {
+        get : function(productId) {
 
-			return $http.get('/product/get/' + productId)
+            return $http.get('/product/get/' + productId)
 
-		},
- 	
- 		getBySlug : function(slug) {
+        },
+    
+        getBySlug : function(slug) {
 
- 			return $http.get('/product/by/slug/' + slug);
+            return $http.get('/product/by/slug/' + slug);
 
- 		},
+        },
 
-		store : function(data) {
+        store : function(data) {
 
-			return $http.post('/product', data);
+            return $http.post('/product', data);
 
-		},
+        },
 
-		update : function(id, data) {
+        update : function(id, data) {
 
-			return $http.put('/product/' + id, data);
+            return $http.put('/product/' + id, data);
 
-		},
+        },
 
-		getTypes : function() {
+        getTypes : function() {
 
-			return $http.get('/product/types');
+            return $http.get('/product/types');
 
-		},
+        },
 
-		getByType : function() {
+        getByType : function() {
 
-			return $http.get('/product/by/type');
+            return $http.get('/product/by/type');
 
-		},
+        },
 
-		customerPhotos : function(productId) {
+        customerPhotos : function(productId) {
 
-			return $http.get('/product/photos/' + productId);
+            return $http.get('/product/photos/' + productId);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
@@ -7928,60 +7928,51 @@ app.factory('Product', ['$http', function($http) {
 app.factory('Order', ['$http', function($http) {
 
 
-	return {
+    return {
 
-		all : function() {
+        all : function() {
 
-			return $http.get('/order');
+            return $http.get('/order');
 
-		},
+        },
 
-		store : function(data) {
+        store : function(data) {
 
-			return $http.post('/order', data);
+            return $http.post('/order', data);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 app.factory('HomeSetting', ['$http', function($http) {
-
-	return {
-
-		all : function() {
-
-			return $http.get('/home-setting');
-
-		},
-
-		save : function(data) {
-
-			return $http.post('/home-setting', data);
-
-		}
-
-	}
-
+    return {
+        all : function() {
+            return $http.get('/home-setting');
+        },
+        save : function(data) {
+            return $http.post('/home-setting', data);
+        }
+    }
 }]);
 
 app.factory('YouImage', ['$http', function($http) {
 
-	return {
+    return {
 
-		all : function() {
+        all : function() {
 
-			return $http.get('/you-image');
+            return $http.get('/you-image');
 
-		},
+        },
 
-		save : function(data) {
+        save : function(data) {
 
-			return $http.post('/you-image', data);
+            return $http.post('/you-image', data);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
@@ -7990,31 +7981,31 @@ app.factory('YouImage', ['$http', function($http) {
 
 
 app.factory('Size', ['$http', function($http) {
-	return {
-		getBySlug : function(slug) {
-			return $http.get('/size/by/slug/' + slug);
-		}
-	}
+    return {
+        getBySlug : function(slug) {
+            return $http.get('/size/by/slug/' + slug);
+        }
+    }
 }]);
 
 
 app.factory('ShippingRequest', ['$http', function($http) {
 
-	return {
+    return {
 
-		send : function(data) {
+        send : function(data) {
 
-			return $http.post('/shipping-request1', data);
+            return $http.post('/shipping-request', data);
 
-		},
+        },
 
-		pay : function(data) {
+        pay : function(data) {
 
-			return $http.post('/shipping-request/pay', data);
+            return $http.post('/shipping-request/pay', data);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
@@ -8022,15 +8013,15 @@ app.factory('ShippingRequest', ['$http', function($http) {
 app.factory('ShippingTrack', ['$http', function($http) {
 
 
-	return {
+    return {
 
-		send : function(data) {
+        send : function(data) {
 
-			return $http.post('/shipping-track', data);
+            return $http.post('/shipping-track', data);
 
-		}
+        }
 
-	}
+    }
 
 }]);
 
