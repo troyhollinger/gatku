@@ -2077,6 +2077,11 @@ product-buyers {
 }
 .live-till{
 	position: absolute;top: 92%;right: 3%;color: $light; font-family: $helvetica;font-size: 14px;
+	@include breakpoint(small) {
+
+			font-size: 12px;
+
+		}
 }
 .photo-credit{
 	position: absolute;top: 95%;right: 3%;color: #fff;font-family: $helvetica; font-size: 19px;	
@@ -2085,7 +2090,7 @@ product-buyers {
 	}
 	@include breakpoint(small) {
 
-			font-size: 14px;
+			font-size: 12px;
 
 		}
 }
