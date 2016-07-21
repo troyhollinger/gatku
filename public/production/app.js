@@ -6923,6 +6923,13 @@ app.filter('money', function () {
 
 });
 
+app.filter('customNumber', function(){
+      return function(input, size) {
+        var zero = (size ? size : 4) - input.toString().length + 1;
+        return Array(+(zero > 0 && zero)).join("0") + input;
+      }
+  });
+
 
 app.directive('backImg',['$window', function($window) {
     return function(scope, element, attrs) {
