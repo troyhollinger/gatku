@@ -16,6 +16,11 @@ class Product extends Eloquent {
 		return $this->hasMany('Addon', 'parentId');
 
 	}
+	public function orderitems() {
+
+		return $this->hasMany('OrderItem', 'productId');
+
+	}
 
 	public function images() {
 

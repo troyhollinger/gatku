@@ -14,8 +14,8 @@ class ProductRepository implements ProductRepositoryInterface {
 	
 	public function all() {
 
-		$products = Product::with('type', 'addons', 'availability')->get();
-
+		$products = Product::with('type', 'addons', 'availability', 'orderitems')->get();
+		//print_r($products);exit;
 		Log::info($products);
 
 		return $products;

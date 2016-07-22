@@ -173,12 +173,14 @@ Admin
 						<th>Name</th>
 						<th>Type</th>
 						<th>Stock</th>
+						<th>Sold</th>
 						<th>Actions (hover)</th>
 					</tr>
 					<tr ng-repeat="product in products">
 						<td class="bold uppercase">@{{ product.name }}</td>
 						<td class="faded">@{{ product.type.name }}</td>
 						<td class="faded">@{{ product.availability.name }}</td>
+						<td class="faded">@{{ product.orderitems.length | number | customNumber }}</td>
 						<td>
 							<a href="/product/@{{ product.slug }}" target="_blank"><div class="button info-bg">View</div></a>
 							<div class="button info-bg" ng-click="editProduct(product)">Edit</div>
