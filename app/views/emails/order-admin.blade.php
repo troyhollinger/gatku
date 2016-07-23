@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xmlns="http://www.3c.org/1999/xhtml">
 	<head>
@@ -46,7 +45,7 @@
 		#body-cell {
 			/*border: solid red thin;*/
 		}
-		#header {
+		#header, #header-address {
 			height:45px;
 			/*background-color:gray;*/
 			/*border:solid green thin;*/
@@ -54,7 +53,7 @@
 			/*width:100;*/
 			font-family: "Helvetica", Arial, sans-serif;
 		}
-		#header img {
+		#header img, #header-address img{
 			/*height:90%;*/
 			margin-left:0;
 			margin-top: 5px;
@@ -437,9 +436,9 @@
 <table class="pagebreak" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: Helvetica, Arial, sans-serif;margin: 0;padding: 0;height: 100%;width: 100%;">
 <thead>
 			<tr>
-				<th id="header" align="left" valign="top" colspan="2" style="height: 45px;font-family: "Helvetica", Arial, sans-serif;">
+				<th id="header-address" align="left" valign="top" colspan="2" style="height: 45px;font-family: "Helvetica", Arial, sans-serif;">
 					<!-- Gatku image here -->
-					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 5px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
+					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 15px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
 				</th>
 			</tr>
 			<tr>
@@ -452,10 +451,11 @@
 	<tbody>
 	<tr>
 		<td style="border-bottom:1px solid black;"><div style="font-size: 32px;padding-top: 100px;padding-left: 297px;padding-bottom: 100px;">
-			
-			<span style="font-weight: bold;">Carl Hitch</span>
-			<p style="font-weight: normal;">4094 NW1st Place<br>
-			Deefield Beac, Florida 33442</p>
+			<span style="font-weight: bold;">{{ $order['address'] }}</span><br>
+			<p style="font-weight: normal;">
+				{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }}<br>
+                 	{{ $order['country'] }}<br>
+			</p>
 			
 		</div></td>
 	</tr>
