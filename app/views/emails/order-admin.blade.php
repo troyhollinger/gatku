@@ -438,7 +438,7 @@
 			<tr>
 				<th id="header-address" align="left" valign="top" colspan="2" style="height: 45px;font-family: "Helvetica", Arial, sans-serif;">
 					<!-- Gatku image here -->
-					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 15px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
+					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 50px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
 				</th>
 			</tr>
 			<tr>
@@ -451,8 +451,12 @@
 	<tbody>
 	<tr>
 		<td style="border-bottom:1px solid black;"><div style="font-size: 32px;padding-top: 100px;padding-left: 297px;padding-bottom: 100px;">
-			<span style="font-weight: bold;">{{ $order['address'] }}</span><br>
-			<p style="font-weight: normal;">
+		   <span style="font-weight: bold;"> {{ $order['customer']['fullName'] }}</span><br>
+			<span style="font-weight: bold;">
+			{{ $order['address'] }}
+			</span>
+
+			<p style="font-weight: normal; margin-top: 0;">
 				{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }}<br>
                  	{{ $order['country'] }}<br>
 			</p>
