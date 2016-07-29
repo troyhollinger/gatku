@@ -443,22 +443,21 @@
 			</tr>
 			<tr>
 				<th colspan="2" padding="0" align="left" style="width: 100%;height: 35px;font-family: 'Helvetica', Arial, sans-serif;padding: 0 0 0 0px; font-weight: normal;">
-					 1250 PIONEER WAY SUITEH <br>
+					 1250 PIONEER WAY SUITE H <br>
                      EL CAJON, CA 92020 <span style="font-weight: bold;">USA</span>
 				</th>
 			</tr>
 		</thead>
 	<tbody>
 	<tr>
-		<td style="border-bottom:1px solid black;"><div style="font-size: 32px;padding-top: 100px;padding-left: 297px;padding-bottom: 100px;">
+		<td><div style="font-size: 32px;padding-top: 100px;padding-left: 297px;padding-bottom: 100px;">
 		   <span style="font-weight: bold;"> {{ $order['customer']['fullName'] }}</span><br>
-			<span style="font-weight: bold;">
+			<span>
 			{{ $order['address'] }}
 			</span>
 
 			<p style="font-weight: normal; margin-top: 0;">
-				{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }}<br>
-                 	{{ $order['country'] }}<br>
+				{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }} {{ $order['country'] }}
 			</p>
 			
 		</div></td>
