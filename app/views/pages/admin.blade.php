@@ -52,11 +52,14 @@ Admin
 						</ul>
 					</td>
 					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request>
-						<div ng-if="!order.tracking" style="float:left;">
-							<shipping-track order="order"></shipping-track>	
+						<div ng-if="!order.tracking" style="margin-right: 5px;float:left;">
+							<shipping-track order="order" tracking=""></shipping-track>	
 						</div>
-						<div ng-if="order.tracking" style="float:left;">
+						<div ng-if="order.tracking" style="margin-right: 5px;float:left;">
 							<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+						</div>
+						<div ng-if="order.tracking" style="margin-right: 5px;float:right;">
+							<shipping-track order="order" tracking="order.tracking"></shipping-track>	
 						</div>
 					</td>
 					<td>@{{ order.createdAtHuman }}</td>

@@ -23,12 +23,18 @@ class ShippingTrackRepository {
 	{	
 		
 		try {
-		
-			$request = new ShippingTrack;
-			$request->track_id = $input['track_id'];
-			$request->orderId = $input['orderId'];
-			$request->token = str_random(10);
-			$request->save();
+			if(!empty($input['trackId'])){
+				ShippingTrack::where('id', $input['trackId'])->update(array('track_id' => $input['track_id']));
+				$request = ShippingTrack::find($input['trackId']);
+				
+			}else{
+				$request = new ShippingTrack;
+				$request->track_id = $input['track_id'];
+				$request->orderId = $input['orderId'];
+				$request->token = str_random(10);
+				$request->save();
+			}
+			
 
 			$request->load('order.customer');
 

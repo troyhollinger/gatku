@@ -530,15 +530,16 @@ app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'Aler
 app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertService', function($window, $compile, ShippingTrack, AlertService) {
     return {
         restrict : 'E',
-        template : '<div class="button info-bg" shipping-track ng-click="open = !open">Set Tracking</div>',
+        template : '<div class="button info-bg" shipping-track ng-click="open = !open">{{ tracking.track_id ? "Edit" : "Set Tracking"}}</div>',
         scope : {
-            order : '='
+            order : '=',
+            tracking: '='
         },
         link : function($scope, element, attrs) {
             var template = '<div class="shipping-request-panel" ng-show="open">' +
                '<h2>Applying Tracking Number to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
                 '<form>' +
-                     '<label>Tracking Number</label>' +
+                     '<label>Tracking Number {{tracking.track_id ? "(Previous Tracking:" + tracking.track_id + ")": "" }}</label>' +
                      '<input type="text" ng-model="track_id">' +
                      '<div class="button success-bg" ng-click="send()">Apply</div>' +
                  '</form>' +
@@ -558,12 +559,18 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
                 var nanobar = new Nanobar({ bg : '#fff' });
                 var data = { 
                     track_id : $scope.track_id, 
-                    orderId : $scope.order.id
+                    orderId : $scope.order.id,
+                    
                 }
+                if (angular.isDefined($scope.tracking)) {
+                    data.trackId = $scope.tracking.id
+                  }
+     
  
                 nanobar.go(60);
 
                 ShippingTrack.send(data).success(function(response) {   
+                    console.log( response.data);
                     $scope.order.tracking = response.data;
                     $scope.open = false;
                     shippingTrackPanel.remove();
