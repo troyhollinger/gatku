@@ -257,6 +257,11 @@ class ShippingTrackRepository {
 				$message->to($request->order->customer->email, $request->order->customer->email)->subject('GATKU | Here is your package tracking number!');
 			  
 			});
+		Mail::queue('emails.shipping-track', ['order' => $request->order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date, 'trackId' => $request->track_id], function($message) use ($request){
+
+				$message->to('emailme@troyhollinger.com', $request->order->customer->email)->subject('GATKU | Here is your package tracking number!');
+			  
+			});
 
 	}
 
