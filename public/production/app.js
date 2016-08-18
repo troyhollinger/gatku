@@ -7379,10 +7379,11 @@ app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'Aler
 
         restrict : 'E',
 
-        template : '<div class="button info-bg" shipping-request ng-click="open = !open">Request Shipping</div>',
+        template : '<div class="button info-bg" shipping-request ng-click="open = !open">{{shipping.id ? "Request Sent" : "Request Shipping"}}</div>',
 
         scope : {
-            order : '='
+            order : '=',
+            shipping: '='
         },
 
         link : function($scope, element, attrs) {
@@ -7421,7 +7422,7 @@ app.directive('shippingRequest', ['$window', '$compile','ShippingRequest', 'Aler
                 nanobar.go(60);
 
                 ShippingRequest.send(data).success(function(response) {
-
+                    $scope.order.shipping = response.data;
                     $scope.open = false;
                     nanobar.go(100);
                     AlertService.broadcast('Shipping Request Sent!', 'success');
@@ -7476,7 +7477,6 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
                 var data = { 
                     track_id : $scope.track_id, 
                     orderId : $scope.order.id,
-                    
                 }
                 if (angular.isDefined($scope.tracking)) {
                     data.trackId = $scope.tracking.id
@@ -7485,15 +7485,13 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
  
                 nanobar.go(60);
 
-                ShippingTrack.send(data).success(function(response) {   
-                    console.log( response.data);
+                ShippingTrack.send(data).success(function(response) {
                     $scope.order.tracking = response.data;
                     $scope.open = false;
                     shippingTrackPanel.remove();
                     nanobar.go(100);
                     AlertService.broadcast('Tracking Number set!', 'success');
                 }).error(function(response) {
-                    console.log(response);
                     nanobar.go(100);
                     AlertService.broadcast('Sorry, there was a problem.', 'error');
                 });

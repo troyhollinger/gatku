@@ -51,7 +51,8 @@ Admin
 							</li>
 						</ul>
 					</td>
-					<td>{{-- <div class="button info-bg">Print Label</div> --}}<shipping-request order="order"></shipping-request>
+					<td>{{-- <div class="button info-bg">Print Label</div> --}}
+					<shipping-request order="order" shipping="order.shipping"></shipping-request>
 						<div ng-if="!order.tracking" style="margin-right: 5px;float:left;">
 							<shipping-track order="order" tracking=""></shipping-track>	
 						</div>

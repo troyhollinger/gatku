@@ -14,4 +14,7 @@ class Order extends Eloquent {
     public function tracking() {
         return $this->hasOne('ShippingTrack', 'orderId');
     }
+    public function shipping() {
+        return $this->hasOne('ShippingRequest', 'orderId');
+    }
 }
