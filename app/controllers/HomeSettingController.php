@@ -45,6 +45,8 @@ class HomeSettingController extends BaseController {
 	public function store() {
 		try {
 			$homeSetting = new HomeSetting;
+			$homeSetting->logo = Input::get('logo');
+			$homeSetting->button_color = Input::get('button_color');
 			$homeSetting->image = Input::get('image');
 			$homeSetting->mobile_image = Input::get('mobile_image');
 			$homeSetting->image_info = Input::get('image_info');

@@ -6,8 +6,28 @@
 
 	<div class="container navigation-container">
 
-		<a href="{{ route('home') }}"><img id="logo-above" src="{{ asset('img/logo-white.png') }}"></a>
+	@if (Route::currentRouteName() === 'home')
+	<style>
+		.mast ul.navigation li, .mast ul.navigation li a{
+			color: {{$homeSetting['button_color']}};
+		}
+		.mast.below-fold ul.navigation li, .mast.below-fold ul.navigation li a{
+			color: #ffffff;
+		}
+	</style>
+		@if (count($homeSetting) === 1)
+		   
+		   <a href="{{ route('home') }}"><img id="logo-above" src="{{$homeSetting['logo']}}"></a>
 
+
+		@else
+		    <a href="{{ route('home') }}"><img id="logo-above" src="{{ asset('img/logo-white.png') }}"></a>
+
+		@endif
+	 @else
+	 	 <a href="{{ route('home') }}"><img id="logo-above" src="{{ asset('img/logo-white.png') }}"></a>
+	@endif
+		
 		<a href="{{ route('home') }}"><img id="logo-below" src="{{ asset('img/logo-white-bg.png') }}"></a>
 
 		<ul class="navigation">

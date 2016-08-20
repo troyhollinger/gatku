@@ -251,6 +251,14 @@ Admin
 				<!-- <div class="grid-square square"  back-img="@{{ HomeSettings.image }}"></div> -->
 				
 				<!-- upload mobile image -->
+				<label>Logo</label>
+					<div style=" height: auto;"class="upload-field" ng-style="{'background-image':'url(' + homeSetting.logo + ')'}">
+						<i class="fa fa-image" ng-hide="homeSetting.logo"></i>
+						<input type="text" ng-model="homeSetting.logo" class="image-path-storage-input">
+						<input type="file" ng-file-drop ng-file-select="uploadHomeImage($files, 'logo')">
+					</div>
+				<label>Button Color</label>
+					<input style="width: 150px;" placeholder="#000000" type="text" ng-model="homeSetting.button_color">
 				<label>Home Image</label>
 					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.image + ')'}">
 						<i class="fa fa-image" ng-hide="homeSetting.mobile_image"></i>
