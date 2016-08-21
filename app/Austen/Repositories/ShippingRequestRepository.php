@@ -36,7 +36,7 @@ class ShippingRequestRepository {
 
 		}
 
-		return true;
+		return $request;
 
 	}
 

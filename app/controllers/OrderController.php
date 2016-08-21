@@ -29,7 +29,7 @@ class OrderController extends BaseController {
 
 	public function orderall($itemsPerPage, $pagenumber){
 		$totalCount = DB::table('orders')->count();
-		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();
+		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking', 'shipping')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();
 		return Response::json(['data' => $orders, 'total_count' => $totalCount], 200);
 	}
 	
