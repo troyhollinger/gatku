@@ -1,7 +1,13 @@
 <?php
-
+use Austen\Repositories\MailchimpRepository;
 
 class QuoteController extends BaseController {
+
+    protected $mailchimp;
+
+    public function __construct(MailchimpRepository $mailchimp) {
+        $this->mailchimp = $mailchimp;
+    }
 
 	public function index() {
 
@@ -35,9 +41,9 @@ class QuoteController extends BaseController {
 		    $message->to('austenpayan@gmail.com', 'Austen Payan')->subject('New Shipping Inquiry from ' . $name);
 
 		});
-
+        
+        $this->mailchimp->addSubscription(Input::get('name'), Input::get('email'), Input::get('country'));
 	
-
 	} 
 
 }

@@ -1,13 +1,15 @@
 <?php
 
 use Austen\Repositories\OrderRepository;
+use Austen\Repositories\MailchimpRepository;
 
 class OrderController extends BaseController {
 
 	protected $order;
 
-	public function __construct(OrderRepository $order) {
+	public function __construct(OrderRepository $order,MailchimpRepository $mailchimp) {
 		$this->order = $order;
+		$this->mailchimp = $mailchimp;
 	}
 
 	/**
@@ -40,7 +42,7 @@ class OrderController extends BaseController {
 	 * @return Response
 	 */
 	public function store() {
-		
+		$allData = Input::all();
 		$order = $this->order->process(Input::all());
 
 		if ($order !== true) {
@@ -50,7 +52,11 @@ class OrderController extends BaseController {
 				return Response::json(['message' => 'Sorry, something went wrong on our end. We are fixing it.'], 404);
 			}
 		}
-
+		$fname = $allData['form']['firstName'];
+		$email = $allData['form']['email'];
+		$country = $allData['form']['country'];
+		$this->mailchimp->addSubscription($fname, $email, $country);
+   
 		return Response::json(['message' => 'Thank you for the order!'], 200);
 	}
 

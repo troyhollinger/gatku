@@ -158,7 +158,10 @@ Admin
 					<input type="text" ng-model="newProduct.balance">
 
 					<label>Stealth</label>
-					<input type="text" ng-model="newProduct.stealth"> 
+					<input type="text" ng-model="newProduct.stealth">
+					<label>Product order</label>
+					<input type="text" ng-model="newProduct.order"
+           min="0" max="500">  
 				</form>
 
 				<div class="button success-bg" ng-show="editState && editingNew" ng-click="saveProduct();">Save</div>
@@ -178,6 +181,7 @@ Admin
 						<th>Type</th>
 						<th>Stock</th>
 						<th>Sold</th>
+						<th>Display Order</th>
 						<th>Actions (hover)</th>
 					</tr>
 					<tr ng-repeat="product in products">
@@ -185,6 +189,8 @@ Admin
 						<td class="faded">@{{ product.type.name }}</td>
 						<td class="faded">@{{ product.availability.name }}</td>
 						<td class="faded">@{{ product.orderitems.length | number | customNumber }}</td>
+						<td class="faded">@{{ product.order }}</td>
+
 						<td>
 							<a href="/product/@{{ product.slug }}" target="_blank"><div class="button info-bg">View</div></a>
 							<div class="button info-bg" ng-click="editProduct(product)">Edit</div>
