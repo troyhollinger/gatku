@@ -1531,7 +1531,17 @@ html {
 	}
 
 }
+.mobile-take-pole{
+	display: none;
 
+	@include breakpoint(small) {
+		display: block;
+		.pole-view-actions{
+			display: block;
+		}
+
+	}
+}
 .product-description {
 
 	font-size: 1.7rem;
@@ -1582,6 +1592,18 @@ html {
 
 		font-size: 1.1rem;
 
+	}
+	iframe {
+		@include breakpoint(medium) {
+
+			width: 100% !important;
+
+		}
+		@include breakpoint(small) {
+
+			width: 100% !important;
+
+		}
 	}
 
 }
@@ -2016,7 +2038,12 @@ product-buyers {
 		display: block;
 
 	}
-
+	.order-search{ padding-bottom: 30px; }
+    .order-search div.ord-src{
+		width: 20%;
+		display: inline-block;
+	} 
+	
 }
 
 .admin-navigation-container {
