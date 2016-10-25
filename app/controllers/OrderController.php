@@ -29,9 +29,18 @@ class OrderController extends BaseController {
 	}
 
 
-	public function orderall($itemsPerPage, $pagenumber){
-		$totalCount = DB::table('orders')->count();
-		$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking', 'shipping')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();
+	public function orderall($itemsPerPage, $pagenumber, $startDate = null, $endDate = null){
+		if(!empty($startDate )){
+			if(empty($endDate)){
+				$endDate = date('y-m-d');
+			}
+			$totalCount = DB::table('orders')->whereBetween('created_at', array($startDate, $endDate))->count();
+			$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking', 'shipping')->whereBetween('created_at', array($startDate, $endDate))->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();
+		}else{
+			$totalCount = DB::table('orders')->count();
+			$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking', 'shipping')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();	
+		}
+		
 		return Response::json(['data' => $orders, 'total_count' => $totalCount], 200);
 	}
 	

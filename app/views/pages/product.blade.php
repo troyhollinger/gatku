@@ -51,6 +51,23 @@
 	@endif
 
 	<div class="product-column-left {{ $product->type->slug === 'apparel' || $product->type->slug === 'glass' ? 'apparel-column' : ''}}">
+	@if($product->attachedImage && $product->detachedImage)
+		<div class="mobile-take-pole">
+			<div class="pole-view-actions">
+
+			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
+				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+			</p>
+
+
+			<div class="zoom-out-button zoom-button" ng-class="{'selected' : fullSize === false}" ng-click="fullSize = false; poleScrollInit()"></div>
+			<div class="zoom-in-button zoom-button" ng-class="{'selected' : fullSize === true}" ng-click="fullSize = true; goFullSize();"></div>
+
+		</div>
+		<div class="clear"></div>
+		</div>
+		@endif
 
 		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold {{ $product->type->slug === 'pole' ? 'uppercase' : '' }}">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 

@@ -1,10 +1,20 @@
-@if (Route::currentRouteName() === 'home')
+@if (Route::currentRouteName() === 'home' || Route::currentRouteName() === 'thespear')
 <div class="mast">
 @else
 <div class="mast below-fold">
 @endif
 
 	<div class="container navigation-container">
+	@if (Route::currentRouteName() === 'thespear')
+	<style>
+		.mast ul.navigation li, .mast ul.navigation li a{
+			color: {{$thespear['button_color']}};
+		}
+		.mast.below-fold ul.navigation li, .mast.below-fold ul.navigation li a{
+			color: #ffffff;
+		}
+	</style>
+	@endif
 
 	@if (Route::currentRouteName() === 'home')
 	<style>
@@ -31,8 +41,16 @@
 		<a href="{{ route('home') }}"><img id="logo-below" src="{{ asset('img/logo-white-bg.png') }}"></a>
 
 		<ul class="navigation">
-			<li><a href="#store">Store</a></li>
-			<li><a href="#contact">Contact</a></li>
+			@if(Route::currentRouteName() === 'thespear')
+				<li><a href="{{ route('home') }}#store">Store</a></li>
+			@else
+				<li><a href="#store">Store</a></li>
+			@endif
+			@if(Route::currentRouteName() === 'thespear')
+				<li><a href="{{ route('home') }}#contact">Contact</a></li>
+			@else
+				<li><a href="#contact">Contact</a></li>
+			@endif
 			<li ng-controller="CartCountController" ng-click="showCart()" ng-cloak>Cart <div class="cart-amount-indicator" ng-show="count > 0"><span>@{{ count }}</span></div> </li>
 		</ul>
 

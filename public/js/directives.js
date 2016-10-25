@@ -25,6 +25,38 @@ app.directive('backImg',['$window', function($window) {
         });
     };
 }]);
+app.directive('datepickerstartdate', function () {
+return {
+    restrict: 'A',
+    require: 'ngModel',
+     link: function (scope, element, attrs, ngModelCtrl) {
+        element.datepicker({
+            dateFormat: 'yy-mm-dd',
+            onSelect: function (order_start_date) {
+                scope.order_start_date = order_start_date;
+                scope.$apply();
+            }
+        });
+    }
+  };
+});
+app.directive('datepickerenddate', function () {
+return {
+    restrict: 'A',
+    require: 'ngModel',
+     link: function (scope, element, attrs, ngModelCtrl) {
+        element.datepicker({
+            dateFormat: 'yy-mm-dd',
+            onSelect: function (order_end_date) {
+                scope.order_end_date = order_end_date;
+                scope.$apply();
+            }
+        });
+    }
+  };
+});
+
+
 
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
