@@ -43,6 +43,8 @@ Route::resource('order', 'OrderController');
 
 
 Route::get('orderall/{itemsPerPage}/{pagenumber}', ['as' => 'order.orderall', 'uses' => 'OrderController@orderall']);
+Route::get('orderall/{itemsPerPage}/{pagenumber}/{startdate}/{enddate}', ['as' => 'order.orderall', 'uses' => 'OrderController@orderall']);
+Route::get('orderall/{itemsPerPage}/{pagenumber}/{startdate}', ['as' => 'order.orderall', 'uses' => 'OrderController@orderall']);
 
 Route::resource('you-image', 'YouImageController', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::post('you-image/upload', ['as' => 'you-image.upload', 'uses' => 'YouImageController@upload']);
@@ -54,6 +56,11 @@ Route::post('home-image/upload', ['as' => 'home-image.upload', 'uses' => 'HomeSe
 Route::get('thankyou', ['as' => 'thankyou', function() {
 
 	return View::make('pages.thankyou');
+
+}]);
+Route::get('thespear', ['as' => 'thespear', function() {
+	$homeSettingThespear = HomeSetting::orderBy('id', 'desc')->first();
+	return View::make('pages.thespear')->with('thespear',  $homeSettingThespear);;
 
 }]);
 

@@ -370,6 +370,13 @@ var Inputs = {
 
 }
 $(document).ready(function() {
+	$homeUrl = window.location.href.split('/#/');
+	if($homeUrl[1] === 'store'){
+		$('a[href="#store"]').click();
+	}
+	if($homeUrl[1] === 'contact'){
+		$('a[href="#contact"]').click();
+	}
 	setTimeout(function(){
    		$("a.grouped_elements").fancyboxPlus();
 	}, 500);
