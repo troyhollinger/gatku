@@ -40,6 +40,7 @@ class OrderController extends BaseController {
 			$totalCount = DB::table('orders')->count();
 			$orders = Order::with('items.addons.product', 'items.product', 'customer', 'items.size', 'tracking', 'shipping')->orderBy('created_at', 'desc')->take($itemsPerPage)->skip($itemsPerPage*($pagenumber-1))->get();	
 		}
+		$orders = $this->assignHumanReadableTimestampsAndOrderAmount($orders);
 		
 		return Response::json(['data' => $orders, 'total_count' => $totalCount], 200);
 	}
@@ -115,6 +116,27 @@ class OrderController extends BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	private function assignHumanReadableTimestampsAndOrderAmount($collection) {
+
+		foreach($collection as $model) {
+			$orderAmount = 0;
+			foreach ($model->items as $items) {
+				foreach ($items->addons as $addons) {
+					$orderAmount = $orderAmount + $addons->product->price;
+				}
+				$orderAmount = $orderAmount + $items->product->price;
+				
+			}
+			
+			$model->orderAmount = chop($orderAmount,"00");
+
+			$model->createdAtHuman = $model->created_at->timezone('America/Los_Angeles')->format('F jS Y | g:i A');
+
+		}
+
+		return $collection;
+
 	}
 
 }
