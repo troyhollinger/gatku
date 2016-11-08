@@ -45,10 +45,12 @@ Admin
 					<th>Info</th>
 					<th>Products</th>
 					<th>Actions</th>
+					<th>Amount</th>
 					<th>Date</th>
 				</tr>
 
 				<tr dir-paginate="order in orders|itemsPerPage:15" total-items="data.total_count">
+				
 					<td><span class="brand">@{{ order.number }}</span><br>
 						<span class="bold">@{{ order.customer.fullName }}</span><br>
 						@{{ order.address }}<br>
@@ -77,6 +79,10 @@ Admin
 						<div ng-if="order.tracking" style="margin-right: 5px;float:right;">
 							<shipping-track order="order" tracking="order.tracking"></shipping-track>	
 						</div>
+					</td>
+					<td>
+					<span ng-if="order.orderAmount">$@{{ order.orderAmount }}</span>
+					
 					</td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
