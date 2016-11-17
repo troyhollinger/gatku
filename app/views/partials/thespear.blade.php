@@ -8,7 +8,7 @@ We put together a special for you Spearonation'ers:</p>
 
 				<div class="free_standard_btn_area">
 					
-					<a href="#" class="standard_free_btn">Free Standard Brand! <span>With any purchase</span> <span class="standard_sticker"><b>$20</b> value</span></a>
+					<a href="#" class="standard_free_btn">Free Standard Band! <span>With any purchase</span> <span class="standard_sticker"><b>$20</b> value</span></a>
 
 					<div class="button_bottom_add"><span class="fa fa-plus"></span></div>
 
