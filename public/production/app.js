@@ -8616,7 +8616,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.discountText = '';
     $scope.discountAmount = 0;
     $scope.enabled = true;
-    $scope.blackFriday = false;
+    $scope.blackFriday = true;
 
     $scope.toStage = function(index) {
         Inputs.blur();
