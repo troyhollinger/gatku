@@ -9164,15 +9164,22 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 			var addon = $scope.product.addons[i];
 
-			if (addon.product.sizeable && addon.product.slug === 'bands') {
-				var slug = $scope.product.slug + '-band';
-				console.debug('slug', slug);
-				Size.getBySlug(slug).success(function(response) {
-					addon.product.price = response.data.price;
-					addon.product.sizeId = response.data.id;
-				}).error(function(response) {
-					$scope.product.addons.splice(i, 1);
-				});
+			if (addon.product.sizeable) {
+
+				if (addon.product.slug === 'bands') {
+					var slug = $scope.product.slug + '-band';
+				} else if (addon.product.slug === 'hardcore-bands') {
+					var slug = $scope.product.slug + '-hardcore';
+				}
+
+				if (typeof slug !== 'undefined') {
+					Size.getBySlug(slug).success(function(response) {
+						addon.product.price = response.data.price;
+						addon.product.sizeId = response.data.id;
+					}).error(function(response) {
+						$scope.product.addons.splice(i, 1);
+					});	
+				}
 
 				break;
 			}
