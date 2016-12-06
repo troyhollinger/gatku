@@ -8777,7 +8777,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         if ($scope.enabled === false) return false;
 
         $scope.enabled = false;
-
         AlertService.broadcast('Processing...', 'info');
 
         StripeService.createToken(card).then(function(token) {
@@ -8804,17 +8803,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.hide = function() {
-
         CartService.hide();
-
     }
 
     $scope.emptyCart = function() {
-
         CartService.empty();
-
         $scope.getItems();
-
     }
 
     $scope.validate = function(index) {
