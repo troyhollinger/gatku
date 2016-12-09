@@ -8878,6 +8878,14 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
             }
 
+            if (!$scope.form.zip) {
+
+                $scope.status = 'Please enter a zip';
+                AlertService.broadcast('Please enter a zip', 'error');
+                return false
+
+            }
+
             if (!$scope.form.country) {
 
                 $scope.status = 'Please enter a country';

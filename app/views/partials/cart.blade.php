@@ -330,7 +330,7 @@
 					
 					<p>@{{ form.firstName }} @{{ form.lastName }}</p>
 					<p>@{{ form.address }}</p>
-					<p>@{{ form.city }}, @{{ form.state }}</p>
+					<p>@{{ form.city }}, @{{ form.state }} @{{ form.zip }}</p>
 					<p>@{{ form.country }}</p>
 
 				</div>
