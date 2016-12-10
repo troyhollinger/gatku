@@ -51,6 +51,23 @@
 	@endif
 
 	<div class="product-column-left {{ $product->type->slug === 'apparel' || $product->type->slug === 'glass' ? 'apparel-column' : ''}}">
+	@if($product->attachedImage && $product->detachedImage)
+		<div class="mobile-take-pole">
+			<div class="pole-view-actions">
+
+			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
+				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+			</p>
+
+
+			<div class="zoom-out-button zoom-button" ng-class="{'selected' : fullSize === false}" ng-click="fullSize = false; poleScrollInit()"></div>
+			<div class="zoom-in-button zoom-button" ng-class="{'selected' : fullSize === true}" ng-click="fullSize = true; goFullSize();"></div>
+
+		</div>
+		<div class="clear"></div>
+		</div>
+		@endif
 
 		<h1 class="product-title {{ $product->slug === 'inshore-shrinker' ? 'shrinker-title' : '' }}"><span class="bold {{ $product->type->slug === 'pole' ? 'uppercase' : '' }}">{{ $product->type->slug === 'apparel' ? $product->name : $product->shortName }}</span>{{ $product->type->slug === 'pole' ? "'ER" : '' }} @if($product->length) <span class="detail"><span class="detail">/{{ $product->length }}</span></span> @endif</h1>
 
@@ -112,11 +129,11 @@
 			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> / 
 			@endif
 			@if($product->type->slug === 'pole')
-			+ <span style="font-size:18px;">$20 Shipping w/in USA <span class="brand">+ <a href="{{ route('australia') }}" class="bold">AU</a></span></span> <br><span class="bold">Int’l</span> Rates Vary <a href="{{ route('quote') }}" target="_blank"><span class="bold">Request Quote</span></a></p>
+			+ <span style="font-size:18px;">$20 Shipping w/in USA + AU</span> <br><span class="bold">Int’l</span> Rates Vary <a href="{{ route('quote') }}" target="_blank"><span class="bold">Request Quote</span></a>
 			@else
 			Ships Free w/ Pole Purchase
 			@endif
-
+		</p>
 		@if($product->availability->slug === 'available')
 
 			<p class="addon-title right">Click to add to order</p>

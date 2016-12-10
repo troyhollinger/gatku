@@ -183,7 +183,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         if ($scope.enabled === false) return false;
 
         $scope.enabled = false;
-
         AlertService.broadcast('Processing...', 'info');
 
         StripeService.createToken(card).then(function(token) {
@@ -192,13 +191,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 form : $scope.form,
                 token : token
             }
- 
             Order.store(data).success(function(response) {
                 AlertService.broadcast('Success! Redirecting...', 'success');
                 $scope.show = false;
                 $scope.emptyCart();
                 $scope.enabled = true;
-                window.location.replace("/thankyou");
+                //window.location.replace("/thankyou");
             }).error(function(response) {
                 $scope.enabled = true;
                 if ('error' in response.message.jsonBody) {
@@ -211,17 +209,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.hide = function() {
-
         CartService.hide();
-
     }
 
     $scope.emptyCart = function() {
-
         CartService.empty();
-
         $scope.getItems();
-
     }
 
     $scope.validate = function(index) {
@@ -305,6 +298,21 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
         if (index == 3) {
 
+            if (!$scope.card.isBillingSame) {
+                if(!$scope.form.billing_address){
+                    $scope.status = 'Please enter Billing Address or check Billing Address same as Shipping Address';
+                    AlertService.broadcast('Please enter Billing Address or check Billing Address same as Shipping Address', 'error');
+                    return false;
+                }
+                if(!$scope.form.billing_zip){
+                    $scope.status = 'Please enter billing zip or check Billing Address same as Shipping Address';
+                    AlertService.broadcast('Please enter billing zip or check Billing Address same as Shipping Address', 'error');
+                    return false;
+                }
+                
+
+            }
+
             var card = extractCardDetails();
 
             var validation = StripeService.validate(card)
@@ -335,7 +343,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     function extractCardDetails() {
         var card = {};
-
+        if($scope.card.isBillingSame){
+            card.address_zip = $scope.form.zip;
+        }else{
+            card.address_zip = $scope.form.billing_zip;    
+        }
         card.number = $scope.card.number;
         card.exp_month = $scope.card.expiryMonth;
         card.exp_year = $scope.card.expiryYear;

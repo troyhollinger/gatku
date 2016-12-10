@@ -1086,6 +1086,13 @@ var Inputs = {
 
 }
 $(document).ready(function() {
+	$homeUrl = window.location.href.split('/#/');
+	if($homeUrl[1] === 'store'){
+		$('a[href="#store"]').click();
+	}
+	if($homeUrl[1] === 'contact'){
+		$('a[href="#contact"]').click();
+	}
 	setTimeout(function(){
    		$("a.grouped_elements").fancyboxPlus();
 	}, 500);
@@ -6941,6 +6948,38 @@ app.directive('backImg',['$window', function($window) {
         });
     };
 }]);
+app.directive('datepickerstartdate', function () {
+return {
+    restrict: 'A',
+    require: 'ngModel',
+     link: function (scope, element, attrs, ngModelCtrl) {
+        element.datepicker({
+            dateFormat: 'yy-mm-dd',
+            onSelect: function (order_start_date) {
+                scope.order_start_date = order_start_date;
+                scope.$apply();
+            }
+        });
+    }
+  };
+});
+app.directive('datepickerenddate', function () {
+return {
+    restrict: 'A',
+    require: 'ngModel',
+     link: function (scope, element, attrs, ngModelCtrl) {
+        element.datepicker({
+            dateFormat: 'yy-mm-dd',
+            onSelect: function (order_end_date) {
+                scope.order_end_date = order_end_date;
+                scope.$apply();
+            }
+        });
+    }
+  };
+});
+
+
 
 
 app.directive('hoverCard', ['$compile', '$window', 'Product', '$filter', function($compile, $window, Product, $filter) {
@@ -8495,16 +8534,35 @@ app.controller('AdminordersController', ['$scope', 'Order','$http', function($sc
     gatkuOrder.orders = []; 
     gatkuOrder.pageno = 1; 
     gatkuOrder.itemsPerPage = 15; 
-    gatkuOrder.getData = function(pageno){ 
-        gatkuOrder.orders = [];  $http.get("/orderall/" + gatkuOrder.itemsPerPage + "/" + pageno).success(function(response){
+    gatkuOrder.getData = function(pageno,start_date, end_date){ 
+        gatkuOrder.orders = [];
+
+        var Url = "/orderall/" + gatkuOrder.itemsPerPage + "/" + pageno;
+        try{
+            if($scope.order_start_date){
+                Url = Url + "/" + $scope.order_start_date;
+            }
+            if($scope.order_end_date){
+                Url = Url + "/" + $scope.order_end_date;
+            }
+        }catch(e){
+
+        }
+        $http.get(Url).success(function(response){
             $scope.orders = response.data;
             gatkuOrder.orders = response.data;
             gatkuOrder.total_count = response.total_count;
         });
     };
-    gatkuOrder.getData(gatkuOrder.pageno); 
     
-
+    gatkuOrder.getData(gatkuOrder.pageno); 
+    gatkuOrder.searchOrder = function(){ 
+        if($scope.order_start_date){
+             gatkuOrder.getData(1, $scope.order_start_date, $scope.order_end_date);    
+            }else{
+                alert('select start date');
+            }
+     };
 }]);
 
 
@@ -8719,7 +8777,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         if ($scope.enabled === false) return false;
 
         $scope.enabled = false;
-
         AlertService.broadcast('Processing...', 'info');
 
         StripeService.createToken(card).then(function(token) {
@@ -8728,13 +8785,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 form : $scope.form,
                 token : token
             }
- 
             Order.store(data).success(function(response) {
                 AlertService.broadcast('Success! Redirecting...', 'success');
                 $scope.show = false;
                 $scope.emptyCart();
                 $scope.enabled = true;
-                window.location.replace("/thankyou");
+                //window.location.replace("/thankyou");
             }).error(function(response) {
                 $scope.enabled = true;
                 if ('error' in response.message.jsonBody) {
@@ -8747,17 +8803,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.hide = function() {
-
         CartService.hide();
-
     }
 
     $scope.emptyCart = function() {
-
         CartService.empty();
-
         $scope.getItems();
-
     }
 
     $scope.validate = function(index) {
@@ -8841,6 +8892,21 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
         if (index == 3) {
 
+            if (!$scope.card.isBillingSame) {
+                if(!$scope.form.billing_address){
+                    $scope.status = 'Please enter Billing Address or check Billing Address same as Shipping Address';
+                    AlertService.broadcast('Please enter Billing Address or check Billing Address same as Shipping Address', 'error');
+                    return false;
+                }
+                if(!$scope.form.billing_zip){
+                    $scope.status = 'Please enter billing zip or check Billing Address same as Shipping Address';
+                    AlertService.broadcast('Please enter billing zip or check Billing Address same as Shipping Address', 'error');
+                    return false;
+                }
+                
+
+            }
+
             var card = extractCardDetails();
 
             var validation = StripeService.validate(card)
@@ -8871,7 +8937,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     function extractCardDetails() {
         var card = {};
-
+        if($scope.card.isBillingSame){
+            card.address_zip = $scope.form.zip;
+        }else{
+            card.address_zip = $scope.form.billing_zip;    
+        }
         card.number = $scope.card.number;
         card.exp_month = $scope.card.expiryMonth;
         card.exp_year = $scope.card.expiryYear;
@@ -9015,7 +9085,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 	}
 
 	$scope.addToCart = function() {
-		console.log("Attempting to add to cart");
+		//console.log("Attempting to add to cart");
 		if ($scope.product.sizeable !== "0" && $scope.product.sizeable) {
 			var sizes = verifySizeIsChecked();
 			console.log("Product is sizeable");
@@ -9036,9 +9106,9 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			}
 
 		} else {
-			console.log("about to add item");
+			//console.log("about to add item");
 			CartService.addItem($scope.product);
-			console.log("added item");
+			//console.log("added item");
 		}
 		$scope.productAddedTextChange();
 
@@ -9088,15 +9158,22 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 			var addon = $scope.product.addons[i];
 
-			if (addon.product.sizeable && addon.product.slug === 'bands') {
-				var slug = $scope.product.slug + '-band';
-				console.debug('slug', slug);
-				Size.getBySlug(slug).success(function(response) {
-					addon.product.price = response.data.price;
-					addon.product.sizeId = response.data.id;
-				}).error(function(response) {
-					$scope.product.addons.splice(i, 1);
-				});
+			if (addon.product.sizeable) {
+
+				if (addon.product.slug === 'bands') {
+					var slug = $scope.product.slug + '-band';
+				} else if (addon.product.slug === 'hardcore-bands') {
+					var slug = $scope.product.slug + '-hardcore';
+				}
+
+				if (typeof slug !== 'undefined') {
+					Size.getBySlug(slug).success(function(response) {
+						addon.product.price = response.data.price;
+						addon.product.sizeId = response.data.id;
+					}).error(function(response) {
+						$scope.product.addons.splice(i, 1);
+					});	
+				}
 
 				break;
 			}

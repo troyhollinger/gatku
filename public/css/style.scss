@@ -1531,7 +1531,17 @@ html {
 	}
 
 }
+.mobile-take-pole{
+	display: none;
 
+	@include breakpoint(small) {
+		display: block;
+		.pole-view-actions{
+			display: block;
+		}
+
+	}
+}
 .product-description {
 
 	font-size: 1.7rem;
@@ -1582,6 +1592,18 @@ html {
 
 		font-size: 1.1rem;
 
+	}
+	iframe {
+		@include breakpoint(medium) {
+
+			width: 100% !important;
+
+		}
+		@include breakpoint(small) {
+
+			width: 100% !important;
+
+		}
 	}
 
 }
@@ -1712,16 +1734,23 @@ product-buyers {
 }
 
 .product-price-amount {
-
 	font-family: $helvetica-thin;
 	font-size: 2em;
+	position: relative;
 
-	@include breakpoint(medium) {
-
-		font-size: 2.3em;
-
+	&:after {
+		content : 'USD';
+		position: absolute;
+		left:101%;
+		font-size: .25em;
+		bottom:auto;
+		top:5px;
+		font-weight: bold;
 	}
 
+	@include breakpoint(medium) {
+		font-size: 2.3em;
+	}
 }
 
 .pole-view-actions {
@@ -2016,7 +2045,12 @@ product-buyers {
 		display: block;
 
 	}
-
+	.order-search{ padding-bottom: 30px; }
+    .order-search div.ord-src{
+		width: 20%;
+		display: inline-block;
+	} 
+	
 }
 
 .admin-navigation-container {
@@ -4340,6 +4374,136 @@ hover-card {
 		@include breakpoint(small) {
 			height:auto;
 		}
+	}
+}
+
+ .home_banner_text_thespear{
+		max-width: 350px;
+	    margin: auto;
+		@include breakpoint(small) {
+		   max-width: 250px;
+		}
+	}
+.home_banner_text_thespear img{
+	max-width: 350px;
+    margin-top: 150px;
+    @include breakpoint(small) {
+	   margin-top: 130px;
+	   max-width: 100%;
+	}
+}
+
+.header_bottom_welcome_text_thespear{
+	margin: auto;
+    max-width: 450px;
+    text-align: center;
+    h2 {
+	    font-size: 50px;
+	    line-height: 50px;
+	    margin: 0;
+	    font-family: $helvetica;
+	    font-weight: bold;
+	}
+	p {
+	    color: #fff;
+	    font-size: 22px;
+	    line-height: 23px;
+	    margin-top: 6px;
+	    margin-bottom: 30px;
+	    font-family: $helvetica;
+	     @include breakpoint(small) {
+		   font-size: 18px;
+		}
+	}
+}
+
+.standard_free_btn {
+    background-color: #fff;
+    display: block;
+    padding: 14px 25px;
+    position: relative;
+    text-transform: uppercase;
+    line-height: 22px;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: bold;
+    font-family: $helvetica;
+    span {
+	    display: block;
+	    font-size: 20px;
+	    font-weight: normal;
+	    font-family: $helvetica-thin;
+	    text-transform: capitalize;
+	    color: #646567;
+	}
+	.standard_sticker{
+		border-bottom: 1px solid #000;
+	    position: absolute;
+	    right: -15px;
+	    top: 25px;
+	    -webkit-transform: rotate(90deg);
+	    transform: rotate(90deg);
+	    font-size: 14px;
+	    font-family: $helvetica-thin;
+	    text-transform: capitalize;
+	    color: #646567;
+	    @include breakpoint(small) {
+	    	 font-size: 9px;
+	    	 right: -10px;
+	    }
+	}
+
+	@include breakpoint(small) {
+	    width: 80%;
+        margin: auto;
+        font-size: 14px;
+         span {
+	        font-size: 12px;
+	    }
+
+	}
+	
+}
+.shop_now_area {
+	padding-top: 10px;
+    h2 {
+	    font-size: 50px;
+	    margin-bottom: 0;
+	    line-height: 40px;
+	    font-family: $helvetica;
+	    font-weight: bold;
+	    padding-bottom: 10px;
+	}
+	p {
+	    color: #fff;
+	    font-size: 22px;
+	    font-family: $helvetica-thin;
+	    margin: 0;
+	    span{
+	    	text-decoration: underline;
+	    }
+	      @include breakpoint(small) {
+	    	 font-size: 18px;
+	    }
+	}
+	a {
+	    color: #fff;
+	    text-decoration: none;
+	    text-transform: capitalize;
+	    cursor: pointer;
+	}
+}
+.footer_content_area {
+    margin: auto;
+    max-width: 450px;
+    text-align: center;
+    h1 {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+   p {
+    margin: 0;
 	}
 }
 

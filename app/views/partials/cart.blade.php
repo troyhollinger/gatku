@@ -202,6 +202,34 @@
 			<div class="clear"></div>
 
 		</div>
+		<div class="checkout-form">
+			<div class="billing-label">
+
+				<input style="width: 5%; float: left;" id="billing-addr" type="checkbox" name="show-billing" ng-model="card.isBillingSame" value="billing-same"><label>Billing Address same as Shipping Address</label>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="checkout-form" ng-show="!card.isBillingSame">
+
+			<label for="billing_address">Billing Address</label>
+			<input type="text" name="billing_address" id="billing_address" ng-model="form.billing_address">
+
+			<label for="city">City</label>
+			<input type="text" name="billing_city" id="billing_city" ng-model="form.billing_city">
+
+			<label for="state">State / Province</label>
+			<input type="text" name="billing_state" id="billing_state" ng-model="form.billing_state">
+
+			<label for="zip">Zip Code</label>
+			<input type="text" name="billing_zip" id="billing_zip" ng-model="form.billing_zip">
+
+			<label for="country">Country <span class="faded bold"></span></label>
+			<input type="text" name="billing_country" id="country" ng-model="form.billing_country">
+			</span>
+			
+			<div class="clear"></div>
+
+		</div>
 
 
 		<div class="cart-actions">

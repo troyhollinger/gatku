@@ -22,18 +22,35 @@ Admin
 		</div>
 
 		<div class="admin-section" ng-show="showOrders" ng-controller="AdminordersController as data" ng-cloak>
-			<h2>Orders</h2>
-
+			
+		<div class="order-search">
+		<h2>Orders</h2>
+				<div class="ord-src">
+					<label>Start From</label>
+					<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_start_date" datepickerstartdate />
+				</div>
+				<div class="ord-src">
+					<label>End To</label>
+					<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_end_date" datepickerenddate />
+				</div>
+				<div class="ord-src">
+					<div class="button success-bg" ng-click="data.searchOrder()">Search Order</div>
+				</div>
+				
+		</div>
+			
     <table class="admin-orders-table">
 
 				<tr>
 					<th>Info</th>
 					<th>Products</th>
 					<th>Actions</th>
+					<th>Amount</th>
 					<th>Date</th>
 				</tr>
 
 				<tr dir-paginate="order in orders|itemsPerPage:15" total-items="data.total_count">
+				
 					<td><span class="brand">@{{ order.number }}</span><br>
 						<span class="bold">@{{ order.customer.fullName }}</span><br>
 						@{{ order.address }}<br>
@@ -62,6 +79,10 @@ Admin
 						<div ng-if="order.tracking" style="margin-right: 5px;float:right;">
 							<shipping-track order="order" tracking="order.tracking"></shipping-track>	
 						</div>
+					</td>
+					<td>
+					<span ng-if="order.orderAmount">$@{{ order.orderAmount }}</span>
+					
 					</td>
 					<td>@{{ order.createdAtHuman }}</td>
 				</tr>
@@ -158,7 +179,10 @@ Admin
 					<input type="text" ng-model="newProduct.balance">
 
 					<label>Stealth</label>
-					<input type="text" ng-model="newProduct.stealth"> 
+					<input type="text" ng-model="newProduct.stealth">
+					<label>Product order</label>
+					<input type="text" ng-model="newProduct.order"
+           min="0" max="500">  
 				</form>
 
 				<div class="button success-bg" ng-show="editState && editingNew" ng-click="saveProduct();">Save</div>
@@ -178,6 +202,7 @@ Admin
 						<th>Type</th>
 						<th>Stock</th>
 						<th>Sold</th>
+						<th>Display Order</th>
 						<th>Actions (hover)</th>
 					</tr>
 					<tr ng-repeat="product in products">
@@ -185,6 +210,8 @@ Admin
 						<td class="faded">@{{ product.type.name }}</td>
 						<td class="faded">@{{ product.availability.name }}</td>
 						<td class="faded">@{{ product.orderitems.length | number | customNumber }}</td>
+						<td class="faded">@{{ product.order }}</td>
+
 						<td>
 							<a href="/product/@{{ product.slug }}" target="_blank"><div class="button info-bg">View</div></a>
 							<div class="button info-bg" ng-click="editProduct(product)">Edit</div>

@@ -132,12 +132,12 @@ class ProductRepository implements ProductRepositoryInterface {
 
 		try {
 			
-			$heads = ProductType::where('name', '=', 'head')->first()->products;
-			$poles = ProductType::where('name', '=', 'pole')->first()->products;
-			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products;
-			$extras = ProductType::where('name', '=', 'extra')->first()->products;
-			$apparel = ProductType::where('name', '=', 'apparel')->first()->products;
-			$glasses = ProductType::where('name', '=', 'glass')->first()->products;
+			$heads = ProductType::where('name', '=', 'head')->first()->products()->orderBy('order', 'asc')->get();
+			$poles = ProductType::where('name', '=', 'pole')->first()->products()->orderBy('order', 'asc')->get();
+			$shrinker = ProductType::where('name', '=', 'shrinker')->first()->products()->orderBy('order', 'asc')->get();
+			$extras = ProductType::where('name', '=', 'extra')->first()->products()->orderBy('order', 'asc')->get();
+			$apparel = ProductType::where('name', '=', 'apparel')->first()->products()->orderBy('order', 'asc')->get();
+			$glasses = ProductType::where('name', '=', 'glass')->first()->products()->orderBy('order', 'asc')->get();
 
 		} catch (Exception $e) {
 			
@@ -203,6 +203,7 @@ class ProductRepository implements ProductRepositoryInterface {
 		if (isset($data['trajectory'])) $product->trajectory = $data['trajectory'];
 		if (isset($data['balance'])) $product->balance = $data['balance'];
 		if (isset($data['stealth'])) $product->stealth = $data['stealth'];
+		if (isset($data['order'])) $product->order = $data['order'];
 
 		return $product;
 

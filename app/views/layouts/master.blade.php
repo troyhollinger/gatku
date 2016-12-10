@@ -16,6 +16,10 @@
         <meta property="og:site_name" content="GATKU">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('production/app.css') }}"> 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
         <script src="{{ asset('bower_components/angular/angular.min.js') }}"></script>
         <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
         <script>
@@ -68,8 +72,7 @@
        
         <alerter></alerter>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{{ asset('js/vendor/jquery-1.10.2.min.js') }}"><\/script>')</script>
+
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <script src="{{ asset('bower_components/ng-file-upload/angular-file-upload.js') }}"></script>
         @if(isset($product) && $product->type->slug === 'apparel')
