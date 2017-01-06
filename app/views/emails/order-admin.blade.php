@@ -421,7 +421,7 @@
 							<td style="color:#E24A62;font-size:16px; padding:15px 0;" colspan="1">Customer Service - Email: dustin@gatku.com / Phone: +001 619 507-3860</td>
 
 							<!-- INSERT SOCIAL MEDIA IMAGES -->
-							<td style="text-align:right;" colspan="1"><a href="http://www.facebook.com/gatku"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/red-facebook.png') }}"></a><a href="http://www.twitter.com/gatku"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/red-twitter.png') }}"></a><a href="http://www.gatku.com"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/red-logo.png') }}"></a></td>
+							<td style="text-align:right;" colspan="1"><a href="http://www.facebook.com/gatku"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/red-facebook.png') }}"></a><a href="http://www.twitter.com/gatku"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/red-twitter.png') }}"></a><a href="http://www.gatku.com"><img height="25" style="margin-left:30px;" src="{{ asset('img/email-assets/logo.png') }}"></a></td>
 
 						</tr>
 					</table>
@@ -450,16 +450,13 @@
 		</thead>
 	<tbody>
 	<tr>
-		<td><div style="font-size: 30px;padding-top: 100px;padding-left: 225px;padding-bottom: 100px;">
+		<td><div style="font-size: 26px;padding-top: 75px;padding-left: 200px;padding-bottom: 100px;">
 		   <span style="font-weight: bold;"> {{ $order['customer']['fullName'] }}</span><br>
 			<span>
 			{{ $order['address'] }}
-			</span>
-
-			<p style="font-weight: normal; margin-top: 0;">
-				{{ $order['city'] }}, {{ $order['state'] }} {{ $order['zip'] }} {{ $order['country'] }}
-			</p>
-			
+			</span><br>
+			<span>{{ $order['city'] }}, {{ $order['state'] }}</span>
+			<span>{{ $order['zip'] }} {{ $order['country'] }}</span>
 		</div></td>
 	</tr>
 	</tbody>
