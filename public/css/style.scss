@@ -65,7 +65,7 @@ $dark : #444444;
 		border-width: 18px 0 18px 31.2px;
 		border-color: transparent transparent transparent $color;
 	}
-	
+
 }
 
 @mixin breakpoint($point) {
@@ -84,7 +84,7 @@ $dark : #444444;
 	@else {
 		@media (max-width: $point) { @content; }
 	}
-  
+
 }
 
 @mixin stretchpoint($point) {
@@ -103,7 +103,7 @@ $dark : #444444;
 	@else {
 		@media (min-width: $point) { @content; }
 	}
-  
+
 }
 
 @mixin change {
@@ -392,9 +392,9 @@ html {
 
 	li:hover {
 
-		text-decoration: underline;		
+		text-decoration: underline;
 
-	} 
+	}
 
 	a {
 
@@ -483,7 +483,7 @@ html {
 	width: 200px;
 	margin-top: 3px;
 	margin-left: -8px;
-	
+
 
 }
 
@@ -552,7 +552,7 @@ html {
 	height: auto;
 
 	font-size: 1.4rem;
-	
+
 }
 
 .product-row {
@@ -568,7 +568,7 @@ html {
 		@include transition(all .15s ease);
 		@include transform(rotate(20deg));
 
-		
+
 
 	}
 
@@ -792,7 +792,7 @@ html {
 
 			&:hover {
 
-				@include transform(rotate(0deg) translate(0, 0px));				
+				@include transform(rotate(0deg) translate(0, 0px));
 
 			}
 
@@ -953,12 +953,12 @@ html {
 
 	@include center;
 
-	color:black;
-	font-size: 2.5rem;
-	font-weight: 200;
-	font-family: helvetica LT STD;
+	color:white;
+	font-size: 3.5rem;
+	font-weight: 600;
+	font-family: HelveticaLTPro-Black, Helvetica, Arial, sans-serif;
 	line-height: 1;
-	letter-spacing: -1px;
+	letter-spacing: -4px;
 
 	@include breakpoint(medium) {
 
@@ -1191,7 +1191,7 @@ html {
 }
 
 
-.contact-email { 
+.contact-email {
 
 	padding-left: 50px;
 
@@ -1204,7 +1204,7 @@ html {
 }
 
 
-.contact-phone { 
+.contact-phone {
 
 	padding-right: 50px;
 
@@ -1308,7 +1308,7 @@ html {
 	width:100%;
 	height:125px;
 	background-color:white;
-	overflow-x:scroll;	
+	overflow-x:scroll;
 	overflow-y:visible;
 	margin-top: 105px;
 	text-align: center;
@@ -1338,11 +1338,11 @@ html {
 		margin-bottom: 30px;
 
 		@include breakpoint(small) {
-			
+
 			height:auto;
 			margin-bottom:20px;
 			margin-top: 70px;
-			// margin:20px 0;		
+			// margin:20px 0;
 
 			& .scroller-image {
 
@@ -1422,7 +1422,7 @@ html {
 	float:left;
 	width:45%;
 	height:auto;
-	
+
 	&.apparel-column {
 
 		position: relative;
@@ -1442,7 +1442,7 @@ html {
 		float:none;
 		width:100%;
 
-	}	
+	}
 
 }
 
@@ -1787,7 +1787,7 @@ product-buyers {
 	bottom:0;
 	width:23px;
 	height:23px;
-	
+
 }
 
 .zoom-out-button {
@@ -1873,12 +1873,12 @@ product-buyers {
 
 	}
 
-	
+
 }
 
 .checkout-button {
 
-	@extend .submit-button; 
+	@extend .submit-button;
 
 	width:0px;
 	background-color: $green;
@@ -2049,8 +2049,8 @@ product-buyers {
     .order-search div.ord-src{
 		width: 20%;
 		display: inline-block;
-	} 
-	
+	}
+
 }
 
 .admin-navigation-container {
@@ -2106,8 +2106,8 @@ product-buyers {
 	margin-left: 10px;
 
 }
-.home-setting-form{ 
-	padding-bottom: 10px; 
+.home-setting-form{
+	padding-bottom: 10px;
 }
 .live-till{
 	position: absolute;top: 92%;right: 3%;color: $light; font-family: $helvetica;font-size: 14px;
@@ -2118,7 +2118,7 @@ product-buyers {
 		}
 }
 .photo-credit{
-	position: absolute;top: 95%;right: 3%;color: #fff;font-family: $helvetica; font-size: 19px;	
+	position: absolute;top: 95%;right: 3%;color: #fff;font-family: $helvetica; font-size: 19px;
 	a{
 		color: #fff;
 	}
@@ -2211,7 +2211,7 @@ product-buyers {
 .admin-products-table {
 
 	@extend .admin-table;
-	
+
 	tr {
 
 		.button {
@@ -2256,7 +2256,7 @@ ul.pagination {
 		a:hover:not(.active) {background-color: #ddd;}
     }
 
-    
+
 	li.active a {
 	    background-color: #2ecc71;
 	    color: white;
@@ -2589,13 +2589,13 @@ ul.pagination {
 	.fa-angle-left {
 
 		right:150%;
-		
+
 	}
 
 	.fa-angle-right {
 
 		left:150%;
-	
+
 	}
 
 }
@@ -2684,7 +2684,7 @@ ul.pagination {
 			cursor: pointer;
 
 		}
-		
+
 		margin-right: 5px;
 
 		&:hover {
@@ -2739,7 +2739,7 @@ ul.pagination {
 
 	&.ng-show {
 
-		
+
 		@include transform(translate(0%, 0%));
 
 	}
@@ -2758,7 +2758,7 @@ ul.pagination {
 
 	&.ng-show {
 
-		
+
 		opacity: 1;
 
 	}
@@ -2842,7 +2842,7 @@ ul.pagination {
 
 		font-size: 4.2rem;
 		font-weight: bold;
-		
+
 		@include breakpoint(small) {
 
 			font-size: 2.5rem;
@@ -2864,8 +2864,8 @@ ul.pagination {
 
 	}
 
-} 
- 
+}
+
 .cart-empty-message {
 
 	@include center;
@@ -2951,7 +2951,7 @@ ul.pagination {
 			left:55%;
 
 		}
-		
+
 	}
 
 }
@@ -2996,7 +2996,7 @@ hover-card {
 	width:20px;
 	height:20px;
 	background-color: white;
-	
+
 
 	&.shadowed {
 
@@ -3015,7 +3015,7 @@ hover-card {
 	width:700px;
 	height:auto;
 	z-index: 19;
-	
+
 
 	div {
 
@@ -3028,16 +3028,16 @@ hover-card {
 		text-align: center;
 		border-radius: 2px;
 		box-shadow: 0px 0px 7px rgba(0,0,0,.3);
-		
+
 	}
 
 	.fa-close {
 
 		color:white;
 		position: absolute;
-		top:3px; 
+		top:3px;
 		right:5px;
-		cursor: pointer;	
+		cursor: pointer;
 
 	}
 
@@ -3081,7 +3081,7 @@ hover-card {
 .slide-up {
 	&.ng-hide-add, &.ng-hide-remove {
 		@include transition(all .25s ease);
-	} 
+	}
 	&.ng-hide-add {
 		opacity: 1;
 		@include transform(translate(-50%, 0));
@@ -3171,7 +3171,7 @@ hover-card {
 		&.above-fold {
 
 			background-color: transparent;
-			
+
 		}
 
 	}
@@ -3302,7 +3302,7 @@ hover-card {
 			left: 0;
 		}
 
-	}	
+	}
 
 	.status {
 
@@ -3326,7 +3326,7 @@ hover-card {
 			&:first-child {
 
 				@include transform(translate(0, 13px) rotate(45deg));
-				
+
 
 			}
 
@@ -3586,7 +3586,7 @@ hover-card {
 		float:right;
 		width:45%;
 		height:100%;
-		
+
 	}
 
 	.title-subscript {
@@ -3673,7 +3673,7 @@ hover-card {
 
 		float:left;
 		margin-left: 2%;
-		
+
 		@include box-sizing(border-box);
 		padding:0 2% 2% 0;
 		background-clip: content-box;
@@ -3789,7 +3789,7 @@ hover-card {
 
 .brand-container {
 	width:100%;
-	height:auto;	
+	height:auto;
 	margin-bottom: 100px;
 	.container {
 		position: relative;
@@ -3842,7 +3842,7 @@ hover-card {
 
 	width:60%;
 	height:200px;
-	
+
 }
 
 .brand-logo-container {
@@ -4140,9 +4140,9 @@ hover-card {
 
     @include animation-name(floating);
     @include animation-duration(3s);
-    @include animation-iteration-count(infinite);  
+    @include animation-iteration-count(infinite);
     @include animation-timing-function(ease-in-out);
-  
+
 }
 
 @include keyframes(floating) {
@@ -4202,7 +4202,7 @@ hover-card {
 	height:100vh;
 
 	@include transform(translate3d(0%, 0%, 0));
-	
+
 	opacity: 1;
 
 
@@ -4229,7 +4229,7 @@ hover-card {
 		@include transform(translate3d(100%, 0%, 0));
 
 	}
-	
+
 	&.ng-hide-remove.ng-hide-remove-active {
 
 		@include transform(translate3d(0%, 0%, 0));
@@ -4241,7 +4241,7 @@ hover-card {
 		position: fixed;
 
 	}
-		
+
 }
 
 
@@ -4288,7 +4288,7 @@ hover-card {
 
 .shipping-payment-panel {
 
-	@extend .shipping-request-panel; 
+	@extend .shipping-request-panel;
 
 }
 
@@ -4462,7 +4462,7 @@ hover-card {
 	    }
 
 	}
-	
+
 }
 .shop_now_area {
 	padding-top: 10px;

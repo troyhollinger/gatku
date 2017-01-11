@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-    // 1. All configuration goes here 
+    // 1. All configuration goes here
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -51,6 +51,7 @@ module.exports = function(grunt) {
                     'production/app.css' : [
                         'css/font-awesome.min.css',
                         'css/reset.css',
+                        'css/MyFontsWebfontsKit.css',
                         'bower_components/skippr/css/jquery.skippr.css',
                         'bower_components/rollerblade/rollerblade.css',
                         'bower_components/fancybox-plus/css/jquery.fancybox-plus.css',
@@ -60,11 +61,11 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            
+
             scripts: {
                 files: [
-                    'js/*.js', 
-                    'js/controllers/*.js', 
+                    'js/*.js',
+                    'js/controllers/*.js',
                     'js/services/*.js'
                 ],
                 tasks: ['concat', 'uglify'],

@@ -15,7 +15,33 @@
         <meta property="og:description" content="@yield('description')">
         <meta property="og:site_name" content="GATKU">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ asset('production/app.css') }}"> 
+        <!--
+        /**
+         * @license
+         * MyFonts Webfont Build ID 3325386, 2016-12-28T12:39:52-0500
+         *
+         * The fonts listed in this notice are subject to the End User License
+         * Agreement(s) entered into by the website owner. All other parties are
+         * explicitly restricted from using the Licensed Webfonts(s).
+         *
+         * You may obtain a valid license at the URLs below.
+         *
+         * Webfont: HelveticaLTPro-Black by Linotype
+         * URL: http://www.myfonts.com/fonts/linotype/helvetica/pro-black/
+         * Copyright: Part of the digitally encoded machine readable outline data for producing
+         * the Typefaces provided is copyrighted &#x00A9; 1981 - 2007 Linotype GmbH,
+         * www.linotype.com. All rights reserved. This software is the property of Linotype
+         * GmbH, and may not be repro
+         * Licensed pageviews: 250,000
+         *
+         *
+         * License: http://www.myfonts.com/viewlicense?type=web&buildid=3325386
+         *
+         * © 2016 MyFonts Inc
+        */
+
+        -->
+        <link rel="stylesheet" href="{{ asset('production/app.css') }}">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -48,7 +74,7 @@
         </script>
         @endif
     </head>
-    @if(Route::currentRouteName() === 'product.show') 
+    @if(Route::currentRouteName() === 'product.show')
     <body ng-app="gatku" ng-controller="ProductController" body-freeze>
     @elseif(Route::currentRouteName() === 'admin.index')
     <body ng-app="gatku" class="admin-body" body-freeze>
@@ -62,14 +88,14 @@
 
             <!--[if lt IE 8]>
                 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-            <![endif]-->   
+            <![endif]-->
 
             @include('partials.cart')
 
             @yield('content')
 
         </div>
-       
+
         <alerter></alerter>
 
 
