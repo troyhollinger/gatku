@@ -7491,13 +7491,21 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
             order : '=',
             tracking: '='
         },
+
         link : function($scope, element, attrs) {
             var template = '<div class="shipping-request-panel" ng-show="open">' +
                '<h2>Applying Tracking Number to {{ order.customer.fullName }} for order : <span class="brand">{{ order.number }}</span></h2>' +
                 '<form>' +
                      '<label>Tracking Number {{tracking.track_id ? "(Previous Tracking:" + tracking.track_id + ")": "" }}</label>' +
                      '<input type="text" ng-model="track_id">' +
-                     '<div class="button success-bg" ng-click="send()">Apply</div>' +
+                     '<div class="shipping-request-model">'+
+                     '<select ng-model="carrier">'+
+                       '<option value="" ng-selected="true" ng-selected="true">Please Select a Carrier</option>'+
+                        '<option value="usps" label="UPS">usps.com</option>'+
+                        '<option value="auspost" label="Auspost">auspost.com.au</option>'+
+                        '<option value="packsend" label="Packsend">packsend.com.au</option>' +
+                    '</select>'+ 
+                     '<div style="float:right" class="button success-bg" ng-click="send()">Apply</div></div> ' +
                  '</form>' +
                  '<i class="fa fa-close" ng-click="open = false;"></i>' +
              '</div>';
@@ -7516,11 +7524,23 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
                 var data = { 
                     track_id : $scope.track_id, 
                     orderId : $scope.order.id,
+                    carrier : $scope.carrier,
                 }
                 if (angular.isDefined($scope.tracking)) {
                     data.trackId = $scope.tracking.id
                   }
-     
+               /* if (angular.isDefined($scope.carrier)) {
+                    data.carrier = $scope.tracking.carrier
+                  }*/
+                  if(!data.carrier){
+                    AlertService.broadcast('Please select carrier.', 'error');
+                    return false;           
+                  }
+                  if(!data.track_id){
+                    AlertService.broadcast('Please input the truck id.', 'error');
+                    return false;           
+                  }
+         
  
                 nanobar.go(60);
 
