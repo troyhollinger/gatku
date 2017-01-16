@@ -74,7 +74,10 @@ Admin
 							<shipping-track order="order" tracking=""></shipping-track>	
 						</div>
 						<div ng-if="order.tracking" style="margin-right: 5px;float:left;">
-							<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+
+							<a ng-if="order.tracking.carrier == 'usps'" href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+							<a ng-if="order.tracking.carrier == 'auspost'" href="https://auspost.com.au/parcels-mail/track.html#/track?id=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
+							<a ng-if="order.tracking.carrier == 'packsend'" href="https://online.packsend.com.au/tracktrace?trackingnumber=@{{ order.tracking.track_id }}" target="_blank"><div class="button success-bg">Track# @{{ order.tracking.track_id }}</div></a>
 						</div>
 						<div ng-if="order.tracking" style="margin-right: 5px;float:right;">
 							<shipping-track order="order" tracking="order.tracking"></shipping-track>	
