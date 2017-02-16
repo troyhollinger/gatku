@@ -7501,9 +7501,10 @@ app.directive('shippingTrack', ['$window', '$compile','ShippingTrack', 'AlertSer
                      '<div class="shipping-request-model">'+
                      '<select ng-model="carrier">'+
                        '<option value="" ng-selected="true" ng-selected="true">Please Select a Carrier</option>'+
-                        '<option value="usps" label="UPS">usps.com</option>'+
+                        '<option value="usps" label="USPS">usps.com</option>'+
                         '<option value="auspost" label="Auspost">auspost.com.au</option>'+
                         '<option value="packsend" label="Packsend">packsend.com.au</option>' +
+                        '<option value="ups" label="UPS">ups.com</option>' +
                     '</select>'+ 
                      '<div style="float:right" class="button success-bg" ng-click="send()">Apply</div></div> ' +
                  '</form>' +

@@ -450,7 +450,7 @@
 		</thead>
 	<tbody>
 	<tr>
-		<td><div style="font-size: 25px;padding-top: 70px;padding-left: 180px;padding-bottom: 100px;">
+		<td><div style="font-size: 20px;padding-top: 70px;padding-left: 175px;padding-bottom: 100px;">
 		   <span style="font-weight: bold;"> {{ $order['customer']['fullName'] }}</span><br>
 			<span>
 			{{ $order['address'] }}
