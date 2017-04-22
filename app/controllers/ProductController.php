@@ -36,10 +36,10 @@ class ProductController extends BaseController {
 			return Redirect::route('home');
 
 		}
-		
+
 	}
 
-	
+
 	/**
 	 * Store a newly created resource in storage.
 	 * POST /products
@@ -106,7 +106,7 @@ class ProductController extends BaseController {
 
 		if ($product === false || $product === null) {
 			return Redirect::route('home');
-		}	
+		}
 		Log::info($product);
 		return View::make('pages.product', ['product' => $product]);
 	}
@@ -143,7 +143,7 @@ class ProductController extends BaseController {
 	 * @return Response
 	 */
 	public function update($id) {
-		
+
 		$input = Input::all();
 
 		$update = $this->product->update($id, $input);
@@ -193,17 +193,13 @@ class ProductController extends BaseController {
 
 
 	public function getByType() {
-
 		$products = $this->product->getByType();
 
 		if ($products === false) {
-
 			return Response::json(['message' => 'Sorry, could not get products by type.'], 404);
-
 		}
 
 		return Response::json(['data' => $products], 200);
-
 	}
 
 
@@ -215,17 +211,17 @@ class ProductController extends BaseController {
 	public function photos($id) {
 
 		try {
-			
+
 			$image = Product::find($id)->images;
 
 		} catch (Exception $e) {
-				
+
 			Log::error($e);
 
 			return Response::json(['message' => 'Sorry, there was a problem retrieving the images'], 404);
 
 		}
-		
+
 		return Response::json(['data' => $image], 200);
 
 	}
