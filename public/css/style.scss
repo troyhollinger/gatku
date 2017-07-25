@@ -953,7 +953,7 @@ html {
 
 	@include center;
 
-	color:white;
+	color: white;
 	font-size: 3.5rem;
 	font-weight: 600;
 	font-family: HelveticaLTPro-Black, Helvetica, Arial, sans-serif;
@@ -1082,11 +1082,11 @@ html {
 
 .contact-top {
 
+	background-image: url(../img/Site_GATKU_Footer-Product.jpg);
 	position: relative;
 	width:100%;
 	background-color: $gray;
 	height: 66.6667%;
-	height: 66.6667vh;
 	color:white;
 
 	.home-container {
@@ -1106,12 +1106,17 @@ html {
 	height:calc(100% / 3);
 	height:calc(100vh / 3);
 	text-align: center;
-
-
+	
 	.home-container {
 
+		background-image: url('../img/Site_GATKU_Footer-PoleLogo.jpg');
+		background-repeat: no-repeat;
+		background-position-x: right;
+		background-position-y: 25%;
+    	background-size: 60%;
+
 		@include center;
-		width:550px;
+		width: 100%;
 
 		@include breakpoint(small) {
 
@@ -1128,6 +1133,22 @@ html {
 			left:0;
 			top:0;
 
+		}
+	}
+
+	.footer-addresses {
+		text-align: left;
+		padding: 45px 20px 10px 70px;
+		font-size: 0.8rem;
+
+		div {
+			font-size: 0.7rem;
+			color: $gray;
+		}
+
+		.country-icon {
+			width: 1.1rem;
+    		margin-right: 5px
 		}
 
 	}
@@ -1150,6 +1171,7 @@ html {
 
 .contact-headline {
 
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: bold;
 	font-size: 4.2rem;
 	margin-bottom: 10px;
@@ -1170,6 +1192,7 @@ html {
 
 .contact-sub-headline {
 
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 300;
 	font-size: 1.8rem;
 	width:60%;
@@ -1193,7 +1216,16 @@ html {
 
 .contact-email {
 
-	padding-left: 50px;
+	a {
+		color: $gray;
+
+	}
+
+	padding-left: 27px;
+	padding-top: 20px;
+	
+	font-size: 0.8rem;
+	text-align: left;
 
 	@include breakpoint(small) {
 
@@ -1206,7 +1238,11 @@ html {
 
 .contact-phone {
 
-	padding-right: 50px;
+	padding-left: 27px;
+	
+	font-size: 0.8rem;
+	text-align: left;
+	color: $gray;
 
 	@include breakpoint(small) {
 
@@ -1240,15 +1276,16 @@ html {
 
 	}
 
+
 }
 
 .contact-social-container {
 
 	i {
 
-		color: $gray;
-		font-size: 2.2rem;
-		margin:0 15px;
+		color: black;
+		font-size: 1.625rem;
+		margin:0 8px;
 		// @include transition(all .2s linear);
 
 	}
@@ -1279,9 +1316,32 @@ html {
 
 }
 
+.social-media-icons {
+	
+	text-align: right;
+	width: 85%;
+}
+
+.tagline-container {
+	
+	position: absolute;
+	bottom: 0px;
+	left: 3%;
+
+}
+
+.tagline-container img {
+	
+	width: 80%;
+	height: auto;
+}
+
 .credits {
 
-	font-size: .8rem;
+	font-size: .525rem;
+	text-align: right;
+	width:85%;
+	padding-top: 20px;
 
 	a {
 
