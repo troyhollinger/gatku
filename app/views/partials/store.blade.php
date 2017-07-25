@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 
 	$headsRow = '<div class="heads-row product-row">
 
 		<div class="product-thumb-container" ng-repeat="head in heads"><a href="' . route('product.show', ['']) . '/{{ head.slug }}"><img ng-src="{{ head.thumb }}"></a></div>
-		
+
 		<div class="clear"></div>
 
 	</div>
@@ -21,7 +21,7 @@
 	$tailsRow = '<div class="tails-row product-row">
 
 		<div class="product-thumb-container" ng-repeat="pole in poles"><a href="' . route('product.show', ['']) . '/{{ pole.slug }}"><img ng-src="{{ pole.thumb }}"></a></div>
-		
+
 		<div class="clear"></div>
 
 	</div>
@@ -40,8 +40,8 @@
 
 		<div class="product-thumb-container" ng-repeat="shrinkerItem in shrinker"><a href="' . route('product.show', ['']) . '/{{ shrinkerItem.slug }}"><img ng-src="{{ shrinkerItem.thumb }}"></a></div>
 
-		<div class="product-thumb-container" ng-repeat="extra in extras1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\'}"></a></div>
-		
+		<div class="product-thumb-container" ng-repeat="extra in extras1" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\'}"></a></div>
+
 		<div class="clear"></div>
 
 	</div>
@@ -50,8 +50,8 @@
 
 		<div class="product-link-container" ng-repeat="shrinkerItem in shrinker"><a href="' . route('product.show', ['']) . '/{{ shrinkerItem.slug }}">{{ shrinkerItem.name }}</a></div>
 
-		<div class="product-link-container" ng-repeat="extra in extras1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
-		
+		<div class="product-link-container" ng-repeat="extra in extras1" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
+
 		<div class="clear"></div>
 
 	</div>
@@ -60,16 +60,16 @@
 
 	$extras2Row = '<div class="extras-row product-row">
 
-		<div class="product-thumb-container" ng-repeat="extra in extras2"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\', \'bands-thumb-large\' : extra.slug == \'hardcore-bands\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' }"></a></div>
-		
+		<div class="product-thumb-container" ng-repeat="extra in extras2" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\', \'bands-thumb-large\' : extra.slug == \'hardcore-bands\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' }"></a></div>
+
 		<div class="clear"></div>
 
 	</div>
 
 	<div class="extras-links links">
 
-		<div class="product-link-container" ng-repeat="extra in extras2"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
-		
+		<div class="product-link-container" ng-repeat="extra in extras2" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
+
 		<div class="clear"></div>
 
 	</div>
@@ -77,11 +77,11 @@
 	<h2 class="store-label">Accessories</h2>';
 
 	$extras3Row = '<div class="extras-row product-row">
-		<div class="product-thumb-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\' || extra.slug == \'offshore-striker\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' || extra.slug == \'cable\' || extra.slug == \'tips\', \'flashers-thumb\' : extra.slug == \'fin-flashers\' }"></a></div>
+		<div class="product-thumb-container" ng-repeat="extra in extras3" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}"><img ng-src="{{ extra.thumb }}" ng-class="{ \'knife-thumb\' : extra.slug == \'budk\', \'bands-thumb\' : extra.slug == \'bands\' || extra.slug == \'hardcore-bands\' || extra.slug == \'offshore-striker\', \'monty-thumb\' : extra.slug == \'full-monty\', \'big-game-thumb\' : extra.slug == \'big-game\', \'cable-w-tip-thumb\' : extra.slug == \'cable-w-tip\' || extra.slug == \'cable\' || extra.slug == \'tips\', \'flashers-thumb\' : extra.slug == \'fin-flashers\' }"></a></div>
 		<div class="clear"></div>
 	</div>
 	<div class="extras-links links">
-		<div class="product-link-container" ng-repeat="extra in extras3"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>	
+		<div class="product-link-container" ng-repeat="extra in extras3" ng-show="extra.availabilityTypeId == 1"><a href="' . route('product.show', ['']) . '/{{ extra.slug }}">{{ extra.name }}</a></div>
 		<div class="clear"></div>
 	</div>
 	<h2 class="store-label">Accessories</h2>';
@@ -89,7 +89,7 @@
 	$apparelRow = '<div class="apparel-row product-row">
 
 		<div class="product-thumb-container" ng-repeat="apparelItem in apparel"><a href="' . route('product.show', ['']) . '/{{ apparelItem.slug }}"><img ng-src="{{ apparelItem.thumb }}"></a></div>
-		
+
 		<div class="clear"></div>
 
 	</div>
@@ -126,15 +126,15 @@
 
 		@if($product->type->slug === 'head')
 
-		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow  }}		
+		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow  }}
 
 		@elseif($product->type->slug === 'pole')
 
-		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}		
+		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
 
 		@elseif($product->type->slug === 'extra' || $product->type->slug === 'shrinker')
 
-		{{ $extras1Row . $extras2Row . $extras3Row . $headsRow . $tailsRow . $apparelRow . $glassRow }}		
+		{{ $extras1Row . $extras2Row . $extras3Row . $headsRow . $tailsRow . $apparelRow . $glassRow }}
 
 		@elseif($product->type->slug === 'apparel')
 
@@ -145,7 +145,7 @@
 		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow}}
 
 		@else
-		
+
 		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
 
 		@endif
@@ -156,6 +156,6 @@
 
 	@endif
 
-	
+
 
 </div>

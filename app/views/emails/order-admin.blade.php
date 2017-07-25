@@ -438,7 +438,7 @@
 			<tr>
 				<th id="header-address" align="left" valign="top" colspan="2" style="height: 45px;font-family: "Helvetica", Arial, sans-serif;">
 					<!-- Gatku image here -->
-					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 50px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
+					<img src="{{ asset('img/email-assets/logo.png') }}" height="40px" style="margin-left: 0;margin-top: 5px;border: 0;outline: none;text-decoration: ;-ms-interpolation-mode: bicubic;font-family: 'helvetica' ;, arial, sans-serif: ;">
 				</th>
 			</tr>
 			<tr>
@@ -450,7 +450,7 @@
 		</thead>
 	<tbody>
 	<tr>
-		<td><div style="font-size: 25px;padding-top: 70px;padding-left: 180px;padding-bottom: 100px;">
+		<td><div style="font-size: 20px;padding-top: 40px;padding-left: 175px;padding-bottom: 100px;">
 		   <span style="font-weight: bold;"> {{ $order['customer']['fullName'] }}</span><br>
 			<span>
 			{{ $order['address'] }}
