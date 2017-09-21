@@ -5,6 +5,16 @@
 @endif
 
 	<div class="container navigation-container">
+	@if((Route::currentRouteName() === 'home') || (Route::currentRouteName() === 'thespear')) 
+	<style>
+		.hamburger .patty{
+			background-color:  {{$homeSetting['hamburger_menu_color']}};
+		}
+		.mobile-mast .cart-icon{
+			color:  {{$homeSetting['cart_button_color']}};
+		}
+	</style>
+	@endif
 	@if (Route::currentRouteName() === 'thespear')
 	<style>
 		.mast ul.navigation li, .mast ul.navigation li a{

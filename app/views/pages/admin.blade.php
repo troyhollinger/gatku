@@ -290,6 +290,10 @@ Admin
 					</div>
 				<label>Button Color</label>
 					<input style="width: 150px;" placeholder="#000000" type="text" ng-model="homeSetting.button_color">
+				<label>Hamburger Menu Color</label>
+					<input style="width: 150px;" placeholder="#000000" type="text" ng-model="homeSetting.hamburger_menu_color">
+				<label>Cart Button Color</label>
+					<input style="width: 150px;" placeholder="#000000" type="text" ng-model="homeSetting.cart_button_color">
 				<label>Home Image</label>
 					<div class="upload-field" ng-style="{'background-image':'url(' + homeSetting.image + ')'}">
 						<i class="fa fa-image" ng-hide="homeSetting.mobile_image"></i>
