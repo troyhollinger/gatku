@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Austen\Repositories;
 
 use Order;
@@ -26,7 +26,7 @@ class OrderRepository {
 	protected $order;
 	protected $error_message;
 
-	public $blackFriday = false;
+	public $blackFriday = true;
 
 	public function __construct(CustomerRepository $customer) {
 
@@ -52,7 +52,7 @@ class OrderRepository {
 
 			return false;
 
-		}	
+		}
 
 		DB::beginTransaction();
 
@@ -62,7 +62,7 @@ class OrderRepository {
 			$order = new Order;
 			$order = $this->assignFields($order, $customer, $input['form']);
 			$order->save();
-		
+
 			$this->assignOrderItems($order, $input['items']);
 
 			$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
@@ -98,33 +98,33 @@ class OrderRepository {
 
 		if (App::environment('production')) {
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
-				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');			 
+				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
 			});
 
 			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');			 
+				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
 			});
 
 			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');			  
+				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
 			});
 
 			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');			  
+				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');
 			});
 		}
 
 		if (App::environment('local')) {
-			
+
 			if (isset($_ENV['test_transaction_email'])) {
 				Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
-					$message->to($_ENV['test_transaction_email'], 'Austen Payan')->subject('New order from GATKU');		 
-				});	
+					$message->to($_ENV['test_transaction_email'], 'Austen Payan')->subject('New order from GATKU');
+				});
 			}
 		}
 
-					
-		
+
+
 		return true;
 	}
 
@@ -152,13 +152,13 @@ class OrderRepository {
 	/**
 	 * Validates the input from the cart. Make sure no shady business is happening.
 	 *
-	 * @todo code this method to validate the input 
+	 * @todo code this method to validate the input
 	 */
 	private function validateInput($input) {
 
 		$email = $input['form']['email'];
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			return false; 
+			return false;
 		}
 
 		return true;
@@ -183,7 +183,7 @@ class OrderRepository {
 			} else {
 
 				$price = $item->product->price;
-		
+
 			}
 
 			$price = $price * $item->quantity;
@@ -270,7 +270,7 @@ class OrderRepository {
 	/**
 	 * Calculate the shipping.
 	 * There is a similar method in the CartController.js file. These two methods
-	 * should produce identical results. 
+	 * should produce identical results.
 	 *
 	 */
 	private function calculateShipping($order) {
@@ -283,7 +283,6 @@ class OrderRepository {
 		$items = $order->items;
 
 		if ($this->calculateSubTotal($order) >= 30000) return 0;
-		if ($this->blackFriday) return 0;
 
 		foreach($items as $item) {
 
@@ -300,6 +299,10 @@ class OrderRepository {
 				$others[] = $item;
 			}
 		}
+
+		// if black friday is true, only give free shipping to
+        // orders that have poles
+		if ($this->blackFriday && count($poles) > 0) return 0;
 
 		if (count($poles) > 0) {
 
@@ -352,7 +355,7 @@ class OrderRepository {
 	}
 
 	/**
-	 * Converts cart items to order Items, 
+	 * Converts cart items to order Items,
 	 * Addons the same.
 	 *
 	 */

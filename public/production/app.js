@@ -8618,9 +8618,9 @@ app.controller('CartBlinderController', ['$scope', 'CartService', function($scop
 | Cart Controller
 |--------------------------------------------------------------------------
 |
-| All of the form fields are defined in the view cart.blade.php. This 
-| controller simply passes the data on to the backend. 
-| NOTE: if a field is added or subtracted, you will have to update the  
+| All of the form fields are defined in the view cart.blade.php. This
+| controller simply passes the data on to the backend.
+| NOTE: if a field is added or subtracted, you will have to update the
 | $scope.validate method to reflect the changes.
 |
 */
@@ -8637,7 +8637,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.discountText = '';
     $scope.discountAmount = 0;
     $scope.enabled = true;
-    $scope.blackFriday = false;
+    $scope.blackFriday = true;
 
     $scope.toStage = function(index) {
         Inputs.blur();
@@ -8683,10 +8683,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             return 0;
         }
 
-        if ($scope.blackFriday) {
-            return 0;
-        }
-
         for(var i = 0; i < $scope.items.length; i++) {
             var item = $scope.items[i];
 
@@ -8698,6 +8694,11 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 others.push(item);
             }
         };
+        // if black friday is true, only give free shipping to
+        // orders that have poles
+        if ($scope.blackFriday && poles.length > 0) {
+            return 0;
+        }
 
         if (poles.length > 0) {
             var poleShippingPrice = poles[0].type.shippingPrice;
@@ -8725,20 +8726,20 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     $scope.subtotal = function() {
         var subtotal = 0;
-        
+
         angular.forEach($scope.items, function(value, key) {
             subtotal += $scope.items[key].price * $scope.items[key].quantity;
 
             for(var i = 0; i < $scope.items[key].addons.length; i++) {
                 subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
             }
-        }); 
+        });
 
         return subtotal - $scope.discounts(subtotal);
     }
 
     /**
-     * This function will change quite a bit depending 
+     * This function will change quite a bit depending
      * on what current discounts you want plugged into the system
      *
      */
@@ -8817,7 +8818,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 if ('error' in response.message.jsonBody) {
                     AlertService.broadcast(response.message.jsonBody.error.message, 'error');
                 } else {
-                    AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');                  
+                    AlertService.broadcast('Sorry, something went wrong on our end. We are fixing it soon!', 'error');
                 }
             });
         });
@@ -8932,7 +8933,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                     AlertService.broadcast('Please enter billing zip or check Billing Address same as Shipping Address', 'error');
                     return false;
                 }
-                
+
 
             }
 
@@ -8969,7 +8970,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         if($scope.card.isBillingSame){
             card.address_zip = $scope.form.zip;
         }else{
-            card.address_zip = $scope.form.billing_zip;    
+            card.address_zip = $scope.form.billing_zip;
         }
         card.number = $scope.card.number;
         card.exp_month = $scope.card.expiryMonth;
