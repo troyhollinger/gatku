@@ -8,4 +8,5 @@ public/img/you-images/*
 public/img/home-images/*
 public/node_modules/*
 public/.sass-cache
-
+.idea/
+dev_config/
