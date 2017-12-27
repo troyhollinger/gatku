@@ -1086,17 +1086,33 @@ html {
 	position: relative;
 	width:100%;
 	background-color: $gray;
-	height: 66.6667%;
+	height: 60%;
 	color:white;
+	text-align: center;
 
 	.home-container {
+		position: absolute;
+		background-repeat: no-repeat;
+		background-position-x: right;
+		background-position-y: 100%;
+		background-size: 60%;
 
 		@include center;
-		text-align: center;
+		width: 100%;
 
+		@include breakpoint(small) {
+			width:100%;
+		}
+
+		@include breakpoint(xsmall) {
+			padding: 25px 10px;
+			box-sizing: border-box;
+			position: static;
+			@include transform(translate(0,0));
+			left:0;
+			top:0;
+		}
 	}
-
-
 }
 
 .contact-bottom {
@@ -1106,13 +1122,15 @@ html {
 	height:calc(100% / 3);
 	height:calc(100vh / 3);
 	text-align: center;
-	
-	.home-container {
 
+	background-color: #00b0e8;
+
+	.home-container {
+		position: absolute;
 		background-image: url('../img/Site_GATKU_Footer-PoleLogo.jpg');
 		background-repeat: no-repeat;
 		background-position-x: right;
-		background-position-y: 25%;
+		background-position-y: 100%;
     	background-size: 60%;
 
 		@include center;
@@ -1137,6 +1155,7 @@ html {
 	}
 
 	.footer-addresses {
+		position: absolute;
 		text-align: left;
 		padding: 45px 20px 10px 70px;
 		font-size: 0.8rem;
@@ -1167,6 +1186,14 @@ html {
 
 	}
 
+}
+
+.copyright-footer {
+	padding: 20px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	background-color: #000;
+	color: #FFF;
+	text-align: center;
 }
 
 .contact-headline {
@@ -1317,9 +1344,35 @@ html {
 }
 
 .social-media-icons {
-	
+	text-align: center;
+	width: 100%;
+	font-size: 2.5em;
+}
+
+.bottom-footer-address {
+	width: 100%;
+	color: #a9a9a9;
+	a {
+		color: #a9a9a9;
+	}
+}
+
+.address-map-icon {
+	width: 46%;
 	text-align: right;
-	width: 85%;
+	float: left;
+	overflow: hidden;
+}
+
+.beside-map-icon-address {
+	width:54%;
+	text-align: left;
+	float: left;
+	overflow: hidden;
+}
+
+.address-divider {
+	margin-top: 30px;
 }
 
 .tagline-container {
