@@ -8,13 +8,9 @@
 
 	<div class="bottom-footer-address">
 
-		<br>
-
-		<div class="address-divider" style="text-align: right;">
-			<img src="../img/Site_GATKU_Footer-PoleLogo.jpg" srcset="../img/Site_GATKU_Footer-PoleLogo.jpg 1200w">
+		<div style="margin-top: 20px; text-align: right; align-content: right; justify-content: right;">
+			<img src="../img/Site_GATKU_Footer-PoleLogo_ver_2.jpg" srcset="../img/Site_GATKU_Footer-PoleLogo_ver_2.jpg 1200w">
 		</div>
-
-		<br>
 
 		<div class="address-divider">
 			<div class="address-map-icon">
@@ -29,8 +25,6 @@
 			</div>
 		</div>
 
-		<br>
-
 		<div class="address-divider">
 			<div class="address-map-icon">
 				<img class="country-icon" src="{{ asset('/img/Site_GATKU_Footer-AU.png') }}">
@@ -42,8 +36,6 @@
 				Wa 6160 AU
 			</div>
 		</div>
-
-		<br>
 
 		<div class="address-divider">
 			<div class="address-map-icon">&nbsp;</div>
@@ -57,7 +49,7 @@
 
 	<br>
 
-	<div class="social-media-icons address-divider">
+	<div class="social-media-icons">
 		<a href="http://www.facebook.com/gatku" target="_blank"><i class="fa fa-facebook"></i></a>
 		&nbsp;
 		<a href="http://www.twitter.com/gatku" target="_blank"><i class="fa fa-twitter"></i></a>

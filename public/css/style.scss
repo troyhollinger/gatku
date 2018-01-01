@@ -1081,8 +1081,8 @@ html {
 }
 
 .contact-top {
-
 	background-image: url(../img/Site_GATKU_Footer-Product.jpg);
+	background-size: auto 100%;
 	position: relative;
 	width:100%;
 	background-color: $gray;
@@ -1194,6 +1194,7 @@ html {
 	background-color: #000;
 	color: #FFF;
 	text-align: center;
+	font-size: 12px;
 }
 
 .contact-headline {
@@ -1358,21 +1359,35 @@ html {
 }
 
 .address-map-icon {
-	width: 46%;
+	width: 50px;
 	text-align: right;
 	float: left;
 	overflow: hidden;
 }
 
 .beside-map-icon-address {
-	width:54%;
+	width: 190px;
 	text-align: left;
 	float: left;
 	overflow: hidden;
 }
 
 .address-divider {
-	margin-top: 30px;
+	margin-top: 20px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	align-items: center;
+	-webkit-flex-wrap: wrap;
+	-moz-flex-wrap: wrap;
+	flex-wrap: wrap;
 }
 
 .tagline-container {
