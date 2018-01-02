@@ -2246,15 +2246,21 @@ product-buyers {
 		}
 }
 .photo-credit{
-	position: absolute;top: 95%;right: 3%;color: #fff;font-family: $helvetica; font-size: 19px;
+	position: absolute;
+	top: 95%;
+	right: 3%;
+	color: #fff;
+	font-family: $helvetica;
+	font-size: 19px;
+	letter-spacing: -1px;
+
 	a{
 		color: #fff;
 	}
 	@include breakpoint(small) {
-
-			font-size: 12px;
-
-		}
+		font-size: 12px;
+		letter-spacing: 0px;
+	}
 }
 .upload-field {
 
