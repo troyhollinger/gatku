@@ -516,11 +516,12 @@ html {
 	background-size: cover;
 	background-position: center;
 	background-color: $gray;
+	text-align: center;
+	letter-spacing: -4px;
 
 	@include breakpoint(small) {
-
 		background-position: 65% 50%;
-
+		letter-spacing: -2px;
 	}
 
 }
@@ -958,7 +959,6 @@ html {
 	font-weight: 600;
 	font-family: HelveticaLTPro-Black, Helvetica, Arial, sans-serif;
 	line-height: 1;
-	letter-spacing: -4px;
 
 	@include breakpoint(medium) {
 
