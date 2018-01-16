@@ -6,62 +6,11 @@
 		</div>
 	</div>
 
-	<div class="bottom-footer-address">
-
-		<div style="margin-top: 20px; text-align: right; align-content: right; justify-content: right;">
-			<img src="../img/Site_GATKU_Footer-PoleLogo_ver_2.jpg" srcset="../img/Site_GATKU_Footer-PoleLogo_ver_2.jpg 1200w">
-		</div>
-
-		<div class="address-divider">
-			<div class="address-map-icon">
-				<img class="country-icon" src="{{ asset('/img/Site_GATKU_Footer-USA.png') }}">
-				&nbsp;&nbsp;
-			</div>
-
-			<div class="beside-map-icon-address">
-				1250 Pioneer Way Suite H
-				<br>
-				El Cajon, CA 92020 USA
-			</div>
-		</div>
-
-		<div class="address-divider">
-			<div class="address-map-icon">
-				<img class="country-icon" src="{{ asset('/img/Site_GATKU_Footer-AU.png') }}">
-				&nbsp;&nbsp;
-			</div>
-			<div class="beside-map-icon-address">
-				Beach Street Fremantle
-				<br>
-				Wa 6160 AU
-			</div>
-		</div>
-
-		<div class="address-divider">
-			<div class="address-map-icon">&nbsp;</div>
-			<div class="beside-map-icon-address">
-				<a href="mailto:dustin@gatku.com">dustin@gatku.com</a>
-				<br>
-				<a href="tel:6195073860">619 507 3860</a>
-			</div>
-		</div>
+	<div class="bottom-footer-address-mobile">
+		@include('partials/mobile-footer')
 	</div>
 
-	<br>
-
-	<div class="social-media-icons">
-		<a href="http://www.facebook.com/gatku" target="_blank"><i class="fa fa-facebook"></i></a>
-		&nbsp;
-		<a href="http://www.twitter.com/gatku" target="_blank"><i class="fa fa-twitter"></i></a>
-		&nbsp;
-		<a href="https://www.instagram.com/gatkupolespears/" target="_blank"><i class="fa fa-instagram"></i></a>
-		&nbsp;
-		<a href="http://www.youtube.com/ryangattoni" target="_blank"><i class="fa fa-youtube-play"></i></a>
-	</div>
-
-	<br>
-
-	<div class="copyright-footer">
-		Copyright <?php echo date("Y"); ?> &copy; GATKU Polespears - All rights reserved.
+	<div class="bottom-footer-address-desktop">
+		@include('partials/desktop-footer')
 	</div>
 </div>
