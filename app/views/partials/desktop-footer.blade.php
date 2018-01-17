@@ -16,16 +16,22 @@
 
 <div style="width: 100%; height: 20px;"></div>
 
-<div style="width: 100%; float: none;">
-    <div style="width: 50%; float: left; ">
-        <img class="image-in-the-middle-of-div" src="../img/Site_GATKU_Footer-TaglineBox.png">
-    </div>
-    
-    <div  style="width: 50%; float: left; padding-top: 10px;">
-        <div style="width: 70%; float: left;">
-            @include('partials.social-media-footer')
-            @include('partials.desktop-copyright-footer')
+<div class="desktop-last-footer-element-wrapper">
+    <div class="desktop-last-footer-element">
+        <div class="div-fifty-percent">
+            <div class="div-ten-percent"></div>
+            <div class="div-ninety-percent">
+                <img src="../img/Site_GATKU_Footer-TaglineBox.png">
+            </div>
         </div>
-        <div style="width: 30%; float: left;"></div>
+
+        <div class="div-fifty-percent" style="padding-top: 10px;">
+            <div class="div-ninety-percent">
+                @include('partials.social-media-footer')
+                @include('partials.desktop-copyright-footer')
+            </div>
+            <div class="div-ten-percent-separator"></div>
+        </div>
     </div>
 </div>
+

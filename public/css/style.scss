@@ -511,7 +511,7 @@ html {
 
 	width:100%;
 	height:100%;
-	width:100vw;
+	//width:100vw;
 	height:100vh;
 	background-size: cover;
 	background-position: center;
@@ -1063,28 +1063,31 @@ html {
 
 
 .contact-section {
-
 	width:100%;
 	height:100%;
 	width:100vw;
 	height:100vh;
 
-
 	@include breakpoint(xsmall) {
-
 		height:auto;
-
 	}
 
+	@media screen and (min-width: 1920px) {
+		width: 1920px;
+		margin: 0 auto;
+		height:100vh;
+	}
 }
 
 .contact-top {
 	background-image: url(../img/Site_GATKU_Footer-Product.jpg);
 	background-size: auto 100%;
-	background-position: center;
+	background-position: center center;
+	background-repeat: no-repeat;
 	position: relative;
 	width:100%;
 	height: 100%;
+	max-width: 1920px;
 	color:white;
 	text-align: center;
 
@@ -1244,7 +1247,6 @@ html {
 
 .bottom-footer-address-desktop {
 	display: block;
-	width: 100%;
 	color: #a9a9a9;
 	font-size: 1.15em;
 
@@ -1257,6 +1259,43 @@ html {
 	}
 }
 
+.desktop-last-footer-element {
+	width:100%;
+	height:100%;
+	width:100vw;
+
+	@media screen and (min-width: 1920px) {
+		width: 1920px;
+	}
+}
+
+.desktop-last-footer-element-wrapper {
+	margin: 0 auto;
+	display: table;
+}
+
+.div-five-percent {
+	width: 5%;
+	float: left;
+	height: 10px;
+}
+
+.div-ten-percent {
+	width: 10%;
+	float: left;
+	height: 10px;
+}
+
+.div-fifty-percent {
+	width: 50%;
+	float: left;
+}
+
+.div-ninety-percent {
+	width: 90%;
+	float: left;
+}
+
 .desktop-logo-footer {
 	width: 60%;
 	float: left;
@@ -1264,6 +1303,7 @@ html {
 	text-align: right;
 	background-repeat: no-repeat;
 	background-image: url( ../img/Site_GATKU_Footer-PoleLogo.jpg );
+	background-size: cover;
 }
 
 .contact-email {
@@ -1401,10 +1441,9 @@ html {
 }
 
 .address-map-icon {
-	width: 100px;
-	text-align: right;
+	width: 50px;
+	text-align: left;
 	float: left;
-	//overflow: hidden;
 }
 
 .beside-map-icon-address {

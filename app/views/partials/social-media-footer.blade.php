@@ -1,6 +1,6 @@
 
 <div class="social-media-icons">
-    <a href="http://www.facebook.com/gatku" target="_blank"><i class="fa fa-facebook"></i></a>
+    <a href="http://www.facebook.com/gatku" target="_blank"><i class="fa fa-facebook-official"></i></a>
     &nbsp;
     <a href="http://www.twitter.com/gatku" target="_blank"><i class="fa fa-twitter"></i></a>
     &nbsp;

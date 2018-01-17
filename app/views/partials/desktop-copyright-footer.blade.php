@@ -1,4 +1,4 @@
 
 <div class="copyright-footer">
-    Media | Copyright &copy; <?php echo date("Y"); ?> GATKU Polespears - All rights reserved. | Made By Troy
+    Copyright &copy; <?php echo date("Y"); ?> GATKU Polespears - All rights reserved. | <a target="_blank" href="http://troyhollinger.com/">Made By Troy</a>
 </div>
