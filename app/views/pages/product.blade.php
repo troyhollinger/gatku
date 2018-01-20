@@ -56,8 +56,8 @@
 			<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
-				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
-				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+				<span ng-show="attached">@if($product->slug === 'g-string' || $product->slug === 'black g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string'  || $product->slug === 'black g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
 			</p>
 
 
@@ -111,8 +111,8 @@
 		<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
-				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
-				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+				<span ng-show="attached">@if($product->slug === 'g-string' || $product->slug === 'black g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string' || $product->slug === 'black g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
 			</p>
 
 

@@ -162,7 +162,7 @@ var PoleScroll = {
 			} else if(windowWidth <= 500) {
 				scroller.scrollLeft($(".scroller-image").width() - 1580);			
 			}
-		} else if(typeof slug != 'undefined' && slug === 'g-string') {
+		} else if(typeof slug != 'undefined' && slug === 'g-string' || slug === 'black g-string') {
 			scroller.scrollLeft($(".scroller-image").width() - 5300);
 		}
 

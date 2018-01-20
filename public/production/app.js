@@ -878,7 +878,7 @@ var PoleScroll = {
 			} else if(windowWidth <= 500) {
 				scroller.scrollLeft($(".scroller-image").width() - 1580);			
 			}
-		} else if(typeof slug != 'undefined' && slug === 'g-string') {
+		} else if(typeof slug != 'undefined' && slug === 'g-string' || slug === 'black g-string') {
 			scroller.scrollLeft($(".scroller-image").width() - 5300);
 		}
 
@@ -9150,7 +9150,7 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 	}
 
 	$scope.scrollAcross = function() {
-		if ($scope.product.slug === 'g-string') {
+		if ($scope.product.slug === 'g-string' || $scope.product.slug === 'black g-string') {
 			PoleScroll.center();
 		} else {
 			PoleScroll.scrollAcross();
