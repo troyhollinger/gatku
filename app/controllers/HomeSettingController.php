@@ -47,6 +47,8 @@ class HomeSettingController extends BaseController {
 			$homeSetting = new HomeSetting;
 			$homeSetting->logo = Input::get('logo');
 			$homeSetting->button_color = Input::get('button_color');
+			$homeSetting->hamburger_menu_color = Input::get('hamburger_menu_color');
+			$homeSetting->cart_button_color = Input::get('cart_button_color');
 			$homeSetting->image = Input::get('image');
 			$homeSetting->mobile_image = Input::get('mobile_image');
 			$homeSetting->image_info = Input::get('image_info');
