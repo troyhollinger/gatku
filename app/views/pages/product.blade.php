@@ -12,7 +12,7 @@
 @section('content')
 
 @if($product->type->slug != 'apparel' && $product->type->slug != 'glass')
-<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }} {{ $product->slug === 'g-string' || $product->slug === 'offshore-striker' ? 'g-string-scroller' : '' }}">
+<div class="scroller {{ $product->slug === 'budk' ? 'knife-scroller no-attached-state' : '' }} {{ $product->slug === 'bands' ? 'band-scroller' : '' }} {{ $product->slug === 'g-string' || $product->slug === 'offshore-striker' || $product->slug === 'black g-string' ? 'g-string-scroller' : '' }}">
 
 	@if($product->attachedImage || $product->detachedImage)
 
@@ -56,8 +56,8 @@
 			<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
-				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
-				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+				<span ng-show="attached">@if($product->slug === 'g-string' || $product->slug === 'black g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string'  || $product->slug === 'black g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
 			</p>
 
 
@@ -111,8 +111,8 @@
 		<div class="pole-view-actions">
 
 			<p class="attachment-button faded" ng-click="attached = !attached; scrollAcross();">
-				<span ng-show="attached">@if($product->slug === 'g-string') OFF POLE @else TAKE POLE APART @endif</span>
-				<span ng-show="attached === false">@if($product->slug === 'g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
+				<span ng-show="attached">@if($product->slug === 'g-string' || $product->slug === 'black g-string') OFF POLE @else TAKE POLE APART @endif</span>
+				<span ng-show="attached === false">@if($product->slug === 'g-string' || $product->slug === 'black g-string') ON POLE @else PUT POLE TOGETHER @endif</span>
 			</p>
 
 
