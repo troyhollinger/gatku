@@ -28,7 +28,9 @@ class ImageRepository
 			// Check if image is a JPG : exif_read_data won't work on anything else.
 			if (exif_imagetype($file) == 2) {
 
-				$exif = exif_read_data($file);
+			    //Added @ before exif_read_data($file) is workaround only. Need to fix it permanently
+                //See: https://github.com/FriendsOfCake/cakephp-upload/issues/221
+				$exif = @exif_read_data($file);
 
 				if (isset($exif['Orientation'])) {
 
