@@ -1,32 +1,33 @@
-<div style="height: 100px;"></div>
+<div class="domain-footer-divider-1"></div>
 
 <div style="overflow: auto;">
-    <div style="width: 40%; float: left;">
+    <div class="forty-percent-left-flow">
+        <div class="desktop-footer-divider">
+            @include('partials.us-address-with-map')
 
-        @include('partials.us-address-with-map')
+            @include('partials.australian-address-with-map')
 
-        @include('partials.australian-address-with-map')
-
-        @include('partials.email-and-phone')
-
+            @include('partials.email-and-phone')
+        </div>
     </div>
 
     <div class="desktop-logo-footer"></div>
 </div>
 
-<div style="width: 100%; height: 20px;"></div>
+<div class="domain-footer-divider"></div>
 
 <div class="desktop-last-footer-element-wrapper">
-    <div class="desktop-last-footer-element">
-        <div class="div-fifty-percent">
-            <div class="div-ten-percent"></div>
-            <div class="div-ninety-percent">
-                <img src="../img/Site_GATKU_Footer-TaglineBox.png">
+    <div style="width: 100%;">
+        <div class="forty-percent-left-flow">
+            <div style="float: right;">
+                <div class="width-400-class">
+                    <img class="footer-label-class" src="../img/Site_GATKU_Footer-TaglineBox.png">
+                </div>
             </div>
         </div>
 
-        <div class="div-fifty-percent" style="padding-top: 10px;">
-            <div class="div-ninety-percent">
+        <div class="social-media-sixty-percent">
+            <div class="social-media-wrapper">
                 @include('partials.social-media-footer')
                 @include('partials.desktop-copyright-footer')
             </div>

@@ -1,5 +1,5 @@
 <div class="mobile-logo">
-    <img style="width: 100%; height: auto;" src="../img/Site_GATKU_Footer-MobilePoleLogo.jpg">
+    <img style="width: 100%; height: auto;" src="../img/Site_GATKU-NewFooter-PolespearMobile.png">
 </div>
 
 @include('partials.us-address-with-map')
