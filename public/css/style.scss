@@ -1163,6 +1163,14 @@ html {
 
 .mobile-logo {
 	margin-top: 20px;
+	width: auto;
+	height: 20vh;
+	background-image: url('../img/Site_GATKU-NewFooter-PolespearMobile.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin-left: 10%;
+	align-content: right;
+	text-align: right;
 }
 
 .copyright-footer {
@@ -1296,6 +1304,7 @@ html {
 	background-image: url( ../img/Site_GATKU-NewFooter-Polespear.png );
 	background-size: cover;
 }
+
 
 .mobile-footer-image {
 	width: 100%;

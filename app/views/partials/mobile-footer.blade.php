@@ -1,6 +1,4 @@
-<div class="mobile-logo">
-    <img class="mobile-footer-image" src="../img/Site_GATKU-NewFooter-PolespearMobile.png">
-</div>
+<div class="mobile-logo"></div>
 
 @include('partials.us-address-with-map')
 
