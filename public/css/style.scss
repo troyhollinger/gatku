@@ -1056,7 +1056,7 @@ html {
 }
 
 .contact-top {
-	background-image: url(../img/Site_GATKU_Footer-Product.jpg);
+	background-image: url('../img/Site_GATKU-NewFooter-Photo2560-polespears.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	position: relative;
@@ -1163,14 +1163,11 @@ html {
 
 .mobile-logo {
 	margin-top: 20px;
-	width: auto;
-	height: 20vh;
-	background-image: url('../img/Site_GATKU-NewFooter-PolespearMobile.png');
-	background-size: contain;
+	background-image: url('../img/Site_GATKU-NewFooter-PhotoMobile-polespears.png');
+	background-position: left center;
 	background-repeat: no-repeat;
-	margin-left: 10%;
-	align-content: right;
-	text-align: right;
+	background-size: cover;
+	height: 30vw;
 }
 
 .copyright-footer {
@@ -1219,7 +1216,7 @@ html {
 	margin:0 auto;
 
 	@include breakpoint(small) {
-		font-size: 1.5rem;
+		font-size: 1.1rem;
 		width:100%;
 	}
 
