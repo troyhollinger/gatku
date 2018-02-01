@@ -1290,11 +1290,17 @@ html {
 .desktop-logo-footer {
 	width: 60%;
 	float: left;
-	height: 200px;
+	height: 140px;
 	text-align: right;
 	background-repeat: no-repeat;
 	background-image: url( ../img/Site_GATKU-NewFooter-Polespear.png );
 	background-size: cover;
+}
+
+.mobile-footer-image {
+	width: 100%;
+	height: auto;
+	margin-left: 10%;
 }
 
 .contact-email {
@@ -1432,7 +1438,7 @@ html {
 }
 
 .address-map-icon {
-	width: 50px;
+	width: 40px;
 	text-align: left;
 	float: left;
 }
@@ -1445,8 +1451,8 @@ html {
 	font-size: 0.7em;
 
 	@include breakpoint(small) {
-		width: 230px;
-		font-size: 1em;
+		width: 200px;
+		font-size: 0.9em;
 	}
 }
 
