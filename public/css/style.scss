@@ -1284,12 +1284,17 @@ html {
 }
 
 .domain-footer-divider-1 {
-	height: 50px;
+	height: 150px;
 }
 
 .desktop-footer-divider {
 	float: right;
 	max-width: 500px;
+}
+
+.desktop-footer-500 {
+	width: 100%;
+	height: 500px;
 }
 
 .desktop-logo-footer {

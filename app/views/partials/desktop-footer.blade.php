@@ -1,18 +1,23 @@
-<div class="domain-footer-divider-1"></div>
+<div class="desktop-footer-500">
 
-<div style="overflow: auto;">
-    <div class="forty-percent-left-flow">
-        <div class="desktop-footer-divider">
-            @include('partials.us-address-with-map')
+    <div class="domain-footer-divider-1"></div>
 
-            @include('partials.australian-address-with-map')
+    <div style="overflow: auto;">
+        <div class="forty-percent-left-flow">
+            <div class="desktop-footer-divider">
+                @include('partials.us-address-with-map')
 
-            @include('partials.email-and-phone')
+                @include('partials.australian-address-with-map')
+
+                @include('partials.email-and-phone')
+            </div>
         </div>
+
+        <div class="desktop-logo-footer"></div>
     </div>
 
-    <div class="desktop-logo-footer"></div>
 </div>
+
 
 <div class="domain-footer-divider"></div>
 
