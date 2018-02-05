@@ -30,7 +30,11 @@ class ProductRepository implements ProductRepositoryInterface {
             $endDate = date('y-m-d');
         }
 
-        $products = Product::with('type', 'addons', 'availability', 'orderitems')->whereBetween('created_at', array($startDate, $endDate))->get();
+        $products = Product::with('type', 'addons', 'availability', 'orderitems')->whereHas('orderitems', function($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        })->get();
+
         Log::info($products);
         return $products;
     }
