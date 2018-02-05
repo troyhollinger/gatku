@@ -9,18 +9,31 @@ use Log;
 use Addon;
 use Size;
 
+
 class ProductRepository implements ProductRepositoryInterface {
 
 	
 	public function all() {
-
 		$products = Product::with('type', 'addons', 'availability', 'orderitems')->get();
-		//print_r($products);exit;
 		Log::info($products);
-
 		return $products;
-
 	}
+
+	public function getProductsForPeriod($startDate, $endDate)
+    {
+        if (!$startDate) {
+            $startDate = date('y-m-d');
+        }
+
+        //Just in case no endDate
+        if (!$endDate) {
+            $endDate = date('y-m-d');
+        }
+
+        $products = Product::with('type', 'addons', 'availability', 'orderitems')->whereBetween('created_at', array($startDate, $endDate))->get();
+        Log::info($products);
+        return $products;
+    }
 
 	public function get($id) {
 

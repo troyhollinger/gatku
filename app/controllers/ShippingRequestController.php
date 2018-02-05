@@ -8,9 +8,9 @@ class ShippingRequestController extends BaseController {
 
 	public function __construct(ShippingRequestRepository $request) 
 	{
-
 		$this->request = $request;
 
+        parent::__construct();
 	}
 
 	/**

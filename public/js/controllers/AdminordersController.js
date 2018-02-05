@@ -4,7 +4,7 @@ app.controller('AdminordersController', ['$scope', 'Order','$http', function($sc
     gatkuOrder.orders = []; 
     gatkuOrder.pageno = 1; 
     gatkuOrder.itemsPerPage = 15; 
-    gatkuOrder.getData = function(pageno,start_date, end_date){ 
+    gatkuOrder.getData = function(pageno,start_date, end_date){
         gatkuOrder.orders = [];
 
         var Url = "/orderall/" + gatkuOrder.itemsPerPage + "/" + pageno;
@@ -33,6 +33,13 @@ app.controller('AdminordersController', ['$scope', 'Order','$http', function($sc
                 alert('select start date');
             }
      };
+
+
+    gatkuOrder.resetDateFilter = function() {
+        $scope.order_start_date = ''
+        $scope.order_end_date = '';
+        gatkuOrder.getData(1, $scope.order_start_date, $scope.order_end_date);
+    }
 }]);
 
 

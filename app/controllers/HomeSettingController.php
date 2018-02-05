@@ -7,9 +7,9 @@ class HomeSettingController extends BaseController {
 	protected $image;
 
 	public function __construct(ImageRepository $image) {
-
 		$this->image = $image;
 
+        parent::__construct();
 	}
 
 	/**

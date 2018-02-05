@@ -7,9 +7,9 @@ class UserController extends BaseController {
 	protected $user;
 
 	public function __construct(UserRepository $user) {
-
 		$this->user = $user;
 
+        parent::__construct();
 	}
 
 	/**

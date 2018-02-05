@@ -22,22 +22,26 @@ Admin
 		</div>
 
 		<div class="admin-section" ng-show="showOrders" ng-controller="AdminordersController as data" ng-cloak>
-			
-		<div class="order-search">
-		<h2>Orders</h2>
+
+			<div class="order-search">
+				<h2>Orders</h2>
 				<div class="ord-src">
 					<label>Start From</label>
-					<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_start_date" datepickerstartdate />
+					<input style="width: 150px;" class="date-ord-input" ; placeholder="<?php echo date('Y-m-d')?>"
+						   type="text" ng-model="order_start_date" datepickerstartdate/>
 				</div>
 				<div class="ord-src">
 					<label>End To</label>
-					<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_end_date" datepickerenddate />
+					<input style="width: 150px;" class="date-ord-input" ; placeholder="<?php echo date('Y-m-d')?>"
+						   type="text" ng-model="order_end_date" datepickerenddate/>
 				</div>
 				<div class="ord-src">
 					<div class="button success-bg" ng-click="data.searchOrder()">Search Order</div>
 				</div>
-				
-		</div>
+				<div class="ord-src" ng-show="order_start_date || order_end_date">
+					<div class="button danger-bg" ng-click="data.resetDateFilter()">Reset range</div>
+				</div>
+			</div>
 			
     <table class="admin-orders-table">
 
@@ -100,7 +104,7 @@ Admin
 		</div>
 
 
-		<div class="admin-section" ng-if="showProducts" ng-cloak>
+		<div class="admin-section" ng-show="showProducts" ng-cloak>
 			
 			<div class="admin-sub-section">
 
@@ -198,7 +202,26 @@ Admin
 
 			<div class="admin-sub-section" ng-hide="editState">
 
-				<h2>Products</h2>
+				<div class="order-search">
+
+					<h2>Products</h2>
+					<div class="ord-src">
+						<label>Start From</label>
+						<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_start_date" datepickerstartdate />
+					</div>
+					<div class="ord-src">
+						<label>End To</label>
+						<input style="width: 150px;" class="date-ord-input"; placeholder="<?php echo date('Y-m-d')?>" type="text" ng-model="order_end_date" datepickerenddate />
+					</div>
+					<div class="ord-src">
+						<div class="button success-bg" ng-click="getProducts()">Submit</div>
+					</div>
+					<div class="ord-src" ng-show="order_start_date || order_end_date">
+						<div class="button danger-bg" ng-click="resetDateFilter()">Reset range</div>
+					</div>
+				</div>
+
+
 
 				<table class="admin-products-table">
 					<tr>

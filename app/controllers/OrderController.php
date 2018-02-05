@@ -10,6 +10,8 @@ class OrderController extends BaseController {
 	public function __construct(OrderRepository $order,MailchimpRepository $mailchimp) {
 		$this->order = $order;
 		$this->mailchimp = $mailchimp;
+
+        parent::__construct();
 	}
 
 	/**
