@@ -1075,7 +1075,14 @@ html {
 		background-repeat: no-repeat;
 
 		@include center;
-		width: 100%;
+
+		@media screen and (max-width: 1440px) {
+			width: 100%;
+		}
+
+		@media screen and (min-width: 1440px) {
+			width: 800px;
+		}
 
 		@include breakpoint(small) {
 			width:auto;
