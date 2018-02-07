@@ -368,7 +368,6 @@ html {
 }
 
 .mast {
-
 	position: fixed;
 	top:0 !important;
 	height:55px;
@@ -469,17 +468,13 @@ html {
 	@include breakpoint(xxsmall) {
 
 		padding:0 17px;
-
 	}
-
 }
 
 .navigation-container {
-
 	height: 100%;
 	overflow: visible;
 	@include center;
-
 }
 
 #logo-above {
@@ -487,7 +482,6 @@ html {
 	float:left;
 	width:185px;
 	margin-top: 7px;
-
 }
 
 #logo-below {
@@ -496,17 +490,13 @@ html {
 	width: 200px;
 	margin-top: 3px;
 	margin-left: -8px;
-
-
 }
 
 .navigation {
-
 	float:right;
 	margin-top: 10px;
 
 	li {
-
 		position: relative;
 		float:left;
 		text-align: right;
@@ -514,17 +504,13 @@ html {
 		letter-spacing: -1px;
 		margin-bottom: 5px;
 		cursor: pointer;
-
 	}
-
 }
 
 
 .hero {
-
 	width:100%;
 	height:100%;
-	width:100vw;
 	height:100vh;
 	background-size: cover;
 	background-position: center;
@@ -536,7 +522,6 @@ html {
 		background-position: 65% 50%;
 		letter-spacing: -2px;
 	}
-
 }
 
 .detail {
@@ -547,16 +532,12 @@ html {
 }
 
 .home-section {
-
 	position: relative;
-	padding:150px 0px;
+	padding:50px 0px;
 
 	@include breakpoint(xsmall) {
-
-		padding:75px 0;
-
+		padding:50px 0;
 	}
-
 }
 
 .store-container {
@@ -1057,7 +1038,6 @@ html {
 }
 
 .grid-square {
-
 	float:left;
 	width: 20%;
 	background-color: transparent;
@@ -1066,7 +1046,6 @@ html {
 	background-clip: content-box;
 	background-position: center;
 	background-size: cover;
-
 }
 
 .you-section {
@@ -1078,43 +1057,51 @@ html {
 
 
 .contact-section {
-
 	width:100%;
 	height:100%;
 	width:100vw;
-	height:100vh;
+	//height:60vh;
 
 
 	@include breakpoint(xsmall) {
-
 		height:auto;
-
 	}
-
 }
 
 .contact-top {
-	background-image: url(../img/Site_GATKU_Footer-Product.jpg);
-	background-size: auto 100%;
+	background-image: url('../img/Site_GATKU-NewFooter-Photo2560-polespears.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
 	position: relative;
 	width:100%;
-	background-color: $gray;
-	height: 60%;
+	//height: 100%;
+	height: 400px;
 	color:white;
 	text-align: center;
+
+	@media screen and (min-width: 1440px) {
+		min-height: 800px;
+	}
 
 	.home-container {
 		position: absolute;
 		background-repeat: no-repeat;
-		background-position-x: right;
-		background-position-y: 100%;
-		background-size: 60%;
 
 		@include center;
-		width: 100%;
+
+		@media screen and (max-width: 1440px) {
+			width: 100%;
+		}
+
+		@media screen and (min-width: 1440px) {
+			width: 800px;
+		}
 
 		@include breakpoint(small) {
-			width:100%;
+			width:auto;
+			height: 350px;
+			background-position: center;
+			vertical-align: center;
 		}
 
 		@include breakpoint(xsmall) {
@@ -1187,48 +1174,61 @@ html {
 
 	.contact-bottom-margin {
 		margin-bottom: 30px;
-
 		@include breakpoint(medium) {
 			margin-bottom: 20px;
 		}
 	}
 
 	@include breakpoint(xsmall) {
-
 		height:auto;
-
 	}
 
 }
 
+.mobile-logo {
+	margin-top: 20px;
+	background-image: url('../img/Site_GATKU-NewFooter-PhotoMobile-polespears.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 30vw;
+}
+
 .copyright-footer {
-	padding: 20px;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	background-color: #000;
-	color: #FFF;
-	text-align: center;
-	font-size: 12px;
+	color: #a9a9a9;
+	font-size: 10px;
+	text-align: right;
+	padding-top: 5px;
+
+	@include breakpoint(small) {
+		padding: 20px;
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		background-color: #000;
+		color: #FFF;
+		text-align: center;
+	}
+}
+
+.image-in-the-middle-of-div {
+	display: block;
+	margin-left: 20%;
+	margin-right: auto;
 }
 
 .contact-headline {
-
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: bold;
 	font-size: 4.2rem;
 	margin-bottom: 10px;
 
 	@include breakpoint(small) {
-
 		font-size: 3.2rem;
-
+		margin-top: 20%;
 	}
 
 	@include breakpoint(xxsmall) {
-
 		font-size: 2.5rem;
-
 	}
-
 }
 
 .contact-sub-headline {
@@ -1240,20 +1240,111 @@ html {
 	margin:0 auto;
 
 	@include breakpoint(small) {
-
-		font-size: 1.5rem;
+		font-size: 1.1rem;
 		width:100%;
-
 	}
 
 	@include breakpoint(xxsmall) {
-
-		font-size: 1.2rem;
-
+		font-size: 1.15rem;
 	}
-
 }
 
+.bottom-footer-address-desktop {
+	display: block;
+	color: #a9a9a9;
+	font-size: 1.15em;
+
+	a {
+		color: #a9a9a9;
+	}
+
+	@include breakpoint(small) {
+		display: none;
+	}
+}
+
+.desktop-last-footer-element {
+	width:100%;
+	height:100%;
+	width:100vw;
+
+	@media screen and (min-width: 1920px) {
+		width: 1920px;
+	}
+}
+
+.desktop-last-footer-element-wrapper {
+	margin: 0 auto;
+}
+
+.forty-percent-left-flow {
+	width: 40%;
+	float: left;
+}
+
+.social-media-sixty-percent {
+	width:60%;
+	padding-top: 10px;
+	float: left;
+}
+
+.social-media-wrapper {
+	max-width: 800px;
+}
+
+.footer-label-class {
+	display: table;
+	margin-bottom: auto;
+}
+
+.width-400-class {
+	float: left;
+	width: 400px;
+}
+
+.domain-footer-divider {
+	width: 100%;
+	height: 20px;
+}
+
+.domain-footer-divider-1 {
+	height: 50px;
+
+	@media screen and (min-width: 2000px) {
+		height: 150px;
+	}
+}
+
+.desktop-footer-divider {
+	float: right;
+	max-width: 500px;
+}
+
+.desktop-footer-500 {
+	width: 100%;
+	height: 250px;
+
+	@media screen and (min-width: 2000px) {
+		height: 600px;
+	}
+}
+
+.desktop-logo-footer {
+	width: 60%;
+	float: left;
+	height: 140px;
+	text-align: right;
+	background-repeat: no-repeat;
+	background-image: url( ../img/Site_GATKU-NewFooter-Polespear.png );
+	background-size: cover;
+}
+
+
+.mobile-footer-image {
+	width: 100%;
+	height: auto;
+	margin-left: 10%;
+}
 
 .contact-email {
 
@@ -1358,31 +1449,58 @@ html {
 }
 
 .social-media-icons {
-	text-align: center;
+	text-align: right;
 	width: 100%;
-	font-size: 2.5em;
+	font-size: 1.9em;
+
+	i {
+		color: #000000;
+	}
+
+	@include breakpoint(small) {
+		text-align: center;
+		width: 100%;
+		font-size: 2.5em;
+	}
+
 }
 
-.bottom-footer-address {
+.bottom-footer-address-mobile {
 	width: 100%;
 	color: #a9a9a9;
+	font-size: 1.15em;
+	display: none;
+
 	a {
 		color: #a9a9a9;
+	}
+
+	@include breakpoint(small) {
+		display: block;
 	}
 }
 
 .address-map-icon {
-	width: 50px;
-	text-align: right;
+	width: 40px;
+	text-align: left;
 	float: left;
-	overflow: hidden;
 }
 
 .beside-map-icon-address {
-	width: 190px;
 	text-align: left;
 	float: left;
 	overflow: hidden;
+	width: 350px;
+	font-size: 0.7em;
+
+	@include breakpoint(small) {
+		width: 200px;
+		font-size: 0.9em;
+	}
+
+	@media screen and (min-width: 2000px) {
+		font-size: 1.1em;
+	}
 }
 
 .address-divider {
@@ -3316,9 +3434,7 @@ hover-card {
 		background-color: white;
 
 		&.above-fold {
-
 			background-color: transparent;
-
 		}
 
 	}
