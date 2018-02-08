@@ -138,6 +138,7 @@ class ProductRepository implements ProductRepositoryInterface {
 			$extras = ProductType::where('name', '=', 'extra')->first()->products()->orderBy('order', 'asc')->get();
 			$apparel = ProductType::where('name', '=', 'apparel')->first()->products()->orderBy('order', 'asc')->get();
 			$glasses = ProductType::where('name', '=', 'glass')->first()->products()->orderBy('order', 'asc')->get();
+			$packages = ProductType::where('name', '=', 'package')->first()->products()->orderBy('order', 'asc')->get();
 
 		} catch (Exception $e) {
 			
@@ -153,7 +154,8 @@ class ProductRepository implements ProductRepositoryInterface {
 			'shrinker' => $shrinker,
 			'extras' => $extras,
 			'apparel' => $apparel,
-			'glasses' => $glasses
+			'glasses' => $glasses,
+			'packages' => $packages
 		];
 
 		return $products;

@@ -115,6 +115,16 @@
 	</div>
 	<h2 class="store-label">Glasses</h2>';
 
+	$packageRow = '<div class="extras-row product-row">
+		<div class="product-thumb-container" ng-repeat="package in packages"><a href="' . route('product.show', ['']) . '/{{ package.slug }}"><img ng-src="{{ package.thumb }}"></a></div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="links glass-links">
+		<div class="product-link-container" ng-repeat="package in packages"><a href="' . route('product.show', ['']) . '/{{ package.slug }}">{{ package.shortName }}</a></div>
+		<div class="clear"></div>
+	</div>
+	<h2 class="store-label">Packages</h2>';
  ?>
 
 
@@ -126,33 +136,37 @@
 
 		@if($product->type->slug === 'head')
 
-		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow  }}
+		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow . $packageRow}}
 
 		@elseif($product->type->slug === 'pole')
 
-		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
+		{{ $tailsRow . $headsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow . $packageRow}}
 
 		@elseif($product->type->slug === 'extra' || $product->type->slug === 'shrinker')
 
-		{{ $extras1Row . $extras2Row . $extras3Row . $headsRow . $tailsRow . $apparelRow . $glassRow }}
+		{{ $extras1Row . $extras2Row . $extras3Row . $headsRow . $tailsRow . $apparelRow . $glassRow . $packageRow}}
 
 		@elseif($product->type->slug === 'apparel')
 
-		{{ $apparelRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $glassRow }}
+		{{ $apparelRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $glassRow . $packageRow}}
 
 		@elseif($product->type->slug === 'glass')
 
-		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow}}
+		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $packageRow}}
+
+		@elseif($product->type->slug === 'package')
+
+		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $packageRow}}
 
 		@else
 
-		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
+		{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow . $packageRow}}
 
 		@endif
 
 	@else
 
-	{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow}}
+	{{ $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow . $packageRow}}
 
 	@endif
 
