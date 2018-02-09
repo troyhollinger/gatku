@@ -25,15 +25,6 @@
 </div>
 @endif
 
-@if($product->attachedImage && $product->detachedImage)
-<div class="arrows">
-	<div class="left-arrow"></div>
-	<div class="right-arrow"></div>
-
-	<div class="clear"></div>
-</div>
-@endif
-
 <div class="container {{ $product->type->slug === 'apparel' ? 'apparel-height' : ''}} {{ $product->type->slug === 'glass' ? 'glass-height' : '' }}">
 
 	@if($product->type->slug === 'apparel')

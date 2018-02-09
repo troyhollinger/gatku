@@ -156,7 +156,7 @@
 
 		@elseif($product->type->slug === 'package')
 
-		{{ $glassRow . $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $packageRow}}
+		{{ $packageRow. $headsRow . $tailsRow . $extras1Row . $extras2Row . $extras3Row . $apparelRow . $glassRow }}
 
 		@else
 
