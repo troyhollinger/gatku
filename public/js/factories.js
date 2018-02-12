@@ -83,6 +83,15 @@ app.factory('Product', ['$http', function($http) {
 }]);
 
 
+app.factory('HearGoodStuff', ['$http', function($http) {
+    return {
+        store : function(data) {
+            return $http.post('/hear-good-stuff', data);
+        }
+    }
+}]);
+
+
 app.factory('Order', ['$http', function($http) {
 
 
