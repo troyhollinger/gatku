@@ -8319,7 +8319,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     function getProductsForPeriod() {
         Product.forPeriod($scope.order_start_date, $scope.order_end_date).success(function(response) {
-            $scope.products = response.data;
+            countSoldItems(response.data);
         }).error(function(response) {
             console.log("Sorry, there was an error retrieving the products");
         });
@@ -8327,10 +8327,21 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     function getAllProducts() {
         Product.all().success(function(response) {
-            $scope.products = response.data;
+            countSoldItems(response.data);
         }).error(function(response) {
             console.log("Sorry, there was an error retrieving the products");
         });
+    }
+
+    function countSoldItems(products) {
+        angular.forEach(products, function(product, idx) {
+            var sold = 0;
+            angular.forEach(product.orderitems, function(orderitem) {
+                 sold += orderitem.quantity;
+            });
+            products[idx].sold = sold;
+        });
+        $scope.products = products;
     }
 
     function getAvailabilityTypes() {

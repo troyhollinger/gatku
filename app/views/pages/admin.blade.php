@@ -236,7 +236,7 @@ Admin
 						<td class="bold uppercase">@{{ product.name }}</td>
 						<td class="faded">@{{ product.type.name }}</td>
 						<td class="faded">@{{ product.availability.name }}</td>
-						<td class="faded">@{{ product.orderitems.length | number | customNumber }}</td>
+						<td class="faded">@{{ product.sold | number | customNumber }}</td>
 						<td class="faded">@{{ product.order }}</td>
 
 						<td>
