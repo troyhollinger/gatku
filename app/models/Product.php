@@ -5,7 +5,7 @@ class Product extends Eloquent {
 	protected $fillable = [];
 
 
-	public function type() {
+    public function type() {
 
 		return $this->belongsTo('ProductType', 'typeId');
 
@@ -17,10 +17,14 @@ class Product extends Eloquent {
 
 	}
 	public function orderitems() {
-
 		return $this->hasMany('OrderItem', 'productId');
-
 	}
+
+    static public function orderItemsWithParams($startDate, $endDate) {
+        return function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('created_at', array($startDate, $endDate));
+        };
+    }
 
 	public function images() {
 

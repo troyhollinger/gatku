@@ -31,9 +31,16 @@ app.factory('Product', ['$http', function($http) {
     return {
 
         all : function() {
-
             return $http.get('/product');
+        },
 
+        forPeriod : function(startDate, endDate) {  //consider to merge this function with all !!!
+            return $http.get('/product', {
+                params: {
+                    start_date: startDate,
+                    end_date: endDate
+                }
+            });
         },
 
         get : function(productId) {
@@ -80,6 +87,15 @@ app.factory('Product', ['$http', function($http) {
 
     }
 
+}]);
+
+
+app.factory('HearGoodStuff', ['$http', function($http) {
+    return {
+        store : function(data) {
+            return $http.post('/hear-good-stuff', data);
+        }
+    }
 }]);
 
 

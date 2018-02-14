@@ -2,7 +2,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     $scope.init = function() {
         $scope.show('orders');
-        getProducts();
+        $scope.getProducts();
         getTypes();
         getYouImages();
         getHomeSettings();
@@ -19,6 +19,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
     $scope.homeSetting = {};
     $scope.editState = false;
     $scope.editingNew = true;
+
+    $scope.submitButton = 'Submit';
 
     $scope.show = function(section) {
         $scope.showOrders = false;
@@ -51,12 +53,39 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     }
 
-    function getProducts() {
-        Product.all().success(function(response) {
-            $scope.products = response.data;    
+    $scope.getProducts = function() {
+        if ($scope.order_start_date && $scope.order_end_date) {
+            getProductsForPeriod();
+        } else {
+            getAllProducts();
+        }
+    }
+
+    function getProductsForPeriod() {
+        Product.forPeriod($scope.order_start_date, $scope.order_end_date).success(function(response) {
+            countSoldItems(response.data);
         }).error(function(response) {
             console.log("Sorry, there was an error retrieving the products");
         });
+    }
+
+    function getAllProducts() {
+        Product.all().success(function(response) {
+            countSoldItems(response.data);
+        }).error(function(response) {
+            console.log("Sorry, there was an error retrieving the products");
+        });
+    }
+
+    function countSoldItems(products) {
+        angular.forEach(products, function(product, idx) {
+            var sold = 0;
+            angular.forEach(product.orderitems, function(orderitem) {
+                 sold += orderitem.quantity;
+            });
+            products[idx].sold = sold;
+        });
+        $scope.products = products;
     }
 
     function getAvailabilityTypes() {
@@ -73,7 +102,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         nanobar.go(60);
 
         Product.store($scope.newProduct).success(function(response) {
-            getProducts();
+            $scope.getProducts();
             $scope.reset();
             nanobar.go(100);
             AlertService.broadcast('Product saved!', 'success');
@@ -106,7 +135,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         nanobar.go(65);
 
         Product.update(data.id, data).success(function(response) {
-            getProducts();
+            $scope.getProducts();
             $scope.reset();
             nanobar.go(100);
             AlertService.broadcast('Product updated!', 'success');
@@ -292,6 +321,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             console.log(response.message);
         });
     }
+
+    $scope.resetDateFilter = function() {
+        $scope.order_start_date = ''
+        $scope.order_end_date = '';
+        $scope.getProducts();
+    }
+
 
     $scope.init();
 

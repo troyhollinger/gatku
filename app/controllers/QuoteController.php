@@ -7,6 +7,8 @@ class QuoteController extends BaseController {
 
     public function __construct(MailchimpRepository $mailchimp) {
         $this->mailchimp = $mailchimp;
+
+        parent::__construct();
     }
 
 	public function index() {
