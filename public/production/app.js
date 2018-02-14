@@ -7945,9 +7945,16 @@ app.factory('Product', ['$http', function($http) {
     return {
 
         all : function() {
-
             return $http.get('/product');
+        },
 
+        forPeriod : function(startDate, endDate) {  //consider to merge this function with all !!!
+            return $http.get('/product', {
+                params: {
+                    start_date: startDate,
+                    end_date: endDate
+                }
+            });
         },
 
         get : function(productId) {
@@ -8260,7 +8267,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     $scope.init = function() {
         $scope.show('orders');
-        getProducts();
+        $scope.getProducts();
         getTypes();
         getYouImages();
         getHomeSettings();
@@ -8277,6 +8284,8 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
     $scope.homeSetting = {};
     $scope.editState = false;
     $scope.editingNew = true;
+
+    $scope.submitButton = 'Submit';
 
     $scope.show = function(section) {
         $scope.showOrders = false;
@@ -8309,12 +8318,39 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
 
     }
 
-    function getProducts() {
-        Product.all().success(function(response) {
-            $scope.products = response.data;    
+    $scope.getProducts = function() {
+        if ($scope.order_start_date && $scope.order_end_date) {
+            getProductsForPeriod();
+        } else {
+            getAllProducts();
+        }
+    }
+
+    function getProductsForPeriod() {
+        Product.forPeriod($scope.order_start_date, $scope.order_end_date).success(function(response) {
+            countSoldItems(response.data);
         }).error(function(response) {
             console.log("Sorry, there was an error retrieving the products");
         });
+    }
+
+    function getAllProducts() {
+        Product.all().success(function(response) {
+            countSoldItems(response.data);
+        }).error(function(response) {
+            console.log("Sorry, there was an error retrieving the products");
+        });
+    }
+
+    function countSoldItems(products) {
+        angular.forEach(products, function(product, idx) {
+            var sold = 0;
+            angular.forEach(product.orderitems, function(orderitem) {
+                 sold += orderitem.quantity;
+            });
+            products[idx].sold = sold;
+        });
+        $scope.products = products;
     }
 
     function getAvailabilityTypes() {
@@ -8331,7 +8367,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         nanobar.go(60);
 
         Product.store($scope.newProduct).success(function(response) {
-            getProducts();
+            $scope.getProducts();
             $scope.reset();
             nanobar.go(100);
             AlertService.broadcast('Product saved!', 'success');
@@ -8364,7 +8400,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         nanobar.go(65);
 
         Product.update(data.id, data).success(function(response) {
-            getProducts();
+            $scope.getProducts();
             $scope.reset();
             nanobar.go(100);
             AlertService.broadcast('Product updated!', 'success');
@@ -8551,6 +8587,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         });
     }
 
+    $scope.resetDateFilter = function() {
+        $scope.order_start_date = ''
+        $scope.order_end_date = '';
+        $scope.getProducts();
+    }
+
+
     $scope.init();
 
 }]);
@@ -8564,7 +8607,7 @@ app.controller('AdminordersController', ['$scope', 'Order','$http', function($sc
     gatkuOrder.orders = []; 
     gatkuOrder.pageno = 1; 
     gatkuOrder.itemsPerPage = 15; 
-    gatkuOrder.getData = function(pageno,start_date, end_date){ 
+    gatkuOrder.getData = function(pageno,start_date, end_date){
         gatkuOrder.orders = [];
 
         var Url = "/orderall/" + gatkuOrder.itemsPerPage + "/" + pageno;
@@ -8593,6 +8636,13 @@ app.controller('AdminordersController', ['$scope', 'Order','$http', function($sc
                 alert('select start date');
             }
      };
+
+
+    gatkuOrder.resetDateFilter = function() {
+        $scope.order_start_date = ''
+        $scope.order_end_date = '';
+        gatkuOrder.getData(1, $scope.order_start_date, $scope.order_end_date);
+    }
 }]);
 
 

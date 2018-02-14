@@ -143,6 +143,19 @@ html {
 
 }
 
+.danger-bg {
+
+	background-color: $red;
+	color:white;
+
+	&:hover {
+
+		background-color: darken($red, 5%);
+
+	}
+
+}
+
 .success {
 
 	color:$green;

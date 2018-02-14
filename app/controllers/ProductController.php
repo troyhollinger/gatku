@@ -3,237 +3,276 @@
 
 use Austen\Repositories\ProductRepositoryInterface;
 use Austen\Repositories\ImageRepository;
+use Illuminate\Http\Request;
 
 
-class ProductController extends BaseController {
+class ProductController extends BaseController
+{
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $product;
+    /**
+     * @var Request
+     */
+    private $request;
+    /**
+     * @var ImageRepository
+     */
+    private $image;
 
-	protected $product;
+    /**
+     * ProductController constructor.
+     * @param ProductRepositoryInterface $product
+     * @param ImageRepository $image
+     * @param Request $request
+     */
+    public function __construct(ProductRepositoryInterface $product, ImageRepository $image, Request $request)
+    {
+        $this->product = $product;
+        $this->image = $image;
+        $this->request = $request;
 
-	public function __construct(ProductRepositoryInterface $product, ImageRepository $image) {
+        parent::__construct();
 
-		$this->product = $product;
-		$this->image = $image;
+    }
 
-	}
 
+    /**
+     * Display a listing of the resource.
+     * GET /products
+     *
+     * @return Response
+     */
+    public function index()
+    {
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /products
-	 *
-	 * @return Response
-	 */
-	public function index() {
+        if ($this->request->wantsJson()) {
 
-		if (Request::wantsJson()) {
+            $requestParams = $this->request->input();
 
-			$products = $this->product->all();
+            if (isset($requestParams['start_date']) && isset($requestParams['end_date'])) {
+                $products = $this->product->getProductsForPeriod($requestParams['start_date'], $requestParams['end_date']);
+            } else {
+                $products = $this->product->all();
+            }
 
-			return Response::json(['data' => $products], 200);
+            return Response::json(['data' => $products], 200);
 
-		} else {
+        } else {
 
-			return Redirect::route('home');
+            return Redirect::route('home');
 
-		}
+        }
 
-	}
+    }
 
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /products
-	 *
-	 * @return Response
-	 */
-	public function store() {
+    /**
+     * Store a newly created resource in storage.
+     * POST /products
+     *
+     * @return Response
+     */
+    public function store()
+    {
 
-		if ($this->product->store(Input::all())) {
+        if ($this->product->store(Input::all())) {
 
-			return Response::json([], 200);
+            return Response::json([], 200);
 
-		} else {
+        } else {
 
-			return Response::json(['message' => 'Sorry, the product could not be created'], 404);
+            return Response::json(['message' => 'Sorry, the product could not be created'], 404);
 
-		}
+        }
 
-	}
+    }
 
 
-	/**
-	 * API Hook, get product
-	 *
-	 * @return JSON Response
-	 */
-	public function get($id) {
+    /**
+     * API Hook, get product
+     *
+     * @return JSON Response
+     */
+    public function get($id)
+    {
 
-		$product = $this->product->get($id);
+        $product = $this->product->get($id);
 
-		if ($product === false) {
+        if ($product === false) {
 
-			return Response::json(['sorry, there was an error'], 404);
+            return Response::json(['sorry, there was an error'], 404);
 
-		}
+        }
 
-		return Response::json(['data' => $product], 200);
+        return Response::json(['data' => $product], 200);
 
-	}
+    }
 
-	public function getBySlug($slug) {
+    public function getBySlug($slug)
+    {
 
-		$product = $this->product->find($slug);
+        $product = $this->product->find($slug);
 
-		if ($product === false) {
+        if ($product === false) {
 
-			return Response::json(['message' => 'Sorry, the product could not be retrieved'], 404);
+            return Response::json(['message' => 'Sorry, the product could not be retrieved'], 404);
 
-		}
+        }
 
-		return Response::json(['data' => $product], 200);
+        return Response::json(['data' => $product], 200);
 
-	}
+    }
 
-	/**
-	 * Display the specified resource.
-	 * GET /products/{id}
-	 *
-	 * @param  string  $slug
-	 * @return Response
-	 */
-	public function show($slug) {
-		$product = $this->product->find($slug);
+    /**
+     * Display the specified resource.
+     * GET /products/{id}
+     *
+     * @param  string $slug
+     * @return Response
+     */
+    public function show($slug)
+    {
+        $product = $this->product->find($slug);
 
-		if ($product === false || $product === null) {
-			return Redirect::route('home');
-		}
-		Log::info($product);
-		return View::make('pages.product', ['product' => $product]);
-	}
+        if ($product === false || $product === null) {
+            return Redirect::route('home');
+        }
+        Log::info($product);
+        return View::make('pages.product', ['product' => $product]);
+    }
 
 
-	/**
-	 * Upload a file from $_POST request
-	 * POST /products/image
-	 *
-	 * @return Response
-	 */
-	public function upload() {
+    /**
+     * Upload a file from $_POST request
+     * POST /products/image
+     *
+     * @return Response
+     */
+    public function upload()
+    {
 
-		$file = Input::file('file');
+        $file = Input::file('file');
 
-		$upload = $this->image->upload($file, 'img/uploads/');
+        $upload = $this->image->upload($file, 'img/uploads/');
 
-		if ($upload === false) {
+        if ($upload === false) {
 
-			return Response::json(['message' => 'Sorry, There was an error uploading this image.'], 404);
+            return Response::json(['message' => 'Sorry, There was an error uploading this image.'], 404);
 
-		}
+        }
 
-		return Response::json(['data' => $upload['imagePath']], 200);
+        return Response::json(['data' => $upload['imagePath']], 200);
 
-	}
+    }
 
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /products/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id) {
+    /**
+     * Update the specified resource in storage.
+     * PUT /products/{id}
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
 
-		$input = Input::all();
+        $input = Input::all();
 
-		$update = $this->product->update($id, $input);
+        $update = $this->product->update($id, $input);
 
-		if ($update === false) {
+        if ($update === false) {
 
-			return Response::json(['message' => 'Sorry, there was a problem updating this product.'], 404);
+            return Response::json(['message' => 'Sorry, there was a problem updating this product.'], 404);
 
-		}
+        }
 
-		return Response::json(['message' => 'product updated'], 200);
+        return Response::json(['message' => 'product updated'], 200);
 
-	}
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /products/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id) {
+    /**
+     * Remove the specified resource from storage.
+     * DELETE /products/{id}
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
 
-		//
+        //
 
-	}
+    }
 
 
-	/**
-	 * Returns an array of product types
-	 *
-	 * @return Response
-	 */
-	public function types() {
+    /**
+     * Returns an array of product types
+     *
+     * @return Response
+     */
+    public function types()
+    {
 
-		$types = $this->product->types();
+        $types = $this->product->types();
 
-		if ($types === false) {
+        if ($types === false) {
 
-			return Response::json(['message' => 'Sorry, there was problem retrieving the types'], 404);
+            return Response::json(['message' => 'Sorry, there was problem retrieving the types'], 404);
 
-		}
+        }
 
-		return Response::json(['data' => $types], 200);
+        return Response::json(['data' => $types], 200);
 
-	}
+    }
 
 
-	public function getByType() {
-		$products = $this->product->getByType();
+    public function getByType()
+    {
+        $products = $this->product->getByType();
 
-		if ($products === false) {
-			return Response::json(['message' => 'Sorry, could not get products by type.'], 404);
-		}
+        if ($products === false) {
+            return Response::json(['message' => 'Sorry, could not get products by type.'], 404);
+        }
 
-		return Response::json(['data' => $products], 200);
-	}
+        return Response::json(['data' => $products], 200);
+    }
 
 
-	/**
-	 * Retrieve you images corresponding to the product
-	 *
-	 * @param id integer
-	 */
-	public function photos($id) {
+    /**
+     * Retrieve you images corresponding to the product
+     *
+     * @param id integer
+     */
+    public function photos($id)
+    {
 
-		try {
+        try {
 
-			$image = Product::find($id)->images;
+            $image = Product::find($id)->images;
 
-		} catch (Exception $e) {
+        } catch (Exception $e) {
 
-			Log::error($e);
+            Log::error($e);
 
-			return Response::json(['message' => 'Sorry, there was a problem retrieving the images'], 404);
+            return Response::json(['message' => 'Sorry, there was a problem retrieving the images'], 404);
 
-		}
+        }
 
-		return Response::json(['data' => $image], 200);
+        return Response::json(['data' => $image], 200);
 
-	}
+    }
 
-	public function getSizeBySlug($slug) {
+    public function getSizeBySlug($slug)
+    {
 
-		$size = $this->product->getSizeBySlug($slug);
+        $size = $this->product->getSizeBySlug($slug);
 
-		if ($size === false) return Response::json(['message' => 'Sorry, something went wrong!'], 404);
+        if ($size === false) return Response::json(['message' => 'Sorry, something went wrong!'], 404);
 
-		return Response::json(['data' => $size], 200);
+        return Response::json(['data' => $size], 200);
 
-	}
+    }
 
 }
