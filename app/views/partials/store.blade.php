@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="links glass-links">
-		<div class="product-link-container" ng-repeat="package in packages"><a href="' . route('product.show', ['']) . '/{{ package.slug }}">{{ package.shortName }} {{package.slug}}</a></div>
+		<div class="product-link-container" ng-repeat="package in packages"><a href="' . route('product.show', ['']) . '/{{ package.slug }}">{{ package.shortName }}</a></div>
 		<div class="clear"></div>
 	</div>
 	<h2 class="store-label">Packages</h2>';
