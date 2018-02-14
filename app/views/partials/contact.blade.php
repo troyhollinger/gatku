@@ -18,7 +18,6 @@
 							ng-model="email_address"
 							placeholder="Your Email Address..."
 							required>
-					&nbsp;
 				</div>
 
 				<div class="hear-good-stuff-button-div-class">
