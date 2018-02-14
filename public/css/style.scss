@@ -1115,6 +1115,49 @@ html {
 	}
 }
 
+.hear-good-stuff {
+	text-align: center;
+	color: #FFF;
+	background-color: #000;
+	font-size: 1.5em;
+	padding: 25px;
+	height: 30px;
+
+	@include breakpoint(small) {
+		height: 100px;
+	}
+}
+
+.hear-good-stuff-button-div-class {
+	width: 150px;
+	height: 20px;
+	float: left;
+
+	@include breakpoint(small) {
+		width: 100%;
+	}
+}
+
+.hear-good-stuff-caption {
+	letter-spacing: -2px;
+}
+
+.button-no-frame {
+	padding: 3px 10px 5px 10px;
+	border: none;
+	font-size: 0.85em;
+	background-color: $green;
+	color:white;
+
+	&:hover {
+		background-color: darken($green, 10%);
+	}
+
+	@include breakpoint(small) {
+		margin-top: 10px;
+	}
+}
+
 .contact-bottom {
 
 	position: relative;
