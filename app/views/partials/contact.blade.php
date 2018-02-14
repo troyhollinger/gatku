@@ -14,8 +14,9 @@
 				<div style="float: left;">
 					<b class="hear-good-stuff-caption">HEAR GOOD STUFF :&nbsp;</b>
 					<input  type="email"
+							style="padding-left: 5px;"
 							ng-model="email_address"
-							placeholder="  Your Email Address..."
+							placeholder="Your Email Address..."
 							required>
 					&nbsp;
 				</div>
