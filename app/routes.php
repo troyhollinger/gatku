@@ -51,6 +51,8 @@ Route::post('you-image/upload', ['as' => 'you-image.upload', 'uses' => 'YouImage
 
 Route::resource('home-setting', 'HomeSettingController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
+Route::resource('hear-good-stuff', 'HearGoodStuffController');
+
 Route::post('home-image/upload', ['as' => 'home-image.upload', 'uses' => 'HomeSettingController@upload']);
 
 Route::get('thankyou', ['as' => 'thankyou', function() {

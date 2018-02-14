@@ -7997,6 +7997,15 @@ app.factory('Product', ['$http', function($http) {
 }]);
 
 
+app.factory('HearGoodStuff', ['$http', function($http) {
+    return {
+        store : function(data) {
+            return $http.post('/hear-good-stuff', data);
+        }
+    }
+}]);
+
+
 app.factory('Order', ['$http', function($http) {
 
 
@@ -9030,6 +9039,19 @@ app.controller('CartCountController', ['$scope', 'CartService', function($scope,
 	countItems();
 
 
+}]);
+app.controller('HearGoodStuffController', ['$scope', 'HearGoodStuff', function($scope, HearGoodStuff) {
+
+	$scope.email_address = '';
+
+	$scope.addEmailToMailingList = function() {
+        HearGoodStuff.store({email: $scope.email_address})
+			.success(function(response) {
+                $scope.email_address = '';
+            }).error(function(response) {
+            	//console.log(response);
+			});
+	}
 }]);
 app.controller('MediaController', ['$scope', function($scope) {
 
