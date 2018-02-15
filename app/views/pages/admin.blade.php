@@ -144,10 +144,26 @@ Admin
 					<input type="number" ng-model="newProduct.price">
 
 					<label>Addons</label>
-					<div class="new-product-checkbox-container" ng-repeat="addon in newProduct.addonSelection" ng-if="editState">
-						<input type="checkbox" ng-model="addon.isAddon">&nbsp;<span class="uppercase">@{{ addon.name }}</span>
-					</div>
-					
+					<table class="table table-striped table-bordered table-sm">
+						<thead class="thead-dark">
+							<tr>
+								<th style="text-align: center"><b>Addon</b></th>
+								<th style="text-align: center"><b>Included in package</b></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="addon in newProduct.addonSelection" ng-if="editState">
+								<td>
+									<div class="new-product-checkbox-container">
+										<input type="checkbox" ng-model="addon.isAddon">&nbsp;<span class="uppercase">@{{ addon.name }}</span>
+									</div>
+								</td>
+								<td style="text-align: center">
+									<input type="checkbox" ng-model="addon.include_in_package">
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
 					<label>Attached Image</label>
 					<div class="upload-field" ng-style="{'background-image':'url(' + newProduct.attachedImage + ')'}">

@@ -8468,7 +8468,15 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
                     for(var e = 0; e < $scope.newProduct.addons.length; e++) {
                         if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
                             addon.isAddon = true;
+
+                            //
+                            if ($scope.newProduct.addons[e].include_in_package) {
+                                addon.include_in_package = true;
+                            } else {
+                                addon.include_in_package = false;
+                            }
                             break;
+
                         } else {
                             addon.isAddon = false;
                         }
@@ -8479,7 +8487,6 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             } else {
                 addon.isAddon = false;
             }
-            
             $scope.newProduct.addonSelection.push(addon);
         }
     }

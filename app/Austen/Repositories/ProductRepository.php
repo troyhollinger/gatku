@@ -251,19 +251,18 @@ class ProductRepository implements ProductRepositoryInterface {
 
 					// there is a match
 					if ($existingAddon->childId == $addon['id']) {
-
 						if ($addon['isAddon'] === false) {
-
 							$existingAddon->delete();
-
 							break;
+						}
 
-						} 
+						if (isset($addon['include_in_package'])) {
+                            $existingAddon->include_in_package = $addon['include_in_package'];
+                            $existingAddon->update();
+                        }
 
 						$match = true;
-
-					} 
-
+					}
 				}
 
 				if ($match === false && $addon['isAddon'] === true) {
@@ -271,6 +270,13 @@ class ProductRepository implements ProductRepositoryInterface {
 					$newAddon = new Addon;
 					$newAddon->parentId = $product->id;
 					$newAddon->childId = $addon['id'];
+
+                    if (isset($addon['include_in_package']) && $addon['include_in_package']) {
+                        $newAddon->include_in_package = $addon['include_in_package'];
+                    } else {
+                        $newAddon->include_in_package = false;
+                    }
+
 					$newAddon->save();
 
 				}
@@ -282,6 +288,13 @@ class ProductRepository implements ProductRepositoryInterface {
 					$newAddon = new Addon;
 					$newAddon->parentId = $product->id;
 					$newAddon->childId = $addon['id'];
+
+					if (isset($addon['include_in_package']) && $addon['include_in_package']) {
+                        $newAddon->include_in_package = $addon['include_in_package'];
+                    } else {
+                        $newAddon->include_in_package = false;
+                    }
+
 					$newAddon->save();
 
 				}

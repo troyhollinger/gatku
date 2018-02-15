@@ -49,6 +49,7 @@ module.exports = function(grunt) {
             combine : {
                 files : {
                     'production/app.css' : [
+                        'css/bootstrap/*.min.css',
                         'css/font-awesome.min.css',
                         'css/reset.css',
                         'css/MyFontsWebfontsKit.css',

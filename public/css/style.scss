@@ -1389,6 +1389,15 @@ html {
 	margin-left: 10%;
 }
 
+.mark-as-included-class {
+	background-color: #000;
+	color: #FFF;
+
+	&:hover {
+		color: #000;
+	}
+}
+
 .contact-email {
 
 	a {

@@ -127,7 +127,12 @@
 		</p>
 		@if($product->availability->slug === 'available')
 
-			<p class="addon-title right">Click to add to order</p>
+			@if($product->type->slug == 'package')
+				<p class="addon-title right"><span style="background-color: #000; color: #FFF;">Included in Package</span> + Optional Add Ons</p>
+			@else
+				<p class="addon-title right">Click to add to order</p>
+			@endif
+
 
 			<div class="clear"></div>
 
@@ -148,9 +153,12 @@
 				@endforeach
 				@else
 
-				<div ng-repeat="addon in product.addons" ng-cloak>
+				<div ng-repeat="addon in product.addons" ng-class="{'mark-as-included-class': addon.include_in_package}" ng-cloak>
 					<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
-					<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
+					<label for="addon-@{{ $index }}">
+                        <span class="addon-name">@{{ addon.product.name }} -</span>
+                        <span class="addon-price">$@{{ addon.product.price | money }}</span>
+                    </label>
 				</div>
 
 				@foreach($product->addons as $addon)
