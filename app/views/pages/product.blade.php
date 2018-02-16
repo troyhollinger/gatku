@@ -153,8 +153,15 @@
 				@endforeach
 				@else
 
-				<div ng-repeat="addon in product.addons" ng-class="{'mark-as-included-class': addon.include_in_package}" ng-cloak>
-					<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
+				<div ng-repeat="addon in product.addons"
+					 ng-class="{'mark-as-included-class': addon.include_in_package, 'disable-input-field': addon.include_in_package}"
+					 ng-cloak>
+					<input type="checkbox"
+						   name="addon-@{{ $index }}"
+						   id="addon-@{{ $index }}"
+						   ng-model="addon.checked"
+						   ng-init="addon.checked = addon.include_in_package == 1 ? true : false">
+
 					<label for="addon-@{{ $index }}">
                         <span class="addon-name">@{{ addon.product.name }} -</span>
                         <span class="addon-price">$@{{ addon.product.price | money }}</span>

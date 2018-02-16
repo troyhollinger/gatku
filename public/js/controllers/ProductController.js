@@ -128,7 +128,11 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			}
 		} else {
 			for(var i = 0; i < $scope.product.addons.length; i++) {
-				$scope.product.addons[i].checked = false;
+
+				//uncheck only addons if not included in package
+				if (!$scope.product.addons[i].include_in_package) {
+                    $scope.product.addons[i].checked = false;
+				}
 			}
 		}
 	}
