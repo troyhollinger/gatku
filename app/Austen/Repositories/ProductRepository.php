@@ -258,7 +258,9 @@ class ProductRepository implements ProductRepositoryInterface {
 
 						if (isset($addon['include_in_package'])) {
                             $existingAddon->include_in_package = $addon['include_in_package'];
-                            $existingAddon->price_zero = $addon['price_zero'];
+                            if (isset($addon['price_zero'])) {
+                                $existingAddon->price_zero = $addon['price_zero'];
+                            }
                             $existingAddon->update();
                         }
 
