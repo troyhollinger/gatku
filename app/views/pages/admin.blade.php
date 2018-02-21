@@ -149,6 +149,7 @@ Admin
 							<tr>
 								<th style="text-align: center"><b>Addon</b></th>
 								<th style="text-align: center"><b>Included in package</b></th>
+								<th style="text-align: center"><b>Price zero if included in package</b></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -160,6 +161,9 @@ Admin
 								</td>
 								<td style="text-align: center">
 									<input type="checkbox" ng-model="addon.include_in_package">
+								</td>
+								<td style="text-align: center">
+									<input type="checkbox" ng-model="addon.price_zero">
 								</td>
 							</tr>
 						</tbody>

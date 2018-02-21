@@ -210,6 +210,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
                             } else {
                                 addon.include_in_package = false;
                             }
+
+                            if ($scope.newProduct.addons[e].price_zero) {
+                                addon.price_zero = true;
+                            } else {
+                                addon.price_zero = false;
+                            }
+
                             break;
 
                         } else {

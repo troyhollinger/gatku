@@ -7671,6 +7671,7 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.name = addon.product.name;
 				addonToCart.sizeable = addon.product.sizeable;
                 addonToCart.include_in_package = addon.include_in_package;
+                addonToCart.price_zero = addon.price_zero;
 				addonToCart.type = {};
 				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
@@ -8494,6 +8495,13 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
                             } else {
                                 addon.include_in_package = false;
                             }
+
+                            if ($scope.newProduct.addons[e].price_zero) {
+                                addon.price_zero = true;
+                            } else {
+                                addon.price_zero = false;
+                            }
+
                             break;
 
                         } else {
@@ -9285,6 +9293,11 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 	function parseSizeableAddons() {
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 			var addon = $scope.product.addons[i];
+
+			//Make price zero if price_zero true for packege included addons
+			if (addon.price_zero) {
+                addon.product.price = 0;
+			}
 
 			if (addon.product.sizeable) {
 
