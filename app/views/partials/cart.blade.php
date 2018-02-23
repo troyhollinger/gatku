@@ -25,8 +25,6 @@
 		<ul>	
 			<li ng-repeat="item in items" class="cart-item" ng-class="{ 'apparel-cart-item' : item.type.slug === 'apparel' }">
 
-				<p class="addon-title right" ng-show="item.type.slug == 'package'"><span style="background-color: #000; color: #FFF;">Included in Package</span> + Optional Add Ons</p></p>
-
 				<div class="cart-item-column">
 
 					<h3>@{{ item.name }}</h3>
@@ -53,8 +51,7 @@
 
 				<div class="cart-item-addon-container"
 					 ng-repeat="addon in item.addons"
-					 ng-if="item.addons.length"
-					 ng-class="{'mark-as-included-class': addon.include_in_package}">
+					 ng-if="item.addons.length">
 
 					<div class="cart-item-column">
 

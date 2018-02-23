@@ -7678,11 +7678,7 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 					addonToCart.sizeId = addon.product.sizeId;
 				}
 				addonToCart.quantity = 1;
-
-				//make price zero for addons included in packages
-				if (addon.include_in_package) {
-                    addonToCart.price = 0;
-				}
+				
 				item.addons.push(addonToCart);
 			}
 		}
@@ -7716,7 +7712,10 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 		for(var i = 0; i < items.length; i++) {
 
-			count+= (1 * items[i].quantity);
+			//If statement here is to avoid count packages as a number of elements in Cart
+			if (items[i].type.slug != 'package') {
+                count+= (1 * items[i].quantity);
+			}
 
 			for(var ii = 0; ii < items[i].addons.length; ii++) {
 
