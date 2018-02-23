@@ -168,7 +168,7 @@
 
 			<div class="clear"></div>
 
-			<p class="special-message"><span class="bold">Free Shipping</span> on orders over <span class="bold">$300</span> <span class="detail bold">USA ONLY</span></p>
+			<p class="special-message"><span class="bold">Free Shipping</span> on orders over <span class="bold">$300</span> <span class="detail bold">USA + AU ONLY</span></p>
 
 		@endif
 
