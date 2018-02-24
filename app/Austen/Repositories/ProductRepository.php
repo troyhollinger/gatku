@@ -220,6 +220,7 @@ class ProductRepository implements ProductRepositoryInterface {
 		if (isset($data['balance'])) $product->balance = $data['balance'];
 		if (isset($data['stealth'])) $product->stealth = $data['stealth'];
 		if (isset($data['order'])) $product->order = $data['order'];
+		if (isset($data['shipping_description'])) $product->shipping_description = $data['shipping_description'];
 
 		return $product;
 

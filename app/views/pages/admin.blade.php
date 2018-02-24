@@ -131,6 +131,9 @@ Admin
 					<label>Availability</label>
 					<select ng-options="availabilityType.id as availabilityType.name for availabilityType in availabilityTypes" ng-model="newProduct.availabilityTypeId"></select>
 
+					<label>Shipping Description [max: 255 characters]</label>
+					<input type="text" ng-model="newProduct.shipping_description"></input>
+
 					<label>Description</label>
 					<textarea ng-model="newProduct.description"></textarea>
 

@@ -117,20 +117,8 @@
 		<br>
 
 		<p class="product-price" ng-cloak>
-			@if(!$product->sizeable)
-			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> / 
-			@endif
-			@if($product->type->slug === 'pole')
-				+ <span style="font-size:18px;">$20 Shipping w/in USA + AU</span> <br><span class="bold">Int’l</span> Rates Vary <a href="{{ route('quote') }}" target="_blank"><span class="bold">Request Quote</span></a>
-			@elseif($product->type->slug === 'package')
-				<span>
-					Free Shipping w/in USA + AU
-					<br>
-					<b>Int'l</b> Rates Vary <b>Request Quote</b>
-				</span>
-			@else
-			Ships Free w/ Pole Purchase
-			@endif
+			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> /
+			<span>{{$product->shipping_description}}</span>
 		</p>
 		@if($product->availability->slug === 'available')
 
