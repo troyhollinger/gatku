@@ -37,7 +37,7 @@ Producing the highest quality polespears, heads, and accessories. Locally built 
 
 </div>
 
-<div class="store-section home-section" id="store">
+<div class="store-section home-section" id="store" ng-cloak>
 
 	<div class="home-container">
 
