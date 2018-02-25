@@ -49,7 +49,9 @@
 
 				<span class="cart-item-addon-title" ng-if="item.addons.length">Addons</span>
 
-				<div class="cart-item-addon-container" ng-repeat="addon in item.addons" ng-if="item.addons.length">
+				<div class="cart-item-addon-container"
+					 ng-repeat="addon in item.addons"
+					 ng-if="item.addons.length">
 
 					<div class="cart-item-column">
 

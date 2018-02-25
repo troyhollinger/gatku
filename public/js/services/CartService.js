@@ -44,13 +44,15 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
 				addonToCart.sizeable = addon.product.sizeable;
+                addonToCart.include_in_package = addon.include_in_package;
+                addonToCart.price_zero = addon.price_zero;
 				addonToCart.type = {};
 				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
 					addonToCart.sizeId = addon.product.sizeId;
 				}
 				addonToCart.quantity = 1;
-
+				
 				item.addons.push(addonToCart);
 			}
 		}
@@ -84,7 +86,10 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 		for(var i = 0; i < items.length; i++) {
 
-			count+= (1 * items[i].quantity);
+			//If statement here is to avoid count packages as a number of elements in Cart
+			if (items[i].type.slug != 'package') {
+                count+= (1 * items[i].quantity);
+			}
 
 			for(var ii = 0; ii < items[i].addons.length; ii++) {
 
@@ -104,6 +109,13 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 		cart[itemIndex].quantity++;
 
+		//update included in package addons
+		angular.forEach(cart[itemIndex].addons, function(addon, idx) {
+			if (addon.include_in_package) {
+                cart[itemIndex].addons[idx].quantity = cart[itemIndex].quantity;
+			}
+		});
+
 		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
@@ -115,6 +127,13 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		var cart = Cookie('items') || [];
 
 		cart[itemIndex].quantity--;
+
+        //update included in package addons
+        angular.forEach(cart[itemIndex].addons, function(addon, idx) {
+            if (addon.include_in_package) {
+                cart[itemIndex].addons[idx].quantity = cart[itemIndex].quantity;
+            }
+        });
 
 		if (cart[itemIndex].quantity == 0) {
 

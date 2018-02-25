@@ -298,6 +298,10 @@ html {
 
 }
 
+a:hover {
+	color: #000;
+	text-decoration: none;
+}
 
 .left-arrow {
 	float:left;
@@ -1389,6 +1393,19 @@ html {
 	margin-left: 10%;
 }
 
+.mark-as-included-class {
+	background-color: #000;
+	color: #FFF;
+
+	&:hover {
+		color: #000;
+	}
+}
+
+.disable-input-field {
+	pointer-events:none;
+}
+
 .contact-email {
 
 	a {
@@ -1765,7 +1782,7 @@ html {
 
 	position: relative;
 	float:right;
-	width:32%;
+	width:36%;
 	height:auto;
 
 	&.apparel-column {

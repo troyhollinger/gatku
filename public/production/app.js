@@ -7670,13 +7670,15 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 				addonToCart.price = addon.product.price;
 				addonToCart.name = addon.product.name;
 				addonToCart.sizeable = addon.product.sizeable;
+                addonToCart.include_in_package = addon.include_in_package;
+                addonToCart.price_zero = addon.price_zero;
 				addonToCart.type = {};
 				addonToCart.type.slug = addon.product.type.slug;
 				if (addon.product.sizeId) {
 					addonToCart.sizeId = addon.product.sizeId;
 				}
 				addonToCart.quantity = 1;
-
+				
 				item.addons.push(addonToCart);
 			}
 		}
@@ -7710,7 +7712,10 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 		for(var i = 0; i < items.length; i++) {
 
-			count+= (1 * items[i].quantity);
+			//If statement here is to avoid count packages as a number of elements in Cart
+			if (items[i].type.slug != 'package') {
+                count+= (1 * items[i].quantity);
+			}
 
 			for(var ii = 0; ii < items[i].addons.length; ii++) {
 
@@ -7730,6 +7735,13 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 		cart[itemIndex].quantity++;
 
+		//update included in package addons
+		angular.forEach(cart[itemIndex].addons, function(addon, idx) {
+			if (addon.include_in_package) {
+                cart[itemIndex].addons[idx].quantity = cart[itemIndex].quantity;
+			}
+		});
+
 		Cookie('items', cart, { path : '/' });
 
 		$rootScope.$broadcast('update');
@@ -7741,6 +7753,13 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		var cart = Cookie('items') || [];
 
 		cart[itemIndex].quantity--;
+
+        //update included in package addons
+        angular.forEach(cart[itemIndex].addons, function(addon, idx) {
+            if (addon.include_in_package) {
+                cart[itemIndex].addons[idx].quantity = cart[itemIndex].quantity;
+            }
+        });
 
 		if (cart[itemIndex].quantity == 0) {
 
@@ -8468,7 +8487,22 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
                     for(var e = 0; e < $scope.newProduct.addons.length; e++) {
                         if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
                             addon.isAddon = true;
+
+                            //
+                            if ($scope.newProduct.addons[e].include_in_package) {
+                                addon.include_in_package = true;
+                            } else {
+                                addon.include_in_package = false;
+                            }
+
+                            if ($scope.newProduct.addons[e].price_zero) {
+                                addon.price_zero = true;
+                            } else {
+                                addon.price_zero = false;
+                            }
+
                             break;
+
                         } else {
                             addon.isAddon = false;
                         }
@@ -8479,7 +8513,6 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             } else {
                 addon.isAddon = false;
             }
-            
             $scope.newProduct.addonSelection.push(addon);
         }
     }
@@ -9260,6 +9293,11 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 		for(var i = 0; i < $scope.product.addons.length; i++) {
 			var addon = $scope.product.addons[i];
 
+			//Make price zero if price_zero true for packege included addons
+			if (addon.price_zero) {
+                addon.product.price = 0;
+			}
+
 			if (addon.product.sizeable) {
 
 				if (addon.product.slug === 'bands') {
@@ -9289,7 +9327,11 @@ app.controller('ProductController', ['$scope', 'Product', 'CartService', 'Size',
 			}
 		} else {
 			for(var i = 0; i < $scope.product.addons.length; i++) {
-				$scope.product.addons[i].checked = false;
+
+				//uncheck only addons if not included in package
+				if (!$scope.product.addons[i].include_in_package) {
+                    $scope.product.addons[i].checked = false;
+				}
 			}
 		}
 	}

@@ -114,20 +114,20 @@
 		<div class="clear"></div>
 		@endif
 
-		
+		<br>
+
 		<p class="product-price" ng-cloak>
-			@if(!$product->sizeable)
-			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> / 
-			@endif
-			@if($product->type->slug === 'pole')
-			+ <span style="font-size:18px;">$20 Shipping w/in USA + AU</span> <br><span class="bold">Int’l</span> Rates Vary <a href="{{ route('quote') }}" target="_blank"><span class="bold">Request Quote</span></a>
-			@else
-			Ships Free w/ Pole Purchase
-			@endif
+			<span class="product-price-amount" ng-cloak>${{ $product->price / 100 }}</span> /
+			<span>{{$product->shipping_description}}</span>
 		</p>
 		@if($product->availability->slug === 'available')
 
-			<p class="addon-title right">Click to add to order</p>
+			@if($product->type->slug == 'package')
+				<p class="addon-title right"><span style="background-color: #000; color: #FFF;">Included in Package</span> + Optional Add Ons</p>
+			@else
+				<p class="addon-title right">Click to add to order</p>
+			@endif
+
 
 			<div class="clear"></div>
 
@@ -148,9 +148,19 @@
 				@endforeach
 				@else
 
-				<div ng-repeat="addon in product.addons" ng-cloak>
-					<input type="checkbox"  name="addon-@{{ $index }}" id="addon-@{{ $index }}" ng-model="addon.checked">
-					<label for="addon-@{{ $index }}"><span class="addon-name">@{{ addon.product.name }} -</span>  <span class="addon-price">$@{{ addon.product.price | money }}</span></label>
+				<div ng-repeat="addon in product.addons"
+					 ng-class="{'mark-as-included-class': addon.include_in_package, 'disable-input-field': addon.include_in_package}"
+					 ng-cloak>
+					<input type="checkbox"
+						   name="addon-@{{ $index }}"
+						   id="addon-@{{ $index }}"
+						   ng-model="addon.checked"
+						   ng-init="addon.checked = addon.include_in_package == 1 ? true : false">
+
+					<label for="addon-@{{ $index }}">
+                        <span class="addon-name">@{{ addon.product.name }} -</span>
+                        <span class="addon-price">$@{{ addon.product.price | money }}</span>
+                    </label>
 				</div>
 
 				@foreach($product->addons as $addon)

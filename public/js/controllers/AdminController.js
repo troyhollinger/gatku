@@ -203,7 +203,22 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
                     for(var e = 0; e < $scope.newProduct.addons.length; e++) {
                         if ($scope.newProduct.addons[e].childId == $scope.products[i].id) {
                             addon.isAddon = true;
+
+                            //
+                            if ($scope.newProduct.addons[e].include_in_package) {
+                                addon.include_in_package = true;
+                            } else {
+                                addon.include_in_package = false;
+                            }
+
+                            if ($scope.newProduct.addons[e].price_zero) {
+                                addon.price_zero = true;
+                            } else {
+                                addon.price_zero = false;
+                            }
+
                             break;
+
                         } else {
                             addon.isAddon = false;
                         }
@@ -214,7 +229,6 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             } else {
                 addon.isAddon = false;
             }
-            
             $scope.newProduct.addonSelection.push(addon);
         }
     }
