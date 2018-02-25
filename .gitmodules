@@ -1,0 +1,3 @@
+[submodule "borisrepl/boris"]
+    path = vendor/d11wtq/boris
+    url = git@github.com:borisrepl/boris.git
