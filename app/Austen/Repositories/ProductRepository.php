@@ -280,7 +280,11 @@ class ProductRepository implements ProductRepositoryInterface {
                     if (isset($addon['include_in_package']) && $addon['include_in_package']) {
                         $newAddon->include_in_package = $addon['include_in_package'];
                         if ($addon['include_in_package']) {
-                            $newAddon->price_zero = $addon['price_zero'];
+                            if (isset($addon['price_zero'])) {
+                                $newAddon->price_zero = $addon['price_zero'];
+                            } else {
+                                $newAddon->price_zero = false;
+                            }
                         } else {
                             $newAddon->price_zero = false;
                         }
@@ -303,7 +307,12 @@ class ProductRepository implements ProductRepositoryInterface {
 
 					if (isset($addon['include_in_package']) && $addon['include_in_package']) {
                         $newAddon->include_in_package = $addon['include_in_package'];
-                        $newAddon->price_zero = $addon['price_zero'];
+                        if (isset($addon['price_zero'])) {
+                            $newAddon->price_zero = $addon['price_zero'];
+                        } else {
+                            $newAddon->price_zero = false;
+                        }
+
                     } else {
                         $newAddon->include_in_package = false;
                         $newAddon->price_zero = false;
