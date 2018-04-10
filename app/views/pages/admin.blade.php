@@ -18,6 +18,7 @@ Admin
 			<div class="admin-navigation-tab" ng-click="show('you')" ng-class="{'selected' : showYou}">You</div>
 			<div class="admin-navigation-tab" ng-click="show('videos')" ng-class="{'selected' : showVideos}">Videos</div>
 			<div class="admin-navigation-tab" ng-click="show('home-setting')" ng-class="{'selected' : showHomeSetting}">Home</div>
+			<div class="admin-navigation-tab" ng-click="show('discount-manager')" ng-class="{'selected' : showDiscountManager}">Discounts</div>
 			<div class="clear"></div>
 		</div>
 
@@ -362,7 +363,61 @@ Admin
 			
 		</div>
 
+		<!-- Discount manager -->
+		<div class="admin-section" ng-show="showDiscountManager" ng-cloak>
+			<div class="order-search">
+				<h2>Discount Manager</h2>
+
+				<br>
+
+				<div>
+					<button type="button"
+							class="btn btn-success"
+							ng-click="addDiscount()">Add Discount</button>
+				</div>
+
+				<br>
+
+				<table class="admin-products-table">
+					<thead>
+					<tr>
+						<th>Discount in %</th>
+						<th>Discount code</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr ng-repeat="discount in discounts track by $index">
+						<td>
+							<input type="text"
+								   ng-change="discountRowChanged($index)"
+								   ng-model="discount.discount">
+						</td>
+						<td>
+							<input type="text"
+								   ng-change="discountRowChanged($index)"
+								   ng-model="discount.code">
+						</td>
+						<td>
+							<button type="button"
+									class="btn btn-success"
+									ng-disabled="!discount.changed"
+									ng-click="discountUpdate($index)">Update
+							</button>
+							&nbsp;
+							<button type="button"
+									class="btn btn-danger"
+									ng-click="discountRemove($index)">Remove
+							</button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- Discount manager - end -->
+
 	</div>
 
-</style>
 @stop

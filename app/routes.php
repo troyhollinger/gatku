@@ -105,5 +105,7 @@ Route::post('shipping-request/pay', ['as' => 'shipping-request.pay', 'uses' => '
 Route::resource('shipping-request', 'ShippingRequestController', ['except' => ['index', 'create', 'edit', 'update']]);
 Route::resource('shipping-track', 'ShippingTrackController', ['except' => ['index', 'create', 'edit', 'update']]);
 
+//Discount route
+Route::resource('discount', 'DiscountController');
 
 

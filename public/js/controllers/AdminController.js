@@ -1,4 +1,6 @@
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService','HomeSetting', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService,HomeSetting) {
+app.controller('AdminController',
+    ['$scope', 'Image', 'Product', 'Discount', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', 'HomeSetting',
+        function($scope, Image, Product, Discount, Order, YouImage, AvailabilityType, AlertService,HomeSetting) {
 
     $scope.init = function() {
         $scope.show('orders');
@@ -28,6 +30,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         $scope.showYou = false;
         $scope.showVideos = false;
         $scope.showHomeSetting = false;
+        $scope.showDiscountManager = false;
         $scope.reset();
 
         switch(section) {
@@ -47,7 +50,9 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             case 'home-setting' : 
                 $scope.showHomeSetting = true;
                 break;
-                
+            case 'discount-manager' :
+                $scope.showDiscountManager = true;
+                break;
 
         }
 
@@ -342,6 +347,59 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         $scope.getProducts();
     }
 
+    //Discount part
+    function fetchAllDiscounts() {
+        Discount.all().success(function(response) {
+            $scope.discounts = response.data;
+        });
+    };
+
+    fetchAllDiscounts();
+
+    $scope.addDiscount = function() {
+        var data = {
+            id: 0,
+            discount: 0,
+            code: ''
+        };
+
+        Discount.store(data).success(function() {
+            fetchAllDiscounts();
+        });
+    };
+
+    $scope.discountUpdate = function(discountIndex) {
+        $scope.discounts[discountIndex].changed = false;
+
+        var data = $scope.discounts[discountIndex];
+
+        Discount.update(data.id, data).success(function() {
+            AlertService.broadcast('Discount updated!', 'success');
+            fetchAllDiscounts();
+        }).error(function(error) {
+            AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
+        });
+    };
+
+    $scope.discountRemove = function(discountIndex) {
+        var r = confirm('Do you want to remove this Discount?');
+        if (r == true) {
+            var data = $scope.discounts[discountIndex];
+
+            Discount.remove(data.id).success(function() {
+                AlertService.broadcast('Discount removed!', 'success');
+                fetchAllDiscounts();
+            }).error(function(error) {
+                AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
+            });
+        }
+    };
+
+    $scope.discountRowChanged = function(discountIndex) {
+        $scope.discounts[discountIndex].changed = true;
+    };
+
+    //Discount part - end
 
     $scope.init();
 

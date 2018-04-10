@@ -89,6 +89,35 @@ app.factory('Product', ['$http', function($http) {
 
 }]);
 
+app.factory('Discount', ['$http', function($http) {
+    return {
+        //Fetch all records from discounts table
+        all : function() {
+            return $http.get('/discount');
+        },
+
+        //Get one discount record with id
+        get : function(id) {
+            return $http.get('/discount/' + id);
+        },
+
+        //Delete one discount record with id
+        remove: function(id) {
+            return $http.delete('/discount/' + id);
+        },
+
+        //Add record to discounts table
+        store : function(data) {
+            return $http.post('/discount', data);
+        },
+
+        //Update record in discounts table
+        update : function(id, data) {
+            return $http.put('/discount/' + id, data);
+        }
+    }
+}]);
+
 
 app.factory('HearGoodStuff', ['$http', function($http) {
     return {
