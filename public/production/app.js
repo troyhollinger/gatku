@@ -8825,7 +8825,9 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 subtotal += $scope.items[key].price * $scope.items[key].quantity;
             }
 
-            subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+            for(var i = 0; i < $scope.items[key].addons.length; i++) {
+                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+            }
         });
 
         return subtotal - $scope.discounts(subtotal);
