@@ -8820,13 +8820,13 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         var subtotal = 0;
 
         angular.forEach($scope.items, function(value, key) {
-
-            if ( $scope.items[key].type.slug != 'package' ) {
-                subtotal += $scope.items[key].price * $scope.items[key].quantity;
-            }
+            subtotal += $scope.items[key].price * $scope.items[key].quantity;
 
             for(var i = 0; i < $scope.items[key].addons.length; i++) {
-                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+                var addOne = $scope.items[key].addons[i];
+                if (addOne.price_zero != 1) {
+                    subtotal += addOne.price * addOne.quantity;
+                }
             }
         });
 

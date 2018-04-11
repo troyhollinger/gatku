@@ -48,6 +48,7 @@ class OrderRepository {
 	 */
 	public function process($input) {
 
+
 		if (!$this->validateInput($input)) {
 
 			return false;
@@ -181,9 +182,13 @@ class OrderRepository {
 				$price = $item->size->price;
 
 			} else {
-
-				$price = $item->product->price;
-
+			    //This id done because we don't wand to double price for charging
+                //Then package price is not added. Only elements from package are summed.
+                if ($item->product->type->slug != 'package') {
+                    $price = $item->product->price;
+                } else {
+                    $price = 0;
+                }
 			}
 
 			$price = $price * $item->quantity;
