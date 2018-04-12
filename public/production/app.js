@@ -8676,9 +8676,7 @@ app.controller('AdminController',
             code: ''
         };
 
-        Discount.store(data).success(function() {
-            fetchAllDiscounts();
-        });
+        $scope.discounts.push(data);
     };
 
     $scope.discountUpdate = function(discountIndex) {
@@ -8686,12 +8684,32 @@ app.controller('AdminController',
 
         var data = $scope.discounts[discountIndex];
 
-        Discount.update(data.id, data).success(function() {
-            AlertService.broadcast('Discount updated!', 'success');
-            fetchAllDiscounts();
-        }).error(function(error) {
-            AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
-        });
+        if (!data.id) {
+            Discount.store(data).success(function() {
+                AlertService.broadcast('Discount added!', 'success');
+                fetchAllDiscounts();
+            }).error(function(error) {
+                AlertService.broadcast('There was a problem with Discounts adding: ' + error, 'error');
+            });
+        } else {
+            Discount.update(data.id, data).success(function() {
+                AlertService.broadcast('Discount updated!', 'success');
+                fetchAllDiscounts();
+            }).error(function(error) {
+                AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
+            });
+        }
+
+    };
+
+    $scope.getSaveUpdateButtonCaption = function(id) {
+        var buttonCaption = 'Update';
+
+        if (!id) {
+            buttonCaption = 'Save';
+        }
+
+        return buttonCaption;
     };
 
     $scope.discountRemove = function(discountIndex) {
@@ -8699,12 +8717,17 @@ app.controller('AdminController',
         if (r == true) {
             var data = $scope.discounts[discountIndex];
 
-            Discount.remove(data.id).success(function() {
-                AlertService.broadcast('Discount removed!', 'success');
+            if (!data.id) {
+                $scope.discounts.slice(discountIndex);
                 fetchAllDiscounts();
-            }).error(function(error) {
-                AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
-            });
+            } else {
+                Discount.remove(data.id).success(function() {
+                    AlertService.broadcast('Discount removed!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
+                });
+            }
         }
     };
 

@@ -381,7 +381,7 @@ Admin
 				<table class="admin-products-table">
 					<thead>
 					<tr>
-						<th>Discount in %</th>
+						<th>Discount [%]</th>
 						<th>Discount code</th>
 						<th>Actions</th>
 					</tr>
@@ -403,7 +403,7 @@ Admin
 							<button type="button"
 									class="btn btn-success"
 									ng-disabled="!discount.changed"
-									ng-click="discountUpdate($index)">Update
+									ng-click="discountUpdate($index)">@{{getSaveUpdateButtonCaption(discount.id)}}
 							</button>
 							&nbsp;
 							<button type="button"
