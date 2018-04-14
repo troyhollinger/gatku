@@ -9,10 +9,13 @@ class DiscountController extends BaseController {
      */
 	protected $repository;
 
+    /**
+     * DiscountController constructor.
+     * @param DiscountRepository $request
+     */
 	public function __construct(DiscountRepository $request)
 	{
 		$this->repository = $request;
-
         parent::__construct();
 	}
 
@@ -24,6 +27,17 @@ class DiscountController extends BaseController {
         $request = $this->repository->all();
         if ($request === false) return Response::json(['message' => 'Sorry, there was an error on our end'], 404);
         return Response::json(['message' => 'request was created', "data" => $request], 200);
+    }
+
+    /**
+     * @param $code
+     * @return mixed
+     */
+    public function show($code)
+    {
+        $request = $this->repository->get($code);
+        if ($request === false) return Response::json(['message' => 'Sorry, there was an error on our end'], 404);
+        return Response::json($request, 200);
     }
 
     /**

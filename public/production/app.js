@@ -7690,7 +7690,7 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		$rootScope.$broadcast('itemAdded');
 		console.log("Items added after cookie");
 	}
-	
+
 	CartService.removeItem = function(index) {
 
 		var cart = CartService.getItems();
@@ -7705,7 +7705,20 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 	}
 
-	CartService.count = function() {
+
+    CartService.getDiscount = function() {
+        return Cookie('discount') || '';
+    };
+
+    CartService.setDiscount = function(discount) {
+        Cookie('discount', discount, { path : '/' });
+    };
+
+    CartService.removeDiscount = function() {
+        Cookie('discount', '', { path : '/' });
+	};
+
+    CartService.count = function() {
 
 		var items = CartService.getItems();
 		var count = 0;
@@ -8030,13 +8043,13 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Get one discount record with id
-        get : function(id) {
-            return $http.get('/discount/' + id);
+        get : function(code) {
+            return $http.get('/discount/' + code);
         },
 
         //Delete one discount record with id
-        remove: function(id) {
-            return $http.delete('/discount/' + id);
+        remove: function(code) {
+            return $http.delete('/discount/' + code);
         },
 
         //Add record to discounts table
@@ -8045,8 +8058,8 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Update record in discounts table
-        update : function(id, data) {
-            return $http.put('/discount/' + id, data);
+        update : function(code, data) {
+            return $http.put('/discount/' + code, data);
         }
     }
 }]);
@@ -8669,9 +8682,16 @@ app.controller('AdminController',
 
     fetchAllDiscounts();
 
+    function confirmUnusedCode(data) {
+        //Here is condition to more then 1 because one record obviously exists by adding new record.
+        if ($scope.discounts.filter(function(row) { return row.code === data.code; }).length > 1) {
+            return true;
+        }
+        return false;
+    }
+
     $scope.addDiscount = function() {
         var data = {
-            id: 0,
             discount: 0,
             code: ''
         };
@@ -8684,28 +8704,34 @@ app.controller('AdminController',
 
         var data = $scope.discounts[discountIndex];
 
-        if (!data.id) {
-            Discount.store(data).success(function() {
-                AlertService.broadcast('Discount added!', 'success');
-                fetchAllDiscounts();
-            }).error(function(error) {
-                AlertService.broadcast('There was a problem with Discounts adding: ' + error, 'error');
-            });
+        //Check if code is already use don't allow to store data.
+        //Code is unique field and primary key.
+        if (confirmUnusedCode(data)) {
+            alert('This discount code is already in use. Please change code or update previous use.');
         } else {
-            Discount.update(data.id, data).success(function() {
-                AlertService.broadcast('Discount updated!', 'success');
-                fetchAllDiscounts();
-            }).error(function(error) {
-                AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
-            });
-        }
+            if (!data.created_at) {
+                Discount.store(data).success(function() {
+                    AlertService.broadcast('Discount added!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts adding: ' + error, 'error');
+                });
+            } else {
+                Discount.update(data.code, data).success(function() {
+                    AlertService.broadcast('Discount updated!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
+                });
+            }
 
+        }
     };
 
-    $scope.getSaveUpdateButtonCaption = function(id) {
+    $scope.getSaveUpdateButtonCaption = function(discount) {
         var buttonCaption = 'Update';
 
-        if (!id) {
+        if (!discount.created_at) {
             buttonCaption = 'Save';
         }
 
@@ -8717,11 +8743,11 @@ app.controller('AdminController',
         if (r == true) {
             var data = $scope.discounts[discountIndex];
 
-            if (!data.id) {
+            if (!data.created_at) {
                 $scope.discounts.slice(discountIndex);
                 fetchAllDiscounts();
             } else {
-                Discount.remove(data.id).success(function() {
+                Discount.remove(data.code).success(function() {
                     AlertService.broadcast('Discount removed!', 'success');
                     fetchAllDiscounts();
                 }).error(function(error) {
@@ -8826,7 +8852,8 @@ app.controller('CartBlinderController', ['$scope', 'CartService', function($scop
 | $scope.validate method to reflect the changes.
 |
 */
-app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', function($scope, CartService, StripeService, Order, AlertService) {
+app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', 'Discount',
+    function($scope, CartService, StripeService, Order, AlertService, Discount) {
 
     $scope.items = [];
     $scope.show = false;
@@ -8840,6 +8867,9 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.discountAmount = 0;
     $scope.enabled = true;
     $scope.blackFriday = false;
+    $scope.enteredDiscountCode = '';
+    $scope.discount = '';
+    $scope.discountSum = 0;
 
     $scope.toStage = function(index) {
         Inputs.blur();
@@ -8858,6 +8888,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.removeItem = function(index) {
         CartService.removeItem(index);
     }
+
+    $scope.getDiscountFromCookies = function () {
+        $scope.discount = CartService.getDiscount();
+    }
+
+    $scope.removeDiscount = function() {
+        CartService.removeDiscount();
+        $scope.getDiscountFromCookies();
+    };
 
     $scope.increaseItemQuantity = function(itemIndex) {
         CartService.increaseItemQuantity(itemIndex);
@@ -8926,21 +8965,42 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         return shipping;
     }
 
+    function calculateDiscountAmountForItem(price, quantity, discount) {
+        return (price * quantity) * (discount / 100);
+    }
+
     $scope.subtotal = function() {
         var subtotal = 0;
+        var discountSum = 0;
 
         angular.forEach($scope.items, function(value, key) {
 
             if ( $scope.items[key].type.slug != 'package' ) {
-                subtotal += $scope.items[key].price * $scope.items[key].quantity;
+                var price = $scope.items[key].price;
+                var quantity = $scope.items[key].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);
+                }
             }
 
             for(var i = 0; i < $scope.items[key].addons.length; i++) {
-                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+                var price = $scope.items[key].addons[i].price;
+                var quantity = $scope.items[key].addons[i].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);;
+                }
             }
         });
 
-        return subtotal - $scope.discounts(subtotal);
+        $scope.discountSum = discountSum;
+
+        return subtotal - $scope.discountSum - $scope.discounts(subtotal);
     }
 
     /**
@@ -8990,7 +9050,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.total = function() {
-
         var subtotal =  $scope.subtotal();
         var shipping = $scope.shipping();
 
@@ -9204,7 +9263,18 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     });
 
+    $scope.applyDiscountCode = function() {
+        Discount.get($scope.enteredDiscountCode).then(function(discount) {
+            $scope.discount = discount.data;
+            CartService.setDiscount($scope.discount);
+            $scope.total();
+        }, function() {
+            alert('Code seams to be not correct. There is no discount for this code.');
+        });
+    };
+
     $scope.getItems();
+    $scope.getDiscountFromCookies();
 
 }]);
 

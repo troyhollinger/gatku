@@ -9,7 +9,8 @@
 | $scope.validate method to reflect the changes.
 |
 */
-app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', function($scope, CartService, StripeService, Order, AlertService) {
+app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', 'Discount',
+    function($scope, CartService, StripeService, Order, AlertService, Discount) {
 
     $scope.items = [];
     $scope.show = false;
@@ -23,6 +24,9 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.discountAmount = 0;
     $scope.enabled = true;
     $scope.blackFriday = false;
+    $scope.enteredDiscountCode = '';
+    $scope.discount = '';
+    $scope.discountSum = 0;
 
     $scope.toStage = function(index) {
         Inputs.blur();
@@ -41,6 +45,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.removeItem = function(index) {
         CartService.removeItem(index);
     }
+
+    $scope.getDiscountFromCookies = function () {
+        $scope.discount = CartService.getDiscount();
+    }
+
+    $scope.removeDiscount = function() {
+        CartService.removeDiscount();
+        $scope.getDiscountFromCookies();
+    };
 
     $scope.increaseItemQuantity = function(itemIndex) {
         CartService.increaseItemQuantity(itemIndex);
@@ -109,21 +122,42 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         return shipping;
     }
 
+    function calculateDiscountAmountForItem(price, quantity, discount) {
+        return (price * quantity) * (discount / 100);
+    }
+
     $scope.subtotal = function() {
         var subtotal = 0;
+        var discountSum = 0;
 
         angular.forEach($scope.items, function(value, key) {
 
             if ( $scope.items[key].type.slug != 'package' ) {
-                subtotal += $scope.items[key].price * $scope.items[key].quantity;
+                var price = $scope.items[key].price;
+                var quantity = $scope.items[key].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);
+                }
             }
 
             for(var i = 0; i < $scope.items[key].addons.length; i++) {
-                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+                var price = $scope.items[key].addons[i].price;
+                var quantity = $scope.items[key].addons[i].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);;
+                }
             }
         });
 
-        return subtotal - $scope.discounts(subtotal);
+        $scope.discountSum = discountSum;
+
+        return subtotal - $scope.discountSum - $scope.discounts(subtotal);
     }
 
     /**
@@ -173,7 +207,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.total = function() {
-
         var subtotal =  $scope.subtotal();
         var shipping = $scope.shipping();
 
@@ -387,7 +420,18 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     });
 
+    $scope.applyDiscountCode = function() {
+        Discount.get($scope.enteredDiscountCode).then(function(discount) {
+            $scope.discount = discount.data;
+            CartService.setDiscount($scope.discount);
+            $scope.total();
+        }, function() {
+            alert('Code seams to be not correct. There is no discount for this code.');
+        });
+    };
+
     $scope.getItems();
+    $scope.getDiscountFromCookies();
 
 }]);
 

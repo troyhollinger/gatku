@@ -381,8 +381,8 @@ Admin
 				<table class="admin-products-table">
 					<thead>
 					<tr>
-						<th>Discount [%]</th>
 						<th>Discount code</th>
+						<th>Discount [%]</th>
 						<th>Actions</th>
 					</tr>
 					</thead>
@@ -392,18 +392,19 @@ Admin
 						<td>
 							<input type="text"
 								   ng-change="discountRowChanged($index)"
-								   ng-model="discount.discount">
+								   ng-model="discount.code"
+								   ng-disabled="discount.code && discount.created_at">
 						</td>
 						<td>
 							<input type="text"
 								   ng-change="discountRowChanged($index)"
-								   ng-model="discount.code">
+								   ng-model="discount.discount">
 						</td>
 						<td>
 							<button type="button"
 									class="btn btn-success"
 									ng-disabled="!discount.changed"
-									ng-click="discountUpdate($index)">@{{getSaveUpdateButtonCaption(discount.id)}}
+									ng-click="discountUpdate($index)">@{{getSaveUpdateButtonCaption(discount)}}
 							</button>
 							&nbsp;
 							<button type="button"
