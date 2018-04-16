@@ -150,7 +150,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 subtotal += price * quantity;
 
                 if ($scope.discount) {
-                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);;
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);
                 }
             }
         });
@@ -215,6 +215,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.submit = function() {
+
         var card = extractCardDetails();
 
         if ($scope.enabled === false) return false;
@@ -226,8 +227,10 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             var data = {
                 items : $scope.items,
                 form : $scope.form,
+                discount: $scope.discount,
                 token : token
             }
+
             Order.store(data).success(function(response) {
                 AlertService.broadcast('Success! Redirecting...', 'success');
                 $scope.show = false;
@@ -251,7 +254,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     $scope.emptyCart = function() {
         CartService.empty();
+        CartService.removeDiscount();
+
+        //Why this is twice? Remove in CartService and in CartController?
+        //Use only one place for coed.
         $scope.getItems();
+        $scope.removeDiscount();
     }
 
     $scope.validate = function(index) {
@@ -274,25 +282,28 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             if (!$scope.form.lastName) {
                 $scope.status = 'Please enter a last name.';
                 AlertService.broadcast('Please enter a last name', 'error');
+
                 return false;
             }
 
             if (!$scope.form.email) {
                 $scope.status = 'Please enter an email address.';
                 AlertService.broadcast('Please enter an email address', 'error');
+
                 return false;
             }
 
             if (!validateEmail($scope.form.email)) {
                 $scope.status = 'Please enter a valid email address.';
                 AlertService.broadcast('Please enter a valid email address', 'error');
+
                 return false;
             }
 
             if (!$scope.form.phone) {
-
                 $scope.status = 'Please enter phone number.';
                 AlertService.broadcast('Please enter a phone number', 'error');
+
                 return false;
 
             }
@@ -301,44 +312,41 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
                 $scope.status = 'Please enter a street address.';
                 AlertService.broadcast('Please enter a street address', 'error');
-                return false;
 
+                return false;
             }
 
             if (!$scope.form.city) {
 
                 $scope.status = 'Please enter a city';
                 AlertService.broadcast('Please enter a city', 'error');
-                return false;
 
+                return false;
             }
 
             if (!$scope.form.state) {
 
                 $scope.status = 'Please enter a state';
                 AlertService.broadcast('Please enter a state', 'error');
+
                 return false
 
             }
 
             if (!$scope.form.zip) {
-
                 $scope.status = 'Please enter a zip';
                 AlertService.broadcast('Please enter a zip', 'error');
-                return false
 
+                return false
             }
 
             if (!$scope.form.country) {
-
                 $scope.status = 'Please enter a country';
                 AlertService.broadcast('Please enter a country', 'error');
+
                 return false;
-
             }
-
             return true;
-
         }
 
         if (index == 3) {
@@ -347,15 +355,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 if(!$scope.form.billing_address){
                     $scope.status = 'Please enter Billing Address or check Billing Address same as Shipping Address';
                     AlertService.broadcast('Please enter Billing Address or check Billing Address same as Shipping Address', 'error');
+
                     return false;
                 }
                 if(!$scope.form.billing_zip){
                     $scope.status = 'Please enter billing zip or check Billing Address same as Shipping Address';
                     AlertService.broadcast('Please enter billing zip or check Billing Address same as Shipping Address', 'error');
+
                     return false;
                 }
-
-
             }
 
             var card = extractCardDetails();
@@ -363,22 +371,16 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             var validation = StripeService.validate(card)
 
             if (validation.response === false) {
-
                 $scope.status = validation.message;
                 AlertService.broadcast($scope.status, 'error');
 
                 return false;
-
             } else if (validation.response) {
-
                 $scope.status = '';
 
                 return true;
-
             }
-
         }
-
     }
 
     function validateEmail(email) {
@@ -432,9 +434,5 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     $scope.getItems();
     $scope.getDiscountFromCookies();
-
 }]);
-
-
-
 
