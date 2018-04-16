@@ -4,12 +4,10 @@ namespace Austen\Repositories;
 use Order;
 use OrderItem;
 use Stripe_Charge;
-use Product;
-use Austen\Repositories\CustomerRepository;
+use Discount;
 use Log;
 use Mail;
 use OrderItemAddon;
-use Size;
 use DB;
 use Carbon\Carbon;
 use App;
@@ -48,30 +46,37 @@ class OrderRepository {
 	 */
 	public function process($input) {
 
-
 		if (!$this->validateInput($input)) {
-
 			return false;
-
 		}
 
 		DB::beginTransaction();
 
 		try {
-
 			$customer = $this->customer->store($input['form']);
 			$order = new Order;
 			$order = $this->assignFields($order, $customer, $input['form']);
 			$order->save();
+            $this->assignOrderItems($order, $input['items']);
+            $order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
 
-			$this->assignOrderItems($order, $input['items']);
+            //Discount part
+            $discount = null;
 
-			$order->load('items.addons.product.type','items.addons.size', 'items.product.type', 'customer', 'items.size');
+            if (isset($input['discount']['code'])) {
+                $discount = new Discount;
+                $discount = $discount->find($input['discount']['code']);
+            }
 
-			$discount = $this->calculateDiscount($order);
-			$subtotal = $this->calculateSubTotal($order);
-			$shipping = $this->calculateShipping($order);
-			$total = $this->calculateTotal($order);
+			//Following function for discount calculation is for hardcoded discount 'Black Friday'.
+            //Consider to remove this code. Temporary commented.
+			//$discountHardcoded = $this->calculateDiscount($order);
+
+			$subtotal = $this->calculateSubTotal($order, $discount);
+
+			$shipping = $this->calculateShipping($order, $discount);
+
+			$total = $this->calculateTotal($order, $discount);
 
 		} catch(Exception $e) {
 			Log::error($e);
@@ -98,19 +103,19 @@ class OrderRepository {
 		$date = Carbon::now()->timezone('America/Los_Angeles')->format('F jS Y | g:i A T');
 
 		if (App::environment('production')) {
-			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount->discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) use ($customer){
 				$message->to($customer->email, $customer->fullName)->subject('GATKU | Order Confirmation');
 			});
 
-			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount->discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 				$message->to('dustin@gatku.com', 'Dustin McIntyre')->subject('New order from GATKU');
 			});
 
-			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+			Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount->discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 				$message->to('emailme@troyhollinger.com', 'Troy Hollinger')->subject('New order from GATKU');
 			});
 
-			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+			Mail::queue('emails.order', ['order' => $order, 'discount' => $discount->discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 				$message->to('ryan@gatku.com', 'Ryan Gattoni')->subject('New order from GATKU');
 			});
 		}
@@ -118,13 +123,11 @@ class OrderRepository {
 		if (App::environment('local')) {
 
 			if (isset($_ENV['test_transaction_email'])) {
-				Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
+				Mail::queue('emails.order-admin', ['order' => $order, 'discount' => $discount->discount, 'subtotal' => $subtotal, 'shipping' => $shipping, 'total' => $total, 'date' => $date], function($message) {
 					$message->to($_ENV['test_transaction_email'], 'Austen Payan')->subject('New order from GATKU');
 				});
 			}
 		}
-
-
 
 		return true;
 	}
@@ -147,7 +150,6 @@ class OrderRepository {
 		if (isset($input['comments'])) $order->comments = $input['comments'];
 
 		return $order;
-
 	}
 
 	/**
@@ -168,19 +170,22 @@ class OrderRepository {
 
 
 
-	private function calculateSubTotal($order) {
+	private function calculateSubTotal($order, $discountObj) {
 
 		$subtotal = 0;
-		$discount = 0;
 
 		$items = $order->items;
+
+		//$discountReverse - variable name because this calculate actually not a discount but how much should be discounted price?
+		$discountReverse = 1;
+		if ($discountObj) {
+		    $discountReverse = (100 - $discountObj->discount) / 100;
+        }
 
 		foreach($items as $item) {
 
 			if ($item->product->sizeable && $item->sizeId) {
-
 				$price = $item->size->price;
-
 			} else {
 			    //This id done because we don't wand to double price for charging
                 //Then package price is not added. Only elements from package are summed.
@@ -191,35 +196,32 @@ class OrderRepository {
                 }
 			}
 
-			$price = $price * $item->quantity;
-
-			$subtotal += $price;
+			//Calc item value
+			$value = $this->calculateDiscountValue($price, $item->quantity, $discountReverse);
+			$subtotal += $value;
 
 			foreach($item->addons as $addon) {
-
 				if ($addon->product->sizeable && $addon->sizeId) {
-
 					$addonPrice = $addon->size->price;
-
 				} else {
-
 					$addonPrice = $addon->product->price;
-
 				}
 
-				$addonPrice = $addonPrice * $addon->quantity;
-
+				//Calc addon value
+				$addonPrice = $this->calculateDiscountValue($addonPrice, $addon->quantity, $discountReverse);
 				$subtotal += $addonPrice;
-
 			}
-
 		}
+		//This is hardcoded discount for Black Friday, consider remove this code
+		$discountHardcoded = $this->calculateDiscount($order, $subtotal);
 
-		$discount = $this->calculateDiscount($order, $subtotal);
-
-		return $subtotal - $discount;
-
+		return $subtotal - $discountHardcoded;
 	}
+
+	private function calculateDiscountValue($price, $quantity, $discountReverse)
+    {
+        return ($price * $quantity) * $discountReverse;
+    }
 
 	private function calculateDiscount($order, $subtotal = false) {
 
@@ -278,7 +280,7 @@ class OrderRepository {
 	 * should produce identical results.
 	 *
 	 */
-	private function calculateShipping($order) {
+	private function calculateShipping($order, $discount) {
 
 		$shippingPrice = 0;
 		$poles = [];
@@ -287,7 +289,7 @@ class OrderRepository {
 
 		$items = $order->items;
 
-		if ($this->calculateSubTotal($order) >= 30000) return 0;
+		if ($this->calculateSubTotal($order, $discount) >= 30000) return 0;
 
 		foreach($items as $item) {
 
@@ -347,11 +349,11 @@ class OrderRepository {
 
 	}
 
-	private function calculateTotal($order) {
+	private function calculateTotal($order, $discount) {
 
-		$subtotal = $this->calculateSubTotal($order);
+		$subtotal = $this->calculateSubTotal($order, $discount);
 
-		$shipping = $this->calculateShipping($order);
+		$shipping = $this->calculateShipping($order, $discount);
 
 		$total = $subtotal + $shipping;
 
@@ -380,35 +382,25 @@ class OrderRepository {
 			$orderItem->save();
 
 			foreach($item['addons'] as $addon) {
-
 				$itemAddon = new OrderItemAddon;
 				$itemAddon->orderItemId = $orderItem->id;
 				$itemAddon->productId = $addon['id'];
 				$itemAddon->quantity = $addon['quantity'];
+
 				if($addon['sizeable'] && $addon['sizeId']) {
-
 					$itemAddon->sizeId = $addon['sizeId'];
-
 				}
-
 				$itemAddon->save();
-
 			}
-
 		}
-
 	}
 
 	private function assignHumanReadableTimestamps($collection) {
 
 		foreach($collection as $model) {
-
 			$model->createdAtHuman = $model->created_at->timezone('America/Los_Angeles')->format('F jS Y | g:i A');
-
 		}
 
 		return $collection;
-
 	}
-
 }

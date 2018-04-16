@@ -95,6 +95,28 @@
 
 			</div>
 
+			<div class="cart-details-row checkout-form" ng-show="!discount">
+				<span class="cart-item-column">Enter Discount Code:</span>
+				<input type="text" ng-model="enteredDiscountCode">
+				<div class="button success-bg right"
+					 ng-click="applyDiscountCode()">Apply Code
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="cart-details-row" ng-show="discount">
+				<span class="cart-item-column">
+					Applied Discount: <b>@{{  discount.discount }}%</b>
+					&nbsp;&nbsp;
+					<a href="#"
+					   style="font-size: 12px;"
+					   ng-click="removeDiscount()">[Remove]
+					</a>
+				</span>
+				<span class="cart-price-column shipping-column" ng-bind="'$' + (discountSum | money)"></span>
+				<div class="clear"></div>
+			</div>
+
 			<div class="cart-details-row">
 				<span class="cart-item-column">Subtotal <span class="smaller faded bold" ng-if="subtotal() < 30000 && !blackFriday">- get to $300 for free shipping!</span><span class="smaller faded bold" ng-if="subtotal() >= 30000 && !blackFriday">You get free shipping!</span></span>
 				<span class="cart-price-column shipping-column" ng-bind="'$' + (subtotal() | money)"></span>
