@@ -1,4 +1,4 @@
-<div class="contact-section" id="contact">
+<div class="contact-section">
 	<div class="contact-top">
 		<div class="home-container">
 			<h2 class="contact-headline">Thank You for Visiting!</h2>
@@ -7,7 +7,7 @@
 	</div>
 </div>
 
-<div class="hear-good-stuff" ng-controller="HearGoodStuffController">
+<div class="hear-good-stuff" ng-controller="HearGoodStuffController" id="contact"cin>
 	<div style="display: table; margin: 0 auto;">
 		<form name="hearGoodStuffForm">
 			<div>

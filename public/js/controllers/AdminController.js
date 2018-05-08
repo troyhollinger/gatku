@@ -1,4 +1,6 @@
-app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouImage', 'AvailabilityType', 'AlertService','HomeSetting', function($scope, Image, Product, Order, YouImage, AvailabilityType, AlertService,HomeSetting) {
+app.controller('AdminController',
+    ['$scope', 'Image', 'Product', 'Discount', 'Order', 'YouImage', 'AvailabilityType', 'AlertService', 'HomeSetting',
+        function($scope, Image, Product, Discount, Order, YouImage, AvailabilityType, AlertService,HomeSetting) {
 
     $scope.init = function() {
         $scope.show('orders');
@@ -28,6 +30,7 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         $scope.showYou = false;
         $scope.showVideos = false;
         $scope.showHomeSetting = false;
+        $scope.showDiscountManager = false;
         $scope.reset();
 
         switch(section) {
@@ -47,7 +50,9 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
             case 'home-setting' : 
                 $scope.showHomeSetting = true;
                 break;
-                
+            case 'discount-manager' :
+                $scope.showDiscountManager = true;
+                break;
 
         }
 
@@ -342,6 +347,95 @@ app.controller('AdminController', ['$scope', 'Image', 'Product', 'Order', 'YouIm
         $scope.getProducts();
     }
 
+    //Discount part
+    function fetchAllDiscounts() {
+        Discount.all().success(function(response) {
+            $scope.discounts = response.data;
+        });
+    };
+
+    fetchAllDiscounts();
+
+    function confirmUnusedCode(data) {
+        //Here is condition to more then 1 because one record obviously exists by adding new record.
+        if ($scope.discounts.filter(function(row) { return row.code === data.code; }).length > 1) {
+            return true;
+        }
+        return false;
+    }
+
+    $scope.addDiscount = function() {
+        var data = {
+            discount: 0,
+            code: ''
+        };
+
+        $scope.discounts.push(data);
+    };
+
+    $scope.discountUpdate = function(discountIndex) {
+        $scope.discounts[discountIndex].changed = false;
+
+        var data = $scope.discounts[discountIndex];
+
+        //Check if code is already use don't allow to store data.
+        //Code is unique field and primary key.
+        if (confirmUnusedCode(data)) {
+            alert('This discount code is already in use. Please change code or update previous use.');
+        } else {
+            if (!data.created_at) {
+                Discount.store(data).success(function() {
+                    AlertService.broadcast('Discount added!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts adding: ' + error, 'error');
+                });
+            } else {
+                Discount.update(data.code, data).success(function() {
+                    AlertService.broadcast('Discount updated!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
+                });
+            }
+
+        }
+    };
+
+    $scope.getSaveUpdateButtonCaption = function(discount) {
+        var buttonCaption = 'Update';
+
+        if (!discount.created_at) {
+            buttonCaption = 'Save';
+        }
+
+        return buttonCaption;
+    };
+
+    $scope.discountRemove = function(discountIndex) {
+        var r = confirm('Do you want to remove this Discount?');
+        if (r == true) {
+            var data = $scope.discounts[discountIndex];
+
+            if (!data.created_at) {
+                $scope.discounts.slice(discountIndex);
+                fetchAllDiscounts();
+            } else {
+                Discount.remove(data.code).success(function() {
+                    AlertService.broadcast('Discount removed!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
+                });
+            }
+        }
+    };
+
+    $scope.discountRowChanged = function(discountIndex) {
+        $scope.discounts[discountIndex].changed = true;
+    };
+
+    //Discount part - end
 
     $scope.init();
 
