@@ -64,7 +64,7 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		$rootScope.$broadcast('itemAdded');
 		console.log("Items added after cookie");
 	}
-	
+
 	CartService.removeItem = function(index) {
 
 		var cart = CartService.getItems();
@@ -79,7 +79,20 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 	}
 
-	CartService.count = function() {
+
+    CartService.getDiscount = function() {
+        return Cookie('discount') || '';
+    };
+
+    CartService.setDiscount = function(discount) {
+        Cookie('discount', discount, { path : '/' });
+    };
+
+    CartService.removeDiscount = function() {
+        Cookie('discount', '', { path : '/' });
+	};
+
+    CartService.count = function() {
 
 		var items = CartService.getItems();
 		var count = 0;

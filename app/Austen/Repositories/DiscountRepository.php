@@ -14,25 +14,19 @@ class DiscountRepository {
 		return $discounts;
 	}
 
-//	public function get($id) {
-//
-//		try {
-//
-//			$product = Product::findOrFail($id);
-//
-//			$product->load('type', 'addons.product.type', 'sizes', 'availability');
-//
-//		} catch (Exception $e) {
-//
-//			Log::error($e);
-//
-//			return false;
-//
-//		}
-//
-//		return $product;
-//
-//	}
+    /**
+     * @param $code
+     * @return bool
+     */
+	public function get($code) {
+		try {
+			$discount = Discount::findOrFail($code);
+		} catch (Exception $e) {
+			Log::error($e);
+			return false;
+		}
+		return $discount;
+	}
 
 
     /**
@@ -53,13 +47,13 @@ class DiscountRepository {
 	}
 
     /**
-     * @param $id
+     * @param $code
      * @param $input
      * @return bool
      */
-	public function update($id, $input) {
+	public function update($code, $input) {
 		try {
-			$discount = Discount::findOrFail($id);
+			$discount = Discount::findOrFail($code);
 			$result = $this->assignData($discount, $input);
 			$result->save();
 		} catch (Exception $e) {
@@ -70,12 +64,12 @@ class DiscountRepository {
 	}
 
     /**
-     * @param $id
+     * @param $code
      * @return bool
      */
-	public function destroy($id) {
+	public function destroy($code) {
 	    try {
-            $discount = Discount::findOrFail($id);
+            $discount = Discount::findOrFail($code);
             $discount->delete();
         } catch (\Exception $e) {
             Log::error($e);
@@ -92,9 +86,8 @@ class DiscountRepository {
      * @return Discount
      */
 	private function assignData($discount, $data) {
-		$discount->id = $data['id'];
+        $discount->code = $data['code'];
 		$discount->discount = $data['discount'];
-		$discount->code = $data['code'];
 
 		return $discount;
 	}

@@ -14,10 +14,10 @@ class AddDiscountsTable extends Migration {
     {
         Schema::create('discounts', function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->string('code')->unique();
             $table->float('discount');
-            $table->string('code');
             $table->timestamps();
+            $table->primary('code');
         });
     }
 

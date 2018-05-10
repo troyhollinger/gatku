@@ -7690,7 +7690,7 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 		$rootScope.$broadcast('itemAdded');
 		console.log("Items added after cookie");
 	}
-	
+
 	CartService.removeItem = function(index) {
 
 		var cart = CartService.getItems();
@@ -7705,7 +7705,20 @@ app.factory('CartService', ['$rootScope', '$http', 'ipCookie', 'AlertService', f
 
 	}
 
-	CartService.count = function() {
+
+    CartService.getDiscount = function() {
+        return Cookie('discount') || '';
+    };
+
+    CartService.setDiscount = function(discount) {
+        Cookie('discount', discount, { path : '/' });
+    };
+
+    CartService.removeDiscount = function() {
+        Cookie('discount', '', { path : '/' });
+	};
+
+    CartService.count = function() {
 
 		var items = CartService.getItems();
 		var count = 0;
@@ -8030,13 +8043,13 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Get one discount record with id
-        get : function(id) {
-            return $http.get('/discount/' + id);
+        get : function(code) {
+            return $http.get('/discount/' + code);
         },
 
         //Delete one discount record with id
-        remove: function(id) {
-            return $http.delete('/discount/' + id);
+        remove: function(code) {
+            return $http.delete('/discount/' + code);
         },
 
         //Add record to discounts table
@@ -8045,12 +8058,20 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Update record in discounts table
-        update : function(id, data) {
-            return $http.put('/discount/' + id, data);
+        update : function(code, data) {
+            return $http.put('/discount/' + code, data);
         }
     }
 }]);
 
+app.factory('DiscountExists', ['$http', function($http) {
+    return {
+        //Fetch all records from discounts table
+        all : function() {
+            return $http.get('/discounts-exists');
+        }
+    }
+}]);
 
 app.factory('HearGoodStuff', ['$http', function($http) {
     return {
@@ -8669,16 +8690,21 @@ app.controller('AdminController',
 
     fetchAllDiscounts();
 
+    function confirmUnusedCode(data) {
+        //Here is condition to more then 1 because one record obviously exists by adding new record.
+        if ($scope.discounts.filter(function(row) { return row.code === data.code; }).length > 1) {
+            return true;
+        }
+        return false;
+    }
+
     $scope.addDiscount = function() {
         var data = {
-            id: 0,
             discount: 0,
             code: ''
         };
 
-        Discount.store(data).success(function() {
-            fetchAllDiscounts();
-        });
+        $scope.discounts.push(data);
     };
 
     $scope.discountUpdate = function(discountIndex) {
@@ -8686,12 +8712,38 @@ app.controller('AdminController',
 
         var data = $scope.discounts[discountIndex];
 
-        Discount.update(data.id, data).success(function() {
-            AlertService.broadcast('Discount updated!', 'success');
-            fetchAllDiscounts();
-        }).error(function(error) {
-            AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
-        });
+        //Check if code is already use don't allow to store data.
+        //Code is unique field and primary key.
+        if (confirmUnusedCode(data)) {
+            alert('This discount code is already in use. Please change code or update previous use.');
+        } else {
+            if (!data.created_at) {
+                Discount.store(data).success(function() {
+                    AlertService.broadcast('Discount added!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts adding: ' + error, 'error');
+                });
+            } else {
+                Discount.update(data.code, data).success(function() {
+                    AlertService.broadcast('Discount updated!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discounts updates: ' + error, 'error');
+                });
+            }
+
+        }
+    };
+
+    $scope.getSaveUpdateButtonCaption = function(discount) {
+        var buttonCaption = 'Update';
+
+        if (!discount.created_at) {
+            buttonCaption = 'Save';
+        }
+
+        return buttonCaption;
     };
 
     $scope.discountRemove = function(discountIndex) {
@@ -8699,12 +8751,17 @@ app.controller('AdminController',
         if (r == true) {
             var data = $scope.discounts[discountIndex];
 
-            Discount.remove(data.id).success(function() {
-                AlertService.broadcast('Discount removed!', 'success');
+            if (!data.created_at) {
+                $scope.discounts.slice(discountIndex);
                 fetchAllDiscounts();
-            }).error(function(error) {
-                AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
-            });
+            } else {
+                Discount.remove(data.code).success(function() {
+                    AlertService.broadcast('Discount removed!', 'success');
+                    fetchAllDiscounts();
+                }).error(function(error) {
+                    AlertService.broadcast('There was a problem with Discount remove: ' + error, 'error');
+                });
+            }
         }
     };
 
@@ -8803,7 +8860,8 @@ app.controller('CartBlinderController', ['$scope', 'CartService', function($scop
 | $scope.validate method to reflect the changes.
 |
 */
-app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', function($scope, CartService, StripeService, Order, AlertService) {
+app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Order', 'AlertService', 'Discount', 'DiscountExists',
+    function($scope, CartService, StripeService, Order, AlertService, Discount, DiscountExists) {
 
     $scope.items = [];
     $scope.show = false;
@@ -8817,6 +8875,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.discountAmount = 0;
     $scope.enabled = true;
     $scope.blackFriday = false;
+    $scope.enteredDiscountCode = '';
+    $scope.discount = '';
+    $scope.discountsExists = false;
+    $scope.discountSum = 0;
+
+    //Check is are records in discount table. If no then don't display discount input
+    DiscountExists.all().then(function(response) {
+        $scope.discountsExists = response.data;
+    });
 
     $scope.toStage = function(index) {
         Inputs.blur();
@@ -8835,6 +8902,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     $scope.removeItem = function(index) {
         CartService.removeItem(index);
     }
+
+    $scope.getDiscountFromCookies = function () {
+        $scope.discount = CartService.getDiscount();
+    }
+
+    $scope.removeDiscount = function() {
+        CartService.removeDiscount();
+        $scope.getDiscountFromCookies();
+    };
 
     $scope.increaseItemQuantity = function(itemIndex) {
         CartService.increaseItemQuantity(itemIndex);
@@ -8903,21 +8979,42 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
         return shipping;
     }
 
+    function calculateDiscountAmountForItem(price, quantity, discount) {
+        return (price * quantity) * (discount / 100);
+    }
+
     $scope.subtotal = function() {
         var subtotal = 0;
+        var discountSum = 0;
 
         angular.forEach($scope.items, function(value, key) {
 
             if ( $scope.items[key].type.slug != 'package' ) {
-                subtotal += $scope.items[key].price * $scope.items[key].quantity;
+                var price = $scope.items[key].price;
+                var quantity = $scope.items[key].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);
+                }
             }
 
             for(var i = 0; i < $scope.items[key].addons.length; i++) {
-                subtotal += $scope.items[key].addons[i].price * $scope.items[key].addons[i].quantity;
+                var price = $scope.items[key].addons[i].price;
+                var quantity = $scope.items[key].addons[i].quantity;
+
+                subtotal += price * quantity;
+
+                if ($scope.discount) {
+                    discountSum += calculateDiscountAmountForItem(price, quantity, $scope.discount.discount);
+                }
             }
         });
 
-        return subtotal - $scope.discounts(subtotal);
+        $scope.discountSum = discountSum;
+
+        return subtotal - $scope.discountSum - $scope.discounts(subtotal);
     }
 
     /**
@@ -8967,7 +9064,6 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.total = function() {
-
         var subtotal =  $scope.subtotal();
         var shipping = $scope.shipping();
 
@@ -8976,6 +9072,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
     }
 
     $scope.submit = function() {
+
         var card = extractCardDetails();
 
         if ($scope.enabled === false) return false;
@@ -8987,8 +9084,10 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             var data = {
                 items : $scope.items,
                 form : $scope.form,
+                discount: $scope.discount,
                 token : token
             }
+
             Order.store(data).success(function(response) {
                 AlertService.broadcast('Success! Redirecting...', 'success');
                 $scope.show = false;
@@ -8996,7 +9095,7 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 $scope.enabled = true;
                 //window.location.replace("/thankyou");
             }).error(function(response) {
-                $scope.enabled = true;
+                //$scope.enabled = true;
                 if ('error' in response.message.jsonBody) {
                     AlertService.broadcast(response.message.jsonBody.error.message, 'error');
                 } else {
@@ -9012,7 +9111,12 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     $scope.emptyCart = function() {
         CartService.empty();
+        CartService.removeDiscount();
+
+        //Why this is twice? Remove in CartService and in CartController?
+        //Use only one place for coed.
         $scope.getItems();
+        $scope.removeDiscount();
     }
 
     $scope.validate = function(index) {
@@ -9035,25 +9139,28 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             if (!$scope.form.lastName) {
                 $scope.status = 'Please enter a last name.';
                 AlertService.broadcast('Please enter a last name', 'error');
+
                 return false;
             }
 
             if (!$scope.form.email) {
                 $scope.status = 'Please enter an email address.';
                 AlertService.broadcast('Please enter an email address', 'error');
+
                 return false;
             }
 
             if (!validateEmail($scope.form.email)) {
                 $scope.status = 'Please enter a valid email address.';
                 AlertService.broadcast('Please enter a valid email address', 'error');
+
                 return false;
             }
 
             if (!$scope.form.phone) {
-
                 $scope.status = 'Please enter phone number.';
                 AlertService.broadcast('Please enter a phone number', 'error');
+
                 return false;
 
             }
@@ -9062,44 +9169,41 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
                 $scope.status = 'Please enter a street address.';
                 AlertService.broadcast('Please enter a street address', 'error');
-                return false;
 
+                return false;
             }
 
             if (!$scope.form.city) {
 
                 $scope.status = 'Please enter a city';
                 AlertService.broadcast('Please enter a city', 'error');
-                return false;
 
+                return false;
             }
 
             if (!$scope.form.state) {
 
                 $scope.status = 'Please enter a state';
                 AlertService.broadcast('Please enter a state', 'error');
+
                 return false
 
             }
 
             if (!$scope.form.zip) {
-
                 $scope.status = 'Please enter a zip';
                 AlertService.broadcast('Please enter a zip', 'error');
-                return false
 
+                return false
             }
 
             if (!$scope.form.country) {
-
                 $scope.status = 'Please enter a country';
                 AlertService.broadcast('Please enter a country', 'error');
+
                 return false;
-
             }
-
             return true;
-
         }
 
         if (index == 3) {
@@ -9108,15 +9212,15 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
                 if(!$scope.form.billing_address){
                     $scope.status = 'Please enter Billing Address or check Billing Address same as Shipping Address';
                     AlertService.broadcast('Please enter Billing Address or check Billing Address same as Shipping Address', 'error');
+
                     return false;
                 }
                 if(!$scope.form.billing_zip){
                     $scope.status = 'Please enter billing zip or check Billing Address same as Shipping Address';
                     AlertService.broadcast('Please enter billing zip or check Billing Address same as Shipping Address', 'error');
+
                     return false;
                 }
-
-
             }
 
             var card = extractCardDetails();
@@ -9124,22 +9228,16 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
             var validation = StripeService.validate(card)
 
             if (validation.response === false) {
-
                 $scope.status = validation.message;
                 AlertService.broadcast($scope.status, 'error');
 
                 return false;
-
             } else if (validation.response) {
-
                 $scope.status = '';
 
                 return true;
-
             }
-
         }
-
     }
 
     function validateEmail(email) {
@@ -9181,12 +9279,19 @@ app.controller('CartController', ['$scope', 'CartService', 'StripeService', 'Ord
 
     });
 
+    $scope.applyDiscountCode = function() {
+        Discount.get($scope.enteredDiscountCode).then(function(discount) {
+            $scope.discount = discount.data;
+            CartService.setDiscount($scope.discount);
+            $scope.total();
+        }, function() {
+            alert('Code seams to be not correct. There is no discount for this code.');
+        });
+    };
+
     $scope.getItems();
-
+    $scope.getDiscountFromCookies();
 }]);
-
-
-
 
 
 app.controller('CartCountController', ['$scope', 'CartService', function($scope, CartService) {
