@@ -62,9 +62,9 @@ class OrderRepository {
 
             //Discount part
             $discount = null;
+            $discount = new Discount;
 
             if (isset($input['discount']['code'])) {
-                $discount = new Discount;
                 $discount = $discount->find($input['discount']['code']);
             }
 
