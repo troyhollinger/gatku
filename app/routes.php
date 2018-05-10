@@ -107,5 +107,6 @@ Route::resource('shipping-track', 'ShippingTrackController', ['except' => ['inde
 
 //Discount route
 Route::resource('discount', 'DiscountController');
+Route::resource('discounts-exists', 'DiscountExistsController'); //Check if in discounts table are any records
 
 

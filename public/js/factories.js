@@ -97,13 +97,13 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Get one discount record with id
-        get : function(id) {
-            return $http.get('/discount/' + id);
+        get : function(code) {
+            return $http.get('/discount/' + code);
         },
 
         //Delete one discount record with id
-        remove: function(id) {
-            return $http.delete('/discount/' + id);
+        remove: function(code) {
+            return $http.delete('/discount/' + code);
         },
 
         //Add record to discounts table
@@ -112,12 +112,20 @@ app.factory('Discount', ['$http', function($http) {
         },
 
         //Update record in discounts table
-        update : function(id, data) {
-            return $http.put('/discount/' + id, data);
+        update : function(code, data) {
+            return $http.put('/discount/' + code, data);
         }
     }
 }]);
 
+app.factory('DiscountExists', ['$http', function($http) {
+    return {
+        //Fetch all records from discounts table
+        all : function() {
+            return $http.get('/discounts-exists');
+        }
+    }
+}]);
 
 app.factory('HearGoodStuff', ['$http', function($http) {
     return {
