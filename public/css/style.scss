@@ -954,7 +954,8 @@ a:hover {
 
 	@include center;
 
-	color:#000000;
+	color:#ffffff;
+	text-shadow: 2px 2px #000000;
 	font-size: 3.5rem;
 	font-weight: 600;
 	font-family: HelveticaLTPro-Black, Helvetica, Arial, sans-serif;
