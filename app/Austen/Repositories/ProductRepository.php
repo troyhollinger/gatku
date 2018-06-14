@@ -221,6 +221,7 @@ class ProductRepository implements ProductRepositoryInterface {
 		if (isset($data['stealth'])) $product->stealth = $data['stealth'];
 		if (isset($data['order'])) $product->order = $data['order'];
 		if (isset($data['shipping_description'])) $product->shipping_description = $data['shipping_description'];
+		if (isset($data['mobile_name'])) $product->mobile_name = $data['mobile_name'];
 
 		return $product;
 
@@ -319,16 +320,10 @@ class ProductRepository implements ProductRepositoryInterface {
                     }
 
 					$newAddon->save();
-
 				}
-
 			}
-
 		}
-
 	}
-
-
 }
 
 

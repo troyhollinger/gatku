@@ -926,28 +926,17 @@ a:hover {
 }
 
 .mobile-product-name {
-
 	font-size: .9rem;
 	display: none;
-
 	@include breakpoint(small) {
-
 		display: inline-block;
-
 	}
-
 }
 
 .mobile-product-name-suffix {
-
-
 	@include breakpoint(xxsmall) {
-
 		display: none;
-
 	}
-
-
 }
 
 .hero-blurb {
