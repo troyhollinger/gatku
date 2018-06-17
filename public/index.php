@@ -6,6 +6,11 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+
+define('LARAVEL_START', microtime(true));
+
+require __DIR__.'/down.html';
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
