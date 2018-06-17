@@ -6,6 +6,11 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+
+require __DIR__.'/down.html';
+
+die();
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
